@@ -1,0 +1,342 @@
+{
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/user/login",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleView": false,
+					"scrollIndicator": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleView": false,
+					"scrollIndicator": "none"
+				}
+			}
+		}, {
+			"path": "pages/repertory/repertory",
+			"style": {
+				"navigationBarTitleText": "库存",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+
+			}
+		}, {
+			"path": "pages/marketing/marketing",
+			"style": {
+				"navigationBarTitleText": "营销服务",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		}, {
+			"path": "pages/statement/statement",
+			"style": {
+				"navigationBarTitleText": "报表",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		}, {
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleView": false,
+					"scrollIndicator": "none"
+				}
+			}
+		}, {
+			"path": "pages/addMembership/addMembership",
+			"style": {
+				"navigationBarTitleText": "添加会员",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		}, {
+			"path": "pages/inventory/inventory",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		}
+
+		, {
+			"path": "pages/signIn/signIn",
+			"style": {
+				"navigationBarTitleText": "商家注册",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/information/information",
+			"style": {
+				"navigationBarTitleText": "账户信息",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/businessSetUp/businessSetUp",
+			"style": {
+				"navigationBarTitleText": "营业设置",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/storeManagement/storeManagement",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+				// "enablePullDownRefresh": true,
+				// "backgroundTextStyle": "dark" 
+			}
+
+		}, {
+			"path": "pages/editShopInformation/editShopInformation",
+			"style": {
+				"navigationBarTitleText": "编辑店铺信息",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/addShopInformation/addShopInformation",
+			"style": {
+				"navigationBarTitleText": "新增店铺信息",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		},
+		{
+			"path": "components/u-avatar-cropper/u-avatar-cropper",
+			"style": {
+				"navigationBarTitleText": "头像裁剪",
+				"navigationBarBackgroundColor": "#000000"
+			}
+		}, {
+			"path": "pages/staffManagement/staffManagement",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/addStaffsInformation/addStaffsInformation",
+			"style": {
+				"navigationBarTitleText": "新增员工信息",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/editStaffsInformation/editStaffsInformation",
+			"style": {
+				"navigationBarTitleText": "编辑员工信息",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/patternOfPayment/patternOfPayment",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/addPatternOfPayment/addPatternOfPayment",
+			"style": {
+				"navigationBarTitleText": "新增支付方式",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/editPatternOfPayment/editPatternOfPayment",
+			"style": {
+				"navigationBarTitleText": "编辑支付方式",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/changePassPword/changePassPword",
+			"style": {
+				"navigationBarTitleText": "修改密码",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white"
+			}
+
+		}, {
+			"path": "pages/addCommodity/addCommodity",
+			"style": {
+				"navigationBarTitleText": "新增商品",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/commodityManagement/commodityManagement",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/productName/productName",
+			"style": {
+				"navigationBarTitleText": "选择商品名称",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/colors/colors",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/editColor/editColor",
+			"style": {
+				"navigationBarTitleText": "编辑商品颜色",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/addColor/addColor",
+			"style": {
+				"navigationBarTitleText": "新增商品颜色",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}
+	   
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#2979ff",
+		"borderStyle": "white",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/home/home",
+				"iconPath": "static/image/index.png",
+				"selectedIconPath": "static/image/index-ed.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/repertory/repertory",
+				"iconPath": "static/image/repertory.png",
+				"selectedIconPath": "static/image/repertory-ed.png",
+				"text": "库存"
+			},
+			{
+				"pagePath": "pages/marketing/marketing",
+				"iconPath": "static/image/marketing.png",
+				"selectedIconPath": "static/image/marketing-ed.png",
+				"text": "营销"
+			},
+			{
+				"pagePath": "pages/statement/statement",
+				"iconPath": "static/image/statement.png",
+				"selectedIconPath": "static/image/statement-ed.png",
+				"text": "报表"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"iconPath": "static/image/mine.png",
+				"selectedIconPath": "static/image/mine-ed.png",
+				"text": "我的"
+			}
+		]
+	}
+}
