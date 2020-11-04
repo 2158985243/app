@@ -66,7 +66,7 @@
 					page: this.page,
 					page_size: this.page_size
 				})
-				// console.log(res); 
+				console.log(res); 
 				this.list.push(...res.data)
 				this.last_page = res.last_page
 			},

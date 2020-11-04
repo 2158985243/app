@@ -12,12 +12,12 @@
 			</view>
 			<view class="form_item">
 				<text>颜色</text>
-				<u-input placeholder='请选择颜色' @tap="toColors" :disabled='true' type='text' v-model="color" />
+				<u-input placeholder='请选择颜色' @tap="toColors" :disabled='true' type='text' v-model="colors_name" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
 				<text>尺码</text>
-				<u-input placeholder='请选择尺码' @tap="toStore" :disabled='true' type='text' v-model="size" />
+				<u-input placeholder='请选择尺码' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 		</view>
@@ -40,13 +40,13 @@
 		<view class="box">
 			<view class="form_item">
 				<text>分类</text>
-				<u-input placeholder='请选择商品分类' @tap="toStore" :disabled='true' v-model="category" type="text" />
+				<u-input placeholder='请选择商品分类' @tap="toCategory" :disabled='true' v-model="category" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
 				<text>供应商</text>
 				<u-input placeholder='请选择供应商' @tap="toStore" :disabled='true' v-model="supplier" type="text" />
-				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon> 
+				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="box1">
 				<view class="form_item1">
@@ -118,6 +118,9 @@
 
 <script>
 	import urls from '../../api/configuration.js'
+	import {
+		goodsAdd
+	} from '../../api/goods.js'
 	export default {
 		data() {
 			return {
@@ -134,9 +137,9 @@
 					main_image: '',
 					images: '',
 					barcode: '',
-					warning: '',
-					warning_max: '',
-					warning_min: '',
+					warning: 0,
+					warning_max: 0,
+					warning_min: 0,
 					sort: 0,
 					exchange: 0,
 					exchange_value: 0,
@@ -165,21 +168,42 @@
 					token: ''
 				},
 				checked1: true,
-				checked2: true,
+				checked2: false,
 				checked3: true,
 				color: '',
 				size: '',
 				category: '',
 				supplier: '',
 				barcode_tit: '', //单品条码提示
-
+				colors_name: '',
+				size_name: ''
 			}
 		},
 		methods: {
+			async save() {
+				this.form.barcode_array = []
+				this.form.color_id.map((v, i) => {
+					this.form.barcode_array.push({
+						color_id: v,
+						data: []
+					})
+					this.form.size_id.map((v1, i1) => {
+						this.form.barcode_array[i].data.push({
+							size_id: v1,
+							barcode: ''
+						})
+					})
+				})
+				console.log(this.form.barcode_array);
+				let res = await goodsAdd(this.form);
+				console.log(res);
+			},
+			// 上传图片成功fnc
 			onSuccess(data, index, lists, name) {
 				console.log(data, index, lists, name);
 				this.form.images = data.data.url
 			},
+			// 上传图片失败fnc
 			onError(res, index, lists, name) {
 				console.log(res, index, lists, name);
 			},
@@ -204,17 +228,29 @@
 				})
 			},
 			// 前往商品库页面
-			toProductName(){
+			toProductName() {
 				uni.navigateTo({
 					url: '/pages/productName/productName'
 				})
 			},
+			// 前往尺码页面
+			toSizes() {
+				uni.navigateTo({
+					url: '/pages/sizes/sizes'
+				})
+			},
 			// 前往颜色页面
-			toColors(){
+			toColors() {
 				uni.navigateTo({
 					url: '/pages/colors/colors'
 				})
-				},
+			},
+			// 前往商品管理页面
+			toCategory() {
+				uni.navigateTo({
+					url: '/pages/category/category'
+				})
+			},
 			// 商品条码扫码
 			toBarcode() {
 				let that = this
@@ -223,23 +259,50 @@
 					success: function(res) {
 						console.log('条码类型：' + res.scanType);
 						console.log('条码内容：' + res.result);
-							that.form.barcode = res.result;
+						that.form.barcode = res.result;
 					}
 				});
 			},
+			init() {
+				const userMessage = uni.getStorageSync('userMessage');
+				this.action = urls.baseURL;
+				this.header.token = "Bearer " + userMessage.token
+				this.formData.type = "store";
+				this.formData.path = "store";
+			},
 		},
 		onLoad() {
-			const userMessage = uni.getStorageSync('userMessage');
-			this.action = urls.baseURL;
-			this.header.token = "Bearer " + userMessage.token
-			this.formData.type = "store";
-			this.formData.path = "store";
+			this.init();
 			uni.$on("produtName", (res) => {
-				if(res){
+				if (res) {
 					// this.storeName  = res.name;
 					this.form.name = res;
 				}
 			});
+			uni.$on("colorDatum", (res) => {
+				if (res) {
+					// console.log(res);
+					let str = [];
+					res.map((v, i) => {
+						this.form.color_id.push(v.id);
+						str.push(v.name);
+					})
+					this.colors_name = str.join(',');
+				}
+			});
+			uni.$on("sizeDatum", (res) => {
+				if (res) {
+					// console.log(res);
+					let str = [];
+					res.map((v, i) => {
+						this.form.size_id.push(v.id);
+						str.push(v.name);
+					})
+					this.size_name = str.join(',');
+				}
+			});
+
+
 		}
 	}
 </script>

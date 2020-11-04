@@ -75,7 +75,7 @@
 		methods: {
 			async register() {
 				let res = await login(this.form)
-				// console.log(res);
+				console.log(res);
 				if (res.code == undefined) {
 					let datas = this.form;
 					datas.checked = this.checked;

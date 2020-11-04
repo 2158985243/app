@@ -8,7 +8,14 @@
 				<scroll-view :scroll-into-view="scrollViewId" class="uni-indexed-list__scroll" scroll-y>
 					<view v-for="(list, idx) in lists" :key="idx" :id="'uni-indexed-list-' + idx">
 						<!-- #endif -->
-						<uni-indexed-list-item :list="list" :loaded="loaded" :idx="idx" :showSelect="showSelect" @itemClick="onClick"></uni-indexed-list-item>
+						<uni-indexed-list-item :list="list" @colorClick="onClicks" :edit='edit' :loaded="loaded" :idx="idx" :showSelect="showSelect" @itemClick="onClick">
+							<!-- <block slot="icon" >
+								<slot name="icon">
+
+								</slot>
+							</block> -->
+
+						</uni-indexed-list-item>
 						<!-- #ifndef APP-NVUE -->
 					</view>
 				</scroll-view>
@@ -95,6 +102,10 @@
 					return []
 				}
 			},
+			edit: {
+				type: Boolean,
+				default: false
+			},
 			showSelect: {
 				type: Boolean,
 				default: false
@@ -134,26 +145,30 @@
 				let index = 0;
 				this.lists = []
 				this.options.forEach((value, index) => {
-					if (value.data.length === 0) {
-						return
+					if (value.data) {
+						if (value.data.length === 0) {
+							return
+						}
+						let indexBefore = index
+						let items = value.data.map(item => {
+							let obj = {}
+							obj['key'] = value.letter
+							obj['name'] = item.name
+							obj['itemIndex'] = index
+							obj['id'] = item.id
+							index++
+							obj.checked = item.checked ? item.checked : false
+							return obj
+						})
+						this.lists.push({
+							title: value.letter,
+							key: value.letter,
+							items: items,
+							itemIndex: indexBefore
+						})
 					}
-					let indexBefore = index
-					let items = value.data.map(item => {
-						let obj = {}
-						obj['key'] = value.letter
-						obj['name'] = item
-						obj['itemIndex'] = index
-						index++
-						obj.checked = item.checked ? item.checked : false
-						return obj
-					})
-					this.lists.push({
-						title: value.letter,
-						key: value.letter,
-						items: items,
-						itemIndex: indexBefore
-					})
 				})
+
 				// #ifndef APP-NVUE
 				uni.createSelectorQuery()
 					.in(this)
@@ -236,6 +251,36 @@
 				this.$emit('click', {
 					item: obj,
 					select: select
+				})
+			},
+			onClicks(e) {
+				let {
+					idx,
+					index,
+					obc
+				} = e
+				let obj = {}
+				for (let key in this.lists[idx].items[index]) {
+					obj[key] = this.lists[idx].items[index][key]
+				}
+				// let select = []
+				// if (this.showSelect) {
+				// 	this.lists[idx].items[index].checked = !this.lists[idx].items[index].checked
+				// 	this.lists.forEach((value, idx) => {
+				// 		value.items.forEach((item, index) => {
+				// 			if (item.checked) {
+				// 				let obj = {}
+				// 				for (let key in this.lists[idx].items[index]) {
+				// 					obj[key] = this.lists[idx].items[index][key]
+				// 				}
+				// 				select.push(obj)
+				// 			}
+				// 		})
+				// 	})
+				// }
+				this.$emit('click', {
+					item: obj,
+					obc:obc
 				})
 			}
 		}

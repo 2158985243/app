@@ -99,7 +99,7 @@ __webpack_require__(/*! uni-pages?{"type":"view"} */ 1);
 function initView() {
   function injectStyles(context) {
 
-    var style0 = __webpack_require__(/*! ./App.vue?vue&type=style&index=0&lang=scss& */ 473);
+    var style0 = __webpack_require__(/*! ./App.vue?vue&type=style&index=0&lang=scss& */ 489);
     if (style0.__inject__) style0.__inject__(context);
 
   }
@@ -165,6 +165,8 @@ __definePage('pages/productName/productName', function () {return Vue.extend(__w
 __definePage('pages/colors/colors', function () {return Vue.extend(__webpack_require__(/*! pages/colors/colors.vue?mpType=page */ 433).default);});
 __definePage('pages/editColor/editColor', function () {return Vue.extend(__webpack_require__(/*! pages/editColor/editColor.vue?mpType=page */ 457).default);});
 __definePage('pages/addColor/addColor', function () {return Vue.extend(__webpack_require__(/*! pages/addColor/addColor.vue?mpType=page */ 465).default);});
+__definePage('pages/sizes/sizes', function () {return Vue.extend(__webpack_require__(/*! pages/sizes/sizes.vue?mpType=page */ 473).default);});
+__definePage('pages/category/category', function () {return Vue.extend(__webpack_require__(/*! pages/category/category.vue?mpType=page */ 492).default);});
 
 /***/ }),
 /* 2 */
@@ -15012,7 +15014,7 @@ var render = function() {
                 model: {
                   value: _vm._$g(11, "v-model"),
                   callback: function() {},
-                  expression: "color"
+                  expression: "colors_name"
                 }
               }),
               _c("u-icon", { attrs: { _i: 12 } })
@@ -15034,7 +15036,7 @@ var render = function() {
                 model: {
                   value: _vm._$g(15, "v-model"),
                   callback: function() {},
-                  expression: "size"
+                  expression: "size_name"
                 }
               }),
               _c("u-icon", { attrs: { _i: 16 } })
@@ -16264,6 +16266,9 @@ var render = function() {
               _c("uni-indexed-list-item", {
                 attrs: { _i: "3-" + $30 },
                 on: {
+                  colorClick: function($event) {
+                    return _vm.$handleViewEvent($event)
+                  },
                   itemClick: function($event) {
                     return _vm.$handleViewEvent($event)
                   }
@@ -16369,7 +16374,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _uniIcons = _interopRequireDefault(__webpack_require__(/*! ../uni-icons/uni-icons.vue */ 89));
 var _uniIndexedListItem = _interopRequireDefault(__webpack_require__(/*! ./uni-indexed-list-item.vue */ 441));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
-  name: "UniIndexedList", props: ["options", "showSelect"],
+  name: "UniIndexedList", props: ["options", "edit", "showSelect"],
   data: function data() {
     return {
       wxsProps: {} };
@@ -16455,7 +16460,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
-  uniIcons: __webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 89).default
+  uniIcons: __webpack_require__(/*! @/components/uni-icons/uni-icons.vue */ 89).default,
+  uIcon: __webpack_require__(/*! uview-ui/components/u-icon/u-icon.vue */ 20).default
 }
 var render = function() {
   var _vm = this
@@ -16537,7 +16543,33 @@ var render = function() {
                               attrs: { _i: "9-" + $30 }
                             },
                             [_vm._v(_vm._$g("9-" + $30, "t0-0"))]
-                          )
+                          ),
+                          _vm._$g("10-" + $30, "i")
+                            ? _c("u-icon", {
+                                staticClass: _vm._$g("10-" + $30, "sc"),
+                                attrs: { _i: "10-" + $30 },
+                                nativeOn: {
+                                  click: function($event) {
+                                    return _vm.$handleViewEvent($event, {
+                                      stop: true
+                                    })
+                                  }
+                                }
+                              })
+                            : _vm._e(),
+                          _vm._$g("11-" + $30, "i")
+                            ? _c("u-icon", {
+                                staticClass: _vm._$g("11-" + $30, "sc"),
+                                attrs: { _i: "11-" + $30 },
+                                nativeOn: {
+                                  click: function($event) {
+                                    return _vm.$handleViewEvent($event, {
+                                      stop: true
+                                    })
+                                  }
+                                }
+                              })
+                            : _vm._e()
                         ],
                         1
                       )
@@ -16588,7 +16620,7 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 var _uniIcons = _interopRequireDefault(__webpack_require__(/*! ../uni-icons/uni-icons.vue */ 89));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
-  name: "UniIndexedList", props: ["loaded", "idx", "list", "showSelect"],
+  name: "UniIndexedList", props: ["loaded", "edit", "idx", "list", "showSelect"],
   data: function data() {
     return {
       wxsProps: {} };
@@ -16644,7 +16676,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 13);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.uni-indexed-list__list[data-v-6a7f6b8c] {\r\n  background-color: #ffffff;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  border-top-style: solid;\r\n  border-top-width: 1px;\r\n  border-top-color: #c8c7cc;\n}\n.uni-indexed-list__item[data-v-6a7f6b8c] {\r\n  font-size: 32rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-flex: 1;\r\n  -webkit-flex: 1;\r\n          flex: 1;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n.uni-indexed-list__item-container[data-v-6a7f6b8c] {\r\n  padding-left: 30rpx;\r\n  -webkit-box-flex: 1;\r\n  -webkit-flex: 1;\r\n          flex: 1;\r\n  position: relative;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  box-sizing: border-box;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n.uni-indexed-list__item-border[data-v-6a7f6b8c] {\r\n  -webkit-box-flex: 1;\r\n  -webkit-flex: 1;\r\n          flex: 1;\r\n  position: relative;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  box-sizing: border-box;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  height: 50px;\r\n  padding: 30rpx;\r\n  padding-left: 0;\r\n  border-bottom-style: solid;\r\n  border-bottom-width: 1px;\r\n  border-bottom-color: #c8c7cc;\n}\n.uni-indexed-list__item-border--last[data-v-6a7f6b8c] {\r\n  border-bottom-width: 0px;\n}\n.uni-indexed-list__item-content[data-v-6a7f6b8c] {\r\n  -webkit-box-flex: 1;\r\n  -webkit-flex: 1;\r\n          flex: 1;\r\n  font-size: 14px;\n}\n.uni-indexed-list[data-v-6a7f6b8c] {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\n}\n.uni-indexed-list__title-wrapper[data-v-6a7f6b8c] {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 100%;\r\n  background-color: #f7f7f7;\n}\n.uni-indexed-list__title[data-v-6a7f6b8c] {\r\n  padding: 6px 12px;\r\n  line-height: 24px;\r\n  font-size: 24rpx;\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.icon[data-v-6a7f6b8c] {\r\n  margin-right: 20rpx;\n}\n.uni-indexed-list__list[data-v-6a7f6b8c] {\r\n  background-color: #ffffff;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  border-top-style: solid;\r\n  border-top-width: 1px;\r\n  border-top-color: #c8c7cc;\n}\n.uni-indexed-list__item[data-v-6a7f6b8c] {\r\n  font-size: 32rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-flex: 1;\r\n  -webkit-flex: 1;\r\n          flex: 1;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n.uni-indexed-list__item-container[data-v-6a7f6b8c] {\r\n  padding-left: 30rpx;\r\n  -webkit-box-flex: 1;\r\n  -webkit-flex: 1;\r\n          flex: 1;\r\n  position: relative;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  box-sizing: border-box;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n.uni-indexed-list__item-border[data-v-6a7f6b8c] {\r\n  -webkit-box-flex: 1;\r\n  -webkit-flex: 1;\r\n          flex: 1;\r\n  position: relative;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  box-sizing: border-box;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  height: 50px;\r\n  padding: 30rpx;\r\n  padding-left: 0;\r\n  border-bottom-style: solid;\r\n  border-bottom-width: 1px;\r\n  border-bottom-color: #c8c7cc;\n}\n.uni-indexed-list__item-border--last[data-v-6a7f6b8c] {\r\n  border-bottom-width: 0px;\n}\n.uni-indexed-list__item-content[data-v-6a7f6b8c] {\r\n  -webkit-box-flex: 1;\r\n  -webkit-flex: 1;\r\n          flex: 1;\r\n  font-size: 14px;\n}\n.uni-indexed-list[data-v-6a7f6b8c] {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\n}\n.uni-indexed-list__title-wrapper[data-v-6a7f6b8c] {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 100%;\r\n  background-color: #f7f7f7;\n}\n.uni-indexed-list__title[data-v-6a7f6b8c] {\r\n  padding: 6px 12px;\r\n  line-height: 24px;\r\n  font-size: 24rpx;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -16783,7 +16815,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 13);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.colors[data-v-41d14416] {\r\n  width: 100%;\n}\n.colors[data-v-41d14416] .u-content {\r\n  background-color: #FFFFFF !important;\r\n  box-shadow: 0rpx 0rpx 4rpx 2rpx #C0C0C0;\n}\n.colors .btn[data-v-41d14416] {\r\n  width: 100%;\r\n  position: fixed;\r\n  bottom: 0;\r\n  z-index: 99;\r\n  border-radius: 0 !important;\n}\n.colors .search[data-v-41d14416] {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n.colors .right_icon[data-v-41d14416] {\r\n  margin-right: 40rpx;\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.colors[data-v-41d14416] {\r\n  width: 100%;\n}\n.colors[data-v-41d14416] .u-content {\r\n  background-color: #FFFFFF !important;\r\n  box-shadow: 0rpx 0rpx 4rpx 2rpx #C0C0C0;\n}\n.colors .btn[data-v-41d14416] {\r\n  width: 100%;\r\n  position: fixed;\r\n  bottom: 0;\r\n  z-index: 99;\r\n  border-radius: 0 !important;\n}\n.colors .icon[data-v-41d14416] {\r\n  margin-left: 20rpx;\n}\n.colors .search[data-v-41d14416] {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n.colors .right_icon[data-v-41d14416] {\r\n  margin-right: 40rpx;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -16863,12 +16895,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  uInput: __webpack_require__(/*! uview-ui/components/u-input/u-input.vue */ 33).default,
+  uButton: __webpack_require__(/*! uview-ui/components/u-button/u-button.vue */ 41).default
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-uni-view", { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } })
+  return _c(
+    "v-uni-view",
+    { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
+    [
+      _c(
+        "v-uni-view",
+        { staticClass: _vm._$g(1, "sc"), attrs: { _i: 1 } },
+        [
+          _c("v-uni-text", { attrs: { _i: 2 } }, [_vm._v("颜色名称")]),
+          _c("u-input", {
+            attrs: { _i: 3 },
+            model: {
+              value: _vm._$g(3, "v-model"),
+              callback: function() {},
+              expression: "name"
+            }
+          })
+        ],
+        1
+      ),
+      _c(
+        "v-uni-view",
+        { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } },
+        [
+          _c(
+            "u-button",
+            {
+              staticClass: _vm._$g(5, "sc"),
+              attrs: { _i: 5 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [_vm._v("保存")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -16958,7 +17035,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 13);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.editColor[data-v-06bbde4a] {\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: #F8F8F8;\n}\n.editColor .form_item[data-v-06bbde4a] {\r\n  padding-right: 20rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  background-color: #FFFFFF;\r\n  margin-bottom: 2rpx;\r\n  height: 85rpx;\n}\n.editColor .form_item uni-text[data-v-06bbde4a] {\r\n  width: 220rpx;\r\n  padding-left: 20rpx;\n}\n.editColor .btn[data-v-06bbde4a] {\r\n  width: 100%;\r\n  position: fixed;\r\n  bottom: 0;\r\n  z-index: 99;\r\n  border-radius: 0 !important;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -17185,6 +17262,1069 @@ module.exports = exports;
 
 /***/ }),
 /* 473 */
+/*!*************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/pages/sizes/sizes.vue?mpType=page ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _sizes_vue_vue_type_template_id_5a2669bc_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sizes.vue?vue&type=template&id=5a2669bc&scoped=true&mpType=page */ 474);
+/* harmony import */ var _sizes_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sizes.vue?vue&type=script&lang=js&mpType=page */ 484);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _sizes_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _sizes_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _sizes_vue_vue_type_style_index_0_id_5a2669bc_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sizes.vue?vue&type=style&index=0&id=5a2669bc&lang=scss&scoped=true&mpType=page */ 486);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 16);
+
+var renderjs
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _sizes_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _sizes_vue_vue_type_template_id_5a2669bc_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _sizes_vue_vue_type_template_id_5a2669bc_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "5a2669bc",
+  null,
+  false,
+  _sizes_vue_vue_type_template_id_5a2669bc_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["components"],
+  renderjs
+)
+
+component.options.__file = "pages/sizes/sizes.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+/* 474 */
+/*!*******************************************************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/pages/sizes/sizes.vue?vue&type=template&id=5a2669bc&scoped=true&mpType=page ***!
+  \*******************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns, recyclableRender, components */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_template_id_5a2669bc_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/filter-modules-template.js!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/page-meta.js!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./sizes.vue?vue&type=template&id=5a2669bc&scoped=true&mpType=page */ 475);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_template_id_5a2669bc_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_template_id_5a2669bc_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_template_id_5a2669bc_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["recyclableRender"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "components", function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_template_id_5a2669bc_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["components"]; });
+
+
+
+/***/ }),
+/* 475 */
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/filter-modules-template.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/page-meta.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/pages/sizes/sizes.vue?vue&type=template&id=5a2669bc&scoped=true&mpType=page ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns, recyclableRender, components */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
+var components = {
+  uNavbar: __webpack_require__(/*! uview-ui/components/u-navbar/u-navbar.vue */ 161).default,
+  uPopup: __webpack_require__(/*! uview-ui/components/u-popup/u-popup.vue */ 212).default,
+  uInput: __webpack_require__(/*! uview-ui/components/u-input/u-input.vue */ 33).default,
+  uButton: __webpack_require__(/*! uview-ui/components/u-button/u-button.vue */ 41).default,
+  uActionSheet: __webpack_require__(/*! uview-ui/components/u-action-sheet/u-action-sheet.vue */ 476)
+    .default,
+  uCheckboxGroup: __webpack_require__(/*! uview-ui/components/u-checkbox-group/u-checkbox-group.vue */ 49)
+    .default,
+  uCheckbox: __webpack_require__(/*! uview-ui/components/u-checkbox/u-checkbox.vue */ 57).default,
+  uIcon: __webpack_require__(/*! uview-ui/components/u-icon/u-icon.vue */ 20).default
+}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-uni-view",
+    { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
+    [
+      _c(
+        "u-navbar",
+        { attrs: { _i: 1 } },
+        [
+          _c(
+            "template",
+            { attrs: { _i: 2 }, slot: "right" },
+            [
+              _c(
+                "v-uni-text",
+                {
+                  staticClass: _vm._$g(3, "sc"),
+                  attrs: { _i: 3 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("添加尺码组")]
+              )
+            ],
+            1
+          )
+        ],
+        2
+      ),
+      _c(
+        "u-popup",
+        {
+          attrs: { _i: 4 },
+          model: {
+            value: _vm._$g(4, "v-model"),
+            callback: function() {},
+            expression: "show"
+          }
+        },
+        [
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } },
+            [
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
+                [_vm._v("新增尺码组")]
+              ),
+              _c("u-input", {
+                staticClass: _vm._$g(7, "sc"),
+                attrs: { _i: 7 },
+                model: {
+                  value: _vm._$g(7, "v-model"),
+                  callback: function() {},
+                  expression: "value"
+                }
+              })
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
+            [
+              _c(
+                "u-button",
+                {
+                  staticClass: _vm._$g(9, "sc"),
+                  attrs: { _i: 9 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("取消")]
+              ),
+              _c(
+                "u-button",
+                {
+                  staticClass: _vm._$g(10, "sc"),
+                  attrs: { _i: 10 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("确定")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _c(
+        "u-popup",
+        {
+          attrs: { _i: 11 },
+          model: {
+            value: _vm._$g(11, "v-model"),
+            callback: function() {},
+            expression: "showedit"
+          }
+        },
+        [
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+            [
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
+                [_vm._v("修改尺码组")]
+              ),
+              _c("u-input", {
+                staticClass: _vm._$g(14, "sc"),
+                attrs: { _i: 14 },
+                model: {
+                  value: _vm._$g(14, "v-model"),
+                  callback: function() {},
+                  expression: "valuename"
+                }
+              })
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
+            [
+              _c(
+                "u-button",
+                {
+                  staticClass: _vm._$g(16, "sc"),
+                  attrs: { _i: 16 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("取消")]
+              ),
+              _c(
+                "u-button",
+                {
+                  staticClass: _vm._$g(17, "sc"),
+                  attrs: { _i: 17 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("确定")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _c(
+        "u-popup",
+        {
+          attrs: { _i: 18 },
+          model: {
+            value: _vm._$g(18, "v-model"),
+            callback: function() {},
+            expression: "showdel"
+          }
+        },
+        [
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
+            [
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
+                [_vm._v("是否删除改尺码组？")]
+              )
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
+            [
+              _c(
+                "u-button",
+                {
+                  staticClass: _vm._$g(22, "sc"),
+                  attrs: { _i: 22 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("取消")]
+              ),
+              _c(
+                "u-button",
+                {
+                  staticClass: _vm._$g(23, "sc"),
+                  attrs: { _i: 23 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("确定")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _c(
+        "u-popup",
+        {
+          attrs: { _i: 24 },
+          model: {
+            value: _vm._$g(24, "v-model"),
+            callback: function() {},
+            expression: "showsize"
+          }
+        },
+        [
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(25, "sc"), attrs: { _i: 25 } },
+            [
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(26, "sc"), attrs: { _i: 26 } },
+                [_vm._v("新增尺码")]
+              ),
+              _c("u-input", {
+                staticClass: _vm._$g(27, "sc"),
+                attrs: { _i: 27 },
+                model: {
+                  value: _vm._$g(27, "v-model"),
+                  callback: function() {},
+                  expression: "valuesize"
+                }
+              })
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(28, "sc"), attrs: { _i: 28 } },
+            [
+              _c(
+                "u-button",
+                {
+                  staticClass: _vm._$g(29, "sc"),
+                  attrs: { _i: 29 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("取消")]
+              ),
+              _c(
+                "u-button",
+                {
+                  staticClass: _vm._$g(30, "sc"),
+                  attrs: { _i: 30 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("确定")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _c(
+        "u-popup",
+        {
+          attrs: { _i: 31 },
+          model: {
+            value: _vm._$g(31, "v-model"),
+            callback: function() {},
+            expression: "editsize"
+          }
+        },
+        [
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(32, "sc"), attrs: { _i: 32 } },
+            [
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(33, "sc"), attrs: { _i: 33 } },
+                [_vm._v("编辑尺码")]
+              ),
+              _c("u-input", {
+                staticClass: _vm._$g(34, "sc"),
+                attrs: { _i: 34 },
+                model: {
+                  value: _vm._$g(34, "v-model"),
+                  callback: function() {},
+                  expression: "valuesize"
+                }
+              })
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(35, "sc"), attrs: { _i: 35 } },
+            [
+              _c(
+                "u-button",
+                {
+                  staticClass: _vm._$g(36, "sc"),
+                  attrs: { _i: 36 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("取消")]
+              ),
+              _c(
+                "u-button",
+                {
+                  staticClass: _vm._$g(37, "sc"),
+                  attrs: { _i: 37 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("确定")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _c(
+        "u-popup",
+        {
+          attrs: { _i: 38 },
+          model: {
+            value: _vm._$g(38, "v-model"),
+            callback: function() {},
+            expression: "editDel"
+          }
+        },
+        [
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(39, "sc"), attrs: { _i: 39 } },
+            [
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(40, "sc"), attrs: { _i: 40 } },
+                [_vm._v("是否删除改" + _vm._$g(40, "t0-0") + "尺码？")]
+              )
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(41, "sc"), attrs: { _i: 41 } },
+            [
+              _c(
+                "u-button",
+                {
+                  staticClass: _vm._$g(42, "sc"),
+                  attrs: { _i: 42 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("取消")]
+              ),
+              _c(
+                "u-button",
+                {
+                  staticClass: _vm._$g(43, "sc"),
+                  attrs: { _i: 43 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("确定")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _c("u-action-sheet", {
+        attrs: { _i: 44 },
+        on: {
+          click: function($event) {
+            return _vm.$handleViewEvent($event)
+          }
+        },
+        model: {
+          value: _vm._$g(44, "v-model"),
+          callback: function() {},
+          expression: "titListShow"
+        }
+      }),
+      _c("v-uni-view", { staticClass: _vm._$g(45, "sc"), attrs: { _i: 45 } }, [
+        _vm._v("*只可选择同一尺码组内的尺码；长按可修改尺码")
+      ]),
+      _c(
+        "v-uni-view",
+        { staticClass: _vm._$g(46, "sc"), attrs: { _i: 46 } },
+        _vm._l(_vm._$g(47, "f"), function(item, index, $20, $30) {
+          return _c(
+            "v-uni-view",
+            {
+              key: item,
+              staticClass: _vm._$g("47-" + $30, "sc"),
+              attrs: { _i: "47-" + $30 }
+            },
+            [
+              _c(
+                "v-uni-view",
+                {
+                  staticClass: _vm._$g("48-" + $30, "sc"),
+                  attrs: { _i: "48-" + $30 }
+                },
+                [
+                  _c(
+                    "u-checkbox-group",
+                    {
+                      attrs: { _i: "49-" + $30 },
+                      on: {
+                        change: function($event) {
+                          return _vm.$handleViewEvent($event)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "u-checkbox",
+                        {
+                          attrs: { _i: "50-" + $30 },
+                          model: {
+                            value: _vm._$g("50-" + $30, "v-model"),
+                            callback: function() {},
+                            expression: "item.checked"
+                          }
+                        },
+                        [_vm._v(_vm._$g("50-" + $30, "t0-0"))]
+                      ),
+                      [
+                        _c(
+                          "v-uni-view",
+                          {
+                            staticClass: _vm._$g("52-" + $30, "sc"),
+                            attrs: { _i: "52-" + $30 }
+                          },
+                          [
+                            _c("u-icon", {
+                              staticClass: _vm._$g("53-" + $30, "sc"),
+                              attrs: { _i: "53-" + $30 },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                }
+                              }
+                            }),
+                            _c("u-icon", {
+                              staticClass: _vm._$g("54-" + $30, "sc"),
+                              attrs: { _i: "54-" + $30 },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                }
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ]
+                    ],
+                    2
+                  ),
+                  [
+                    _c(
+                      "v-uni-view",
+                      {
+                        staticClass: _vm._$g("56-" + $30, "sc"),
+                        attrs: { _i: "56-" + $30 }
+                      },
+                      [
+                        _vm._l(_vm._$g(57 + "-" + $30, "f"), function(
+                          val,
+                          vi,
+                          $21,
+                          $31
+                        ) {
+                          return _c(
+                            "v-uni-view",
+                            {
+                              key: val,
+                              staticClass: _vm._$g(
+                                "57-" + $30 + "-" + $31,
+                                "sc"
+                              ),
+                              class: _vm._$g("57-" + $30 + "-" + $31, "c"),
+                              attrs: { _i: "57-" + $30 + "-" + $31 },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                },
+                                longpress: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._$g("57-" + $30 + "-" + $31, "t0-0"))]
+                          )
+                        }),
+                        _c(
+                          "v-uni-view",
+                          {
+                            staticClass: _vm._$g("58-" + $30, "sc"),
+                            attrs: { _i: "58-" + $30 }
+                          },
+                          [
+                            _c("u-icon", {
+                              staticClass: _vm._$g("59-" + $30, "sc"),
+                              attrs: { _i: "59-" + $30 },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                }
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      2
+                    )
+                  ]
+                ],
+                2
+              )
+            ],
+            1
+          )
+        }),
+        1
+      ),
+      _c(
+        "v-uni-view",
+        { staticClass: _vm._$g(60, "sc"), attrs: { _i: 60 } },
+        [
+          _c(
+            "u-button",
+            {
+              staticClass: _vm._$g(61, "sc"),
+              attrs: { _i: 61 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [_vm._v("确定")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var recyclableRender = false
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+/* 476 */
+/*!**********************************************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/components/u-action-sheet/u-action-sheet.vue ***!
+  \**********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _u_action_sheet_vue_vue_type_template_id_6766c527_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./u-action-sheet.vue?vue&type=template&id=6766c527&scoped=true& */ 477);
+/* harmony import */ var _u_action_sheet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./u-action-sheet.vue?vue&type=script&lang=js& */ 479);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _u_action_sheet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _u_action_sheet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _u_action_sheet_vue_vue_type_style_index_0_id_6766c527_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./u-action-sheet.vue?vue&type=style&index=0&id=6766c527&lang=scss&scoped=true& */ 481);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 16);
+
+var renderjs
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _u_action_sheet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _u_action_sheet_vue_vue_type_template_id_6766c527_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _u_action_sheet_vue_vue_type_template_id_6766c527_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "6766c527",
+  null,
+  false,
+  _u_action_sheet_vue_vue_type_template_id_6766c527_scoped_true___WEBPACK_IMPORTED_MODULE_0__["components"],
+  renderjs
+)
+
+component.options.__file = "node_modules/uview-ui/components/u-action-sheet/u-action-sheet.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+/* 477 */
+/*!*****************************************************************************************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/components/u-action-sheet/u-action-sheet.vue?vue&type=template&id=6766c527&scoped=true& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns, recyclableRender, components */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_template_id_6766c527_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/filter-modules-template.js!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/page-meta.js!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./u-action-sheet.vue?vue&type=template&id=6766c527&scoped=true& */ 478);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_template_id_6766c527_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_template_id_6766c527_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_template_id_6766c527_scoped_true___WEBPACK_IMPORTED_MODULE_0__["recyclableRender"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "components", function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_template_id_6766c527_scoped_true___WEBPACK_IMPORTED_MODULE_0__["components"]; });
+
+
+
+/***/ }),
+/* 478 */
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/filter-modules-template.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/page-meta.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/components/u-action-sheet/u-action-sheet.vue?vue&type=template&id=6766c527&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns, recyclableRender, components */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
+var components = {
+  uPopup: __webpack_require__(/*! uview-ui/components/u-popup/u-popup.vue */ 212).default
+}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "u-popup",
+    {
+      attrs: { _i: 0 },
+      on: {
+        close: function($event) {
+          return _vm.$handleViewEvent($event)
+        }
+      },
+      model: {
+        value: _vm._$g(0, "v-model"),
+        callback: function() {},
+        expression: "value"
+      }
+    },
+    [
+      _vm._$g(1, "i")
+        ? _c(
+            "v-uni-view",
+            {
+              staticClass: _vm._$g(1, "sc"),
+              style: _vm._$g(1, "s"),
+              attrs: { _i: 1 }
+            },
+            [_vm._v(_vm._$g(1, "t0-0"))]
+          )
+        : _vm._e(),
+      _vm._l(_vm._$g(2, "f"), function(item, index, $20, $30) {
+        return [
+          _c(
+            "v-uni-view",
+            {
+              key: item["k0"],
+              staticClass: _vm._$g("3-" + $30, "sc"),
+              class: _vm._$g("3-" + $30, "c"),
+              style: _vm._$g("3-" + $30, "s"),
+              attrs: { "hover-stay-time": 150, _i: "3-" + $30 },
+              on: {
+                touchmove: function($event) {
+                  return _vm.$handleViewEvent($event, {
+                    stop: true,
+                    prevent: true
+                  })
+                },
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [
+              _c("v-uni-text", { attrs: { _i: "4-" + $30 } }, [
+                _vm._v(_vm._$g("4-" + $30, "t0-0"))
+              ]),
+              _vm._$g("5-" + $30, "i")
+                ? _c(
+                    "v-uni-text",
+                    {
+                      staticClass: _vm._$g("5-" + $30, "sc"),
+                      attrs: { _i: "5-" + $30 }
+                    },
+                    [_vm._v(_vm._$g("5-" + $30, "t0-0"))]
+                  )
+                : _vm._e()
+            ],
+            1
+          )
+        ]
+      }),
+      _vm._$g(6, "i")
+        ? _c("v-uni-view", { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } })
+        : _vm._e(),
+      _vm._$g(7, "i")
+        ? _c(
+            "v-uni-view",
+            {
+              staticClass: _vm._$g(7, "sc"),
+              attrs: {
+                "hover-class": "u-hover-class",
+                "hover-stay-time": 150,
+                _i: 7
+              },
+              on: {
+                touchmove: function($event) {
+                  return _vm.$handleViewEvent($event, {
+                    stop: true,
+                    prevent: true
+                  })
+                },
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [_vm._v(_vm._$g(7, "t0-0"))]
+          )
+        : _vm._e()
+    ],
+    2
+  )
+}
+var recyclableRender = false
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+/* 479 */
+/*!***********************************************************************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/components/u-action-sheet/u-action-sheet.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/babel-loader/lib!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/script.js!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/using-components.js!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./u-action-sheet.vue?vue&type=script&lang=js& */ 480);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 480 */
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/using-components.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/components/u-action-sheet/u-action-sheet.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+
+{
+  name: "u-action-sheet", props: ["maskCloseAble", "list", "tips", "cancelBtn", "safeAreaInsetBottom", "value", "borderRadius", "zIndex", "cancelText"],
+  data: function data() {
+    return {
+      wxsProps: {} };
+
+  },
+  components: {} };exports.default = _default;
+
+/***/ }),
+/* 481 */
+/*!********************************************************************************************************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/components/u-action-sheet/u-action-sheet.vue?vue&type=style&index=0&id=6766c527&lang=scss&scoped=true& ***!
+  \********************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_style_index_0_id_6766c527_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader??ref--8-oneOf-1-0!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--8-oneOf-1-3!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./u-action-sheet.vue?vue&type=style&index=0&id=6766c527&lang=scss&scoped=true& */ 482);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_style_index_0_id_6766c527_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_style_index_0_id_6766c527_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_style_index_0_id_6766c527_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_style_index_0_id_6766c527_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_u_action_sheet_vue_vue_type_style_index_0_id_6766c527_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 482 */
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader??ref--8-oneOf-1-0!./node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!./node_modules/postcss-loader/src??ref--8-oneOf-1-3!./node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/components/u-action-sheet/u-action-sheet.vue?vue&type=style&index=0&id=6766c527&lang=scss&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(/*! !../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--8-oneOf-1-3!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./u-action-sheet.vue?vue&type=style&index=0&id=6766c527&lang=scss&scoped=true& */ 483);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(/*! ../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader/lib/addStylesClient.js */ 14).default
+var update = add("2ad013f6", content, false, {"sourceMap":false,"shadowMode":false});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 483 */
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!./node_modules/postcss-loader/src??ref--8-oneOf-1-3!./node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/components/u-action-sheet/u-action-sheet.vue?vue&type=style&index=0&id=6766c527&lang=scss&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 13);
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.u-tips[data-v-6766c527] {\r\n  font-size: 26rpx;\r\n  text-align: center;\r\n  padding: 34rpx 0;\r\n  line-height: 1;\r\n  color: #909399;\n}\n.u-action-sheet-item[data-v-6766c527] {\r\n\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n\r\n  line-height: 1;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  font-size: 32rpx;\r\n  padding: 34rpx 0;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\n}\n.u-action-sheet-item__subtext[data-v-6766c527] {\r\n  font-size: 24rpx;\r\n  color: #909399;\r\n  margin-top: 20rpx;\n}\n.u-gab[data-v-6766c527] {\r\n  height: 12rpx;\r\n  background-color: #eaeaec;\n}\n.u-actionsheet-cancel[data-v-6766c527] {\r\n  color: #303133;\n}\r\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+/* 484 */
+/*!*************************************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/pages/sizes/sizes.vue?vue&type=script&lang=js&mpType=page ***!
+  \*************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/babel-loader/lib!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/script.js!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/using-components.js!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./sizes.vue?vue&type=script&lang=js&mpType=page */ 485);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 485 */
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/using-components.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/pages/sizes/sizes.vue?vue&type=script&lang=js&mpType=page ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+
+{
+
+  data: function data() {
+    return {
+      wxsProps: {} };
+
+  },
+  components: {} };exports.default = _default;
+
+/***/ }),
+/* 486 */
+/*!**********************************************************************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/pages/sizes/sizes.vue?vue&type=style&index=0&id=5a2669bc&lang=scss&scoped=true&mpType=page ***!
+  \**********************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_style_index_0_id_5a2669bc_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader??ref--8-oneOf-1-0!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--8-oneOf-1-3!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./sizes.vue?vue&type=style&index=0&id=5a2669bc&lang=scss&scoped=true&mpType=page */ 487);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_style_index_0_id_5a2669bc_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_style_index_0_id_5a2669bc_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_style_index_0_id_5a2669bc_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_style_index_0_id_5a2669bc_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_sizes_vue_vue_type_style_index_0_id_5a2669bc_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 487 */
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader??ref--8-oneOf-1-0!./node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!./node_modules/postcss-loader/src??ref--8-oneOf-1-3!./node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/pages/sizes/sizes.vue?vue&type=style&index=0&id=5a2669bc&lang=scss&scoped=true&mpType=page ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(/*! !../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--8-oneOf-1-3!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./sizes.vue?vue&type=style&index=0&id=5a2669bc&lang=scss&scoped=true&mpType=page */ 488);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(/*! ../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader/lib/addStylesClient.js */ 14).default
+var update = add("228f4e72", content, false, {"sourceMap":false,"shadowMode":false});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 488 */
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!./node_modules/postcss-loader/src??ref--8-oneOf-1-3!./node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/pages/sizes/sizes.vue?vue&type=style&index=0&id=5a2669bc&lang=scss&scoped=true&mpType=page ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 13);
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.sizes .active[data-v-5a2669bc] {\r\n  background-color: #8fbff9 !important;\n}\n.sizes .btn1[data-v-5a2669bc] {\r\n  width: 100%;\r\n  position: fixed;\r\n  bottom: 0;\r\n  z-index: 99;\r\n  border-radius: 0 !important;\n}\n.sizes .check-box[data-v-5a2669bc] {\r\n  width: 100%;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-flex-wrap: wrap;\r\n          flex-wrap: wrap;\r\n  padding: 10rpx 30rpx;\n}\n.sizes .check-box .check-add[data-v-5a2669bc] {\r\n  width: 80rpx;\r\n  height: 50rpx;\r\n  border: 1rpx dashed #00aaff;\r\n  border-radius: 10rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  margin: 10rpx 0;\n}\n.sizes .check-box .check-list[data-v-5a2669bc] {\r\n  width: 80rpx;\r\n  margin: 10rpx 0;\r\n  height: 50rpx;\r\n  border-radius: 10rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  background-color: #e8eefc;\r\n  margin-right: 20rpx;\n}\n.sizes .pop[data-v-5a2669bc] {\r\n  width: 70vw;\r\n  height: 15vh;\n}\n.sizes .pop .titl[data-v-5a2669bc] {\r\n  display: block;\r\n  width: 100%;\r\n  font-size: 28rpx;\r\n  padding: 20rpx;\r\n  text-align: center;\n}\n.sizes .pop .del[data-v-5a2669bc] {\r\n  display: block;\r\n  width: 100%;\r\n  padding-top: 100rpx;\r\n  text-align: center;\n}\n.sizes .pop .inputs[data-v-5a2669bc] {\r\n  width: 80%;\r\n  margin: 20rpx auto;\n}\n.sizes .btnChild[data-v-5a2669bc] {\r\n  -webkit-box-flex: 1;\r\n  -webkit-flex: 1;\r\n          flex: 1;\r\n  border-radius: 0 !important;\n}\n.sizes .btn[data-v-5a2669bc] {\r\n  width: 100%;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n.sizes .nav[data-v-5a2669bc] {\r\n  text-align: center;\r\n  padding: 10rpx 0;\r\n  color: #C0C0C0;\n}\n.sizes .font[data-v-5a2669bc] {\r\n  padding-right: 20rpx;\r\n  font-size: 24rpx;\r\n  color: #FFFFFF;\n}\n.sizes .u-checkbox-group[data-v-5a2669bc] {\r\n  width: 100%;\r\n  height: 80rpx;\r\n  padding: 0 20rpx;\r\n  background-color: #e3e3e3;\r\n  display: block !important;\n}\n.sizes .u-checkbox-group .u-checkbox[data-v-5a2669bc] {\r\n  float: left;\r\n  line-height: 80rpx;\n}\n.sizes .u-checkbox-group .edit-icon[data-v-5a2669bc] {\r\n  float: right;\r\n  line-height: 80rpx;\n}\n.sizes .u-checkbox-group .edit-icon .icon[data-v-5a2669bc] {\r\n  margin-left: 30rpx;\n}\r\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+/* 489 */
 /*!*********************************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/App.vue?vue&type=style&index=0&lang=scss& ***!
   \*********************************************************************************************/
@@ -17193,13 +18333,13 @@ module.exports = exports;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_App_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader??ref--8-oneOf-1-0!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--8-oneOf-1-3!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./App.vue?vue&type=style&index=0&lang=scss& */ 474);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_App_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader??ref--8-oneOf-1-0!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--8-oneOf-1-3!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./App.vue?vue&type=style&index=0&lang=scss& */ 490);
 /* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_App_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_App_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_App_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_App_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
  /* harmony default export */ __webpack_exports__["default"] = (_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_App_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 474 */
+/* 490 */
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader??ref--8-oneOf-1-0!./node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!./node_modules/postcss-loader/src??ref--8-oneOf-1-3!./node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/App.vue?vue&type=style&index=0&lang=scss& ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -17209,7 +18349,7 @@ __webpack_require__.r(__webpack_exports__);
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--8-oneOf-1-3!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./App.vue?vue&type=style&index=0&lang=scss& */ 475);
+var content = __webpack_require__(/*! !../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--8-oneOf-1-3!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./App.vue?vue&type=style&index=0&lang=scss& */ 491);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -17219,7 +18359,7 @@ var update = add("a6ad6d16", content, false, {"sourceMap":false,"shadowMode":fal
 if(false) {}
 
 /***/ }),
-/* 475 */
+/* 491 */
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!./node_modules/postcss-loader/src??ref--8-oneOf-1-3!./node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/App.vue?vue&type=style&index=0&lang=scss& ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -17231,6 +18371,222 @@ var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../Downloads/HBu
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.u-relative,\r\n.u-rela {\r\n  position: relative;\n}\n.u-absolute,\r\n.u-abso {\r\n  position: absolute;\n}\nuni-image {\r\n  display: inline-block;\n}\nuni-view,\r\nuni-text {\r\n  box-sizing: border-box;\n}\n.u-font-xs {\r\n  font-size: 22rpx;\n}\n.u-font-sm {\r\n  font-size: 26rpx;\n}\n.u-font-md {\r\n  font-size: 28rpx;\n}\n.u-font-lg {\r\n  font-size: 30rpx;\n}\n.u-font-xl {\r\n  font-size: 34rpx;\n}\n.u-flex {\r\n\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n.u-flex-wrap {\r\n  -webkit-flex-wrap: wrap;\r\n          flex-wrap: wrap;\n}\n.u-flex-nowrap {\r\n  -webkit-flex-wrap: nowrap;\r\n          flex-wrap: nowrap;\n}\n.u-col-center {\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n.u-col-top {\r\n  -webkit-box-align: start;\r\n  -webkit-align-items: flex-start;\r\n          align-items: flex-start;\n}\n.u-col-bottom {\r\n  -webkit-box-align: end;\r\n  -webkit-align-items: flex-end;\r\n          align-items: flex-end;\n}\n.u-row-center {\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n.u-row-left {\r\n  -webkit-box-pack: start;\r\n  -webkit-justify-content: flex-start;\r\n          justify-content: flex-start;\n}\n.u-row-right {\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n          justify-content: flex-end;\n}\n.u-row-between {\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n.u-row-around {\r\n  -webkit-justify-content: space-around;\r\n          justify-content: space-around;\n}\n.u-text-left {\r\n  text-align: left;\n}\n.u-text-center {\r\n  text-align: center;\n}\n.u-text-right {\r\n  text-align: right;\n}\n.u-flex-col {\r\n\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\n}\n.u-flex-0 {\r\n  -webkit-box-flex: 0;\r\n  -webkit-flex: 0;\r\n          flex: 0;\n}\n.u-flex-1 {\r\n  -webkit-box-flex: 1;\r\n  -webkit-flex: 1;\r\n          flex: 1;\n}\n.u-flex-2 {\r\n  -webkit-box-flex: 2;\r\n  -webkit-flex: 2;\r\n          flex: 2;\n}\n.u-flex-3 {\r\n  -webkit-box-flex: 3;\r\n  -webkit-flex: 3;\r\n          flex: 3;\n}\n.u-flex-4 {\r\n  -webkit-box-flex: 4;\r\n  -webkit-flex: 4;\r\n          flex: 4;\n}\n.u-flex-5 {\r\n  -webkit-box-flex: 5;\r\n  -webkit-flex: 5;\r\n          flex: 5;\n}\n.u-flex-6 {\r\n  -webkit-box-flex: 6;\r\n  -webkit-flex: 6;\r\n          flex: 6;\n}\n.u-flex-7 {\r\n  -webkit-box-flex: 7;\r\n  -webkit-flex: 7;\r\n          flex: 7;\n}\n.u-flex-8 {\r\n  -webkit-box-flex: 8;\r\n  -webkit-flex: 8;\r\n          flex: 8;\n}\n.u-flex-9 {\r\n  -webkit-box-flex: 9;\r\n  -webkit-flex: 9;\r\n          flex: 9;\n}\n.u-flex-10 {\r\n  -webkit-box-flex: 10;\r\n  -webkit-flex: 10;\r\n          flex: 10;\n}\n.u-flex-11 {\r\n  -webkit-box-flex: 11;\r\n  -webkit-flex: 11;\r\n          flex: 11;\n}\n.u-flex-12 {\r\n  -webkit-box-flex: 12;\r\n  -webkit-flex: 12;\r\n          flex: 12;\n}\n.u-font-9 {\r\n  font-size: 9px;\n}\n.u-font-10 {\r\n  font-size: 10px;\n}\n.u-font-11 {\r\n  font-size: 11px;\n}\n.u-font-12 {\r\n  font-size: 12px;\n}\n.u-font-13 {\r\n  font-size: 13px;\n}\n.u-font-14 {\r\n  font-size: 14px;\n}\n.u-font-15 {\r\n  font-size: 15px;\n}\n.u-font-16 {\r\n  font-size: 16px;\n}\n.u-font-17 {\r\n  font-size: 17px;\n}\n.u-font-18 {\r\n  font-size: 18px;\n}\n.u-font-19 {\r\n  font-size: 19px;\n}\n.u-font-20 {\r\n  font-size: 20rpx;\n}\n.u-font-21 {\r\n  font-size: 21rpx;\n}\n.u-font-22 {\r\n  font-size: 22rpx;\n}\n.u-font-23 {\r\n  font-size: 23rpx;\n}\n.u-font-24 {\r\n  font-size: 24rpx;\n}\n.u-font-25 {\r\n  font-size: 25rpx;\n}\n.u-font-26 {\r\n  font-size: 26rpx;\n}\n.u-font-27 {\r\n  font-size: 27rpx;\n}\n.u-font-28 {\r\n  font-size: 28rpx;\n}\n.u-font-29 {\r\n  font-size: 29rpx;\n}\n.u-font-30 {\r\n  font-size: 30rpx;\n}\n.u-font-31 {\r\n  font-size: 31rpx;\n}\n.u-font-32 {\r\n  font-size: 32rpx;\n}\n.u-font-33 {\r\n  font-size: 33rpx;\n}\n.u-font-34 {\r\n  font-size: 34rpx;\n}\n.u-font-35 {\r\n  font-size: 35rpx;\n}\n.u-font-36 {\r\n  font-size: 36rpx;\n}\n.u-font-37 {\r\n  font-size: 37rpx;\n}\n.u-font-38 {\r\n  font-size: 38rpx;\n}\n.u-font-39 {\r\n  font-size: 39rpx;\n}\n.u-font-40 {\r\n  font-size: 40rpx;\n}\n.u-margin-0, .u-m-0 {\r\n  margin: 0rpx !important;\n}\n.u-padding-0, .u-p-0 {\r\n  padding: 0rpx !important;\n}\n.u-m-l-0 {\r\n  margin-left: 0rpx !important;\n}\n.u-p-l-0 {\r\n  padding-left: 0rpx !important;\n}\n.u-margin-left-0 {\r\n  margin-left: 0rpx !important;\n}\n.u-padding-left-0 {\r\n  padding-left: 0rpx !important;\n}\n.u-m-t-0 {\r\n  margin-top: 0rpx !important;\n}\n.u-p-t-0 {\r\n  padding-top: 0rpx !important;\n}\n.u-margin-top-0 {\r\n  margin-top: 0rpx !important;\n}\n.u-padding-top-0 {\r\n  padding-top: 0rpx !important;\n}\n.u-m-r-0 {\r\n  margin-right: 0rpx !important;\n}\n.u-p-r-0 {\r\n  padding-right: 0rpx !important;\n}\n.u-margin-right-0 {\r\n  margin-right: 0rpx !important;\n}\n.u-padding-right-0 {\r\n  padding-right: 0rpx !important;\n}\n.u-m-b-0 {\r\n  margin-bottom: 0rpx !important;\n}\n.u-p-b-0 {\r\n  padding-bottom: 0rpx !important;\n}\n.u-margin-bottom-0 {\r\n  margin-bottom: 0rpx !important;\n}\n.u-padding-bottom-0 {\r\n  padding-bottom: 0rpx !important;\n}\n.u-margin-2, .u-m-2 {\r\n  margin: 2rpx !important;\n}\n.u-padding-2, .u-p-2 {\r\n  padding: 2rpx !important;\n}\n.u-m-l-2 {\r\n  margin-left: 2rpx !important;\n}\n.u-p-l-2 {\r\n  padding-left: 2rpx !important;\n}\n.u-margin-left-2 {\r\n  margin-left: 2rpx !important;\n}\n.u-padding-left-2 {\r\n  padding-left: 2rpx !important;\n}\n.u-m-t-2 {\r\n  margin-top: 2rpx !important;\n}\n.u-p-t-2 {\r\n  padding-top: 2rpx !important;\n}\n.u-margin-top-2 {\r\n  margin-top: 2rpx !important;\n}\n.u-padding-top-2 {\r\n  padding-top: 2rpx !important;\n}\n.u-m-r-2 {\r\n  margin-right: 2rpx !important;\n}\n.u-p-r-2 {\r\n  padding-right: 2rpx !important;\n}\n.u-margin-right-2 {\r\n  margin-right: 2rpx !important;\n}\n.u-padding-right-2 {\r\n  padding-right: 2rpx !important;\n}\n.u-m-b-2 {\r\n  margin-bottom: 2rpx !important;\n}\n.u-p-b-2 {\r\n  padding-bottom: 2rpx !important;\n}\n.u-margin-bottom-2 {\r\n  margin-bottom: 2rpx !important;\n}\n.u-padding-bottom-2 {\r\n  padding-bottom: 2rpx !important;\n}\n.u-margin-4, .u-m-4 {\r\n  margin: 4rpx !important;\n}\n.u-padding-4, .u-p-4 {\r\n  padding: 4rpx !important;\n}\n.u-m-l-4 {\r\n  margin-left: 4rpx !important;\n}\n.u-p-l-4 {\r\n  padding-left: 4rpx !important;\n}\n.u-margin-left-4 {\r\n  margin-left: 4rpx !important;\n}\n.u-padding-left-4 {\r\n  padding-left: 4rpx !important;\n}\n.u-m-t-4 {\r\n  margin-top: 4rpx !important;\n}\n.u-p-t-4 {\r\n  padding-top: 4rpx !important;\n}\n.u-margin-top-4 {\r\n  margin-top: 4rpx !important;\n}\n.u-padding-top-4 {\r\n  padding-top: 4rpx !important;\n}\n.u-m-r-4 {\r\n  margin-right: 4rpx !important;\n}\n.u-p-r-4 {\r\n  padding-right: 4rpx !important;\n}\n.u-margin-right-4 {\r\n  margin-right: 4rpx !important;\n}\n.u-padding-right-4 {\r\n  padding-right: 4rpx !important;\n}\n.u-m-b-4 {\r\n  margin-bottom: 4rpx !important;\n}\n.u-p-b-4 {\r\n  padding-bottom: 4rpx !important;\n}\n.u-margin-bottom-4 {\r\n  margin-bottom: 4rpx !important;\n}\n.u-padding-bottom-4 {\r\n  padding-bottom: 4rpx !important;\n}\n.u-margin-5, .u-m-5 {\r\n  margin: 5rpx !important;\n}\n.u-padding-5, .u-p-5 {\r\n  padding: 5rpx !important;\n}\n.u-m-l-5 {\r\n  margin-left: 5rpx !important;\n}\n.u-p-l-5 {\r\n  padding-left: 5rpx !important;\n}\n.u-margin-left-5 {\r\n  margin-left: 5rpx !important;\n}\n.u-padding-left-5 {\r\n  padding-left: 5rpx !important;\n}\n.u-m-t-5 {\r\n  margin-top: 5rpx !important;\n}\n.u-p-t-5 {\r\n  padding-top: 5rpx !important;\n}\n.u-margin-top-5 {\r\n  margin-top: 5rpx !important;\n}\n.u-padding-top-5 {\r\n  padding-top: 5rpx !important;\n}\n.u-m-r-5 {\r\n  margin-right: 5rpx !important;\n}\n.u-p-r-5 {\r\n  padding-right: 5rpx !important;\n}\n.u-margin-right-5 {\r\n  margin-right: 5rpx !important;\n}\n.u-padding-right-5 {\r\n  padding-right: 5rpx !important;\n}\n.u-m-b-5 {\r\n  margin-bottom: 5rpx !important;\n}\n.u-p-b-5 {\r\n  padding-bottom: 5rpx !important;\n}\n.u-margin-bottom-5 {\r\n  margin-bottom: 5rpx !important;\n}\n.u-padding-bottom-5 {\r\n  padding-bottom: 5rpx !important;\n}\n.u-margin-6, .u-m-6 {\r\n  margin: 6rpx !important;\n}\n.u-padding-6, .u-p-6 {\r\n  padding: 6rpx !important;\n}\n.u-m-l-6 {\r\n  margin-left: 6rpx !important;\n}\n.u-p-l-6 {\r\n  padding-left: 6rpx !important;\n}\n.u-margin-left-6 {\r\n  margin-left: 6rpx !important;\n}\n.u-padding-left-6 {\r\n  padding-left: 6rpx !important;\n}\n.u-m-t-6 {\r\n  margin-top: 6rpx !important;\n}\n.u-p-t-6 {\r\n  padding-top: 6rpx !important;\n}\n.u-margin-top-6 {\r\n  margin-top: 6rpx !important;\n}\n.u-padding-top-6 {\r\n  padding-top: 6rpx !important;\n}\n.u-m-r-6 {\r\n  margin-right: 6rpx !important;\n}\n.u-p-r-6 {\r\n  padding-right: 6rpx !important;\n}\n.u-margin-right-6 {\r\n  margin-right: 6rpx !important;\n}\n.u-padding-right-6 {\r\n  padding-right: 6rpx !important;\n}\n.u-m-b-6 {\r\n  margin-bottom: 6rpx !important;\n}\n.u-p-b-6 {\r\n  padding-bottom: 6rpx !important;\n}\n.u-margin-bottom-6 {\r\n  margin-bottom: 6rpx !important;\n}\n.u-padding-bottom-6 {\r\n  padding-bottom: 6rpx !important;\n}\n.u-margin-8, .u-m-8 {\r\n  margin: 8rpx !important;\n}\n.u-padding-8, .u-p-8 {\r\n  padding: 8rpx !important;\n}\n.u-m-l-8 {\r\n  margin-left: 8rpx !important;\n}\n.u-p-l-8 {\r\n  padding-left: 8rpx !important;\n}\n.u-margin-left-8 {\r\n  margin-left: 8rpx !important;\n}\n.u-padding-left-8 {\r\n  padding-left: 8rpx !important;\n}\n.u-m-t-8 {\r\n  margin-top: 8rpx !important;\n}\n.u-p-t-8 {\r\n  padding-top: 8rpx !important;\n}\n.u-margin-top-8 {\r\n  margin-top: 8rpx !important;\n}\n.u-padding-top-8 {\r\n  padding-top: 8rpx !important;\n}\n.u-m-r-8 {\r\n  margin-right: 8rpx !important;\n}\n.u-p-r-8 {\r\n  padding-right: 8rpx !important;\n}\n.u-margin-right-8 {\r\n  margin-right: 8rpx !important;\n}\n.u-padding-right-8 {\r\n  padding-right: 8rpx !important;\n}\n.u-m-b-8 {\r\n  margin-bottom: 8rpx !important;\n}\n.u-p-b-8 {\r\n  padding-bottom: 8rpx !important;\n}\n.u-margin-bottom-8 {\r\n  margin-bottom: 8rpx !important;\n}\n.u-padding-bottom-8 {\r\n  padding-bottom: 8rpx !important;\n}\n.u-margin-10, .u-m-10 {\r\n  margin: 10rpx !important;\n}\n.u-padding-10, .u-p-10 {\r\n  padding: 10rpx !important;\n}\n.u-m-l-10 {\r\n  margin-left: 10rpx !important;\n}\n.u-p-l-10 {\r\n  padding-left: 10rpx !important;\n}\n.u-margin-left-10 {\r\n  margin-left: 10rpx !important;\n}\n.u-padding-left-10 {\r\n  padding-left: 10rpx !important;\n}\n.u-m-t-10 {\r\n  margin-top: 10rpx !important;\n}\n.u-p-t-10 {\r\n  padding-top: 10rpx !important;\n}\n.u-margin-top-10 {\r\n  margin-top: 10rpx !important;\n}\n.u-padding-top-10 {\r\n  padding-top: 10rpx !important;\n}\n.u-m-r-10 {\r\n  margin-right: 10rpx !important;\n}\n.u-p-r-10 {\r\n  padding-right: 10rpx !important;\n}\n.u-margin-right-10 {\r\n  margin-right: 10rpx !important;\n}\n.u-padding-right-10 {\r\n  padding-right: 10rpx !important;\n}\n.u-m-b-10 {\r\n  margin-bottom: 10rpx !important;\n}\n.u-p-b-10 {\r\n  padding-bottom: 10rpx !important;\n}\n.u-margin-bottom-10 {\r\n  margin-bottom: 10rpx !important;\n}\n.u-padding-bottom-10 {\r\n  padding-bottom: 10rpx !important;\n}\n.u-margin-12, .u-m-12 {\r\n  margin: 12rpx !important;\n}\n.u-padding-12, .u-p-12 {\r\n  padding: 12rpx !important;\n}\n.u-m-l-12 {\r\n  margin-left: 12rpx !important;\n}\n.u-p-l-12 {\r\n  padding-left: 12rpx !important;\n}\n.u-margin-left-12 {\r\n  margin-left: 12rpx !important;\n}\n.u-padding-left-12 {\r\n  padding-left: 12rpx !important;\n}\n.u-m-t-12 {\r\n  margin-top: 12rpx !important;\n}\n.u-p-t-12 {\r\n  padding-top: 12rpx !important;\n}\n.u-margin-top-12 {\r\n  margin-top: 12rpx !important;\n}\n.u-padding-top-12 {\r\n  padding-top: 12rpx !important;\n}\n.u-m-r-12 {\r\n  margin-right: 12rpx !important;\n}\n.u-p-r-12 {\r\n  padding-right: 12rpx !important;\n}\n.u-margin-right-12 {\r\n  margin-right: 12rpx !important;\n}\n.u-padding-right-12 {\r\n  padding-right: 12rpx !important;\n}\n.u-m-b-12 {\r\n  margin-bottom: 12rpx !important;\n}\n.u-p-b-12 {\r\n  padding-bottom: 12rpx !important;\n}\n.u-margin-bottom-12 {\r\n  margin-bottom: 12rpx !important;\n}\n.u-padding-bottom-12 {\r\n  padding-bottom: 12rpx !important;\n}\n.u-margin-14, .u-m-14 {\r\n  margin: 14rpx !important;\n}\n.u-padding-14, .u-p-14 {\r\n  padding: 14rpx !important;\n}\n.u-m-l-14 {\r\n  margin-left: 14rpx !important;\n}\n.u-p-l-14 {\r\n  padding-left: 14rpx !important;\n}\n.u-margin-left-14 {\r\n  margin-left: 14rpx !important;\n}\n.u-padding-left-14 {\r\n  padding-left: 14rpx !important;\n}\n.u-m-t-14 {\r\n  margin-top: 14rpx !important;\n}\n.u-p-t-14 {\r\n  padding-top: 14rpx !important;\n}\n.u-margin-top-14 {\r\n  margin-top: 14rpx !important;\n}\n.u-padding-top-14 {\r\n  padding-top: 14rpx !important;\n}\n.u-m-r-14 {\r\n  margin-right: 14rpx !important;\n}\n.u-p-r-14 {\r\n  padding-right: 14rpx !important;\n}\n.u-margin-right-14 {\r\n  margin-right: 14rpx !important;\n}\n.u-padding-right-14 {\r\n  padding-right: 14rpx !important;\n}\n.u-m-b-14 {\r\n  margin-bottom: 14rpx !important;\n}\n.u-p-b-14 {\r\n  padding-bottom: 14rpx !important;\n}\n.u-margin-bottom-14 {\r\n  margin-bottom: 14rpx !important;\n}\n.u-padding-bottom-14 {\r\n  padding-bottom: 14rpx !important;\n}\n.u-margin-15, .u-m-15 {\r\n  margin: 15rpx !important;\n}\n.u-padding-15, .u-p-15 {\r\n  padding: 15rpx !important;\n}\n.u-m-l-15 {\r\n  margin-left: 15rpx !important;\n}\n.u-p-l-15 {\r\n  padding-left: 15rpx !important;\n}\n.u-margin-left-15 {\r\n  margin-left: 15rpx !important;\n}\n.u-padding-left-15 {\r\n  padding-left: 15rpx !important;\n}\n.u-m-t-15 {\r\n  margin-top: 15rpx !important;\n}\n.u-p-t-15 {\r\n  padding-top: 15rpx !important;\n}\n.u-margin-top-15 {\r\n  margin-top: 15rpx !important;\n}\n.u-padding-top-15 {\r\n  padding-top: 15rpx !important;\n}\n.u-m-r-15 {\r\n  margin-right: 15rpx !important;\n}\n.u-p-r-15 {\r\n  padding-right: 15rpx !important;\n}\n.u-margin-right-15 {\r\n  margin-right: 15rpx !important;\n}\n.u-padding-right-15 {\r\n  padding-right: 15rpx !important;\n}\n.u-m-b-15 {\r\n  margin-bottom: 15rpx !important;\n}\n.u-p-b-15 {\r\n  padding-bottom: 15rpx !important;\n}\n.u-margin-bottom-15 {\r\n  margin-bottom: 15rpx !important;\n}\n.u-padding-bottom-15 {\r\n  padding-bottom: 15rpx !important;\n}\n.u-margin-16, .u-m-16 {\r\n  margin: 16rpx !important;\n}\n.u-padding-16, .u-p-16 {\r\n  padding: 16rpx !important;\n}\n.u-m-l-16 {\r\n  margin-left: 16rpx !important;\n}\n.u-p-l-16 {\r\n  padding-left: 16rpx !important;\n}\n.u-margin-left-16 {\r\n  margin-left: 16rpx !important;\n}\n.u-padding-left-16 {\r\n  padding-left: 16rpx !important;\n}\n.u-m-t-16 {\r\n  margin-top: 16rpx !important;\n}\n.u-p-t-16 {\r\n  padding-top: 16rpx !important;\n}\n.u-margin-top-16 {\r\n  margin-top: 16rpx !important;\n}\n.u-padding-top-16 {\r\n  padding-top: 16rpx !important;\n}\n.u-m-r-16 {\r\n  margin-right: 16rpx !important;\n}\n.u-p-r-16 {\r\n  padding-right: 16rpx !important;\n}\n.u-margin-right-16 {\r\n  margin-right: 16rpx !important;\n}\n.u-padding-right-16 {\r\n  padding-right: 16rpx !important;\n}\n.u-m-b-16 {\r\n  margin-bottom: 16rpx !important;\n}\n.u-p-b-16 {\r\n  padding-bottom: 16rpx !important;\n}\n.u-margin-bottom-16 {\r\n  margin-bottom: 16rpx !important;\n}\n.u-padding-bottom-16 {\r\n  padding-bottom: 16rpx !important;\n}\n.u-margin-18, .u-m-18 {\r\n  margin: 18rpx !important;\n}\n.u-padding-18, .u-p-18 {\r\n  padding: 18rpx !important;\n}\n.u-m-l-18 {\r\n  margin-left: 18rpx !important;\n}\n.u-p-l-18 {\r\n  padding-left: 18rpx !important;\n}\n.u-margin-left-18 {\r\n  margin-left: 18rpx !important;\n}\n.u-padding-left-18 {\r\n  padding-left: 18rpx !important;\n}\n.u-m-t-18 {\r\n  margin-top: 18rpx !important;\n}\n.u-p-t-18 {\r\n  padding-top: 18rpx !important;\n}\n.u-margin-top-18 {\r\n  margin-top: 18rpx !important;\n}\n.u-padding-top-18 {\r\n  padding-top: 18rpx !important;\n}\n.u-m-r-18 {\r\n  margin-right: 18rpx !important;\n}\n.u-p-r-18 {\r\n  padding-right: 18rpx !important;\n}\n.u-margin-right-18 {\r\n  margin-right: 18rpx !important;\n}\n.u-padding-right-18 {\r\n  padding-right: 18rpx !important;\n}\n.u-m-b-18 {\r\n  margin-bottom: 18rpx !important;\n}\n.u-p-b-18 {\r\n  padding-bottom: 18rpx !important;\n}\n.u-margin-bottom-18 {\r\n  margin-bottom: 18rpx !important;\n}\n.u-padding-bottom-18 {\r\n  padding-bottom: 18rpx !important;\n}\n.u-margin-20, .u-m-20 {\r\n  margin: 20rpx !important;\n}\n.u-padding-20, .u-p-20 {\r\n  padding: 20rpx !important;\n}\n.u-m-l-20 {\r\n  margin-left: 20rpx !important;\n}\n.u-p-l-20 {\r\n  padding-left: 20rpx !important;\n}\n.u-margin-left-20 {\r\n  margin-left: 20rpx !important;\n}\n.u-padding-left-20 {\r\n  padding-left: 20rpx !important;\n}\n.u-m-t-20 {\r\n  margin-top: 20rpx !important;\n}\n.u-p-t-20 {\r\n  padding-top: 20rpx !important;\n}\n.u-margin-top-20 {\r\n  margin-top: 20rpx !important;\n}\n.u-padding-top-20 {\r\n  padding-top: 20rpx !important;\n}\n.u-m-r-20 {\r\n  margin-right: 20rpx !important;\n}\n.u-p-r-20 {\r\n  padding-right: 20rpx !important;\n}\n.u-margin-right-20 {\r\n  margin-right: 20rpx !important;\n}\n.u-padding-right-20 {\r\n  padding-right: 20rpx !important;\n}\n.u-m-b-20 {\r\n  margin-bottom: 20rpx !important;\n}\n.u-p-b-20 {\r\n  padding-bottom: 20rpx !important;\n}\n.u-margin-bottom-20 {\r\n  margin-bottom: 20rpx !important;\n}\n.u-padding-bottom-20 {\r\n  padding-bottom: 20rpx !important;\n}\n.u-margin-22, .u-m-22 {\r\n  margin: 22rpx !important;\n}\n.u-padding-22, .u-p-22 {\r\n  padding: 22rpx !important;\n}\n.u-m-l-22 {\r\n  margin-left: 22rpx !important;\n}\n.u-p-l-22 {\r\n  padding-left: 22rpx !important;\n}\n.u-margin-left-22 {\r\n  margin-left: 22rpx !important;\n}\n.u-padding-left-22 {\r\n  padding-left: 22rpx !important;\n}\n.u-m-t-22 {\r\n  margin-top: 22rpx !important;\n}\n.u-p-t-22 {\r\n  padding-top: 22rpx !important;\n}\n.u-margin-top-22 {\r\n  margin-top: 22rpx !important;\n}\n.u-padding-top-22 {\r\n  padding-top: 22rpx !important;\n}\n.u-m-r-22 {\r\n  margin-right: 22rpx !important;\n}\n.u-p-r-22 {\r\n  padding-right: 22rpx !important;\n}\n.u-margin-right-22 {\r\n  margin-right: 22rpx !important;\n}\n.u-padding-right-22 {\r\n  padding-right: 22rpx !important;\n}\n.u-m-b-22 {\r\n  margin-bottom: 22rpx !important;\n}\n.u-p-b-22 {\r\n  padding-bottom: 22rpx !important;\n}\n.u-margin-bottom-22 {\r\n  margin-bottom: 22rpx !important;\n}\n.u-padding-bottom-22 {\r\n  padding-bottom: 22rpx !important;\n}\n.u-margin-24, .u-m-24 {\r\n  margin: 24rpx !important;\n}\n.u-padding-24, .u-p-24 {\r\n  padding: 24rpx !important;\n}\n.u-m-l-24 {\r\n  margin-left: 24rpx !important;\n}\n.u-p-l-24 {\r\n  padding-left: 24rpx !important;\n}\n.u-margin-left-24 {\r\n  margin-left: 24rpx !important;\n}\n.u-padding-left-24 {\r\n  padding-left: 24rpx !important;\n}\n.u-m-t-24 {\r\n  margin-top: 24rpx !important;\n}\n.u-p-t-24 {\r\n  padding-top: 24rpx !important;\n}\n.u-margin-top-24 {\r\n  margin-top: 24rpx !important;\n}\n.u-padding-top-24 {\r\n  padding-top: 24rpx !important;\n}\n.u-m-r-24 {\r\n  margin-right: 24rpx !important;\n}\n.u-p-r-24 {\r\n  padding-right: 24rpx !important;\n}\n.u-margin-right-24 {\r\n  margin-right: 24rpx !important;\n}\n.u-padding-right-24 {\r\n  padding-right: 24rpx !important;\n}\n.u-m-b-24 {\r\n  margin-bottom: 24rpx !important;\n}\n.u-p-b-24 {\r\n  padding-bottom: 24rpx !important;\n}\n.u-margin-bottom-24 {\r\n  margin-bottom: 24rpx !important;\n}\n.u-padding-bottom-24 {\r\n  padding-bottom: 24rpx !important;\n}\n.u-margin-25, .u-m-25 {\r\n  margin: 25rpx !important;\n}\n.u-padding-25, .u-p-25 {\r\n  padding: 25rpx !important;\n}\n.u-m-l-25 {\r\n  margin-left: 25rpx !important;\n}\n.u-p-l-25 {\r\n  padding-left: 25rpx !important;\n}\n.u-margin-left-25 {\r\n  margin-left: 25rpx !important;\n}\n.u-padding-left-25 {\r\n  padding-left: 25rpx !important;\n}\n.u-m-t-25 {\r\n  margin-top: 25rpx !important;\n}\n.u-p-t-25 {\r\n  padding-top: 25rpx !important;\n}\n.u-margin-top-25 {\r\n  margin-top: 25rpx !important;\n}\n.u-padding-top-25 {\r\n  padding-top: 25rpx !important;\n}\n.u-m-r-25 {\r\n  margin-right: 25rpx !important;\n}\n.u-p-r-25 {\r\n  padding-right: 25rpx !important;\n}\n.u-margin-right-25 {\r\n  margin-right: 25rpx !important;\n}\n.u-padding-right-25 {\r\n  padding-right: 25rpx !important;\n}\n.u-m-b-25 {\r\n  margin-bottom: 25rpx !important;\n}\n.u-p-b-25 {\r\n  padding-bottom: 25rpx !important;\n}\n.u-margin-bottom-25 {\r\n  margin-bottom: 25rpx !important;\n}\n.u-padding-bottom-25 {\r\n  padding-bottom: 25rpx !important;\n}\n.u-margin-26, .u-m-26 {\r\n  margin: 26rpx !important;\n}\n.u-padding-26, .u-p-26 {\r\n  padding: 26rpx !important;\n}\n.u-m-l-26 {\r\n  margin-left: 26rpx !important;\n}\n.u-p-l-26 {\r\n  padding-left: 26rpx !important;\n}\n.u-margin-left-26 {\r\n  margin-left: 26rpx !important;\n}\n.u-padding-left-26 {\r\n  padding-left: 26rpx !important;\n}\n.u-m-t-26 {\r\n  margin-top: 26rpx !important;\n}\n.u-p-t-26 {\r\n  padding-top: 26rpx !important;\n}\n.u-margin-top-26 {\r\n  margin-top: 26rpx !important;\n}\n.u-padding-top-26 {\r\n  padding-top: 26rpx !important;\n}\n.u-m-r-26 {\r\n  margin-right: 26rpx !important;\n}\n.u-p-r-26 {\r\n  padding-right: 26rpx !important;\n}\n.u-margin-right-26 {\r\n  margin-right: 26rpx !important;\n}\n.u-padding-right-26 {\r\n  padding-right: 26rpx !important;\n}\n.u-m-b-26 {\r\n  margin-bottom: 26rpx !important;\n}\n.u-p-b-26 {\r\n  padding-bottom: 26rpx !important;\n}\n.u-margin-bottom-26 {\r\n  margin-bottom: 26rpx !important;\n}\n.u-padding-bottom-26 {\r\n  padding-bottom: 26rpx !important;\n}\n.u-margin-28, .u-m-28 {\r\n  margin: 28rpx !important;\n}\n.u-padding-28, .u-p-28 {\r\n  padding: 28rpx !important;\n}\n.u-m-l-28 {\r\n  margin-left: 28rpx !important;\n}\n.u-p-l-28 {\r\n  padding-left: 28rpx !important;\n}\n.u-margin-left-28 {\r\n  margin-left: 28rpx !important;\n}\n.u-padding-left-28 {\r\n  padding-left: 28rpx !important;\n}\n.u-m-t-28 {\r\n  margin-top: 28rpx !important;\n}\n.u-p-t-28 {\r\n  padding-top: 28rpx !important;\n}\n.u-margin-top-28 {\r\n  margin-top: 28rpx !important;\n}\n.u-padding-top-28 {\r\n  padding-top: 28rpx !important;\n}\n.u-m-r-28 {\r\n  margin-right: 28rpx !important;\n}\n.u-p-r-28 {\r\n  padding-right: 28rpx !important;\n}\n.u-margin-right-28 {\r\n  margin-right: 28rpx !important;\n}\n.u-padding-right-28 {\r\n  padding-right: 28rpx !important;\n}\n.u-m-b-28 {\r\n  margin-bottom: 28rpx !important;\n}\n.u-p-b-28 {\r\n  padding-bottom: 28rpx !important;\n}\n.u-margin-bottom-28 {\r\n  margin-bottom: 28rpx !important;\n}\n.u-padding-bottom-28 {\r\n  padding-bottom: 28rpx !important;\n}\n.u-margin-30, .u-m-30 {\r\n  margin: 30rpx !important;\n}\n.u-padding-30, .u-p-30 {\r\n  padding: 30rpx !important;\n}\n.u-m-l-30 {\r\n  margin-left: 30rpx !important;\n}\n.u-p-l-30 {\r\n  padding-left: 30rpx !important;\n}\n.u-margin-left-30 {\r\n  margin-left: 30rpx !important;\n}\n.u-padding-left-30 {\r\n  padding-left: 30rpx !important;\n}\n.u-m-t-30 {\r\n  margin-top: 30rpx !important;\n}\n.u-p-t-30 {\r\n  padding-top: 30rpx !important;\n}\n.u-margin-top-30 {\r\n  margin-top: 30rpx !important;\n}\n.u-padding-top-30 {\r\n  padding-top: 30rpx !important;\n}\n.u-m-r-30 {\r\n  margin-right: 30rpx !important;\n}\n.u-p-r-30 {\r\n  padding-right: 30rpx !important;\n}\n.u-margin-right-30 {\r\n  margin-right: 30rpx !important;\n}\n.u-padding-right-30 {\r\n  padding-right: 30rpx !important;\n}\n.u-m-b-30 {\r\n  margin-bottom: 30rpx !important;\n}\n.u-p-b-30 {\r\n  padding-bottom: 30rpx !important;\n}\n.u-margin-bottom-30 {\r\n  margin-bottom: 30rpx !important;\n}\n.u-padding-bottom-30 {\r\n  padding-bottom: 30rpx !important;\n}\n.u-margin-32, .u-m-32 {\r\n  margin: 32rpx !important;\n}\n.u-padding-32, .u-p-32 {\r\n  padding: 32rpx !important;\n}\n.u-m-l-32 {\r\n  margin-left: 32rpx !important;\n}\n.u-p-l-32 {\r\n  padding-left: 32rpx !important;\n}\n.u-margin-left-32 {\r\n  margin-left: 32rpx !important;\n}\n.u-padding-left-32 {\r\n  padding-left: 32rpx !important;\n}\n.u-m-t-32 {\r\n  margin-top: 32rpx !important;\n}\n.u-p-t-32 {\r\n  padding-top: 32rpx !important;\n}\n.u-margin-top-32 {\r\n  margin-top: 32rpx !important;\n}\n.u-padding-top-32 {\r\n  padding-top: 32rpx !important;\n}\n.u-m-r-32 {\r\n  margin-right: 32rpx !important;\n}\n.u-p-r-32 {\r\n  padding-right: 32rpx !important;\n}\n.u-margin-right-32 {\r\n  margin-right: 32rpx !important;\n}\n.u-padding-right-32 {\r\n  padding-right: 32rpx !important;\n}\n.u-m-b-32 {\r\n  margin-bottom: 32rpx !important;\n}\n.u-p-b-32 {\r\n  padding-bottom: 32rpx !important;\n}\n.u-margin-bottom-32 {\r\n  margin-bottom: 32rpx !important;\n}\n.u-padding-bottom-32 {\r\n  padding-bottom: 32rpx !important;\n}\n.u-margin-34, .u-m-34 {\r\n  margin: 34rpx !important;\n}\n.u-padding-34, .u-p-34 {\r\n  padding: 34rpx !important;\n}\n.u-m-l-34 {\r\n  margin-left: 34rpx !important;\n}\n.u-p-l-34 {\r\n  padding-left: 34rpx !important;\n}\n.u-margin-left-34 {\r\n  margin-left: 34rpx !important;\n}\n.u-padding-left-34 {\r\n  padding-left: 34rpx !important;\n}\n.u-m-t-34 {\r\n  margin-top: 34rpx !important;\n}\n.u-p-t-34 {\r\n  padding-top: 34rpx !important;\n}\n.u-margin-top-34 {\r\n  margin-top: 34rpx !important;\n}\n.u-padding-top-34 {\r\n  padding-top: 34rpx !important;\n}\n.u-m-r-34 {\r\n  margin-right: 34rpx !important;\n}\n.u-p-r-34 {\r\n  padding-right: 34rpx !important;\n}\n.u-margin-right-34 {\r\n  margin-right: 34rpx !important;\n}\n.u-padding-right-34 {\r\n  padding-right: 34rpx !important;\n}\n.u-m-b-34 {\r\n  margin-bottom: 34rpx !important;\n}\n.u-p-b-34 {\r\n  padding-bottom: 34rpx !important;\n}\n.u-margin-bottom-34 {\r\n  margin-bottom: 34rpx !important;\n}\n.u-padding-bottom-34 {\r\n  padding-bottom: 34rpx !important;\n}\n.u-margin-35, .u-m-35 {\r\n  margin: 35rpx !important;\n}\n.u-padding-35, .u-p-35 {\r\n  padding: 35rpx !important;\n}\n.u-m-l-35 {\r\n  margin-left: 35rpx !important;\n}\n.u-p-l-35 {\r\n  padding-left: 35rpx !important;\n}\n.u-margin-left-35 {\r\n  margin-left: 35rpx !important;\n}\n.u-padding-left-35 {\r\n  padding-left: 35rpx !important;\n}\n.u-m-t-35 {\r\n  margin-top: 35rpx !important;\n}\n.u-p-t-35 {\r\n  padding-top: 35rpx !important;\n}\n.u-margin-top-35 {\r\n  margin-top: 35rpx !important;\n}\n.u-padding-top-35 {\r\n  padding-top: 35rpx !important;\n}\n.u-m-r-35 {\r\n  margin-right: 35rpx !important;\n}\n.u-p-r-35 {\r\n  padding-right: 35rpx !important;\n}\n.u-margin-right-35 {\r\n  margin-right: 35rpx !important;\n}\n.u-padding-right-35 {\r\n  padding-right: 35rpx !important;\n}\n.u-m-b-35 {\r\n  margin-bottom: 35rpx !important;\n}\n.u-p-b-35 {\r\n  padding-bottom: 35rpx !important;\n}\n.u-margin-bottom-35 {\r\n  margin-bottom: 35rpx !important;\n}\n.u-padding-bottom-35 {\r\n  padding-bottom: 35rpx !important;\n}\n.u-margin-36, .u-m-36 {\r\n  margin: 36rpx !important;\n}\n.u-padding-36, .u-p-36 {\r\n  padding: 36rpx !important;\n}\n.u-m-l-36 {\r\n  margin-left: 36rpx !important;\n}\n.u-p-l-36 {\r\n  padding-left: 36rpx !important;\n}\n.u-margin-left-36 {\r\n  margin-left: 36rpx !important;\n}\n.u-padding-left-36 {\r\n  padding-left: 36rpx !important;\n}\n.u-m-t-36 {\r\n  margin-top: 36rpx !important;\n}\n.u-p-t-36 {\r\n  padding-top: 36rpx !important;\n}\n.u-margin-top-36 {\r\n  margin-top: 36rpx !important;\n}\n.u-padding-top-36 {\r\n  padding-top: 36rpx !important;\n}\n.u-m-r-36 {\r\n  margin-right: 36rpx !important;\n}\n.u-p-r-36 {\r\n  padding-right: 36rpx !important;\n}\n.u-margin-right-36 {\r\n  margin-right: 36rpx !important;\n}\n.u-padding-right-36 {\r\n  padding-right: 36rpx !important;\n}\n.u-m-b-36 {\r\n  margin-bottom: 36rpx !important;\n}\n.u-p-b-36 {\r\n  padding-bottom: 36rpx !important;\n}\n.u-margin-bottom-36 {\r\n  margin-bottom: 36rpx !important;\n}\n.u-padding-bottom-36 {\r\n  padding-bottom: 36rpx !important;\n}\n.u-margin-38, .u-m-38 {\r\n  margin: 38rpx !important;\n}\n.u-padding-38, .u-p-38 {\r\n  padding: 38rpx !important;\n}\n.u-m-l-38 {\r\n  margin-left: 38rpx !important;\n}\n.u-p-l-38 {\r\n  padding-left: 38rpx !important;\n}\n.u-margin-left-38 {\r\n  margin-left: 38rpx !important;\n}\n.u-padding-left-38 {\r\n  padding-left: 38rpx !important;\n}\n.u-m-t-38 {\r\n  margin-top: 38rpx !important;\n}\n.u-p-t-38 {\r\n  padding-top: 38rpx !important;\n}\n.u-margin-top-38 {\r\n  margin-top: 38rpx !important;\n}\n.u-padding-top-38 {\r\n  padding-top: 38rpx !important;\n}\n.u-m-r-38 {\r\n  margin-right: 38rpx !important;\n}\n.u-p-r-38 {\r\n  padding-right: 38rpx !important;\n}\n.u-margin-right-38 {\r\n  margin-right: 38rpx !important;\n}\n.u-padding-right-38 {\r\n  padding-right: 38rpx !important;\n}\n.u-m-b-38 {\r\n  margin-bottom: 38rpx !important;\n}\n.u-p-b-38 {\r\n  padding-bottom: 38rpx !important;\n}\n.u-margin-bottom-38 {\r\n  margin-bottom: 38rpx !important;\n}\n.u-padding-bottom-38 {\r\n  padding-bottom: 38rpx !important;\n}\n.u-margin-40, .u-m-40 {\r\n  margin: 40rpx !important;\n}\n.u-padding-40, .u-p-40 {\r\n  padding: 40rpx !important;\n}\n.u-m-l-40 {\r\n  margin-left: 40rpx !important;\n}\n.u-p-l-40 {\r\n  padding-left: 40rpx !important;\n}\n.u-margin-left-40 {\r\n  margin-left: 40rpx !important;\n}\n.u-padding-left-40 {\r\n  padding-left: 40rpx !important;\n}\n.u-m-t-40 {\r\n  margin-top: 40rpx !important;\n}\n.u-p-t-40 {\r\n  padding-top: 40rpx !important;\n}\n.u-margin-top-40 {\r\n  margin-top: 40rpx !important;\n}\n.u-padding-top-40 {\r\n  padding-top: 40rpx !important;\n}\n.u-m-r-40 {\r\n  margin-right: 40rpx !important;\n}\n.u-p-r-40 {\r\n  padding-right: 40rpx !important;\n}\n.u-margin-right-40 {\r\n  margin-right: 40rpx !important;\n}\n.u-padding-right-40 {\r\n  padding-right: 40rpx !important;\n}\n.u-m-b-40 {\r\n  margin-bottom: 40rpx !important;\n}\n.u-p-b-40 {\r\n  padding-bottom: 40rpx !important;\n}\n.u-margin-bottom-40 {\r\n  margin-bottom: 40rpx !important;\n}\n.u-padding-bottom-40 {\r\n  padding-bottom: 40rpx !important;\n}\n.u-margin-42, .u-m-42 {\r\n  margin: 42rpx !important;\n}\n.u-padding-42, .u-p-42 {\r\n  padding: 42rpx !important;\n}\n.u-m-l-42 {\r\n  margin-left: 42rpx !important;\n}\n.u-p-l-42 {\r\n  padding-left: 42rpx !important;\n}\n.u-margin-left-42 {\r\n  margin-left: 42rpx !important;\n}\n.u-padding-left-42 {\r\n  padding-left: 42rpx !important;\n}\n.u-m-t-42 {\r\n  margin-top: 42rpx !important;\n}\n.u-p-t-42 {\r\n  padding-top: 42rpx !important;\n}\n.u-margin-top-42 {\r\n  margin-top: 42rpx !important;\n}\n.u-padding-top-42 {\r\n  padding-top: 42rpx !important;\n}\n.u-m-r-42 {\r\n  margin-right: 42rpx !important;\n}\n.u-p-r-42 {\r\n  padding-right: 42rpx !important;\n}\n.u-margin-right-42 {\r\n  margin-right: 42rpx !important;\n}\n.u-padding-right-42 {\r\n  padding-right: 42rpx !important;\n}\n.u-m-b-42 {\r\n  margin-bottom: 42rpx !important;\n}\n.u-p-b-42 {\r\n  padding-bottom: 42rpx !important;\n}\n.u-margin-bottom-42 {\r\n  margin-bottom: 42rpx !important;\n}\n.u-padding-bottom-42 {\r\n  padding-bottom: 42rpx !important;\n}\n.u-margin-44, .u-m-44 {\r\n  margin: 44rpx !important;\n}\n.u-padding-44, .u-p-44 {\r\n  padding: 44rpx !important;\n}\n.u-m-l-44 {\r\n  margin-left: 44rpx !important;\n}\n.u-p-l-44 {\r\n  padding-left: 44rpx !important;\n}\n.u-margin-left-44 {\r\n  margin-left: 44rpx !important;\n}\n.u-padding-left-44 {\r\n  padding-left: 44rpx !important;\n}\n.u-m-t-44 {\r\n  margin-top: 44rpx !important;\n}\n.u-p-t-44 {\r\n  padding-top: 44rpx !important;\n}\n.u-margin-top-44 {\r\n  margin-top: 44rpx !important;\n}\n.u-padding-top-44 {\r\n  padding-top: 44rpx !important;\n}\n.u-m-r-44 {\r\n  margin-right: 44rpx !important;\n}\n.u-p-r-44 {\r\n  padding-right: 44rpx !important;\n}\n.u-margin-right-44 {\r\n  margin-right: 44rpx !important;\n}\n.u-padding-right-44 {\r\n  padding-right: 44rpx !important;\n}\n.u-m-b-44 {\r\n  margin-bottom: 44rpx !important;\n}\n.u-p-b-44 {\r\n  padding-bottom: 44rpx !important;\n}\n.u-margin-bottom-44 {\r\n  margin-bottom: 44rpx !important;\n}\n.u-padding-bottom-44 {\r\n  padding-bottom: 44rpx !important;\n}\n.u-margin-45, .u-m-45 {\r\n  margin: 45rpx !important;\n}\n.u-padding-45, .u-p-45 {\r\n  padding: 45rpx !important;\n}\n.u-m-l-45 {\r\n  margin-left: 45rpx !important;\n}\n.u-p-l-45 {\r\n  padding-left: 45rpx !important;\n}\n.u-margin-left-45 {\r\n  margin-left: 45rpx !important;\n}\n.u-padding-left-45 {\r\n  padding-left: 45rpx !important;\n}\n.u-m-t-45 {\r\n  margin-top: 45rpx !important;\n}\n.u-p-t-45 {\r\n  padding-top: 45rpx !important;\n}\n.u-margin-top-45 {\r\n  margin-top: 45rpx !important;\n}\n.u-padding-top-45 {\r\n  padding-top: 45rpx !important;\n}\n.u-m-r-45 {\r\n  margin-right: 45rpx !important;\n}\n.u-p-r-45 {\r\n  padding-right: 45rpx !important;\n}\n.u-margin-right-45 {\r\n  margin-right: 45rpx !important;\n}\n.u-padding-right-45 {\r\n  padding-right: 45rpx !important;\n}\n.u-m-b-45 {\r\n  margin-bottom: 45rpx !important;\n}\n.u-p-b-45 {\r\n  padding-bottom: 45rpx !important;\n}\n.u-margin-bottom-45 {\r\n  margin-bottom: 45rpx !important;\n}\n.u-padding-bottom-45 {\r\n  padding-bottom: 45rpx !important;\n}\n.u-margin-46, .u-m-46 {\r\n  margin: 46rpx !important;\n}\n.u-padding-46, .u-p-46 {\r\n  padding: 46rpx !important;\n}\n.u-m-l-46 {\r\n  margin-left: 46rpx !important;\n}\n.u-p-l-46 {\r\n  padding-left: 46rpx !important;\n}\n.u-margin-left-46 {\r\n  margin-left: 46rpx !important;\n}\n.u-padding-left-46 {\r\n  padding-left: 46rpx !important;\n}\n.u-m-t-46 {\r\n  margin-top: 46rpx !important;\n}\n.u-p-t-46 {\r\n  padding-top: 46rpx !important;\n}\n.u-margin-top-46 {\r\n  margin-top: 46rpx !important;\n}\n.u-padding-top-46 {\r\n  padding-top: 46rpx !important;\n}\n.u-m-r-46 {\r\n  margin-right: 46rpx !important;\n}\n.u-p-r-46 {\r\n  padding-right: 46rpx !important;\n}\n.u-margin-right-46 {\r\n  margin-right: 46rpx !important;\n}\n.u-padding-right-46 {\r\n  padding-right: 46rpx !important;\n}\n.u-m-b-46 {\r\n  margin-bottom: 46rpx !important;\n}\n.u-p-b-46 {\r\n  padding-bottom: 46rpx !important;\n}\n.u-margin-bottom-46 {\r\n  margin-bottom: 46rpx !important;\n}\n.u-padding-bottom-46 {\r\n  padding-bottom: 46rpx !important;\n}\n.u-margin-48, .u-m-48 {\r\n  margin: 48rpx !important;\n}\n.u-padding-48, .u-p-48 {\r\n  padding: 48rpx !important;\n}\n.u-m-l-48 {\r\n  margin-left: 48rpx !important;\n}\n.u-p-l-48 {\r\n  padding-left: 48rpx !important;\n}\n.u-margin-left-48 {\r\n  margin-left: 48rpx !important;\n}\n.u-padding-left-48 {\r\n  padding-left: 48rpx !important;\n}\n.u-m-t-48 {\r\n  margin-top: 48rpx !important;\n}\n.u-p-t-48 {\r\n  padding-top: 48rpx !important;\n}\n.u-margin-top-48 {\r\n  margin-top: 48rpx !important;\n}\n.u-padding-top-48 {\r\n  padding-top: 48rpx !important;\n}\n.u-m-r-48 {\r\n  margin-right: 48rpx !important;\n}\n.u-p-r-48 {\r\n  padding-right: 48rpx !important;\n}\n.u-margin-right-48 {\r\n  margin-right: 48rpx !important;\n}\n.u-padding-right-48 {\r\n  padding-right: 48rpx !important;\n}\n.u-m-b-48 {\r\n  margin-bottom: 48rpx !important;\n}\n.u-p-b-48 {\r\n  padding-bottom: 48rpx !important;\n}\n.u-margin-bottom-48 {\r\n  margin-bottom: 48rpx !important;\n}\n.u-padding-bottom-48 {\r\n  padding-bottom: 48rpx !important;\n}\n.u-margin-50, .u-m-50 {\r\n  margin: 50rpx !important;\n}\n.u-padding-50, .u-p-50 {\r\n  padding: 50rpx !important;\n}\n.u-m-l-50 {\r\n  margin-left: 50rpx !important;\n}\n.u-p-l-50 {\r\n  padding-left: 50rpx !important;\n}\n.u-margin-left-50 {\r\n  margin-left: 50rpx !important;\n}\n.u-padding-left-50 {\r\n  padding-left: 50rpx !important;\n}\n.u-m-t-50 {\r\n  margin-top: 50rpx !important;\n}\n.u-p-t-50 {\r\n  padding-top: 50rpx !important;\n}\n.u-margin-top-50 {\r\n  margin-top: 50rpx !important;\n}\n.u-padding-top-50 {\r\n  padding-top: 50rpx !important;\n}\n.u-m-r-50 {\r\n  margin-right: 50rpx !important;\n}\n.u-p-r-50 {\r\n  padding-right: 50rpx !important;\n}\n.u-margin-right-50 {\r\n  margin-right: 50rpx !important;\n}\n.u-padding-right-50 {\r\n  padding-right: 50rpx !important;\n}\n.u-m-b-50 {\r\n  margin-bottom: 50rpx !important;\n}\n.u-p-b-50 {\r\n  padding-bottom: 50rpx !important;\n}\n.u-margin-bottom-50 {\r\n  margin-bottom: 50rpx !important;\n}\n.u-padding-bottom-50 {\r\n  padding-bottom: 50rpx !important;\n}\n.u-margin-52, .u-m-52 {\r\n  margin: 52rpx !important;\n}\n.u-padding-52, .u-p-52 {\r\n  padding: 52rpx !important;\n}\n.u-m-l-52 {\r\n  margin-left: 52rpx !important;\n}\n.u-p-l-52 {\r\n  padding-left: 52rpx !important;\n}\n.u-margin-left-52 {\r\n  margin-left: 52rpx !important;\n}\n.u-padding-left-52 {\r\n  padding-left: 52rpx !important;\n}\n.u-m-t-52 {\r\n  margin-top: 52rpx !important;\n}\n.u-p-t-52 {\r\n  padding-top: 52rpx !important;\n}\n.u-margin-top-52 {\r\n  margin-top: 52rpx !important;\n}\n.u-padding-top-52 {\r\n  padding-top: 52rpx !important;\n}\n.u-m-r-52 {\r\n  margin-right: 52rpx !important;\n}\n.u-p-r-52 {\r\n  padding-right: 52rpx !important;\n}\n.u-margin-right-52 {\r\n  margin-right: 52rpx !important;\n}\n.u-padding-right-52 {\r\n  padding-right: 52rpx !important;\n}\n.u-m-b-52 {\r\n  margin-bottom: 52rpx !important;\n}\n.u-p-b-52 {\r\n  padding-bottom: 52rpx !important;\n}\n.u-margin-bottom-52 {\r\n  margin-bottom: 52rpx !important;\n}\n.u-padding-bottom-52 {\r\n  padding-bottom: 52rpx !important;\n}\n.u-margin-54, .u-m-54 {\r\n  margin: 54rpx !important;\n}\n.u-padding-54, .u-p-54 {\r\n  padding: 54rpx !important;\n}\n.u-m-l-54 {\r\n  margin-left: 54rpx !important;\n}\n.u-p-l-54 {\r\n  padding-left: 54rpx !important;\n}\n.u-margin-left-54 {\r\n  margin-left: 54rpx !important;\n}\n.u-padding-left-54 {\r\n  padding-left: 54rpx !important;\n}\n.u-m-t-54 {\r\n  margin-top: 54rpx !important;\n}\n.u-p-t-54 {\r\n  padding-top: 54rpx !important;\n}\n.u-margin-top-54 {\r\n  margin-top: 54rpx !important;\n}\n.u-padding-top-54 {\r\n  padding-top: 54rpx !important;\n}\n.u-m-r-54 {\r\n  margin-right: 54rpx !important;\n}\n.u-p-r-54 {\r\n  padding-right: 54rpx !important;\n}\n.u-margin-right-54 {\r\n  margin-right: 54rpx !important;\n}\n.u-padding-right-54 {\r\n  padding-right: 54rpx !important;\n}\n.u-m-b-54 {\r\n  margin-bottom: 54rpx !important;\n}\n.u-p-b-54 {\r\n  padding-bottom: 54rpx !important;\n}\n.u-margin-bottom-54 {\r\n  margin-bottom: 54rpx !important;\n}\n.u-padding-bottom-54 {\r\n  padding-bottom: 54rpx !important;\n}\n.u-margin-55, .u-m-55 {\r\n  margin: 55rpx !important;\n}\n.u-padding-55, .u-p-55 {\r\n  padding: 55rpx !important;\n}\n.u-m-l-55 {\r\n  margin-left: 55rpx !important;\n}\n.u-p-l-55 {\r\n  padding-left: 55rpx !important;\n}\n.u-margin-left-55 {\r\n  margin-left: 55rpx !important;\n}\n.u-padding-left-55 {\r\n  padding-left: 55rpx !important;\n}\n.u-m-t-55 {\r\n  margin-top: 55rpx !important;\n}\n.u-p-t-55 {\r\n  padding-top: 55rpx !important;\n}\n.u-margin-top-55 {\r\n  margin-top: 55rpx !important;\n}\n.u-padding-top-55 {\r\n  padding-top: 55rpx !important;\n}\n.u-m-r-55 {\r\n  margin-right: 55rpx !important;\n}\n.u-p-r-55 {\r\n  padding-right: 55rpx !important;\n}\n.u-margin-right-55 {\r\n  margin-right: 55rpx !important;\n}\n.u-padding-right-55 {\r\n  padding-right: 55rpx !important;\n}\n.u-m-b-55 {\r\n  margin-bottom: 55rpx !important;\n}\n.u-p-b-55 {\r\n  padding-bottom: 55rpx !important;\n}\n.u-margin-bottom-55 {\r\n  margin-bottom: 55rpx !important;\n}\n.u-padding-bottom-55 {\r\n  padding-bottom: 55rpx !important;\n}\n.u-margin-56, .u-m-56 {\r\n  margin: 56rpx !important;\n}\n.u-padding-56, .u-p-56 {\r\n  padding: 56rpx !important;\n}\n.u-m-l-56 {\r\n  margin-left: 56rpx !important;\n}\n.u-p-l-56 {\r\n  padding-left: 56rpx !important;\n}\n.u-margin-left-56 {\r\n  margin-left: 56rpx !important;\n}\n.u-padding-left-56 {\r\n  padding-left: 56rpx !important;\n}\n.u-m-t-56 {\r\n  margin-top: 56rpx !important;\n}\n.u-p-t-56 {\r\n  padding-top: 56rpx !important;\n}\n.u-margin-top-56 {\r\n  margin-top: 56rpx !important;\n}\n.u-padding-top-56 {\r\n  padding-top: 56rpx !important;\n}\n.u-m-r-56 {\r\n  margin-right: 56rpx !important;\n}\n.u-p-r-56 {\r\n  padding-right: 56rpx !important;\n}\n.u-margin-right-56 {\r\n  margin-right: 56rpx !important;\n}\n.u-padding-right-56 {\r\n  padding-right: 56rpx !important;\n}\n.u-m-b-56 {\r\n  margin-bottom: 56rpx !important;\n}\n.u-p-b-56 {\r\n  padding-bottom: 56rpx !important;\n}\n.u-margin-bottom-56 {\r\n  margin-bottom: 56rpx !important;\n}\n.u-padding-bottom-56 {\r\n  padding-bottom: 56rpx !important;\n}\n.u-margin-58, .u-m-58 {\r\n  margin: 58rpx !important;\n}\n.u-padding-58, .u-p-58 {\r\n  padding: 58rpx !important;\n}\n.u-m-l-58 {\r\n  margin-left: 58rpx !important;\n}\n.u-p-l-58 {\r\n  padding-left: 58rpx !important;\n}\n.u-margin-left-58 {\r\n  margin-left: 58rpx !important;\n}\n.u-padding-left-58 {\r\n  padding-left: 58rpx !important;\n}\n.u-m-t-58 {\r\n  margin-top: 58rpx !important;\n}\n.u-p-t-58 {\r\n  padding-top: 58rpx !important;\n}\n.u-margin-top-58 {\r\n  margin-top: 58rpx !important;\n}\n.u-padding-top-58 {\r\n  padding-top: 58rpx !important;\n}\n.u-m-r-58 {\r\n  margin-right: 58rpx !important;\n}\n.u-p-r-58 {\r\n  padding-right: 58rpx !important;\n}\n.u-margin-right-58 {\r\n  margin-right: 58rpx !important;\n}\n.u-padding-right-58 {\r\n  padding-right: 58rpx !important;\n}\n.u-m-b-58 {\r\n  margin-bottom: 58rpx !important;\n}\n.u-p-b-58 {\r\n  padding-bottom: 58rpx !important;\n}\n.u-margin-bottom-58 {\r\n  margin-bottom: 58rpx !important;\n}\n.u-padding-bottom-58 {\r\n  padding-bottom: 58rpx !important;\n}\n.u-margin-60, .u-m-60 {\r\n  margin: 60rpx !important;\n}\n.u-padding-60, .u-p-60 {\r\n  padding: 60rpx !important;\n}\n.u-m-l-60 {\r\n  margin-left: 60rpx !important;\n}\n.u-p-l-60 {\r\n  padding-left: 60rpx !important;\n}\n.u-margin-left-60 {\r\n  margin-left: 60rpx !important;\n}\n.u-padding-left-60 {\r\n  padding-left: 60rpx !important;\n}\n.u-m-t-60 {\r\n  margin-top: 60rpx !important;\n}\n.u-p-t-60 {\r\n  padding-top: 60rpx !important;\n}\n.u-margin-top-60 {\r\n  margin-top: 60rpx !important;\n}\n.u-padding-top-60 {\r\n  padding-top: 60rpx !important;\n}\n.u-m-r-60 {\r\n  margin-right: 60rpx !important;\n}\n.u-p-r-60 {\r\n  padding-right: 60rpx !important;\n}\n.u-margin-right-60 {\r\n  margin-right: 60rpx !important;\n}\n.u-padding-right-60 {\r\n  padding-right: 60rpx !important;\n}\n.u-m-b-60 {\r\n  margin-bottom: 60rpx !important;\n}\n.u-p-b-60 {\r\n  padding-bottom: 60rpx !important;\n}\n.u-margin-bottom-60 {\r\n  margin-bottom: 60rpx !important;\n}\n.u-padding-bottom-60 {\r\n  padding-bottom: 60rpx !important;\n}\n.u-margin-62, .u-m-62 {\r\n  margin: 62rpx !important;\n}\n.u-padding-62, .u-p-62 {\r\n  padding: 62rpx !important;\n}\n.u-m-l-62 {\r\n  margin-left: 62rpx !important;\n}\n.u-p-l-62 {\r\n  padding-left: 62rpx !important;\n}\n.u-margin-left-62 {\r\n  margin-left: 62rpx !important;\n}\n.u-padding-left-62 {\r\n  padding-left: 62rpx !important;\n}\n.u-m-t-62 {\r\n  margin-top: 62rpx !important;\n}\n.u-p-t-62 {\r\n  padding-top: 62rpx !important;\n}\n.u-margin-top-62 {\r\n  margin-top: 62rpx !important;\n}\n.u-padding-top-62 {\r\n  padding-top: 62rpx !important;\n}\n.u-m-r-62 {\r\n  margin-right: 62rpx !important;\n}\n.u-p-r-62 {\r\n  padding-right: 62rpx !important;\n}\n.u-margin-right-62 {\r\n  margin-right: 62rpx !important;\n}\n.u-padding-right-62 {\r\n  padding-right: 62rpx !important;\n}\n.u-m-b-62 {\r\n  margin-bottom: 62rpx !important;\n}\n.u-p-b-62 {\r\n  padding-bottom: 62rpx !important;\n}\n.u-margin-bottom-62 {\r\n  margin-bottom: 62rpx !important;\n}\n.u-padding-bottom-62 {\r\n  padding-bottom: 62rpx !important;\n}\n.u-margin-64, .u-m-64 {\r\n  margin: 64rpx !important;\n}\n.u-padding-64, .u-p-64 {\r\n  padding: 64rpx !important;\n}\n.u-m-l-64 {\r\n  margin-left: 64rpx !important;\n}\n.u-p-l-64 {\r\n  padding-left: 64rpx !important;\n}\n.u-margin-left-64 {\r\n  margin-left: 64rpx !important;\n}\n.u-padding-left-64 {\r\n  padding-left: 64rpx !important;\n}\n.u-m-t-64 {\r\n  margin-top: 64rpx !important;\n}\n.u-p-t-64 {\r\n  padding-top: 64rpx !important;\n}\n.u-margin-top-64 {\r\n  margin-top: 64rpx !important;\n}\n.u-padding-top-64 {\r\n  padding-top: 64rpx !important;\n}\n.u-m-r-64 {\r\n  margin-right: 64rpx !important;\n}\n.u-p-r-64 {\r\n  padding-right: 64rpx !important;\n}\n.u-margin-right-64 {\r\n  margin-right: 64rpx !important;\n}\n.u-padding-right-64 {\r\n  padding-right: 64rpx !important;\n}\n.u-m-b-64 {\r\n  margin-bottom: 64rpx !important;\n}\n.u-p-b-64 {\r\n  padding-bottom: 64rpx !important;\n}\n.u-margin-bottom-64 {\r\n  margin-bottom: 64rpx !important;\n}\n.u-padding-bottom-64 {\r\n  padding-bottom: 64rpx !important;\n}\n.u-margin-65, .u-m-65 {\r\n  margin: 65rpx !important;\n}\n.u-padding-65, .u-p-65 {\r\n  padding: 65rpx !important;\n}\n.u-m-l-65 {\r\n  margin-left: 65rpx !important;\n}\n.u-p-l-65 {\r\n  padding-left: 65rpx !important;\n}\n.u-margin-left-65 {\r\n  margin-left: 65rpx !important;\n}\n.u-padding-left-65 {\r\n  padding-left: 65rpx !important;\n}\n.u-m-t-65 {\r\n  margin-top: 65rpx !important;\n}\n.u-p-t-65 {\r\n  padding-top: 65rpx !important;\n}\n.u-margin-top-65 {\r\n  margin-top: 65rpx !important;\n}\n.u-padding-top-65 {\r\n  padding-top: 65rpx !important;\n}\n.u-m-r-65 {\r\n  margin-right: 65rpx !important;\n}\n.u-p-r-65 {\r\n  padding-right: 65rpx !important;\n}\n.u-margin-right-65 {\r\n  margin-right: 65rpx !important;\n}\n.u-padding-right-65 {\r\n  padding-right: 65rpx !important;\n}\n.u-m-b-65 {\r\n  margin-bottom: 65rpx !important;\n}\n.u-p-b-65 {\r\n  padding-bottom: 65rpx !important;\n}\n.u-margin-bottom-65 {\r\n  margin-bottom: 65rpx !important;\n}\n.u-padding-bottom-65 {\r\n  padding-bottom: 65rpx !important;\n}\n.u-margin-66, .u-m-66 {\r\n  margin: 66rpx !important;\n}\n.u-padding-66, .u-p-66 {\r\n  padding: 66rpx !important;\n}\n.u-m-l-66 {\r\n  margin-left: 66rpx !important;\n}\n.u-p-l-66 {\r\n  padding-left: 66rpx !important;\n}\n.u-margin-left-66 {\r\n  margin-left: 66rpx !important;\n}\n.u-padding-left-66 {\r\n  padding-left: 66rpx !important;\n}\n.u-m-t-66 {\r\n  margin-top: 66rpx !important;\n}\n.u-p-t-66 {\r\n  padding-top: 66rpx !important;\n}\n.u-margin-top-66 {\r\n  margin-top: 66rpx !important;\n}\n.u-padding-top-66 {\r\n  padding-top: 66rpx !important;\n}\n.u-m-r-66 {\r\n  margin-right: 66rpx !important;\n}\n.u-p-r-66 {\r\n  padding-right: 66rpx !important;\n}\n.u-margin-right-66 {\r\n  margin-right: 66rpx !important;\n}\n.u-padding-right-66 {\r\n  padding-right: 66rpx !important;\n}\n.u-m-b-66 {\r\n  margin-bottom: 66rpx !important;\n}\n.u-p-b-66 {\r\n  padding-bottom: 66rpx !important;\n}\n.u-margin-bottom-66 {\r\n  margin-bottom: 66rpx !important;\n}\n.u-padding-bottom-66 {\r\n  padding-bottom: 66rpx !important;\n}\n.u-margin-68, .u-m-68 {\r\n  margin: 68rpx !important;\n}\n.u-padding-68, .u-p-68 {\r\n  padding: 68rpx !important;\n}\n.u-m-l-68 {\r\n  margin-left: 68rpx !important;\n}\n.u-p-l-68 {\r\n  padding-left: 68rpx !important;\n}\n.u-margin-left-68 {\r\n  margin-left: 68rpx !important;\n}\n.u-padding-left-68 {\r\n  padding-left: 68rpx !important;\n}\n.u-m-t-68 {\r\n  margin-top: 68rpx !important;\n}\n.u-p-t-68 {\r\n  padding-top: 68rpx !important;\n}\n.u-margin-top-68 {\r\n  margin-top: 68rpx !important;\n}\n.u-padding-top-68 {\r\n  padding-top: 68rpx !important;\n}\n.u-m-r-68 {\r\n  margin-right: 68rpx !important;\n}\n.u-p-r-68 {\r\n  padding-right: 68rpx !important;\n}\n.u-margin-right-68 {\r\n  margin-right: 68rpx !important;\n}\n.u-padding-right-68 {\r\n  padding-right: 68rpx !important;\n}\n.u-m-b-68 {\r\n  margin-bottom: 68rpx !important;\n}\n.u-p-b-68 {\r\n  padding-bottom: 68rpx !important;\n}\n.u-margin-bottom-68 {\r\n  margin-bottom: 68rpx !important;\n}\n.u-padding-bottom-68 {\r\n  padding-bottom: 68rpx !important;\n}\n.u-margin-70, .u-m-70 {\r\n  margin: 70rpx !important;\n}\n.u-padding-70, .u-p-70 {\r\n  padding: 70rpx !important;\n}\n.u-m-l-70 {\r\n  margin-left: 70rpx !important;\n}\n.u-p-l-70 {\r\n  padding-left: 70rpx !important;\n}\n.u-margin-left-70 {\r\n  margin-left: 70rpx !important;\n}\n.u-padding-left-70 {\r\n  padding-left: 70rpx !important;\n}\n.u-m-t-70 {\r\n  margin-top: 70rpx !important;\n}\n.u-p-t-70 {\r\n  padding-top: 70rpx !important;\n}\n.u-margin-top-70 {\r\n  margin-top: 70rpx !important;\n}\n.u-padding-top-70 {\r\n  padding-top: 70rpx !important;\n}\n.u-m-r-70 {\r\n  margin-right: 70rpx !important;\n}\n.u-p-r-70 {\r\n  padding-right: 70rpx !important;\n}\n.u-margin-right-70 {\r\n  margin-right: 70rpx !important;\n}\n.u-padding-right-70 {\r\n  padding-right: 70rpx !important;\n}\n.u-m-b-70 {\r\n  margin-bottom: 70rpx !important;\n}\n.u-p-b-70 {\r\n  padding-bottom: 70rpx !important;\n}\n.u-margin-bottom-70 {\r\n  margin-bottom: 70rpx !important;\n}\n.u-padding-bottom-70 {\r\n  padding-bottom: 70rpx !important;\n}\n.u-margin-72, .u-m-72 {\r\n  margin: 72rpx !important;\n}\n.u-padding-72, .u-p-72 {\r\n  padding: 72rpx !important;\n}\n.u-m-l-72 {\r\n  margin-left: 72rpx !important;\n}\n.u-p-l-72 {\r\n  padding-left: 72rpx !important;\n}\n.u-margin-left-72 {\r\n  margin-left: 72rpx !important;\n}\n.u-padding-left-72 {\r\n  padding-left: 72rpx !important;\n}\n.u-m-t-72 {\r\n  margin-top: 72rpx !important;\n}\n.u-p-t-72 {\r\n  padding-top: 72rpx !important;\n}\n.u-margin-top-72 {\r\n  margin-top: 72rpx !important;\n}\n.u-padding-top-72 {\r\n  padding-top: 72rpx !important;\n}\n.u-m-r-72 {\r\n  margin-right: 72rpx !important;\n}\n.u-p-r-72 {\r\n  padding-right: 72rpx !important;\n}\n.u-margin-right-72 {\r\n  margin-right: 72rpx !important;\n}\n.u-padding-right-72 {\r\n  padding-right: 72rpx !important;\n}\n.u-m-b-72 {\r\n  margin-bottom: 72rpx !important;\n}\n.u-p-b-72 {\r\n  padding-bottom: 72rpx !important;\n}\n.u-margin-bottom-72 {\r\n  margin-bottom: 72rpx !important;\n}\n.u-padding-bottom-72 {\r\n  padding-bottom: 72rpx !important;\n}\n.u-margin-74, .u-m-74 {\r\n  margin: 74rpx !important;\n}\n.u-padding-74, .u-p-74 {\r\n  padding: 74rpx !important;\n}\n.u-m-l-74 {\r\n  margin-left: 74rpx !important;\n}\n.u-p-l-74 {\r\n  padding-left: 74rpx !important;\n}\n.u-margin-left-74 {\r\n  margin-left: 74rpx !important;\n}\n.u-padding-left-74 {\r\n  padding-left: 74rpx !important;\n}\n.u-m-t-74 {\r\n  margin-top: 74rpx !important;\n}\n.u-p-t-74 {\r\n  padding-top: 74rpx !important;\n}\n.u-margin-top-74 {\r\n  margin-top: 74rpx !important;\n}\n.u-padding-top-74 {\r\n  padding-top: 74rpx !important;\n}\n.u-m-r-74 {\r\n  margin-right: 74rpx !important;\n}\n.u-p-r-74 {\r\n  padding-right: 74rpx !important;\n}\n.u-margin-right-74 {\r\n  margin-right: 74rpx !important;\n}\n.u-padding-right-74 {\r\n  padding-right: 74rpx !important;\n}\n.u-m-b-74 {\r\n  margin-bottom: 74rpx !important;\n}\n.u-p-b-74 {\r\n  padding-bottom: 74rpx !important;\n}\n.u-margin-bottom-74 {\r\n  margin-bottom: 74rpx !important;\n}\n.u-padding-bottom-74 {\r\n  padding-bottom: 74rpx !important;\n}\n.u-margin-75, .u-m-75 {\r\n  margin: 75rpx !important;\n}\n.u-padding-75, .u-p-75 {\r\n  padding: 75rpx !important;\n}\n.u-m-l-75 {\r\n  margin-left: 75rpx !important;\n}\n.u-p-l-75 {\r\n  padding-left: 75rpx !important;\n}\n.u-margin-left-75 {\r\n  margin-left: 75rpx !important;\n}\n.u-padding-left-75 {\r\n  padding-left: 75rpx !important;\n}\n.u-m-t-75 {\r\n  margin-top: 75rpx !important;\n}\n.u-p-t-75 {\r\n  padding-top: 75rpx !important;\n}\n.u-margin-top-75 {\r\n  margin-top: 75rpx !important;\n}\n.u-padding-top-75 {\r\n  padding-top: 75rpx !important;\n}\n.u-m-r-75 {\r\n  margin-right: 75rpx !important;\n}\n.u-p-r-75 {\r\n  padding-right: 75rpx !important;\n}\n.u-margin-right-75 {\r\n  margin-right: 75rpx !important;\n}\n.u-padding-right-75 {\r\n  padding-right: 75rpx !important;\n}\n.u-m-b-75 {\r\n  margin-bottom: 75rpx !important;\n}\n.u-p-b-75 {\r\n  padding-bottom: 75rpx !important;\n}\n.u-margin-bottom-75 {\r\n  margin-bottom: 75rpx !important;\n}\n.u-padding-bottom-75 {\r\n  padding-bottom: 75rpx !important;\n}\n.u-margin-76, .u-m-76 {\r\n  margin: 76rpx !important;\n}\n.u-padding-76, .u-p-76 {\r\n  padding: 76rpx !important;\n}\n.u-m-l-76 {\r\n  margin-left: 76rpx !important;\n}\n.u-p-l-76 {\r\n  padding-left: 76rpx !important;\n}\n.u-margin-left-76 {\r\n  margin-left: 76rpx !important;\n}\n.u-padding-left-76 {\r\n  padding-left: 76rpx !important;\n}\n.u-m-t-76 {\r\n  margin-top: 76rpx !important;\n}\n.u-p-t-76 {\r\n  padding-top: 76rpx !important;\n}\n.u-margin-top-76 {\r\n  margin-top: 76rpx !important;\n}\n.u-padding-top-76 {\r\n  padding-top: 76rpx !important;\n}\n.u-m-r-76 {\r\n  margin-right: 76rpx !important;\n}\n.u-p-r-76 {\r\n  padding-right: 76rpx !important;\n}\n.u-margin-right-76 {\r\n  margin-right: 76rpx !important;\n}\n.u-padding-right-76 {\r\n  padding-right: 76rpx !important;\n}\n.u-m-b-76 {\r\n  margin-bottom: 76rpx !important;\n}\n.u-p-b-76 {\r\n  padding-bottom: 76rpx !important;\n}\n.u-margin-bottom-76 {\r\n  margin-bottom: 76rpx !important;\n}\n.u-padding-bottom-76 {\r\n  padding-bottom: 76rpx !important;\n}\n.u-margin-78, .u-m-78 {\r\n  margin: 78rpx !important;\n}\n.u-padding-78, .u-p-78 {\r\n  padding: 78rpx !important;\n}\n.u-m-l-78 {\r\n  margin-left: 78rpx !important;\n}\n.u-p-l-78 {\r\n  padding-left: 78rpx !important;\n}\n.u-margin-left-78 {\r\n  margin-left: 78rpx !important;\n}\n.u-padding-left-78 {\r\n  padding-left: 78rpx !important;\n}\n.u-m-t-78 {\r\n  margin-top: 78rpx !important;\n}\n.u-p-t-78 {\r\n  padding-top: 78rpx !important;\n}\n.u-margin-top-78 {\r\n  margin-top: 78rpx !important;\n}\n.u-padding-top-78 {\r\n  padding-top: 78rpx !important;\n}\n.u-m-r-78 {\r\n  margin-right: 78rpx !important;\n}\n.u-p-r-78 {\r\n  padding-right: 78rpx !important;\n}\n.u-margin-right-78 {\r\n  margin-right: 78rpx !important;\n}\n.u-padding-right-78 {\r\n  padding-right: 78rpx !important;\n}\n.u-m-b-78 {\r\n  margin-bottom: 78rpx !important;\n}\n.u-p-b-78 {\r\n  padding-bottom: 78rpx !important;\n}\n.u-margin-bottom-78 {\r\n  margin-bottom: 78rpx !important;\n}\n.u-padding-bottom-78 {\r\n  padding-bottom: 78rpx !important;\n}\n.u-margin-80, .u-m-80 {\r\n  margin: 80rpx !important;\n}\n.u-padding-80, .u-p-80 {\r\n  padding: 80rpx !important;\n}\n.u-m-l-80 {\r\n  margin-left: 80rpx !important;\n}\n.u-p-l-80 {\r\n  padding-left: 80rpx !important;\n}\n.u-margin-left-80 {\r\n  margin-left: 80rpx !important;\n}\n.u-padding-left-80 {\r\n  padding-left: 80rpx !important;\n}\n.u-m-t-80 {\r\n  margin-top: 80rpx !important;\n}\n.u-p-t-80 {\r\n  padding-top: 80rpx !important;\n}\n.u-margin-top-80 {\r\n  margin-top: 80rpx !important;\n}\n.u-padding-top-80 {\r\n  padding-top: 80rpx !important;\n}\n.u-m-r-80 {\r\n  margin-right: 80rpx !important;\n}\n.u-p-r-80 {\r\n  padding-right: 80rpx !important;\n}\n.u-margin-right-80 {\r\n  margin-right: 80rpx !important;\n}\n.u-padding-right-80 {\r\n  padding-right: 80rpx !important;\n}\n.u-m-b-80 {\r\n  margin-bottom: 80rpx !important;\n}\n.u-p-b-80 {\r\n  padding-bottom: 80rpx !important;\n}\n.u-margin-bottom-80 {\r\n  margin-bottom: 80rpx !important;\n}\n.u-padding-bottom-80 {\r\n  padding-bottom: 80rpx !important;\n}\n.u-reset-nvue {\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n.u-type-primary-light {\r\n  color: #ecf5ff;\n}\n.u-type-warning-light {\r\n  color: #fdf6ec;\n}\n.u-type-success-light {\r\n  color: #dbf1e1;\n}\n.u-type-error-light {\r\n  color: #fef0f0;\n}\n.u-type-info-light {\r\n  color: #f4f4f5;\n}\n.u-type-primary-light-bg {\r\n  background-color: #ecf5ff;\n}\n.u-type-warning-light-bg {\r\n  background-color: #fdf6ec;\n}\n.u-type-success-light-bg {\r\n  background-color: #dbf1e1;\n}\n.u-type-error-light-bg {\r\n  background-color: #fef0f0;\n}\n.u-type-info-light-bg {\r\n  background-color: #f4f4f5;\n}\n.u-type-primary-dark {\r\n  color: #2b85e4;\n}\n.u-type-warning-dark {\r\n  color: #f29100;\n}\n.u-type-success-dark {\r\n  color: #18b566;\n}\n.u-type-error-dark {\r\n  color: #dd6161;\n}\n.u-type-info-dark {\r\n  color: #82848a;\n}\n.u-type-primary-dark-bg {\r\n  background-color: #2b85e4;\n}\n.u-type-warning-dark-bg {\r\n  background-color: #f29100;\n}\n.u-type-success-dark-bg {\r\n  background-color: #18b566;\n}\n.u-type-error-dark-bg {\r\n  background-color: #dd6161;\n}\n.u-type-info-dark-bg {\r\n  background-color: #82848a;\n}\n.u-type-primary-disabled {\r\n  color: #a0cfff;\n}\n.u-type-warning-disabled {\r\n  color: #fcbd71;\n}\n.u-type-success-disabled {\r\n  color: #71d5a1;\n}\n.u-type-error-disabled {\r\n  color: #fab6b6;\n}\n.u-type-info-disabled {\r\n  color: #c8c9cc;\n}\n.u-type-primary {\r\n  color: #2979ff;\n}\n.u-type-warning {\r\n  color: #ff9900;\n}\n.u-type-success {\r\n  color: #19be6b;\n}\n.u-type-error {\r\n  color: #fa3534;\n}\n.u-type-info {\r\n  color: #909399;\n}\n.u-type-primary-bg {\r\n  background-color: #2979ff;\n}\n.u-type-warning-bg {\r\n  background-color: #ff9900;\n}\n.u-type-success-bg {\r\n  background-color: #19be6b;\n}\n.u-type-error-bg {\r\n  background-color: #fa3534;\n}\n.u-type-info-bg {\r\n  background-color: #909399;\n}\n.u-main-color {\r\n  color: #303133;\n}\n.u-content-color {\r\n  color: #606266;\n}\n.u-tips-color {\r\n  color: #909399;\n}\n.u-light-color {\r\n  color: #c0c4cc;\n}\nbody {\r\n  color: #303133;\r\n  font-size: 28rpx;\n}\r\n/* start--去除webkit的默认样式--start */\n.u-fix-ios-appearance {\r\n  -webkit-appearance: none;\n}\r\n/* end--去除webkit的默认样式--end */\r\n/* start--icon图标外层套一个view，让其达到更好的垂直居中的效果--start */\n.u-icon-wrap {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\r\n/* end-icon图标外层套一个view，让其达到更好的垂直居中的效果--end */\r\n/* start--iPhoneX底部安全区定义--start */\n.safe-area-inset-bottom {\r\n  padding-bottom: 0;\r\n  padding-bottom: constant(safe-area-inset-bottom);\r\n  padding-bottom: env(safe-area-inset-bottom);\n}\r\n/* end-iPhoneX底部安全区定义--end */\r\n/* start--各种hover点击反馈相关的类名-start */\n.u-hover-class {\r\n  opacity: 0.6;\n}\n.u-cell-hover {\r\n  background-color: #f7f8f9 !important;\n}\r\n/* end--各种hover点击反馈相关的类名--end */\r\n/* start--文本行数限制--start */\n.u-line-1 {\r\n  overflow: hidden;\r\n  white-space: nowrap;\r\n  text-overflow: ellipsis;\n}\n.u-line-2 {\r\n  -webkit-line-clamp: 2;\n}\n.u-line-3 {\r\n  -webkit-line-clamp: 3;\n}\n.u-line-4 {\r\n  -webkit-line-clamp: 4;\n}\n.u-line-5 {\r\n  -webkit-line-clamp: 5;\n}\n.u-line-2, .u-line-3, .u-line-4, .u-line-5 {\r\n  overflow: hidden;\r\n  word-break: break-all;\r\n  text-overflow: ellipsis;\r\n  display: -webkit-box;\r\n  -webkit-box-orient: vertical;\n}\r\n/* end--文本行数限制--end */\r\n/* start--Retina 屏幕下的 1px 边框--start */\n.u-border,\r\n.u-border-bottom,\r\n.u-border-left,\r\n.u-border-right,\r\n.u-border-top,\r\n.u-border-top-bottom {\r\n  position: relative;\n}\n.u-border-bottom:after,\r\n.u-border-left:after,\r\n.u-border-right:after,\r\n.u-border-top-bottom:after,\r\n.u-border-top:after,\r\n.u-border:after {\r\n\r\n  content: ' ';\r\n\r\n  position: absolute;\r\n  left: 0;\r\n  top: 0;\r\n  pointer-events: none;\r\n  box-sizing: border-box;\r\n  -webkit-transform-origin: 0 0;\r\n  transform-origin: 0 0;\r\n  width: 199.8%;\r\n  height: 199.7%;\r\n  -webkit-transform: scale(0.5, 0.5);\r\n          transform: scale(0.5, 0.5);\r\n  border: 0 solid #e4e7ed;\r\n  z-index: 2;\n}\n.u-border-top:after {\r\n  border-top-width: 1px;\n}\n.u-border-left:after {\r\n  border-left-width: 1px;\n}\n.u-border-right:after {\r\n  border-right-width: 1px;\n}\n.u-border-bottom:after {\r\n  border-bottom-width: 1px;\n}\n.u-border-top-bottom:after {\r\n  border-width: 1px 0;\n}\n.u-border:after {\r\n  border-width: 1px;\n}\r\n/* end--Retina 屏幕下的 1px 边框--end */\r\n/* start--clearfix--start */\n.u-clearfix:after,\r\n.clearfix:after {\r\n\r\n  content: '';\r\n\r\n  display: table;\r\n  clear: both;\n}\r\n/* end--clearfix--end */\r\n/* start--高斯模糊tabbar底部处理--start */\n.u-blur-effect-inset {\r\n  width: 750rpx;\r\n  height: var(--window-bottom);\r\n  background-color: #FFFFFF;\n}\r\n/* end--高斯模糊tabbar底部处理--end */\r\n/* start--提升H5端uni.toast()的层级，避免被uView的modal等遮盖--start */\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n/* end--提升H5端uni.toast()的层级，避免被uView的modal等遮盖--end */\r\n/* start--去除button的所有默认样式--start */\n.u-reset-button {\r\n  padding: 0;\r\n  font-size: inherit;\r\n  line-height: inherit;\r\n  background-color: transparent;\r\n  color: inherit;\n}\n.u-reset-button::after {\r\n  border: none;\n}\r\n/* end--去除button的所有默认样式--end */\nuni-page-body,\r\nhtml,\r\nbody {\r\n  height: 100%;\n}\n.status_bar {\r\n  width: 100%;\r\n  height: var(--status-bar-height);\r\n  background-color: #2979ff;\n}\n.content {\r\n  margin: 0 20rpx;\n}\r\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+/* 492 */
+/*!*******************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/pages/category/category.vue?mpType=page ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _category_vue_vue_type_template_id_540fc896_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./category.vue?vue&type=template&id=540fc896&scoped=true&mpType=page */ 493);
+/* harmony import */ var _category_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category.vue?vue&type=script&lang=js&mpType=page */ 495);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _category_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _category_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _category_vue_vue_type_style_index_0_id_540fc896_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./category.vue?vue&type=style&index=0&id=540fc896&lang=scss&scoped=true&mpType=page */ 497);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 16);
+
+var renderjs
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _category_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _category_vue_vue_type_template_id_540fc896_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _category_vue_vue_type_template_id_540fc896_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "540fc896",
+  null,
+  false,
+  _category_vue_vue_type_template_id_540fc896_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["components"],
+  renderjs
+)
+
+component.options.__file = "pages/category/category.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+/* 493 */
+/*!*************************************************************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/pages/category/category.vue?vue&type=template&id=540fc896&scoped=true&mpType=page ***!
+  \*************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns, recyclableRender, components */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_template_id_540fc896_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/filter-modules-template.js!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/page-meta.js!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./category.vue?vue&type=template&id=540fc896&scoped=true&mpType=page */ 494);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_template_id_540fc896_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_template_id_540fc896_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_template_id_540fc896_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["recyclableRender"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "components", function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_filter_modules_template_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_page_meta_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_template_id_540fc896_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__["components"]; });
+
+
+
+/***/ }),
+/* 494 */
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/filter-modules-template.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/page-meta.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/pages/category/category.vue?vue&type=template&id=540fc896&scoped=true&mpType=page ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns, recyclableRender, components */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
+var components = {
+  uNavbar: __webpack_require__(/*! uview-ui/components/u-navbar/u-navbar.vue */ 161).default,
+  uIcon: __webpack_require__(/*! uview-ui/components/u-icon/u-icon.vue */ 20).default
+}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-uni-view",
+    { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
+    [
+      _c(
+        "u-navbar",
+        { attrs: { _i: 1 } },
+        [
+          _c(
+            "template",
+            { attrs: { _i: 2 }, slot: "right" },
+            [
+              _c("u-icon", {
+                staticClass: _vm._$g(3, "sc"),
+                attrs: { _i: 3 },
+                on: {
+                  click: function($event) {
+                    return _vm.$handleViewEvent($event)
+                  }
+                }
+              }),
+              _c("u-icon", {
+                staticClass: _vm._$g(4, "sc"),
+                attrs: { _i: 4 },
+                on: {
+                  click: function($event) {
+                    return _vm.$handleViewEvent($event)
+                  }
+                }
+              })
+            ],
+            1
+          )
+        ],
+        2
+      )
+    ],
+    1
+  )
+}
+var recyclableRender = false
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+/* 495 */
+/*!*******************************************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/pages/category/category.vue?vue&type=script&lang=js&mpType=page ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/babel-loader/lib!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/script.js!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/using-components.js!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./category.vue?vue&type=script&lang=js&mpType=page */ 496);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_script_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_using_components_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_script_lang_js_mpType_page__WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 496 */
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/using-components.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/pages/category/category.vue?vue&type=script&lang=js&mpType=page ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+
+{
+
+  data: function data() {
+    return {
+      wxsProps: {} };
+
+  },
+  components: {} };exports.default = _default;
+
+/***/ }),
+/* 497 */
+/*!****************************************************************************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/pages/category/category.vue?vue&type=style&index=0&id=540fc896&lang=scss&scoped=true&mpType=page ***!
+  \****************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_style_index_0_id_540fc896_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader??ref--8-oneOf-1-0!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--8-oneOf-1-3!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./category.vue?vue&type=style&index=0&id=540fc896&lang=scss&scoped=true&mpType=page */ 498);
+/* harmony import */ var _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_style_index_0_id_540fc896_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_style_index_0_id_540fc896_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_style_index_0_id_540fc896_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_style_index_0_id_540fc896_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_app_vue_style_loader_index_js_ref_8_oneOf_1_0_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_uni_app_loader_view_style_js_category_vue_vue_type_style_index_0_id_540fc896_lang_scss_scoped_true_mpType_page__WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 498 */
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader??ref--8-oneOf-1-0!./node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!./node_modules/postcss-loader/src??ref--8-oneOf-1-3!./node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/pages/category/category.vue?vue&type=style&index=0&id=540fc896&lang=scss&scoped=true&mpType=page ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(/*! !../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--8-oneOf-1-3!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!./category.vue?vue&type=style&index=0&id=540fc896&lang=scss&scoped=true&mpType=page */ 499);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(/*! ../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/app-vue-style-loader/lib/addStylesClient.js */ 14).default
+var update = add("448c1c8e", content, false, {"sourceMap":false,"shadowMode":false});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 499 */
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!./node_modules/postcss-loader/src??ref--8-oneOf-1-3!./node_modules/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/view/style.js!C:/Users/admin/Desktop/clothingAPP/clothing/pages/category/category.vue?vue&type=style&index=0&id=540fc896&lang=scss&scoped=true&mpType=page ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 13);
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.category .right_icon[data-v-540fc896] {\r\n  margin-right: 40rpx;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 

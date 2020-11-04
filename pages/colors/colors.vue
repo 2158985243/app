@@ -2,16 +2,21 @@
 	<view class="colors">
 		<u-navbar back-icon-color='#ffffff' title="选择颜色" :background="background" title-color="#ffffff">
 			<template slot="right">
-				<u-icon name="edit-pen" @click="toEditColor" color="#ffffff" class="right_icon" size="40"></u-icon>
+				<u-icon name="edit-pen" @click="edit" color="#ffffff" class="right_icon" size="40"></u-icon>
 				<u-icon name="plus" @click="toAddColor" color="#ffffff" class="right_icon" size="40"></u-icon>
 			</template>
 		</u-navbar>
 		<view class="search">
-			<u-search placeholder="请输入商品名称" @change='changed' shape='square' :show-action='false' height='60' :input-style="style_input" margin='20rpx 50rpx 20rpx 20rpx'
-			 v-model="keyword"></u-search>
+			<u-search placeholder="请输入商品名称" @change='changed' shape='square' :show-action='false' height='60' :input-style="style_input"
+			 margin='20rpx 50rpx 20rpx 20rpx' v-model="keyword"></u-search>
 		</view>
 		<view class="list">
-			<uni-indexed-list :options="list" :showSelect="true" @click="bindClick"></uni-indexed-list>
+			<uni-indexed-list :options="list" :edit='visible' :showSelect="true" @click="bindClick">
+				<!-- <block slot="icon">
+					<u-icon name="order" class="icon" color="#cccccc" size="38" @click.native.stop="editColor"></u-icon>
+					<u-icon name="trash" class="icon"  color="#cccccc" size="38" @click.native.stop="delColor(idx)"></u-icon>
+				</block> -->
+			</uni-indexed-list>
 		</view>
 		<view class="btn">
 			<u-button type="primary" class="btn" @tap="save">选择</u-button>
@@ -21,13 +26,17 @@
 
 <script>
 	import uniIndexedList from "@/components/uni-indexed-list/uni-indexed-list.vue"
-	import {colorList} from '../../api/colors.js' 
+	import {
+		colorList,
+		colorDel
+	} from '../../api/colors.js'
 	export default {
 		components: {
 			// uniIndexedList
 		},
 		data() {
 			return {
+				visible: false,
 				keyword: '',
 				style_input: {
 					'background-color': '#ffffff'
@@ -35,67 +44,74 @@
 				background: {
 					backgroundColor: '#2979ff'
 				},
-				list: [{
-					"letter": "A",
-					"data": [
-						"阿克苏机场",
-						"阿拉山口机场",
-						"阿勒泰机场",
-						"阿里昆莎机场",
-						"安庆天柱山机场",
-						"澳门国际机场"
-					]
-				}, {
-					"letter": "B",
-					"data": [
-						"保山机场",
-						"包头机场",
-						"北海福成机场",
-						"北京南苑机场",
-						"北京首都国际机场"
-					]
-				}, {
-					"letter": "C",
-					"data": [
-						"保山机场",
-						"包头机场",
-						"北海福成机场",
-						"北京南苑机场",
-						"北京首都国际机场"
-					]
-				}, {
-					"letter": "D",
-					"data": [
-						"保山机场",
-						"包头机场",
-						"北海福成机场",
-						"北京南苑机场",
-						"北京首都国际机场"
-					]
-				}]
+				list: [],
+				datum:[]
+
 			}
 		},
 		methods: {
+			save() {
+				uni.$emit('colorDatum', this.datum)
+				uni.navigateBack();
+			},
 			bindClick(v) {
 				console.log(v);
+				if (v.obc == 0) {
+					this.editColor(v)
+				} else if (v.obc == 1) {
+					this.delColor(v)
+				} else {
+					this.datum = v.select;
+				}
 			},
 			toAddColor() {
 				uni.navigateTo({
 					url: '/pages/addColor/addColor'
 				})
 			},
-			toEditColor() {
+			edit() {
+				this.visible = !this.visible;
+			},
+			async init() {
+				let res = await colorList({
+					keyword: this.keyword
+				})
+				// console.log(res);
+				this.list = res;
+			},
+			changed(v) {
+				this.init();
+			},
+			// 前往colors编辑页面
+			editColor(e) {
+				// console.log(e);
+				let str = {
+					id: e.item.id,
+					name: e.item.name
+				}
 				uni.navigateTo({
-					url: '/pages/editColor/editColor'
+					url: `/pages/editColor/editColor?id=${str.id}&name=${str.name}`
 				})
 			},
-			async init(){
-				let res = await colorList({keyword:this.keyword})
-				console.log(res);
+			// 删除对应的color
+			delColor(e) {
+				uni.showModal({
+					title: '提示',
+					content: '确定删除改颜色？',
+					success: async function(res) {
+						if (res.confirm) {
+							// console.log('用户点击确定');
+							let res = await colorDel(e.item.id)
+							if (!this.res.code) {
+								this.init();
+							}
+						} else if (res.cancel) {
+							// console.log('用户点击取消');
+						}
+					}
+				});
 			},
-			changed(v){
-				this.init();
-			}
+
 		},
 		onLoad() {
 			this.init();
@@ -123,6 +139,10 @@
 
 		.list {
 			// margin-top: 60rpx;
+		}
+
+		.icon {
+			margin-left: 20rpx;
 		}
 
 		.search {

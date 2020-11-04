@@ -11,6 +11,9 @@
 							<uni-icons :type="item.checked ? 'checkbox-filled' : 'circle'" :color="item.checked ? '#007aff' : '#aaa'" size="24" />
 						</view>
 						<text class="uni-indexed-list__item-content">{{ item.name }}</text>
+						<u-icon name="edit-pen" v-if="edit" @click.native.stop="colorEdit(idx,index)" class="icon" color="#cccccc" size="38"></u-icon> 
+						<u-icon name="trash" v-if="edit" @click.native.stop="colorDel(idx,index)" class="icon" color="#cccccc" size="38"></u-icon>
+						<!-- <slot name="icon"></slot> -->
 					</view>
 				</view>
 			</view>
@@ -27,6 +30,10 @@
 		},
 		props: {
 			loaded: {
+				type: Boolean,
+				default: false
+			},
+			edit: {
 				type: Boolean,
 				default: false
 			},
@@ -51,12 +58,31 @@
 					idx,
 					index
 				})
+			},
+			colorEdit(idx, index){
+				let obc = 0;
+				this.$emit("colorClick", {
+					idx,
+					index,
+					obc
+				})
+			},
+			colorDel(idx, index){
+				let obc = 1;
+				this.$emit("colorClick", {
+					idx,
+					index,
+					obc
+				})
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
+	.icon{
+		margin-right: 20rpx;
+	}
 	.uni-indexed-list__list {
 		background-color: $uni-bg-color;
 		/* #ifndef APP-NVUE */

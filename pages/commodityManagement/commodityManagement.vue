@@ -20,6 +20,7 @@
 </template>
 
 <script>
+	import {goodsList} from '../../api/goods.js'
 	export default {
 		data() {
 			return {
@@ -43,7 +44,14 @@
 						this.keyword = res.result;
 					}
 				});
+			},
+			async init(){
+				let res = await goodsList()
+				console.log(res);
 			}
+		},
+		onLoad() {
+			this.init()
 		}
 	}
 </script>
