@@ -30,7 +30,7 @@
 		<!-- 删除尺码组 -->
 		<u-popup v-model="showdel" mode="center">
 			<view class="pop">
-				<text class="del">是否删除改尺码组？</text>
+				<text class="del">是否删除该尺码组？</text>
 			</view>
 			<view class="btn">
 				<u-button :hair-line="false" @click="qx2" class="btnChild">取消</u-button>

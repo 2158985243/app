@@ -305,12 +305,119 @@
 				}
 			}
 
+		}, {
+			"path": "pages/category/category",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/addCategory/addCategory",
+			"style": {
+				"navigationBarTitleText": "新增分类",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/supplier/supplier",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/addSupplier/addSupplier",
+			"style": {
+				"navigationBarTitleText": "新增供应商",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/supplierDetails/supplierDetails",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/editSupplier/editSupplier",
+			"style": {
+				"navigationBarTitleText": "编辑供应商",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/chooseSupplier/chooseSupplier",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/trademark/trademark",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/addTrademark/addTrademark",
+			"style": {
+				"navigationBarTitleText": "新增品牌",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
 	    ,{
-            "path" : "pages/category/category",
+            "path" : "pages/unitList/unitList",
             "style" :                                                                                    
             {
                "navigationStyle": "custom", // 隐藏系统导航栏
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+        ,{
+            "path" : "pages/addUnitList/addUnitList",
+            "style" :                                                                                    
+            {
+               "navigationBarTitleText": "新增单位",
+               "navigationBarBackgroundColor": "#2979ff",
                "navigationBarTextStyle": "white",
                "app-plus": {
                	"scrollIndicator": "none"

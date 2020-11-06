@@ -44,11 +44,11 @@
 					<u-icon name="plus" @click='toAddCommodity' class='add' color="#cccccc" size="40"></u-icon>
 				</view>
 				<view class="box">
-					<view class="left">
-						<u-icon class="logo" name="account-fill" color="#2979ff" size="40"></u-icon>
+					<view class="left"  @click='toSupplier' >
+						<u-icon class="logo"name="account-fill" color="#2979ff" size="40"></u-icon>
 						<text>供应商管理</text>
 					</view>
-					<u-icon name="plus" class='add' color="#cccccc" size="40"></u-icon>
+					<u-icon name="plus" @click='toAddSupplier'  class='add' color="#cccccc" size="40"></u-icon>
 				</view>
 			</view>
 
@@ -90,6 +90,16 @@
 			toCommodityManagement(){
 				uni.navigateTo({
 					url: `/pages/commodityManagement/commodityManagement`
+				})
+			},
+			toSupplier(){
+				uni.navigateTo({
+					url: `/pages/supplier/supplier`
+				})
+			},
+			toAddSupplier(){
+				uni.navigateTo({
+					url: `/pages/addSupplier/addSupplier`
 				})
 			}
 		}

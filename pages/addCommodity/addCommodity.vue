@@ -45,7 +45,7 @@
 			</view>
 			<view class="form_item">
 				<text>供应商</text>
-				<u-input placeholder='请选择供应商' @tap="toStore" :disabled='true' v-model="supplier" type="text" />
+				<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="box1">
@@ -100,13 +100,70 @@
 				<text>商品启用状态</text>
 				<u-switch v-model="checked3" @change="changeStatus" active-value="1" inactive-value="0"></u-switch>
 			</view>
-			<view class="form_item3" v-if="true">
+			<view class="form_item3" @click="hidde" v-if="!his">
 				<text>显示更多</text>
 				<u-icon name="arrow-down" color="#2979ff" size="34"></u-icon>
 			</view>
-			<view class="form_item2" v-else>
+			<view class="form_item2" @click="hidde" v-else>
 				<text>隐藏信息</text>
 				<u-icon name="arrow-down" color="#2979ff" size="34"></u-icon>
+			</view>
+			<view class="box" v-show="his">
+				<view class="form_item">
+					<text>品牌</text>
+					<u-input placeholder='请选择品牌' @tap="toTrademark" :disabled='true' type='text' v-model="trademark_name" />
+					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+				</view>
+				<view class="form_item">
+					<text>年份</text>
+					<u-input placeholder='请选择年份' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
+					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+				</view>
+				<view class="form_item">
+					<text>季节</text>
+					<u-input placeholder='请选择季节' @tap="toColors" :disabled='true' type='text' v-model="colors_name" />
+					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+				</view>
+				<view class="form_item">
+					<text>单位</text>
+					<u-input placeholder='请选择单位' @tap="toUnitList" :disabled='true' type='text' v-model="unitList_name" />
+					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+				</view>
+			</view>
+
+			<view class="box" v-show="his">
+				<view class="form_item">
+					<text>材质</text>
+					<u-input placeholder='请输入或选择材质' @tap="toColors" :disabled='true' type='text' v-model="colors_name" />
+					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
+				</view>
+				<view class="form_item">
+					<text>风格</text>
+					<u-input placeholder='请输入或选择风格' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
+					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
+				</view>
+				<view class="form_item">
+					<text>款式</text>
+					<u-input placeholder='请输入或选择款式' @tap="toColors" :disabled='true' type='text' v-model="colors_name" />
+					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
+				</view>
+				<view class="form_item">
+					<text>产地</text>
+					<u-input placeholder='请输入或选择产地' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
+					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
+				</view>
+			</view>
+			<view class="box bottoms" v-show="his">
+				<view class="form_item">
+					<text>执行标准</text>
+					<u-input placeholder='请输入或选择执行标准' @tap="toColors" :disabled='true' type='text' v-model="colors_name" />
+					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
+				</view>
+				<view class="form_item">
+					<text>安全类型</text>
+					<u-input placeholder='请输入或选择执行标准' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
+					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
+				</view>
 			</view>
 		</view>
 
@@ -129,18 +186,18 @@
 					number: '',
 					color_id: [],
 					size_id: [],
-					purchase_price: 0,
-					retail_price: 0,
-					customer_price: 0,
-					goods_category_id: 0,
-					supplier_id: 0,
+					purchase_price: '',
+					retail_price: '',
+					customer_price: '',
+					goods_category_id: '',
+					supplier_id: '',
 					main_image: '',
 					images: '',
 					barcode: '',
 					warning: 0,
 					warning_max: 0,
 					warning_min: 0,
-					sort: 0,
+					sort: 100,
 					exchange: 0,
 					exchange_value: 0,
 					status: 0,
@@ -176,10 +233,18 @@
 				supplier: '',
 				barcode_tit: '', //单品条码提示
 				colors_name: '',
-				size_name: ''
+				size_name: '',
+				trademark_name: '',
+				unitList_name: '',
+				his: false
 			}
 		},
 		methods: {
+
+			hidde() {
+				this.his = !this.his;
+			},
+			// 
 			async save() {
 				this.form.barcode_array = []
 				this.form.color_id.map((v, i) => {
@@ -194,9 +259,15 @@
 						})
 					})
 				})
-				console.log(this.form.barcode_array);
-				let res = await goodsAdd(this.form);
-				console.log(res);
+				// console.log(this.form.barcode_array);
+				let obj = {}
+				for (let key in this.form) {
+					if (this.form[key]) {
+						obj[key] = this.form[key];
+					}
+				}
+				let res = await goodsAdd(obj);
+				// console.log(res);
 			},
 			// 上传图片成功fnc
 			onSuccess(data, index, lists, name) {
@@ -222,9 +293,9 @@
 				// console.log(v);
 				this.form.warning = Number(v);
 			},
-			toStore() {
+			toChooseSupplier() {
 				uni.navigateTo({
-					url: '/pages/storeManagement/storeManagement?iq=1'
+					url: '/pages/chooseSupplier/chooseSupplier'
 				})
 			},
 			// 前往商品库页面
@@ -249,6 +320,16 @@
 			toCategory() {
 				uni.navigateTo({
 					url: '/pages/category/category'
+				})
+			},
+			toTrademark() {
+				uni.navigateTo({
+					url: '/pages/trademark/trademark'
+				})
+			},
+			toUnitList() {
+				uni.navigateTo({
+					url: '/pages/unitList/unitList'
 				})
 			},
 			// 商品条码扫码
@@ -301,6 +382,52 @@
 					this.size_name = str.join(',');
 				}
 			});
+			uni.$on("categoryDatum", (res) => {
+				if (res) {
+					console.log(res);
+					// let str = [];
+					// res.map((v, i) => {
+					this.form.goods_category_id = res.id;
+					// str.push(v.name);
+					this.category = res.name;
+					// })
+					// this.size_name = str.join(',');
+				}
+			});
+			uni.$on("supplierDatum", (res) => {
+				if (res) {
+					// let str = [];
+					// res.map((v, i) => {
+					this.form.supplier_id = res.id;
+					// str.push(v.name);
+					this.supplier = res.name;
+					// })
+					// this.size_name = str.join(',');
+				}
+			});
+			uni.$on("trademarkDatum", (res) => {
+				if (res) {
+					// let str = [];
+					// res.map((v, i) => {
+					this.form.unit_id = res.id;
+					// str.push(v.name);
+					this.trademark_name = res.name;
+					// })
+					// this.size_name = str.join(',');
+				}
+			});
+			uni.$on("unitListDatum", (res) => {
+				if (res) {
+					console.log(res);
+					// let str = [];
+					// res.map((v, i) => {
+					this.form.unit_id = res.id;
+					// str.push(v.name);
+					this.unitList_name = res.name;
+					// })
+					// this.size_name = str.join(',');
+				}
+			});
 
 
 		}
@@ -350,14 +477,19 @@
 				}
 
 				.border_bt {
-					border-bottom: 2rpx solid #C0C0C0;
+					border-bottom: 0.01rem solid #C0C0C0;
 				}
 
 				.man_r {
-					border-left: 2rpx solid #e3e3e3;
-					padding: 25rpx 15rpx 25rpx 30rpx;
+					border-left: 0.01rem solid #e3e3e3;
+					padding: 28rpx 15rpx 28rpx 30rpx;
 					// margin: 0 auto;
 				}
+
+			}
+
+			.bottoms {
+				margin-bottom: 80rpx;
 			}
 
 			.form_item2 {
@@ -365,7 +497,7 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				margin-bottom: 2rpx;
+				margin-bottom: 20rpx;
 				background-color: #FFFFFF;
 				height: 85rpx;
 

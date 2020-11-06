@@ -1,27 +1,23 @@
 <template>
-	<view class="staffManagement">
-		<u-navbar back-icon-color='#ffffff' title="员工管理" :background="background" title-color="#ffffff">
+	<view class="chooseSupplier">
+		<u-navbar back-icon-color='#ffffff' title="供应商管理" :background="background" title-color="#ffffff">
 			<template slot="right">
-				<u-icon name="plus" @click="toAddShopInformation" color="#ffffff" class="right_icon" size="34"></u-icon>
+				<u-icon name="plus" @click="toAddSupplier" color="#ffffff" class="right_icon" size="34"></u-icon>
 			</template>
 		</u-navbar>
 		<view class="search">
-			<u-search placeholder="请输入员工姓名或手机号" shape='square' @change="changeInput" height='60' :input-style="style_input"
+			<u-search placeholder="请输入供应商姓名" shape='square' height='60' @change="changeInput" :input-style="style_input"
 			 :show-action='false' margin='20rpx' v-model="keyword"></u-search>
 		</view>
 		<view class="management_list">
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
 			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
-				<uni-list>
-					<uni-list-item :title="item.name" class="listit" v-for="(item,index) in list" :key="index" @click="toShopInformation(item.id)"
-					 :note="item.mobile" :showArrow='true' :rightText='item.job' :clickable='true'>
-						<template slot="header">
-							<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" :src="url+item.images"></u-image>
-						</template>
-					</uni-list-item>
-				</uni-list>
-				<!-- 数据列表 -->
+				<view class="list" v-for="(item,index) in list" :key="index" @click="toSupplierDetails(item)">
+					<view>
+						{{item.name}}
+					</view>
+				</view>
 			</k-scroll-view>
 			<u-toast ref="uToast" />
 		</view>
@@ -31,9 +27,8 @@
 <script>
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import {
-		staffList
-	} from "../../api/staff.js"
-	import url from '../../api/configuration.js'
+		supplierList
+	} from '../../api/supplier.js'
 	export default {
 		components: {
 			kScrollView
@@ -58,33 +53,36 @@
 				page_size: 10,
 				list: [],
 				last_page: 0,
-				url: url.domain,
 				style_input: {
 					'background-color': '#ffffff'
-				}
+				},
+				kda: ''
 			}
 		},
 		methods: {
+			toSupplierDetails(v) {
+				uni.$emit('supplierDatum', v)
+				uni.navigateBack()
+			},
 			changeInput(v) {
-				// console.log(v);
 				this.init(v)
 			},
 			async init(v) {
-				let res = await staffList({
+				let res = await supplierList({
 					page: this.page,
 					page_size: this.page_size,
 					keyword: v || ''
 				})
-				console.log(res);
+				// console.log(res);
 				this.list = [];
-				this.list.push(...res.data)
-				this.last_page = res.last_page
+				this.list.push(...res.data);
+				this.last_page = res.last_page;
 			},
 			// 下拉刷新
 			handlePullDown(stopLoad) {
 				this.page = 1;
-				this.list = []
-				this.init()
+				this.list = [];
+				this.init();
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
@@ -111,22 +109,24 @@
 				})
 			},
 			// 前往新增店铺信息
-			toAddShopInformation() {
+			toAddSupplier() {
 				uni.navigateTo({
-					url: `/pages/addStaffsInformation/addStaffsInformation`
+					url: `/pages/addSupplier/addSupplier?val=1`
 				})
 			}
 		},
-		onLoad() {
+		onLoad(query) {
 			this.init();
+			// this.kda = query.val;
+			
 
 		},
-
+		
 	}
 </script>
 
 <style lang="scss" scoped>
-	.staffManagement {
+	.chooseSupplier {
 		width: 100vw;
 
 		.search {
@@ -150,8 +150,22 @@
 
 		}
 
+		.list {
+			width: 100%;
+			height: 80rpx;
+			line-height: 80rpx;
+			text-indent: 1em;
+			border-bottom: 0.01rem solid #999999;
+		}
+
 		.right_icon {
-			margin-right: 20rpx;
+			margin-right: 30rpx;
+		}
+
+		.weights {
+			color: #C0C0C0;
+			font-size: 24rpx;
+			padding-top: 16rpx;
 		}
 	}
 </style>

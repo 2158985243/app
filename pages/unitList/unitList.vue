@@ -1,6 +1,6 @@
 <template>
-	<view class="category">
-		<u-navbar back-icon-color='#ffffff' title="选择分类" :background="background" title-color="#ffffff">
+	<view class="unitList">
+		<u-navbar back-icon-color='#ffffff' title="商品单位列表" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="edit-pen" @click="edit" color="#ffffff" class="right_icon" size="40"></u-icon>
 				<u-icon name="plus" @click="toAddCategory" color="#ffffff" class="right_icon" size="40"></u-icon>
@@ -21,15 +21,14 @@
 			<view class="pop">
 				<text class="titl">修改分类</text>
 				<view class="nav">
-					<text>分类:</text>
-					<u-input class='inputs' placeholder="请输入分类名称" v-model="name" type="text" :border="border" />
+					<text>单位:</text>
+					<u-input class='inputs' placeholder="请输入单位名称" v-model="name" type="text" :border="border" />
 				</view>
-			</view>
-			<view class="pop">
 				<view class="nav">
-					<text>排序:</text>
-					<u-input class='inputs' placeholder="请输入排序" v-model="sort" type="text" :border="border" />
+					<text>备注:</text>
+					<u-input class='inputs' placeholder="请输入备注" v-model="remarks" type="text" :border="border" />
 				</view>
+				
 			</view>
 			<view class="btn">
 				<u-button :hair-line="false" @click="abrogate" class="btnChild">取消</u-button>
@@ -39,7 +38,7 @@
 		<!-- 删除分类 -->
 		<u-popup v-model="showdel" mode="center">
 			<view class="pop">
-				<text class="del">是否删除{{name}}分类？</text>
+				<text class="del">是否删除{{name}}单位？</text>
 			</view>
 			<view class="btn">
 				<u-button :hair-line="false" @click="abolish" class="btnChild">取消</u-button>
@@ -52,10 +51,10 @@
 
 <script>
 	import {
-		goodsCategoryList,
-		goodsCategoryEdit,
-		goodsCategoryDel
-	} from '../../api/goods_category.js'
+		unitList,
+		unitEdit,
+		unitDel
+	} from '../../api/unit.js'
 	export default {
 		data() {
 			return {
@@ -73,17 +72,18 @@
 				sort: 100,
 				id: 0,
 				border: true,
+				remarks:''
 			}
 		},
 		methods: {
-			toAddCommodity(item){
-				uni.$emit('categoryDatum', item)
+			toAddCommodity(item) {
+				uni.$emit('unitListDatum', item)
 				uni.navigateBack();
 			},
 			// 前往添加分类
 			toAddCategory() {
 				uni.navigateTo({
-					url: '/pages/addCategory/addCategory'
+					url: '/pages/addUnitList/addUnitList'
 				})
 			},
 			// 显示隐藏修改按钮
@@ -92,13 +92,13 @@
 			},
 			// 初始化
 			async init() {
-				let res = await goodsCategoryList()
+				let res = await unitList()
 				this.list = res;
 			},
 			// 点击编辑按钮
 			editct(v) {
 				this.name = v.name;
-				this.sort = v.sort;
+				this.remarks = v.remarks;
 				this.showedit = true;
 				this.id = v.id
 			},
@@ -106,6 +106,7 @@
 			delct(v) {
 				this.showdel = true;
 				this.name = v.name;
+				this.remarks = v.remarks;
 				this.id = v.id
 			},
 			// 编辑取消按钮
@@ -114,9 +115,9 @@
 			},
 			// 编辑确定按钮
 			async ensure() {
-				let res = await goodsCategoryEdit(this.id, {
+				let res = await unitEdit(this.id, {
 					name: this.name,
-					sort: this.sort
+					remarks:this.remarks
 				})
 				this.showedit = false;
 				if (!res.code) {
@@ -129,11 +130,11 @@
 			},
 			// 删除确定按钮
 			async ascertain() {
-				let res = await goodsCategoryDel(this.id)
-				this.showdel = false;
+				let res = await unitDel(this.id)
 				if (!res.code) {
 					this.init()
 				}
+				this.showdel = false;
 			},
 		},
 		onLoad() {
@@ -143,7 +144,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.category {
+	.unitList {
 		width: 100%;
 		height: 100%;
 		background-color: #f8f8f8;
@@ -154,7 +155,7 @@
 
 		.pop {
 			width: 70vw;
-			height: 10vh;
+			height: 20vh;
 
 			// display: flex;
 			// justify-content: center;
@@ -167,12 +168,13 @@
 				text-align: center;
 			}
 
+			
 			.nav {
 				display: flex;
 				justify-content: center;
 				align-items: center;
 				padding: 0 20rpx;
-
+			
 				text {
 					padding-right: 10rpx;
 				}
@@ -215,6 +217,7 @@
 				// align-items: center;
 				background-color: #FFFFFF;
 				border-bottom: 0.01rem solid #dadada;
+
 				text {
 					display: block;
 					width: 100%;

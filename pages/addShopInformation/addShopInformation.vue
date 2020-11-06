@@ -54,8 +54,8 @@
 	export default {
 		data() {
 			return {
-				show: false,
 				limit: ['png', 'jpg', 'jpeg'],
+				show: false,
 				defaultres: ["广东省", "广州市", "番禺区"],
 				params: {
 					province: true,

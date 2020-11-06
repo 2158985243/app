@@ -1,6 +1,6 @@
 <template>
-	<view class="category">
-		<u-navbar back-icon-color='#ffffff' title="选择分类" :background="background" title-color="#ffffff">
+	<view class="trademark">
+		<u-navbar back-icon-color='#ffffff' title="选择品牌" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="edit-pen" @click="edit" color="#ffffff" class="right_icon" size="40"></u-icon>
 				<u-icon name="plus" @click="toAddCategory" color="#ffffff" class="right_icon" size="40"></u-icon>
@@ -25,12 +25,6 @@
 					<u-input class='inputs' placeholder="请输入分类名称" v-model="name" type="text" :border="border" />
 				</view>
 			</view>
-			<view class="pop">
-				<view class="nav">
-					<text>排序:</text>
-					<u-input class='inputs' placeholder="请输入排序" v-model="sort" type="text" :border="border" />
-				</view>
-			</view>
 			<view class="btn">
 				<u-button :hair-line="false" @click="abrogate" class="btnChild">取消</u-button>
 				<u-button :hair-line="false" @click='ensure' class="btnChild">确定</u-button>
@@ -52,10 +46,10 @@
 
 <script>
 	import {
-		goodsCategoryList,
-		goodsCategoryEdit,
-		goodsCategoryDel
-	} from '../../api/goods_category.js'
+		brandList,
+		brandEdit,
+		brandDel
+	} from '../../api/brand.js'
 	export default {
 		data() {
 			return {
@@ -76,14 +70,14 @@
 			}
 		},
 		methods: {
-			toAddCommodity(item){
-				uni.$emit('categoryDatum', item)
+			toAddCommodity(item) {
+				uni.$emit('trademarkDatum', item)
 				uni.navigateBack();
 			},
 			// 前往添加分类
 			toAddCategory() {
 				uni.navigateTo({
-					url: '/pages/addCategory/addCategory'
+					url: '/pages/addTrademark/addTrademark'
 				})
 			},
 			// 显示隐藏修改按钮
@@ -92,7 +86,7 @@
 			},
 			// 初始化
 			async init() {
-				let res = await goodsCategoryList()
+				let res = await brandList()
 				this.list = res;
 			},
 			// 点击编辑按钮
@@ -114,9 +108,8 @@
 			},
 			// 编辑确定按钮
 			async ensure() {
-				let res = await goodsCategoryEdit(this.id, {
-					name: this.name,
-					sort: this.sort
+				let res = await brandEdit(this.id, {
+					name: this.name
 				})
 				this.showedit = false;
 				if (!res.code) {
@@ -129,11 +122,11 @@
 			},
 			// 删除确定按钮
 			async ascertain() {
-				let res = await goodsCategoryDel(this.id)
-				this.showdel = false;
+				let res = await brandDel(this.id)
 				if (!res.code) {
 					this.init()
 				}
+				this.showdel = false;
 			},
 		},
 		onLoad() {
@@ -143,7 +136,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.category {
+	.trademark {
 		width: 100%;
 		height: 100%;
 		background-color: #f8f8f8;
@@ -154,7 +147,7 @@
 
 		.pop {
 			width: 70vw;
-			height: 10vh;
+			height: 15vh;
 
 			// display: flex;
 			// justify-content: center;
@@ -171,8 +164,7 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				padding: 0 20rpx;
-
+				padding:0 20rpx;
 				text {
 					padding-right: 10rpx;
 				}
@@ -215,6 +207,7 @@
 				// align-items: center;
 				background-color: #FFFFFF;
 				border-bottom: 0.01rem solid #dadada;
+
 				text {
 					display: block;
 					width: 100%;
