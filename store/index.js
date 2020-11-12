@@ -5,7 +5,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state:{
-		token:''
+		token:'',
+		barcodeDa:{},
+		sizerDa:[],
+		colorDa:[],
 	},
 	getters:{
 		
@@ -14,6 +17,15 @@ export default new Vuex.Store({
 		loginStatusAction(state,context){
 			console.log(context);
 			state.token = context.token;
+		},
+		barcodeAction(state,context){
+			state.barcodeDa = context.barcodes;
+		},
+		colorDaAction(state,context){
+			state.colorDa = context.colorDa;
+		},
+		sizerDaAction(state,context){
+			state.sizerDa = context.sizerDa;
 		}
 	},
 	actions:{

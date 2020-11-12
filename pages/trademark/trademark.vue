@@ -94,7 +94,7 @@
 				this.name = v.name;
 				this.sort = v.sort;
 				this.showedit = true;
-				this.id = v.id
+				this.id = v.id;
 			},
 			// 点击删除按钮
 			delct(v) {

@@ -119,6 +119,7 @@
 		sizeEdit,
 		sizeDel
 	} from '../../api/sizes.js'
+	import store from '@/store'
 	export default {
 		data() {
 			return {
@@ -153,7 +154,7 @@
 				valuesize: '',
 				size_group_id: 0,
 				active: 0,
-				group:{},
+				group: {},
 			}
 		},
 		methods: {
@@ -166,8 +167,8 @@
 				this.editDel = false;
 				let res = await sizeDel(this.group.id)
 				// console.log(res);
-				if(!res.code){
-					this.init();
+				if (!res.code) {
+					this.init(1);
 				}
 			},
 			// 取消编辑尺码
@@ -177,12 +178,12 @@
 			// 确定编辑尺码
 			async ensure() {
 				this.editsize = false;
-				let res = await sizeEdit(this.group.id,{
-					name:this.valuesize
+				let res = await sizeEdit(this.group.id, {
+					name: this.valuesize
 				})
 				// console.log(res);
-				if(!res.code){
-					this.init();
+				if (!res.code) {
+					this.init(1);
 				}
 			},
 			// 点击编辑或者删除尺码
@@ -199,7 +200,7 @@
 			longtap(item) {
 				console.log(item);
 				this.titListShow = true;
-				this.group =item;
+				this.group = item;
 			},
 			// 点击单个尺码
 			check(item, index, ind) {
@@ -240,7 +241,7 @@
 					size_group_id: this.size_group_id
 				})
 				if (!res.code) {
-					this.init();
+					this.init(1);
 					this.valuesize = ''
 				}
 				this.showsize = false;
@@ -300,7 +301,7 @@
 				})
 				this.value = '';
 				if (!res.code) {
-					this.init()
+					this.init(1)
 				}
 			},
 			// 取消编辑尺码组
@@ -316,7 +317,7 @@
 				})
 				this.valuename = '';
 				if (!res.code) {
-					this.init()
+					this.init(1)
 				}
 			},
 			// 取消删除尺码组
@@ -328,10 +329,11 @@
 				this.showdel = false;
 				let res = await sizeGroupDel(this.id)
 				if (!res.code) {
-					this.init()
+					this.init(1)
 				}
 			},
-			async init() {
+			// 初始化
+			async init(v) {
 				let res = await sizeGroupList();
 				this.list = res.size_group;
 				this.list.map((v, i) => {
@@ -340,13 +342,41 @@
 						v1['choice'] = false;
 					})
 				})
-				// console.log(this.list);
+				if (!v) {
+					this.backtrack()
+				}
+				// console.log(store.state.sizerDa);
 			},
-			save(){
+			// 返回的数据
+			backtrack() {
+				let sizerDa = store.state.sizerDa
+				if (sizerDa) {
+					sizerDa.map((v, i) => {
+						// console.log(v);
+						this.list.map((j, k) => {
+							if (v.id == j.id) {
+								let num = 0;
+								j.size.map((v1, i1) => {
+									if (v.choice) {
+										++num;
+										v1.choice = true;
+										if (num == j.size.length) {
+											j.checked = true;
+										}
+									}
+								})
+							}
+						})
+					})
+				}
+				console.log(this.list);
+			},
+			// 选择确定
+			save() {
 				let ids = [];
-				this.list.map((v,i)=>{
-					v.size.map((v1,i1)=>{
-						if(v1.choice){
+				this.list.map((v, i) => {
+					v.size.map((v1, i1) => {
+						if (v1.choice) {
 							ids.push(v1)
 						}
 					})
@@ -356,7 +386,7 @@
 			}
 		},
 		onLoad() {
-			this.init()
+			this.init();
 		}
 	}
 </script>

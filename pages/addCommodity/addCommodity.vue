@@ -51,9 +51,9 @@
 			<view class="box1">
 				<view class="form_item1">
 					<text>上传图片</text>
-					<u-upload width="120" height='120' upload-text='' image-mode='aspectFit' :limitType='limit' :action="action+'/api/upload'"
+					<u-upload width="100" height='100' upload-text='' image-mode='aspectFit' :limitType='limit' :action="action+'/api/upload'"
 					 :header="header" :name="formData.type" :form-data="formData" @on-success="onSuccess" :file-list="fileList"
-					 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="1" :show-progress="false" @on-error='onError'
+					 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="6" :show-progress="false" @on-error='onError'
 					 del-bg-color='#000000'>
 					</u-upload>
 				</view>
@@ -69,7 +69,8 @@
 			<view class="form_item">
 				<text>单品条码</text>
 				<u-input placeholder='' v-model="barcode_tit" :disabled='true' type="text" />
-				<text class="set">设置</text>
+				<text class="set" @click="toBarcodes">设置</text>
+				<u-toast ref="uToast" />
 			</view>
 		</view>
 		<view class="box">
@@ -116,14 +117,16 @@
 				</view>
 				<view class="form_item">
 					<text>年份</text>
-					<u-input placeholder='请选择年份' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
+					<u-input placeholder='请选择年份' @tap="toYear" :disabled='true' type='text' v-model="form.year" />
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
+				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :params="params"></u-picker>
 				<view class="form_item">
 					<text>季节</text>
-					<u-input placeholder='请选择季节' @tap="toColors" :disabled='true' type='text' v-model="colors_name" />
+					<u-input placeholder='请选择季节' @tap="toSeason" :disabled='true' type='text' v-model="form.season" />
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
+				<u-select v-model="showSeason" @confirm="confirm" :list="list"></u-select>
 				<view class="form_item">
 					<text>单位</text>
 					<u-input placeholder='请选择单位' @tap="toUnitList" :disabled='true' type='text' v-model="unitList_name" />
@@ -134,34 +137,34 @@
 			<view class="box" v-show="his">
 				<view class="form_item">
 					<text>材质</text>
-					<u-input placeholder='请输入或选择材质' @tap="toColors" :disabled='true' type='text' v-model="colors_name" />
+					<u-input placeholder='请输入或选择材质' type='text' v-model="form.material" />
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
 					<text>风格</text>
-					<u-input placeholder='请输入或选择风格' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
+					<u-input placeholder='请输入或选择风格' type='text' v-model="form.style" />
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
 					<text>款式</text>
-					<u-input placeholder='请输入或选择款式' @tap="toColors" :disabled='true' type='text' v-model="colors_name" />
+					<u-input placeholder='请输入或选择款式' type='text' v-model="form.model" />
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
 					<text>产地</text>
-					<u-input placeholder='请输入或选择产地' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
+					<u-input placeholder='请输入或选择产地' type='text' v-model="form.origin" />
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
 			<view class="box bottoms" v-show="his">
 				<view class="form_item">
 					<text>执行标准</text>
-					<u-input placeholder='请输入或选择执行标准' @tap="toColors" :disabled='true' type='text' v-model="colors_name" />
+					<u-input placeholder='请输入或选择执行标准' type='text' v-model="form.standard" />
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
 					<text>安全类型</text>
-					<u-input placeholder='请输入或选择执行标准' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
+					<u-input placeholder='请输入或选择执行标准' type='text' v-model="form.security" />
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
@@ -175,6 +178,7 @@
 
 <script>
 	import urls from '../../api/configuration.js'
+	import store from '@/store'
 	import {
 		goodsAdd
 	} from '../../api/goods.js'
@@ -192,7 +196,7 @@
 					goods_category_id: '',
 					supplier_id: '',
 					main_image: '',
-					images: '',
+					images: [],
 					barcode: '',
 					warning: 0,
 					warning_max: 0,
@@ -203,7 +207,7 @@
 					status: 0,
 					barcode_array: [],
 					brand_id: 0,
-					year: 1970,
+					year: '',
 					season: '',
 					unit_id: 0,
 					material: '',
@@ -213,6 +217,8 @@
 					standard: '',
 					security: ''
 				},
+				showSeason: false,
+				showtime: false,
 				storeName: '',
 				limit: ['png', 'jpg', 'jpeg'],
 				formData: {
@@ -236,43 +242,132 @@
 				size_name: '',
 				trademark_name: '',
 				unitList_name: '',
-				his: false
+				list: [{
+						value: '1',
+						label: '春'
+					},
+					{
+						value: '2',
+						label: '夏'
+					},
+					{
+						value: '3',
+						label: '秋'
+					},
+					{
+						value: '4',
+						label: '冬'
+					}
+				],
+				his: false,
+				params: {
+					year: true,
+					month: false,
+					day: false,
+					hour: false,
+					minute: false,
+					second: false
+				},
+				barcodeDa: {
+					colorDa: [],
+					sizerDa: []
+				},
+				exit: false
 			}
 		},
+		onBackPress(options) {
+			if (options.from === 'navigateBack') {
+				return false;
+			}
+			this.quit()
+			return true;
+		},
 		methods: {
-
+			quit() {
+				uni.showModal({
+					title: '提示',
+					content: '商品还未保存，确认要退出？',
+					success: function(res) {
+						if (res.confirm) {
+							uni.navigateTo({
+								url: '/pages/commodityManagement/commodityManagement'
+							})
+						} else if (res.cancel) {
+							return true;
+						}
+					}
+				});
+			},
+			// 时间返回fn
+			confirmTime(v) {
+				// console.log(v);
+				this.form.year = v.year;
+			},
+			// 季节返回fn
+			confirm(v) {
+				console.log(v);
+				this.form.season = v[0].label;
+			},
+			// 点击选择年份
+			toYear() {
+				this.showtime = true;
+			},
+			// 点击选择季节
+			toSeason() {
+				this.showSeason = true;
+			},
 			hidde() {
 				this.his = !this.his;
 			},
 			// 
 			async save() {
-				this.form.barcode_array = []
-				this.form.color_id.map((v, i) => {
-					this.form.barcode_array.push({
-						color_id: v,
-						data: []
-					})
-					this.form.size_id.map((v1, i1) => {
-						this.form.barcode_array[i].data.push({
-							size_id: v1,
-							barcode: ''
+				if (!store.state.barcodeDa.barcode_array) {
+					this.form.barcode_array = []
+					this.form.color_id.map((v, i) => {
+						this.form.barcode_array.push({
+							color_id: v,
+							data: []
+						})
+						this.form.size_id.map((v1, i1) => {
+							this.form.barcode_array[i].data.push({
+								size_id: v1,
+								barcode: ''
+							})
 						})
 					})
-				})
-				// console.log(this.form.barcode_array);
+				} else {
+					this.form.barcode_array = store.state.barcodeDa.barcode_array;
+				}
 				let obj = {}
 				for (let key in this.form) {
-					if (this.form[key]) {
+					if (this.form[key] || this.form[key] === 0) {
 						obj[key] = this.form[key];
 					}
 				}
+				this.$store.commit('colorDaAction', {
+					colorDa: ''
+				});
+				this.$store.commit('sizerDaAction', {
+					sizerDa: ''
+				});
 				let res = await goodsAdd(obj);
+				if (!res.code) {
+					uni.navigateTo({
+						url: '/pages/commodityManagement/commodityManagement'
+					})
+				}
 				// console.log(res);
 			},
 			// 上传图片成功fnc
 			onSuccess(data, index, lists, name) {
 				console.log(data, index, lists, name);
-				this.form.images = data.data.url
+				lists.map((v, i) => {
+					if (i == 0) {
+						this.form.main_image = v.response.data.url;
+					} else {
+						this.form.images.push(v.response.data.url)
+					}
+				})
 			},
 			// 上传图片失败fnc
 			onError(res, index, lists, name) {
@@ -334,7 +429,7 @@
 			},
 			// 商品条码扫码
 			toBarcode() {
-				let that = this
+				let that = this;
 				// 允许从相机和相册扫码
 				uni.scanCode({
 					success: function(res) {
@@ -350,6 +445,38 @@
 				this.header.token = "Bearer " + userMessage.token
 				this.formData.type = "store";
 				this.formData.path = "store";
+
+			},
+			toBarcodes() {
+				if (this.barcodeDa.colorDa.length > 0 && this.barcodeDa.sizerDa.length > 0) {
+
+					this.form.barcode_array = []
+					this.form.color_id.map((v, i) => {
+						this.form.barcode_array.push({
+							color_id: v,
+							data: []
+						})
+						this.form.size_id.map((v1, i1) => {
+							this.form.barcode_array[i].data.push({
+								size_id: v1,
+								barcode: ''
+							})
+						})
+					})
+					this.barcodeDa['barcode_array'] = this.form.barcode_array;
+					this.$store.commit('barcodeAction', {
+						barcodes: this.barcodeDa
+					});
+					uni.navigateTo({
+						url: '/pages/barcode/barcode'
+					})
+
+				} else {
+					this.$refs.uToast.show({
+						title: '请选择颜色和尺码后再操作！',
+						type: 'defaul'
+					})
+				}
 			},
 		},
 		onLoad() {
@@ -363,6 +490,11 @@
 			uni.$on("colorDatum", (res) => {
 				if (res) {
 					// console.log(res);
+					this.barcodeDa.colorDa = res;
+					// uni.setStorageSync('colorDa', res);
+					this.$store.commit('colorDaAction', {
+						colorDa: res
+					});
 					let str = [];
 					res.map((v, i) => {
 						this.form.color_id.push(v.id);
@@ -374,11 +506,16 @@
 			uni.$on("sizeDatum", (res) => {
 				if (res) {
 					// console.log(res);
+					this.$store.commit('sizerDaAction', {
+						sizerDa: res
+					});
 					let str = [];
 					res.map((v, i) => {
 						this.form.size_id.push(v.id);
 						str.push(v.name);
+						v['barcode'] = ''
 					})
+					this.barcodeDa.sizerDa = res;
 					this.size_name = str.join(',');
 				}
 			});
@@ -532,7 +669,7 @@
 					align-items: center;
 					background-color: #FFFFFF;
 					margin-bottom: 2rpx;
-					height: 140rpx;
+					height: 280rpx;
 
 					/deep/.u-add-tips {
 						margin-top: 0;

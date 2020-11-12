@@ -60,7 +60,7 @@
 				})
 			},
 			colorEdit(idx, index){
-				let obc = 0;
+				let obc = false;
 				this.$emit("colorClick", {
 					idx,
 					index,
@@ -68,7 +68,7 @@
 				})
 			},
 			colorDel(idx, index){
-				let obc = 1;
+				let obc = true;
 				this.$emit("colorClick", {
 					idx,
 					index,

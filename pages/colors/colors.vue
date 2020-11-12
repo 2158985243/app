@@ -1,5 +1,6 @@
 <template>
 	<view class="colors">
+		<!-- <view class="status_bar"></view> -->
 		<u-navbar back-icon-color='#ffffff' title="选择颜色" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="edit-pen" @click="edit" color="#ffffff" class="right_icon" size="40"></u-icon>
@@ -30,9 +31,10 @@
 		colorList,
 		colorDel
 	} from '../../api/colors.js'
+	import store from '@/store'
 	export default {
 		components: {
-			// uniIndexedList
+			// uniIndexedList 
 		},
 		data() {
 			return {
@@ -45,21 +47,23 @@
 					backgroundColor: '#2979ff'
 				},
 				list: [],
-				datum:[]
+				datum: [],
+				checkedData: [],
 
 			}
 		},
 		methods: {
 			save() {
-				uni.$emit('colorDatum', this.datum)
+				uni.$emit('colorDatum', this.datum);
 				uni.navigateBack();
 			},
 			bindClick(v) {
 				console.log(v);
-				if (v.obc == 0) {
-					this.editColor(v)
-				} else if (v.obc == 1) {
-					this.delColor(v)
+
+				if (v.obc == false) {
+					this.editColor(v);
+				} else if (v.obc == true) {
+					this.delColor(v);
 				} else {
 					this.datum = v.select;
 				}
@@ -76,7 +80,20 @@
 				let res = await colorList({
 					keyword: this.keyword
 				})
-				// console.log(res);
+				// this.list = res;
+				for (let i in res) {
+					for (let x in res[i].data) {
+						let ele = res[i].data[x]
+						for (let j in this.checkedData) {
+							if (ele.id === this.checkedData[j].id) {
+								ele.checked = true;
+								break;
+							} else {
+								ele.checked = false;
+							}
+						}
+					}
+				}
 				this.list = res;
 			},
 			changed(v) {
@@ -102,7 +119,7 @@
 						if (res.confirm) {
 							// console.log('用户点击确定');
 							let res = await colorDel(e.item.id)
-							if (!this.res.code) {
+							if (!res.code) {
 								this.init();
 							}
 						} else if (res.cancel) {
@@ -112,9 +129,19 @@
 				});
 			},
 
+			bin() {
+				this.checkedData = store.state.colorDa;
+				this.bindClick(this.checkedData)
+			}
 		},
 		onLoad() {
+			this.bin();
 			this.init();
+
+
+		},
+		onShow() {
+			// this.init();
 		}
 	}
 </script>
@@ -122,6 +149,9 @@
 <style lang="scss" scoped>
 	.colors {
 		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
 
 		/deep/.u-content {
 			background-color: #FFFFFF !important;
@@ -139,6 +169,10 @@
 
 		.list {
 			// margin-top: 60rpx;
+			display: flex;
+			flex: auto;
+			height: 100px;
+			position: relative;
 		}
 
 		.icon {
@@ -149,7 +183,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			// height: 80rpx;
+			// height: 100rpx;
 		}
 
 		.right_icon {
