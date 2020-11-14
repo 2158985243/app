@@ -361,6 +361,7 @@
 			// 上传图片成功fnc
 			onSuccess(data, index, lists, name) {
 				console.log(data, index, lists, name);
+				this.form.images = []
 				lists.map((v, i) => {
 					if (i == 0) {
 						this.form.main_image = v.response.data.url;
@@ -546,7 +547,7 @@
 				if (res) {
 					// let str = [];
 					// res.map((v, i) => {
-					this.form.unit_id = res.id;
+					this.form.brand_id = res.id;
 					// str.push(v.name);
 					this.trademark_name = res.name;
 					// })

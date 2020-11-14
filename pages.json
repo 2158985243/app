@@ -438,6 +438,18 @@
             }
             
         }
+        ,{
+            "path" : "pages/commodityDetails/commodityDetails",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom", // 隐藏系统导航栏
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

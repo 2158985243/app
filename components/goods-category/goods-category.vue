@@ -14,7 +14,7 @@
 				<view class="list-arr-name" :style="{height:hig+'rpx'}" v-show="acitve==index">
 					<view class="list-shop" v-for="(item1,index1) in item.arr" @click="rightchange(index1,item1)">
 						<view class="img">
-							<u-image width="100rpx" height="100rpx" border-radius="20rpx" :src="$cfg.domain+item1.main_image"></u-image>
+							<u-image width="100rpx" height="100rpx" border-radius="20rpx" mode='aspectFit' :src="$cfg.domain+item1.main_image"></u-image>
 
 						</view>
 						<view class="cont">

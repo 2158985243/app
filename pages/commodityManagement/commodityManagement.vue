@@ -8,9 +8,10 @@
 		</u-navbar>
 		<view class="box">
 			<u-popup v-model="show" mode="right" width="80%">
+
 				<view class="popup-right">
 					<view class="pop-title">
-						<u-icon name="arrow-left" color="#000000" size="40"></u-icon>
+						<u-icon name="arrow-left" color="#000000" @click='show=false' size="40"></u-icon>
 						<view class="sx">筛选</view>
 					</view>
 					<view class="pop-list">
@@ -21,13 +22,13 @@
 							</view>
 							<view class="nav-list">
 								<view class="lak" v-for="(item,index) in brandList" :key="index">
-									<view class="nav-name" v-if="index<5">
-										<view class="nav-kk">
+									<view class="nav-name">
+										<view class="nav-kk" @click.stop="clickBrand(item,index)" :class="item.checked? 'actives':''" v-if="index<5">
 											{{item.name}}
 										</view>
 									</view>
 									<view class="nav-name" v-if="index==5">
-										<view class="nav-kk">
+										<view class="nav-kk" @click.stop="barndArr">
 											全部品牌
 										</view>
 									</view>
@@ -35,27 +36,93 @@
 							</view>
 						</view>
 
-						
+
 						<view class="nav-box">
 							<view class="nav-tit">
 								<text class="ht">类别</text>
-						
+
 							</view>
 							<view class="nav-list">
 								<view class="lak" v-for="(item,index) in CategoryList" :key="index">
-									<view class="nav-name" v-if="index<5">
-										<view class="nav-kk">
+									<view class="nav-name">
+										<view class="nav-kk" @click.stop="clickCate(item,index)" :class="item.checked? 'actives':''" v-if="index<5">
 											{{item.name}}
 										</view>
 									</view>
 									<view class="nav-name" v-if="index==5">
-										<view class="nav-kk">
+										<view class="nav-kk" @click.stop="categoryArr">
 											全部类别
 										</view>
 									</view>
 								</view>
 							</view>
 						</view>
+
+						<view class="nav-box">
+							<view class="nav-tit">
+								<text class="ht">状态</text>
+
+							</view>
+							<view class="nav-list">
+								<view class="lak" v-for="(item,index) in status" :key="index">
+									<view class="nav-name">
+										<view class="nav-kk" @click.stop="clickStatus(item,index)" :class="item.checked? 'actives':''">
+											{{item.name}}
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+
+						<view class="nav-box">
+							<view class="nav-tit">
+								<text class="ht">价格</text>
+
+							</view>
+							<view class="nav-list">
+								<view class="lak" v-for="(item,index) in price" :key="index">
+									<view class="nav-name">
+										<view class="nav-kk" @click.stop="clickPrice(item,index)" :class="item.checked? 'actives':''">
+											{{item.name}}
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+
+
+					</view>
+					<view class="btn">
+						<u-button class="open" @click='reset'>重置</u-button>
+						<u-button class="open" type="primary" @click='determine'>确定</u-button>
+					</view>
+				</view>
+			</u-popup>
+			<u-popup v-model="show1" mode="right" z-index='10077' width="80%">
+				<view class="popup-right">
+					<view class="pop-title">
+						<u-icon name="arrow-left" color="#000000" @click='show1=false' size="40"></u-icon>
+						<view class="sx">品牌</view>
+					</view>
+					<view class="pop-listt">
+						<u-checkbox-group :wrap='true'>
+							<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked" v-for="(item, index) in brandList"
+							 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+						</u-checkbox-group>
+					</view>
+				</view>
+			</u-popup>
+			<u-popup v-model="show2" mode="right" z-index='10077' width="80%">
+				<view class="popup-right">
+					<view class="pop-title">
+						<u-icon name="arrow-left" color="#000000" @click='show2=false' size="40"></u-icon>
+						<view class="sx">类别</view>
+					</view>
+					<view class="pop-listt">
+						<u-checkbox-group :wrap='true'>
+							<u-checkbox shape="circle" @change="cartesChecked($event,index)" v-model="item.checked" v-for="(item, index) in CategoryList"
+							 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+						</u-checkbox-group>
 					</view>
 				</view>
 			</u-popup>
@@ -65,7 +132,7 @@
 					 placeholder="请输入货号/商品名称/条码" v-model="keyword" @Inventory="handelScan"></u-search>
 					<view class="search_add" @click="popup">
 						<text>筛选</text>
-						<u-icon name="arrow-down-fill" color="#ffffff" class="right_icon" size="28"></u-icon>
+						<u-icon name="arrow-down-fill"  color="#ffffff" class="right_icon" size="28"></u-icon>
 					</view>
 				</view>
 			</view>
@@ -82,7 +149,8 @@
 
 <script>
 	import {
-		goodsList
+		goodsList,
+		goods
 	} from '../../api/goods.js'
 	import {
 		brandList
@@ -112,11 +180,121 @@
 				dataList: [],
 				vs: 1,
 				show: false,
+				show1: false,
+				show2: false,
 				brandList: [],
 				CategoryList: [],
+				status: [{
+					name: '启用',
+					id: 1,
+					checked: false
+				}, {
+					name: '未启用',
+					id: 0,
+					checked: false
+				}],
+				price: [{
+					name: '缺少零售价',
+					id: "purchase_price",
+					checked: false
+				}, {
+					name: '缺少采购价',
+					id: 'retail_price',
+					checked: false
+				}, {
+					name: '缺少会员价',
+					id: 'customer_price',
+					checked: false
+				}],
+				options: {
+					goods_category_id: [], //类别
+					status: [], //状态
+					price: [], //价格
+				}
 			}
 		},
 		methods: {
+
+			// 
+			barlistChecked(e, index) {
+				this.$set(this.brandList, index, this.brandList[index])
+			},
+			cartesChecked(e, index) {
+				this.$set(this.CategoryList, index, this.CategoryList[index])
+			},
+			// 点击全部品牌
+			barndArr() {
+				this.show1 = true;
+			},
+			// 点击全部类别
+			categoryArr() {
+				this.show2 = true;
+			},
+			// 点击重置
+			reset() {
+				this.options = {
+					goods_category_id: [], //类别
+					status: [], //状态
+					price: []
+				}
+				this.brandList.map(v => {
+					v['checked'] = false;
+				})
+				this.CategoryList.map(v => {
+					v['checked'] = false;
+				})
+				this.price.map(v => {
+					v['checked'] = false;
+				})
+				this.status.map(v => {
+					v['checked'] = false;
+				})
+
+			},
+			// 点击确定
+			determine() {
+				this.CategoryList.map((v, i) => {
+					if (v.checked) {
+						this.options.goods_category_id.push(v.id)
+					}
+				})
+				this.status.map((v, i) => {
+					if (v.checked) {
+						this.options.status.push(v.id)
+					}
+				})
+				this.price.map((v, i) => {
+					if (v.checked) {
+						this.options.price.push(v.id)
+					}
+				})
+				this.show = false;
+				// console.log(this.options);
+			},
+			// 点击品牌
+			clickBrand(item, index) {
+				// this.actives1 = index;
+				this.$set(this.brandList, index, this.brandList[index]);
+				this.brandList[index].checked = !item.checked;
+			},
+			// 点击类别
+			clickCate(item, index) {
+				// this.actives2 = index;
+				this.$set(this.CategoryList, index, this.CategoryList[index]);
+				this.CategoryList[index].checked = !item.checked;
+			},
+			// 点击状态
+			clickStatus(item, index) {
+				// this.actives3 = index;
+				this.$set(this.status, index, this.status[index]);
+				this.status[index].checked = !item.checked;
+			},
+			// 点击价格
+			clickPrice(item, index) {
+				// this.actives4 = index;
+				this.$set(this.price, index, this.price[index]);
+				this.price[index].checked = !item.checked;
+			},
 			popup() {
 				this.show = true;
 			},
@@ -173,6 +351,9 @@
 			// 点击右侧
 			rightNav(e) {
 				console.log(e);
+				uni.navigateTo({
+					url: `/pages/commodityDetails/commodityDetails?id=${e.id}`
+				})
 			},
 			search(v) {
 				this.init()
@@ -189,6 +370,12 @@
 				let res1 = await goodsCategoryList()
 				this.CategoryList = res1;
 				// console.log(res);
+				this.brandList.map(v => {
+					v['checked'] = false;
+				})
+				this.CategoryList.map(v => {
+					v['checked'] = false;
+				})
 			}
 
 		},
@@ -259,12 +446,21 @@
 			background-color: #e3e3e3;
 		}
 
+		.actives {
+			background-color: #000000 !important;
+			color: #FFFFFF !important;
+		}
+
 		.popup-right {
 			display: flex;
 			flex-direction: column;
 
 			.pop-title {
+				position: fixed;
+				top: 0;
 				display: flex;
+				width: 100%;
+				background-color: #FFFFFF;
 				padding: 10rpx 0;
 				border-bottom: 10rpx solid #e2e2e2;
 
@@ -272,13 +468,51 @@
 					width: 90%;
 					text-align: center;
 				}
+
+				.logs {
+					width: 80%;
+					text-align: center;
+				}
+
+				.userd {
+					text-align: center;
+					color: #007AFF;
+				}
+			}
+
+			.pop-listt {
+				margin-top: 60rpx;
+				padding: 20rpx;
+
+				.u-checkbox {
+					height: 80rpx;
+				}
+			}
+
+			.btn {
+				width: 100%;
+				position: fixed;
+				bottom: 0;
+				display: flex;
+				flex-direction: row;
+
+				.open {
+					flex: 1;
+					border-radius: 0;
+					// width: 50%;
+				}
+			}
+
+			/deep/uni-button:after {
+				border-radius: 0;
 			}
 
 			.pop-list {
 				width: 100%;
 				display: flex;
 				flex-direction: column;
-				padding: 20rpx;
+				padding: 20rpx 10rpx;
+				margin-top: 60rpx;
 
 				.nav-box {
 					width: 100%;
@@ -299,12 +533,12 @@
 					.nav-list {
 						width: 100%;
 						display: flex;
-						justify-content: center;
+						// justify-content: center;
 						align-items: center;
 						flex-wrap: wrap;
 
 						.lak {
-							width: 33%;
+							width: 33.3%;
 						}
 
 						.nav-name {
