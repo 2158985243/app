@@ -6,31 +6,38 @@
 					<text class="nav-ol">
 						{{item.name}}
 					</text>
+					<text class="numberops" v-if="categoryQuantity[item.id]"> {{categoryQuantity[item.id]}}</text>
 				</view>
 			</view>
 		</view>
 		<view class="right">
-			<view class="list-arr" v-for="(item,index) in dataList" :key='index'>
-				<view class="list-arr-name" :style="{height:hig+'rpx'}" v-show="acitve==index">
-					<view class="list-shop" v-for="(item1,index1) in item.arr" @click="rightchange(index1,item1)">
-						<view class="img">
-							<u-image width="100rpx" height="100rpx" border-radius="20rpx" mode='aspectFit' :src="$cfg.domain+item1.main_image"></u-image>
-
-						</view>
-						<view class="cont">
-							<text>{{item1.name}}</text>
-							<text class="number">{{item1.number}}</text>
-							<text class="retail">&yen;{{item1.retail_price}}</text>
+			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
+			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
+			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown">
+				<view class="list-arr" v-for="(item,index) in dataList" :key='index'>
+					<view class="list-arr-name" :style="{height:hig+'rpx'}" v-show="acitve==index">
+						<view class="list-shop" v-for="(item1,index1) in item.arr" @click="rightchange(index1,item1)">
+							<view class="img">
+								<u-image width="100rpx" height="100rpx" border-radius="20rpx" mode='aspectFit' :src="$cfg.domain+item1.main_image"></u-image>
+							</view>
+							<view class="cont">
+								<text>{{item1.name}}</text>
+								<text class="number">{{item1.number}}</text>
+								<text class="retail">&yen;{{item1.retail_price}}</text>
+							</view>
+							<text class="numberops" v-if="goodsQuantity[item1.id]">{{goodsQuantity[item1.id].quantity}}</text>
 						</view>
 					</view>
 				</view>
-			</view>
+			</k-scroll-view>
 		</view>
 	</view>
 </template>
 
 <script>
 	// import {domain} from '../../api/configuration.js'
+	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
+	import store from '@/store'
 	export default {
 		name: 'goodsCategory',
 		props: {
@@ -46,39 +53,120 @@
 			}
 
 		},
+		components: {
+			kScrollView
+		},
 		data() {
 			return {
 				acitve: 0,
 				hig: '',
+				background: {
+					backgroundColor: '#2979ff'
+				},
+				refreshType: 'custom',
+				refreshTip: '正在下拉',
+				loadTip: '获取更多数据',
+				loadingTip: '正在加载中...',
+				emptyTip: '--到底了--',
+				touchHeight: 50,
+				height: 100,
+				bottom: 0,
+				autoPullUp: true,
+				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
+				page: 1,
+				page_size: 10,
+				list: [],
+				last_page: 0,
+				iq: '',
 			};
 		},
-		computed: {},
+		filters:{
+			filterQuantity(v) {
+				let quantity = 0;
+				let data = store.state.specificationOfGoods;
+				for(let i in data) {
+					for(let j in data[i].goodsData) {
+						if(data[i].goodsData[j].goods_id == v) {
+							quantity = quantity + data[i].goodsData[j].quantity;
+							
+						}
+					}
+				}
+				return quantity;
+			}
+		},
+		computed: {
+			goodsQuantity() {
+				let quantity ={};
+				let data = store.state.specificationOfGoods;
+				for(let i in data) {
+					for(let j in data[i].goodsData) {
+						if(!quantity.hasOwnProperty(data[i].goodsData[j].goods_id)) {
+							quantity[data[i].goodsData[j].goods_id] = {
+								quantity: 0,
+								goods_category_id:data[i].goodsData[j].goods_category_id
+							};
+						}
+						quantity[data[i].goodsData[j].goods_id].quantity += data[i].goodsData[j].quantity;
+					}
+				}
+				return quantity;
+			},
+			categoryQuantity() {
+				let quantity ={};
+				for(let i in this.dataList) {
+					if(!quantity.hasOwnProperty(this.dataList[i].id)) {
+						quantity[this.dataList[i].id] = 0;
+					}
+					if(this.dataList[i].id == 0) continue;
+					for(let j in this.goodsQuantity) {
+						if(this.goodsQuantity[j].goods_category_id == this.dataList[i].id) {
+							quantity[this.dataList[i].id] += this.goodsQuantity[j].quantity;
+						}
+					}
+				}
+				return quantity;
+			}
+		},
 		created() {},
 		onReady() {},
 		mounted() {
+			// console.log(store.state.specificationOfGoods,this.dataList);  
 			this.getSystemIngo()
 		},
 		methods: {
+			filterQuantity(v) {
+				let quantity = 0;
+				let data = store.state.specificationOfGoods;
+				for(let i in data) {
+					for(let j in data[i].goodsData) {
+						if(data[i].goodsData[j].goods_id == v) {
+							quantity = quantity + data[i].goodsData[j].quantity;
+							
+						}
+					}
+				}
+				return quantity;
+			},
+			
+			handlePullDown(stopLoad) {
+				this.$emit('handlePullDown', stopLoad)
+				stopLoad ? stopLoad() : '';
+			},
+			handleLoadMore(stopLoad) {
+				this.$emit('handleLoadMore', stopLoad)
+			},
+
 			getSystemIngo() {
 				let that = this;
 
 				let num = 0;
 				uni.getSystemInfo({
 					success: function(res) {
-						// console.log(res);
-						// console.log(res.pixelRatio);
-						// console.log(res.windowWidth);
-						// console.log(res.windowHeight);
-						// console.log(res.language);
-						// console.log(res.version);
-						// console.log(res.platform);
-						// num = res.windowHeight;
 						that.$u.getRect('.goodsCategory', true).then(rect => {
+
 							that.hig = (res.screenHeight - rect[0].top - res.statusBarHeight) * 2;
-							// console.log(that.hig);
-							// that.hig = 
 						});
-						// that.hig = res.windowHeight*2
 					}
 				});
 
@@ -130,10 +218,27 @@
 					height: 90rpx;
 					text-align: center;
 					line-height: 90rpx;
+					position: relative;
+					border-bottom: 0.01rem solid #f8f8f8;
 
 					// display: flex;
 					// justify-content: center;
 					// align-items: center;
+					.numberops {
+						display: block;
+						position: absolute;
+						right: 10rpx;
+						top: 6rpx;
+						width: 40rpx;
+						height: 40rpx;
+						line-height: 40rpx;
+						text-align: center;
+						background-color: red;
+						border-radius: 50%;
+						color: #FFFFFF;
+						font-size: 20rpx;
+					}
+
 					.nav-ol {
 						display: block;
 						width: 100%;
@@ -181,6 +286,22 @@
 						background-color: #FFFFFF;
 						align-items: center;
 						border-bottom: 0.01rem solid #C0C0C0;
+						position: relative;
+
+						.numberops {
+							position: absolute;
+							right: 20rpx;
+							top: 10rpx;
+							display: block;
+							width: 40rpx;
+							height: 40rpx;
+							line-height: 40rpx;
+							background-color: red;
+							font-size: 20rpx;
+							color: #FFFFFF;
+							border-radius: 50%;
+							text-align: center;
+						}
 
 						.img {
 							margin: 0 20rpx;

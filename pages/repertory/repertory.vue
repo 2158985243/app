@@ -7,7 +7,7 @@
 						<u-icon class="logo" name="order" color="#ffaa00" size="40"></u-icon>
 						<text>采购入库</text>
 					</view>
-					<u-icon name="plus" class='add' color="#cccccc" size="40"></u-icon>
+					<u-icon name="plus" class='add' @click='toPurchaseStorage' color="#cccccc" size="40"></u-icon>
 				</view>
 				<view class="box">
 					<view class="left">
@@ -100,6 +100,14 @@
 			toAddSupplier(){
 				uni.navigateTo({
 					url: `/pages/addSupplier/addSupplier`
+				})
+			},
+			toPurchaseStorage(){
+				this.$store.commit('commercialSpecification',{
+					specificationOfGoods:[]
+				})
+				uni.navigateTo({
+					url: `/pages/purchaseStorage/purchaseStorage`
 				})
 			}
 		}

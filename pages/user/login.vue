@@ -76,7 +76,7 @@
 			async register() {
 				let res = await login(this.form)
 				console.log(res);
-				if (res.code == undefined) {
+				if (!res.code) {
 					let datas = this.form;
 					datas.checked = this.checked;
 					this.$store.commit('loginStatusAction',{token:res.token});

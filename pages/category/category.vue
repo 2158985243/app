@@ -76,7 +76,7 @@
 			}
 		},
 		methods: {
-			toAddCommodity(item){
+			toAddCommodity(item) {
 				uni.$emit('categoryDatum', item)
 				uni.navigateBack();
 			},
@@ -93,7 +93,9 @@
 			// 初始化
 			async init() {
 				let res = await goodsCategoryList()
-				this.list = res;
+				if (!res.code) {
+					this.list = res;
+				}
 			},
 			// 点击编辑按钮
 			editct(v) {
@@ -215,6 +217,7 @@
 				// align-items: center;
 				background-color: #FFFFFF;
 				border-bottom: 0.01rem solid #dadada;
+
 				text {
 					display: block;
 					width: 100%;

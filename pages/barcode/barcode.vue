@@ -117,7 +117,7 @@
 			display: flex;
 			height: 60rpx;
 			line-height: 60rpx;
-			background-color: #ebebeb;
+			// background-color: #ebebeb;
 
 			text {
 				width: 20vw;

@@ -69,8 +69,8 @@
 				</view>
 			</view>
 		</view>
-		
-		
+
+
 	</view>
 </template>
 
@@ -87,6 +87,7 @@
 				oracle: {},
 				colorName: '',
 				sizeName: '',
+				id:0
 			}
 		},
 		methods: {
@@ -102,7 +103,9 @@
 			},
 			// 编辑商品
 			toEditCommodity() {
-
+				uni.navigateTo({
+					url: `/pages/editCommodity/editCommodity?id=${this.id}`
+				})
 			},
 			async init(v) {
 				let res = await goods(v)
@@ -123,6 +126,7 @@
 		},
 		onLoad(query) {
 			// console.log(query);
+			this.id = query.id;
 			this.init(query.id)
 		}
 	}
@@ -145,11 +149,12 @@
 			display: flex;
 			flex-direction: column;
 			padding: 10rpx 20rpx;
-			width: 100%; 
+			width: 100%;
 			background-color: #FFFFFF;
 			height: 628rpx;
 			margin-bottom: 20rpx;
-			.imgs { 
+
+			.imgs {
 				width: 100%;
 				height: 188rpx;
 				display: flex;

@@ -450,6 +450,57 @@
             }
             
         }
+        ,{
+            "path" : "pages/editCommodity/editCommodity",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "编辑商品",
+                "navigationBarBackgroundColor": "#2979ff",
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
+       
+        ,{
+            "path" : "pages/purchaseStorage/purchaseStorage",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "采购入库",
+                "navigationBarBackgroundColor": "#2979ff",
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
+        ,{
+            "path" : "pages/selectAccount/selectAccount",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom", // 隐藏系统导航栏
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+        ,{
+            "path" : "pages/selectProducts/selectProducts",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom", // 隐藏系统导航栏
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

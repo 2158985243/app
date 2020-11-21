@@ -4,31 +4,36 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-	state:{
-		token:'',
-		barcodeDa:{},
-		sizerDa:[],
-		colorDa:[],
+	state: {
+		token: '',
+		barcodeDa: {},
+		sizerDa: [],
+		colorDa: [],
+		specificationOfGoods: {},
+
 	},
-	getters:{
-		
+	getters: {
+
 	},
-	mutations:{
-		loginStatusAction(state,context){
+	mutations: {
+		loginStatusAction(state, context) {
 			console.log(context);
 			state.token = context.token;
 		},
-		barcodeAction(state,context){
+		barcodeAction(state, context) {
 			state.barcodeDa = context.barcodes;
 		},
-		colorDaAction(state,context){
+		colorDaAction(state, context) {
 			state.colorDa = context.colorDa;
 		},
-		sizerDaAction(state,context){
+		sizerDaAction(state, context) {
 			state.sizerDa = context.sizerDa;
+		},
+		commercialSpecification(state, context) {
+			state.specificationOfGoods = context.specificationOfGoods;
 		}
 	},
-	actions:{
-		
+	actions: {
+
 	}
 });

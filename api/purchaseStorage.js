@@ -1,51 +1,53 @@
 import $http from '@/js_sdk/app-request/requestConfig';
-// 商品列表
-export const goodsList = (data) => {
-	return $http.get("/goods/list", data).then((res) => {
+// 员工列表
+export const purchaseStorageList = (data) => {
+	return $http.get("/purchase_storage/list", data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
 		return error;
 	});
 };
-// 商品添加
-export const goodsAdd = (data) => {
-	return $http.post("/goods/add", data).then((res) => {
+// 新增员工
+export const purchaseStorageAdd = (data) => {
+	return $http.post("/purchase_storage/add", data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
 		return error;
 	});
 };
-export const goodsEdit = (id,data) => {
-	return $http.post("/goods/edit/"+id, data).then((res) => {
+// 查看员工资料
+export const purchaseStorage = (id) => {
+	return $http.get("/purchase_storage/"+id).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
 		return error;
 	});
 };
-// 商品删除
-export const goodsDel = (id) => {
-	return $http.post("/goods/del/"+id).then((res) => {
+// 编辑员工
+export const purchaseStorageEdit = (id,data) => {
+	return $http.post("/purchase_storage/edit/"+id, data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
 		return error;
 	});
 };
-// 商品详情
-export const goods = (id) => {
-	return $http.get("/goods/"+id).then((res) => {
+// 删除员工
+export const purchaseStorageDel = (id) => {
+	return $http.post("/purchase_storage/del/"+id).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
 		return error;
 	});
 };
-// 商品库存
-export const getTotal = () => {
-	return $http.get("/goods/get_total").then((res) => {
+
+// 作废入库单
+export const purchaseStorageCancel = (id) => {
+	return $http.post("/purchase_storage/cancel/"+id).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示

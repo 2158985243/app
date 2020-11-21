@@ -48,7 +48,7 @@
 				loadingTip: '正在加载中...',
 				emptyTip: '--到底了--',
 				touchHeight: 50,
-				height: 0,
+				height: 100,
 				bottom: 0,
 				autoPullUp: true,
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载

@@ -1,5 +1,5 @@
 <template>
-	<view class="addCommodity">
+	<view class="editCommodity">
 		<view class="box">
 			<view class="form_item">
 				<text>名称</text>
@@ -171,7 +171,8 @@
 		</view>
 
 		<view class="btn">
-			<u-button type="primary" class="btn" @tap="save">保存</u-button>
+			<u-button class="stbn" @tap="delgoods">删除</u-button>
+			<u-button type="primary" class="stbn" @tap="save">保存</u-button>
 		</view>
 	</view>
 </template>
@@ -180,14 +181,16 @@
 	import urls from '../../api/configuration.js'
 	import store from '@/store'
 	import {
-		goodsAdd
+		goodsEdit,
+		goods,
+		goodsDel
 	} from '../../api/goods.js'
 	export default {
 		data() {
 			return {
 				form: {
 					name: '',
-					number: '',
+					number: '', //
 					color_id: [],
 					size_id: [],
 					purchase_price: '',
@@ -272,7 +275,9 @@
 					colorDa: [],
 					sizerDa: []
 				},
-				exit: false
+				exit: false,
+				id: 0,
+
 			}
 		},
 		onBackPress(options) {
@@ -289,7 +294,9 @@
 					content: '商品还未保存，确认要退出？',
 					success: function(res) {
 						if (res.confirm) {
-							uni.navigateBack()
+							uni.navigateTo({
+								url: '/pages/commodityManagement/commodityManagement'
+							})
 						} else if (res.cancel) {
 							return true;
 						}
@@ -333,6 +340,18 @@
 							})
 						})
 					})
+					this.barcodeDa.goods_spec.map((v, i) => {
+						this.form.barcode_array.map((v1, i1) => {
+							if (v.color_id == v1.color_id) {
+								v1.data.map((j, k) => {
+									if (v.size_id == j.size_id) {
+										j.barcode = v.barcode;
+										j['id'] = v.id
+									}
+								})
+							}
+						})
+					})
 				} else {
 					this.form.barcode_array = store.state.barcodeDa.barcode_array;
 				}
@@ -348,9 +367,11 @@
 				this.$store.commit('sizerDaAction', {
 					sizerDa: ''
 				});
-				let res = await goodsAdd(obj);
+				let res = await goodsEdit(this.id, obj);
 				if (!res.code) {
-					uni.navigateBack()
+					uni.navigateTo({
+						url: '/pages/commodityManagement/commodityManagement'
+					})
 				}
 				// console.log(res);
 			},
@@ -436,14 +457,96 @@
 					}
 				});
 			},
+			async good() {
+				let res = await goods(this.id)
+				console.log(res);
+				this.form.name = res.name;
+				this.form.number = res.number;
+				this.form.purchase_price = res.purchase_price;
+				this.form.retail_price = res.retail_price;
+				this.form.customer_price = res.customer_price;
+				if (res.supplier) {
+					this.category = res.supplier.name
+				}
+				this.form.supplier_id = res.supplier_id;
+				if (res.goods_category) {
+					this.supplier = res.goods_category.name;
+				}
+				this.form.goods_category_id = res.goods_category_id;
+				this.form.main_image = res.main_image;
+				this.form.images = res.images;
+				this.form.barcode = res.barcode;
+				this.form.warning = res.warning;
+				this.form.warning_max = res.warning_max;
+				this.form.warning_min = res.warning_min;
+				this.form.sort = res.sort;
+				this.form.exchange = res.exchange;
+				this.form.exchange_value = res.exchange_value;
+				this.form.status = res.status;
+				this.form.brand_id = res.goods_info.brand_id;
+				if (res.goods_info.brand) {
+					this.trademark_name = res.goods_info.brand.name;
+				}
+				this.form.year = res.goods_info.year;
+				this.form.season = res.goods_info.season;
+				this.form.unit_id = res.goods_info.unit_id;
+				if (res.goods_info.unit_id) {
+					this.unitList_name = res.goods_info.unit.name;
+				}
+				this.form.material = res.goods_info.material;
+				this.form.style = res.goods_info.style;
+				this.form.model = res.goods_info.model;
+				this.form.origin = res.goods_info.origin;
+				this.form.standard = res.goods_info.standard;
+				this.form.security = res.goods_info.security;
+
+				let arrSize = [];
+				let arrColor = [];
+				res.color.map((v, i) => {
+					this.form.color_id.push(v.id);
+					arrColor.push(v.name)
+				})
+				this.colors_name = arrColor.join(',')
+				res.size.map((v, i) => {
+					this.form.size_id.push(v.id);
+					arrSize.push(v.name)
+				})
+				this.size_name = arrSize.join(',')
+
+				this.fileList.push({
+					url: this.$cfg.domain + res.main_image
+				})
+				if (res.images) {
+					res.images.map((v) => {
+						this.fileList.push({
+							url: this.$cfg.domain + v
+						})
+					})
+				}
+				this.barcodeDa.colorDa = res.color;
+				this.barcodeDa.colorDa.map((v) => {
+					v['checked'] = true;
+				})
+				this.barcodeDa.sizerDa = res.size;
+				this.barcodeDa.sizerDa.map((v) => {
+					v['choice'] = true;
+				});
+				this.barcodeDa['goods_spec'] = res.goods_spec;
+				this.$store.commit('colorDaAction', {
+					colorDa: this.barcodeDa.colorDa
+				});
+				this.$store.commit('sizerDaAction', {
+					sizerDa: this.barcodeDa.sizerDa
+				});
+			},
 			init() {
 				const userMessage = uni.getStorageSync('userMessage');
 				this.action = urls.baseURL;
 				this.header.token = "Bearer " + userMessage.token
 				this.formData.type = "goods";
 				this.formData.path = "goods";
-
 			},
+			// 设置单品条码
 			toBarcodes() {
 				if (this.barcodeDa.colorDa.length > 0 && this.barcodeDa.sizerDa.length > 0) {
 
@@ -460,6 +563,19 @@
 							})
 						})
 					})
+					this.barcodeDa.goods_spec.map((v, i) => {
+						this.form.barcode_array.map((v1, i1) => {
+							if (v.color_id == v1.color_id) {
+								v1.data.map((j, k) => {
+									if (v.size_id == j.size_id) {
+										j.barcode = v.barcode;
+										j['id'] = v.id
+									}
+								})
+							}
+						})
+					})
+					// console.log(this.form.barcode_array);
 					this.barcodeDa['barcode_array'] = this.form.barcode_array;
 					this.$store.commit('barcodeAction', {
 						barcodes: this.barcodeDa
@@ -475,9 +591,30 @@
 					})
 				}
 			},
+			async delgoods() {
+				uni.showModal({
+					title: '提示',
+					content: '是否删除此商品？',
+					success: async (res) => {
+						if (res.confirm) {
+							let res = await goodsDel(this.id)
+							if (!res.code) {
+								uni.navigateTo({
+									url: '/pages/commodityManagement/commodityManagement'
+								})
+							}
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+				
+			}
 		},
-		onLoad() {
+		onLoad(query) {
+			this.id = query.id
 			this.init();
+			this.good()
 			uni.$on("produtName", (res) => {
 				if (res) {
 					// this.storeName  = res.name;
@@ -486,7 +623,7 @@
 			});
 			uni.$on("colorDatum", (res) => {
 				if (res) {
-					// console.log(res);
+					console.log(res);
 					this.barcodeDa.colorDa = res;
 					// uni.setStorageSync('colorDa', res);
 					this.$store.commit('colorDaAction', {
@@ -502,7 +639,7 @@
 			});
 			uni.$on("sizeDatum", (res) => {
 				if (res) {
-					// console.log(res);
+					console.log(res);
 					this.$store.commit('sizerDaAction', {
 						sizerDa: res
 					});
@@ -552,7 +689,6 @@
 			});
 			uni.$on("unitListDatum", (res) => {
 				if (res) {
-					console.log(res);
 					// let str = [];
 					// res.map((v, i) => {
 					this.form.unit_id = res.id;
@@ -569,7 +705,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.addCommodity {
+	.editCommodity {
 		position: relative;
 		width: 100%;
 		// height: 100%;
@@ -580,9 +716,20 @@
 			position: fixed;
 			bottom: 0;
 			z-index: 99;
-			border-radius: 0 !important;
+			display: flex;
+
+			.stbn {
+				border-radius: 0 !important;
+				flex: 1;
+			}
+
+			uni-button:after {
+				border-radius: 0 !important;
+			}
+
 
 		}
+
 
 		.box {
 			margin-bottom: 20rpx;
