@@ -47,6 +47,12 @@
 					return [];
 				}
 			},
+			saveData: {
+				type: Array,
+				default () {
+					return [];
+				}
+			},
 			vs: {
 				type: Number,
 				default: 0
@@ -80,15 +86,15 @@
 				iq: '',
 			};
 		},
-		filters:{
+		filters: {
 			filterQuantity(v) {
 				let quantity = 0;
-				let data = store.state.specificationOfGoods;
-				for(let i in data) {
-					for(let j in data[i].goodsData) {
-						if(data[i].goodsData[j].goods_id == v) {
+				let data = this.saveData;
+				for (let i in data) {
+					for (let j in data[i].goodsData) {
+						if (data[i].goodsData[j].goods_id == v) {
 							quantity = quantity + data[i].goodsData[j].quantity;
-							
+
 						}
 					}
 				}
@@ -97,36 +103,72 @@
 		},
 		computed: {
 			goodsQuantity() {
-				let quantity ={};
-				let data = store.state.specificationOfGoods;
-				for(let i in data) {
-					for(let j in data[i].goodsData) {
-						if(!quantity.hasOwnProperty(data[i].goodsData[j].goods_id)) {
+				let quantity = {};
+				let data = this.saveData;
+				for (let i in data) {
+					for (let j in data[i].goodsData) {
+						if (!quantity.hasOwnProperty(data[i].goodsData[j].goods_id)) {
 							quantity[data[i].goodsData[j].goods_id] = {
 								quantity: 0,
-								goods_category_id:data[i].goodsData[j].goods_category_id
+								goods_category_id: data[i].goodsData[j].goods_category_id
 							};
 						}
 						quantity[data[i].goodsData[j].goods_id].quantity += data[i].goodsData[j].quantity;
 					}
 				}
 				return quantity;
+
 			},
 			categoryQuantity() {
-				let quantity ={};
-				for(let i in this.dataList) {
-					if(!quantity.hasOwnProperty(this.dataList[i].id)) {
+				let quantity = {};
+				for (let i in this.dataList) {
+					if (!quantity.hasOwnProperty(this.dataList[i].id)) {
 						quantity[this.dataList[i].id] = 0;
 					}
-					if(this.dataList[i].id == 0) continue;
-					for(let j in this.goodsQuantity) {
-						if(this.goodsQuantity[j].goods_category_id == this.dataList[i].id) {
+					if (this.dataList[i].id == 0) continue;
+					for (let j in this.goodsQuantity) {
+						if (this.goodsQuantity[j].goods_category_id == this.dataList[i].id) {
 							quantity[this.dataList[i].id] += this.goodsQuantity[j].quantity;
 						}
 					}
 				}
 				return quantity;
 			}
+		},
+		watch: {
+			// saveData:function(newVal,oldVal){
+			// 	console.log(newVal,oldVal)
+			// 	let quantity ={};
+			// 	let data = newVal;
+			// 	for(let i in data) {
+			// 		for(let j in data[i].goodsData) {
+			// 			if(!quantity.hasOwnProperty(data[i].goodsData[j].goods_id)) {
+			// 				quantity[data[i].goodsData[j].goods_id] = {
+			// 					quantity: 0,
+			// 					goods_category_id:data[i].goodsData[j].goods_category_id
+			// 				};
+			// 			}
+			// 			quantity[data[i].goodsData[j].goods_id].quantity += data[i].goodsData[j].quantity;
+			// 			console.log(data[i].goodsData[j].quantity);
+			// 		}
+			// 	}
+			// 	this.goodsQuantity =  quantity;
+			// 	console.log(quantity);
+			// 	 quantity ={};
+			// 	for(let i in this.dataList) {
+			// 		if(!quantity.hasOwnProperty(this.dataList[i].id)) {
+			// 			quantity[this.dataList[i].id] = 0;
+			// 		}
+			// 		if(this.dataList[i].id == 0) continue;
+			// 		for(let j in this.goodsQuantity) {
+			// 			if(this.goodsQuantity[j].goods_category_id == this.dataList[i].id) {
+			// 				quantity[this.dataList[i].id] += this.goodsQuantity[j].quantity;
+			// 			}
+			// 		}
+			// 	}
+			// 	console.log(quantity);
+			// 	this.categoryQuantity =  quantity;
+			// }
 		},
 		created() {},
 		onReady() {},
@@ -138,17 +180,17 @@
 			filterQuantity(v) {
 				let quantity = 0;
 				let data = store.state.specificationOfGoods;
-				for(let i in data) {
-					for(let j in data[i].goodsData) {
-						if(data[i].goodsData[j].goods_id == v) {
+				for (let i in data) {
+					for (let j in data[i].goodsData) {
+						if (data[i].goodsData[j].goods_id == v) {
 							quantity = quantity + data[i].goodsData[j].quantity;
-							
+
 						}
 					}
 				}
 				return quantity;
 			},
-			
+
 			handlePullDown(stopLoad) {
 				this.$emit('handlePullDown', stopLoad)
 				stopLoad ? stopLoad() : '';
@@ -229,8 +271,8 @@
 						position: absolute;
 						right: 10rpx;
 						top: 6rpx;
-						width: 40rpx;
-						height: 40rpx;
+						min-width: 40rpx;
+						min-height: 40rpx;
 						line-height: 40rpx;
 						text-align: center;
 						background-color: red;
@@ -293,8 +335,8 @@
 							right: 20rpx;
 							top: 10rpx;
 							display: block;
-							width: 40rpx;
-							height: 40rpx;
+							min-width: 40rpx;
+							min-height: 40rpx;
 							line-height: 40rpx;
 							background-color: red;
 							font-size: 20rpx;

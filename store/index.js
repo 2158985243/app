@@ -9,7 +9,8 @@ export default new Vuex.Store({
 		barcodeDa: {},
 		sizerDa: [],
 		colorDa: [],
-		specificationOfGoods: {},
+		specificationOfGoods: [],
+		stateGood:false,
 
 	},
 	getters: {
@@ -31,6 +32,9 @@ export default new Vuex.Store({
 		},
 		commercialSpecification(state, context) {
 			state.specificationOfGoods = context.specificationOfGoods;
+		},
+		stateGoodFn(state,context){
+			state.stateGood = context.stateGood
 		}
 	},
 	actions: {

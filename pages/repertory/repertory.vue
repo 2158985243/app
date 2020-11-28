@@ -3,7 +3,7 @@
 		<view class="text-area">
 			<view class="block">
 				<view class="box">
-					<view class="left">
+					<view class="left" @click="toLibraryHistory">
 						<u-icon class="logo" name="order" color="#ffaa00" size="40"></u-icon>
 						<text>采购入库</text>
 					</view>
@@ -106,8 +106,17 @@
 				this.$store.commit('commercialSpecification',{
 					specificationOfGoods:[]
 				})
+				this.$store.commit('stateGoodFn',{
+					stateGood:false
+				})
 				uni.navigateTo({
 					url: `/pages/purchaseStorage/purchaseStorage`
+				})
+			},
+			// 入库历史
+			toLibraryHistory(){
+				uni.navigateTo({
+					url: `/pages/libraryHistory/libraryHistory`
 				})
 			}
 		}

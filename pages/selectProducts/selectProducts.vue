@@ -1,6 +1,6 @@
 <template>
 	<view class="selectProducts">
-		<u-navbar back-icon-color='#ffffff' title="商品选择" :background="background" title-color="#ffffff">
+		<u-navbar back-icon-color='#ffffff' :custom-back="quit" title="商品选择" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="plus" @click="toAddCommodity" color="#ffffff" class="right_icon" size="34"></u-icon>
 			</template>
@@ -140,31 +140,32 @@
 			</view> -->
 		</view>
 		<view class="list">
-			<goods-category :dataList='dataList' @leftNav="leftNav" :vs='vs' @rightNav="rightNav" @handlePullDown="handlePullDown"
-			 @handleLoadMore="handleLoadMore"></goods-category>
+			<goods-category :dataList='dataList' @leftNav="leftNav" :saveData="saveData" :vs='vs' @rightNav="rightNav"
+			 @handlePullDown="handlePullDown" @handleLoadMore="handleLoadMore"></goods-category>
 		</view>
 		<view class="shopping-cart">
 			<view class="goods-quantity">
-				<u-icon class="icon-cart" name="shopping-cart" color="#ffffff" size="50"></u-icon>
-				<text class="money-cart">&yen;{{1500}}</text>
+				<u-icon class="icon-cart" @click="shoppingCart" name="shopping-cart" color="#ffffff" size="50"></u-icon>
+				<text class="money-cart">{{goodsNumber+'件'}} &yen;{{allMoney}}</text>
 			</view>
-			<view class="selected">
-				加入采购单
+			<view class="selected" @click="selectedFn">
+				选好了
 			</view>
 		</view>
-		<u-popup v-model="showGoods" mode="bottom" length="60%">
-			<view class="specification">
-				<u-icon name="close" class='close' @click="hiddengoods" color="#a8a8a8" size="28"></u-icon>
+		<!-- 商品规格表单 -->
+		<u-popup v-model="showGoods" mode="bottom" z-index='996' height="70%">
+			<view class="specification" v-if="goodsOf">
 				<view class="goods-of">
 					<!-- mode='aspectFit'  -->
 					<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+goodsOf.main_image"></u-image>
 					<view class="goodsNews">
-						<text class="goods-money">&yen;{{goodsOf.retail_price}}</text>
 						<text class="goods-name">{{goodsOf.name}}</text>
 						<text class="goods-number">{{goodsOf.number}}</text>
+						<text class="goods-money">&yen;{{goodsOf.retail_price}}</text>
 					</view>
 				</view>
-				<u-line color="inof" />
+				<u-line color="#e6e6e6" />
+
 				<view class="goods-color">
 					<text>颜色</text>
 					<view class="colors">
@@ -176,30 +177,68 @@
 				</view>
 				<!-- <u-line color="inof" /> -->
 				<view class="goods-size">
-					<text>尺码</text>
-					<view class="">
-						<view class="" v-for="(item,index) in spec" :key="index">
-							<view class="sizes" v-show="index==active1">
-								<view class="sizeMo" v-for="(item1,index1) in item.data" :key="index1" @click="clickSize(item1,index1)" :class="active2==index1? 'active':''">
-									<text>{{item1.size.name}}</text>
-									<text class="pos" v-if="item1.quantity>0">{{item1.quantity}}</text>
+					<view class="" v-for="(item,index) in spec" :key="index">
+						<view class="size-box" v-if="index==active1">
+							<view class="size-box-list once">
+								<text class="listed">尺码</text>
+								<text class="listed">当前库存</text>
+								<u-number-box class="listed" v-model="item.valNew" size="24" input-width="60" input-height="40" :min="0" @minus="minusAll"
+								 @plus="plusAll" @change="valChangeAll($event,item,index)"></u-number-box>
+							</view>
+							<view class="size-box-list" v-for="(item1,index1) in item.data" :key="index1" @click="clickSize(item1,index1)">
+								<text class="listed">{{item1.size.name}}</text>
+								<text class="listed" v-if="item1.goods_spec_info">{{item1.goods_spec_info.stock}}</text>
+								<u-number-box class="listed" v-model="item1.quantity" size="24" input-width="60" input-height="40" :min="0"
+								 @change="valChange"></u-number-box>
+							</view>
+						</view>
+					</view>
+
+				</view>
+
+				<view class="btn">
+					<u-button type="primary" class="btn" @tap="save()">确定</u-button>
+				</view>
+			</view>
+		</u-popup>
+
+		<!-- 购物车表单 -->
+		<u-popup v-model="showShoppingCart" mode="bottom" z-index='996' length="60%">
+			<view class="scart">
+				<view class="del">
+					<u-icon name="close-circle" class='close' @click="showShoppingCart=false" color="#040404" size="40"></u-icon>
+				</view>
+				<view class="lists-cart">
+					<view class="specification" v-for="(item,index) in saveData" :key="index">
+						<u-icon name="trash" class='close' @click="hiddengoods(index)" color="#a8a8a8" size="40"></u-icon>
+						<view class="goods-of" v-if="item.goodsData[0]">
+							<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+item.goodsData[0].goodsOf.main_image"></u-image>
+							<view class="goodsNews">
+								<text class="goods-name">{{item.goodsData[0].goodsOf.name}}</text>
+								<text class="goods-number">{{item.goodsData[0].goodsOf.number}}</text>
+								<text class="goods-money">&yen;{{item.goodsData[0].goodsOf.retail_price}}</text>
+							</view>
+						</view>
+						<view class="color-size">
+							<view class="color-list">
+								<view class="color-box" v-for="(itemColor,index1) in item.goodsData" :key="index1">
+									<view class="size-list" v-if="itemColor.quantity>0">
+										<view class="sizeInof" v-for="(itemSize,indexSize) in itemColor.data">
+											<view class="size-medium" v-if="itemSize.hidden">
+												<text class="size-nav">{{itemColor.name}}</text>
+												<text class="size-nav">{{itemSize.size.name}}</text>
+												<u-number-box class="size-nav" v-model="itemSize.quantity" size="24" @change="sizeChange($event,index,index1,indexSize,itemSize)"
+												 input-width="100" :min="0"></u-number-box>
+												<view class='size-nav'>
+													<u-icon name="trash" color="#a8a8a8" size="40" @click="delSize(index,index1,indexSize)"></u-icon>
+												</view>
+											</view>
+										</view>
+									</view>
 								</view>
 							</view>
 						</view>
 					</view>
-				</view>
-				<!-- <u-line color="inof" /> -->
-				<view class="number-box">
-					<view class="">
-						<text>购买数量</text>
-						<!-- spec[active1].data[active2].goods_spec_info.stock -->
-						<text class="goods-inventory" v-if="spec[active1]">库存: <text v-if="spec[active1].data[active2]">
-								{{spec[active1].data[active2].goods_spec_info.stock}}</text></text>
-					</view>
-					<u-number-box v-model="value" :min="0" @change="valChange"></u-number-box>
-				</view>
-				<view class="btn">
-					<u-button type="primary" class="btn" @tap="save(goodsOf.id)">确定</u-button>
 				</view>
 			</view>
 		</u-popup>
@@ -225,6 +264,7 @@
 		},
 		data() {
 			return {
+				// allMoney: 0,
 				value: 0,
 				background: {
 					backgroundColor: '#2979ff'
@@ -272,13 +312,100 @@
 				goodsOf: {},
 				active1: 0,
 				active2: 0,
-				spec: []
+				spec: [],
+				showShoppingCart: false,
+				aIndex: [], //购物车商品数组下标
+				aValue: [], //购物车商品尺码数量组
+				numAll: 0,
+				valAll: [],
+				// saveData:[]
+
 			}
 		},
+
+		computed: {
+			// 商品组
+			saveData() {
+				return store.state.specificationOfGoods;
+			},
+			// 商品总数量
+			goodsNumber() {
+				let num = 0;
+				let arr = store.state.specificationOfGoods;
+				arr.map(v => {
+					v.goodsData.map(v1 => {
+						num += v1.quantity;
+					})
+				})
+				return num;
+			},
+			// 商品总价格
+			allMoney() {
+				let num = 0;
+				let arr = store.state.specificationOfGoods;
+				arr.map(v => {
+					v.goodsData.map(v1 => {
+						num += v1.quantity * Number(v1.goodsOf.retail_price);
+					})
+				})
+				return num;
+			},
+		},
+		watch: {
+			// newList(newv, oldv) {
+			// 	console.log(newv, oldv);
+			// 	if (oldv.length !== 0) {
+			// 		console.log(1);
+			// 		this.spec[this.active1].data.map((v, i) => {
+			// 			v.quantity = v.quantity + (newv[this.active1] - oldv[this.active1]);
+			// 		});
+			// 	}
+			// },
+		},
+		onBackPress(options) {
+			if (options.from === 'navigateBack') {
+				return false;
+			}
+			this.quit()
+			return true;
+		},
 		methods: {
-			// 
-			valChange(v) {
-				this.spec[this.active1].data[this.active2].quantity = v.value;
+			quit() {
+				let _this = this
+				uni.showModal({
+					title: '提示',
+					content: '商品还未保存，确认要退出？',
+					success: function(res) {
+						if (res.confirm) {
+							_this.$store.commit('commercialSpecification', {
+								specificationOfGoods: []
+							})
+							uni.navigateBack()
+						} else if (res.cancel) {
+							return true;
+						}
+					}
+				});
+			},
+			// 全部尺码组数组变化
+			valChangeAll(val, item, index) {
+				console.log(val, item);
+				item.data.map((v, i) => {
+					v.quantity = v.quantity + (val.value - item.valOld);
+				});
+				item.valOld = item.valNew;
+				this.$set(this.spec, index, this.spec[index])
+			},
+			// 全部尺码组数组减小
+			minusAll(val) {
+
+			},
+			// 全部尺码组数组增加
+			plusAll(val) {},
+			// 单个尺码数值变化
+			valChange() {
+				// console.log(1);
+				// this.spec[this.active1].data[this.active2].quantity = v.value;
 				this.spec[this.active1].quantity = 0;
 				this.spec[this.active1].data.map((v, i) => {
 					this.spec[this.active1].quantity += v.quantity;
@@ -440,43 +567,58 @@
 			},
 			// 点击右侧
 			async rightNav(e) {
-				this.active1= 0;
-				this.active2= 0;
-				let arr = store.state.specificationOfGoods;
-				// console.log(arr);
+				// console.log(store.state.specificationOfGoods);
+				this.active1 = 0;
+				// this.active2 = 0;
+				// this.valAll = [];
+				let arr = this.saveData;
+
 				let num = 1;
+				// 修改选过的商品
 				for (let i = 0; i < arr.length; i++) {
 					if (arr[i].goodsData[0].goods_id == e.id) {
-						this.goodsOf = arr[i].goodsData[0].goodsOf
+						this.goodsOf = arr[i].goodsData[0].goodsOf;
 						this.spec = arr[i].goodsData;
 						num = 0;
+						this.$forceUpdate()
 						break;
 					}
 				}
-				console.log(this.spec);
+				// 新选的商品
 				if (num) {
 					let res = await goods(e.id)
-					console.log(res);
 					if (!res.code) {
 						this.value = 0;
 						this.goodsOf = res;
+						this.$forceUpdate()
 						this.spec = res.color;
 						this.spec.map((v1, i1) => {
-							v1['goodsOf'] = res;
+							v1['goodsOf'] = {
+								id: res.id,
+								name: res.name,
+								number: res.number,
+								retail_price: res.retail_price,
+								main_image: res.main_image,
+								images: res.images
+							};
 							v1['goods_category_id'] = res.goods_category_id;
 							v1['goods_id'] = e.id;
 							v1['data'] = [];
 							v1['quantity'] = 0;
+							v1['valOld'] = 0;
+							v1['valNew'] = 0;
+							// this.valAll.push(0);
 							res.goods_spec.map((v, i) => {
 								if (v.color_id == v1.id) {
 									v1.data.push({
 										size: v.size,
 										goods_spec_info: v.goods_spec_info,
-										quantity: 0
+										quantity: 0,
+										hidden: true
 									})
 								}
 							})
-						this.$set(this.spec,i1,this.spec[i1]);
+							this.$set(this.spec, i1, this.spec[i1]);
 						})
 					}
 				}
@@ -484,8 +626,23 @@
 
 				this.showGoods = true;
 			},
-			hiddengoods() {
-				this.showGoods = false;
+			hiddengoods(index) {
+				let _this = this
+				uni.showModal({
+					title: '提示',
+					content: '确定删除该商品吗？',
+					success: function(res) {
+						if (res.confirm) {
+							_this.saveData.splice(index, 1);
+							_this.$store.commit('commercialSpecification', {
+								specificationOfGoods: _this.saveData
+							})
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+
 			},
 			search(v) {
 				this.init()
@@ -511,11 +668,11 @@
 			},
 			clickColor(item, index) {
 				this.active1 = index;
-				this.value = this.spec[this.active1].data[this.active2].quantity;
+				// this.value = this.spec[this.active1].data[this.active2].quantity;
 			},
 			clickSize(item, index) {
 				this.active2 = index;
-				this.value = this.spec[this.active1].data[this.active2].quantity;
+				// this.value = this.spec[this.active1].data[this.active2].quantity;
 			},
 			// 确定选择商品规格
 			save() {
@@ -527,7 +684,8 @@
 					for (let i = 0; i < arr.length; i++) {
 						if (this.spec[0].goods_id == arr[i].goodsData[0].goods_id) {
 							arr[i].goodsData = this.spec;
-							num = 0
+							num = 0;
+							this.$set(arr, i, arr[i])
 							break;
 						}
 					}
@@ -535,24 +693,75 @@
 						arr.push({
 							goodsData: this.spec
 						});
+						this.$forceUpdate()
 					}
 				} else {
 					arr.push({
 						goodsData: this.spec
 					})
 				}
-				// if(store.state.specificationOfGoods)
+				console.log(arr);
 				this.$store.commit('commercialSpecification', {
 					specificationOfGoods: arr
 				})
-				console.log(store.state.specificationOfGoods);
+
 				this.showGoods = false;
-			}
+			},
+			// 点击购物车
+			shoppingCart() {
+				// console.log(this.saveData);
+				let _this = this
+				this.$nextTick(function() {
+					if (_this.saveData.length > 0) {
+						_this.saveData.map((v, i) => {
+							v.goodsData.map(v1 => {
+								v1.data.map((v2) => {
+									if (v2.quantity > 0) {
+										v2.hidden = true;
+									}
+								})
+							})
+							_this.$set(_this.saveData, i, _this.saveData[i])
+						})
+						_this.showShoppingCart = true;
+					}
+				})
+				console.log(this.saveData);
+			},
+			// 删除某一个尺码
+			delSize(index, index1, indexSize) {
+				this.saveData[index].goodsData[index1].data[indexSize].hidden = false;
+				this.saveData[index].goodsData[index1].quantity -= this.saveData[index].goodsData[index1].data[indexSize].quantity;
+				this.saveData[index].goodsData[index1].data[indexSize].quantity = 0;
+
+				this.$set(this.saveData, index, this.saveData[index])
+			},
+			// 每一个尺码的变化
+			sizeChange(val, index, index1, indexSize, itemSize) {
+				this.saveData.map((v, i) => {
+					v.goodsData.map((v1, i1) => {
+						v1.quantity = 0;
+						v1.data.map((v2, i2) => {
+							v1.quantity += v2.quantity;
+						})
+					})
+				})
+				this.$set(this.saveData, index, this.saveData[index])
+			},
+			// 选完跳转
+			selectedFn() {
+				this.$store.commit('stateGoodFn', {
+					stateGood: true
+				});
+				uni.navigateBack();
+				// console.log(1);
+			},
+
 
 		},
 		onLoad(query) {
 			this.init()
-			this.brand()
+			this.brand();
 		}
 	}
 </script>
@@ -567,6 +776,89 @@
 		.active {
 			background-color: #3B4144 !important;
 			color: #FFFFFF !important;
+		}
+
+		.scart {
+			position: relative;
+			width: 100%;
+			display: flex;
+
+			.del {
+				position: fixed;
+				top: 0;
+				background-color: #FFFFFF;
+				width: 100%;
+				overflow: hidden;
+				height: 70rpx;
+				z-index: 666;
+
+				.close {
+					display: block;
+					width: 40rpx;
+					height: 40rpx;
+					float: right;
+					margin: 20rpx;
+				}
+			}
+
+			.lists-cart {
+				width: 100%;
+				display: flex;
+				margin-top: 70rpx;
+				flex-direction: column;
+
+				.color-size {
+					width: 100%;
+					display: flex;
+
+					.color-list {
+						width: 100%;
+						display: flex;
+						flex-direction: column;
+						border-top: 0.01rem solid #e6e6e6;
+
+
+						.color-box {
+							width: 100%;
+							display: flex;
+						}
+
+						.size-list {
+							width: 100%;
+							display: flex;
+							flex-direction: column;
+
+							.sizeInof {
+								width: 100%;
+								display: flex;
+								// flex-direction: row;
+								flex-direction: column;
+
+								.size-medium {
+									width: 100%;
+									display: flex;
+									flex-direction: row;
+									padding: 15rpx 0;
+									border-bottom: 0.01rem solid #e6e6e6;
+								}
+
+								.size-nav {
+									flex: 1;
+									display: flex;
+									justify-content: center;
+									align-items: center;
+								}
+							}
+
+							// .sizeInof:first-child{
+							// }
+
+						}
+					}
+				}
+			}
+
+
 		}
 
 		.specification {
@@ -590,9 +882,7 @@
 				display: flex;
 				flex-direction: row;
 				margin: 20rpx 0;
-				padding: 0 20rpx;
-
-
+				padding: 10rpx 20rpx;
 
 				.goodsNews {
 					display: flex;
@@ -602,17 +892,19 @@
 					.goods-number {
 						color: #C0C0C0;
 						font-size: 20rpx;
-
+						margin-top: 10rpx;
 					}
 
 					.goods-money {
 						color: #ff0000;
 						font-size: 28rpx;
+						margin-top: 10rpx;
 					}
 
 					.goods-inventory {
 						color: #C0C0C0;
 						font-size: 20rpx;
+						margin-top: 10rpx;
 					}
 				}
 			}
@@ -663,8 +955,35 @@
 				width: 100%;
 				display: flex;
 				flex-direction: column;
-				margin: 20rpx 0;
+				// margin: 20rpx 0;
+				margin-top: 20rpx;
+				margin-bottom: 80rpx;
 				padding: 0 20rpx;
+
+				.size-box {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+
+					.size-box-list {
+						width: 100%;
+						height: 90rpx;
+						display: flex;
+						flex-direction: row;
+						border-bottom: 0.01rem solid #e6e6e6;
+
+						.listed {
+							flex: 1;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+					}
+
+					.once {
+						border-top: 0.01rem solid #e6e6e6;
+					}
+				}
 
 				.sizes {
 					width: 100%;
@@ -750,25 +1069,29 @@
 			width: 100%;
 			height: 80rpx;
 			background: #4d4d4d;
-			.goods-quantity{
+
+			.goods-quantity {
 				width: 67%;
 				display: flex;
 				flex-direction: row;
-				.icon-cart{
-					flex: 1;
+
+				.icon-cart {
 					display: flex;
-					justify-content: center;
+					// justify-content: center;
 					align-items: center;
+					padding-left: 10rpx;
 				}
-				.money-cart{
-					flex: 1;
+
+				.money-cart {
+					padding-left: 60rpx;
 					display: flex;
 					align-items: center;
 					color: #FFFFFF;
 					font-size: 26rpx;
 				}
 			}
-			.selected{
+
+			.selected {
 				width: 33%;
 				display: flex;
 				justify-content: center;
@@ -776,7 +1099,7 @@
 				background-color: #007AFF;
 				color: #FFFFFF;
 				font-size: 30rpx;
-				
+
 			}
 		}
 
