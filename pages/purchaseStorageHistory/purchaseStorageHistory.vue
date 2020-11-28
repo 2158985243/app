@@ -1,5 +1,5 @@
 <template>
-	<view class="purchaseStorage">
+	<view class="purchaseStorageHistory">
 		<view class="mains">
 			<view class="box">
 				<view class="form_item">
@@ -338,7 +338,6 @@
 				this.amendMoney = this.goodsMoney[index].moneys[indexColor];
 				this.showMoney = true;
 			},
-
 			// 初始化商品数量
 			selecGooded() {
 				let _this = this
@@ -468,7 +467,7 @@
 				}
 			},
 		},
-		onLoad() {
+		onLoad(query) {
 			uni.$on("supplierDatum", (res) => {
 				if (res) {
 					// console.log(res);
@@ -499,7 +498,7 @@
 </script>
 
 <style scoped lang="scss">
-	.purchaseStorage {
+	.purchaseStorageHistory {
 		width: 100%;
 		// height: 100%;
 		display: flex;

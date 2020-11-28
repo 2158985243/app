@@ -513,6 +513,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/purchaseStorageHistory/purchaseStorageHistory",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

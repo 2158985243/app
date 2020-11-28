@@ -2,12 +2,33 @@
 	<view class="libraryHistory">
 		<u-navbar back-icon-color='#ffffff' title="采购入库历史" :background="background" title-color="#ffffff">
 			<template slot="right">
-				<u-icon name="edit-pen" @click="toEditCommodity" color="#ffffff" class="right_icon" size="34"></u-icon>
+				<u-icon name="search" @click="toEditCommodity" color="#ffffff" class="right_icon" size="34"></u-icon>
 				<u-icon name="plus" @click="toPurchaseStorage" color="#ffffff" class="right_icon" size="34"></u-icon>
 			</template>
 		</u-navbar>
 		<view class="box">
-			
+			<tabControl :current="current" :values="items" bgc="#fff" :fixed="true" :scrollFlag='true' :isEqually='true'
+			 @clickItem="onClickItem"></tabControl>
+			<swiper class="swiper" @change='scollSwiper' :current='current'>
+				<swiper-item v-for="(item,index) in list" :key='index'>
+					<scroll-view scroll-y="true" style="height: 100%;">
+						<view class="list">
+							<view class="list-box" v-for="(itemList,indexList) in item" @click="toPurchase(itemList)">
+								<view class="left">
+									<text class="supplier-name">{{itemList.supplier.name}}</text>
+									<text>{{itemList.number}}</text>
+									<text>{{itemList.updated_at}}</text>
+								</view>
+								<view class="right">
+									<text class="money">&yen;{{itemList.goods_amount}}</text>
+									<text>{{itemList.store.name}}</text>
+								</view>
+
+							</view>
+						</view>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
 		</view>
 	</view>
 </template>
@@ -18,14 +39,35 @@
 		purchaseStorage,
 		purchaseStorageDel
 	} from '../../api/purchaseStorage.js'
+	import tabControl from '@/components/tabControl-tag/tabControl-tag.vue';
+
 	export default {
+		components: {
+			tabControl
+		},
 		data() {
 			return {
 				background: {
 					backgroundColor: '#2979ff'
 				},
-				list: [],
-				QSTabsWxsListHeight: 0,
+				list: [
+					[],
+					[],
+					[]
+				],
+				current: 0,
+				items: [{
+					name: '已入库',
+					status: 0
+				}, {
+					name: '草稿单',
+					status: 1
+				}, {
+					name: '已作废',
+					status: 2
+				}],
+				page: 1,
+				page_size: 10,
 
 			}
 		},
@@ -33,11 +75,13 @@
 			// 初始化
 			async init() {
 				let res = await purchaseStorageList({
-					status: 0
-				})
-				this.list = res.data
-			},
+					status: 0,
+					page: this.page,
+					page_size: this.page_size
 
+				})
+				this.list.splice(0, 1, res.data)
+			},
 			async clickItem(item) {
 				console.log(item);
 				let res = await purchaseStorageDel(item.id);
@@ -55,22 +99,51 @@
 					url: `/pages/purchaseStorage/purchaseStorage`
 				})
 			},
-			countQSTabsWxsListHeight() {
-				//...
-				this.QSTabsWxsListHeight = 30;
+			toPurchase(item){
+				console.log(item);
+				if(item.status==0){
+					
+				}else if(item.status==1){
+					uni.navigateTo({
+						url: `/pages/purchaseStorageHistory/purchaseStorageHistory?id=${item.id}`
+					})
+				}else if(item.status==2){
+					
+				}
+				
 			},
-			setTabs() {
-				//接口获取tabs数组，使用ref调用setTabs方法传入
-				//...获取tabs
-				this.$refs.QSTabsWxsList.setTabs(tabs);
+			async onClickItem(val) {
+				this.current = val.currentIndex;
+				if (this.list[this.current].length == 0) {
+					let res = await purchaseStorageList({
+						status: val.item.status,
+						page: this.page,
+						page_size: this.page_size
+
+					});
+					this.list.splice(val.currentIndex, 1, res.data);
+				}
+			},
+			async scollSwiper(e) {
+				this.current = e.target.current
+				if (this.list[this.current].length == 0) {
+					let res = await purchaseStorageList({
+						status: this.current,
+						page: this.page,
+						page_size: this.page_size
+
+					});
+					this.list.splice(this.current, 1, res.data);
+				}
+				// console.log(this.current);
 			}
+
 		},
 		onLoad() {
 			this.init()
 		},
 		onReady() {
 			//执行计算组件高度方法
-			this.countQSTabsWxsListHeight();
 		},
 	}
 </script>
@@ -78,8 +151,10 @@
 <style scoped lang="scss">
 	.libraryHistory {
 		width: 100%;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
+		background-color: #f2f1f5;
 
 		.right_icon {
 			margin-right: 30rpx;
@@ -87,18 +162,62 @@
 
 		.box {
 			width: 100%;
-			display: flex;
-			flex-direction: column;
+			height: 100%;
+			margin-top: 98rpx;
+			// display: flex;
+			// flex-direction: column;
+
+			.swiper {
+				height: 100%;
+			}
 
 			.list {
 				width: 100%;
 				display: flex;
-				height: 60rpx;
-				line-height: 60rpx;
-				background-color: #3F536E;
-				margin-bottom: 10rpx;
-				// flex-direction: row;
+				flex-direction: column;
+
+				.list-box {
+					width: 100%;
+					padding: 20rpx;
+					background-color: #FFFFFF;
+					border-bottom: 0.01rem solid #C8C7CC;
+					display: flex;
+					flex-direction: space-between;
+
+					.left {
+						flex: 1;
+						display: flex;
+						flex-direction: column;
+
+						.supplier-name {
+							font-weight: 600;
+							padding-bottom: 10rpx;
+						}
+
+						text {
+							font-size: 24rpx;
+						}
+					}
+
+					.right {
+						display: flex;
+						flex-direction: column;
+						justify-content: flex-end;
+
+						// align-self:flex-end
+						text {
+							text-align: right;
+							font-size: 24rpx;
+						}
+
+						.money {
+							font-weight: 600;
+							color: #DD524D;
+						}
+					}
+				}
 			}
 		}
+
 	}
 </style>
