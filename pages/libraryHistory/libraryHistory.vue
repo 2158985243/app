@@ -35,9 +35,7 @@
 
 <script>
 	import {
-		purchaseStorageList,
-		purchaseStorage,
-		purchaseStorageDel
+		purchaseStorageList
 	} from '../../api/purchaseStorage.js'
 	import tabControl from '@/components/tabControl-tag/tabControl-tag.vue';
 

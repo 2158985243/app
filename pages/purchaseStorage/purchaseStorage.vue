@@ -121,7 +121,7 @@
 					<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.business_time" type="text" />
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
-				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :params="params"></u-picker>
+				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :default-time="form.business_time" :params="params"></u-picker>
 				<view class="form_item">
 					<text>备注</text>
 					<u-input v-model="form.remarks" type="text" />
@@ -239,6 +239,7 @@
 					minute: false,
 					second: false
 				},
+				
 				shopping: [],
 				goodsMoney: [],
 				goodsAmount: 0,
@@ -249,6 +250,7 @@
 			}
 		},
 		methods: {
+			
 			// 选择时间
 			confirmTime(v) {
 				this.form.business_time = `${v.year}-${v.month}-${v.day}`;
@@ -469,6 +471,8 @@
 			},
 		},
 		onLoad() {
+			let date = new Date();
+			this.form.business_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
 			uni.$on("supplierDatum", (res) => {
 				if (res) {
 					// console.log(res);
@@ -488,7 +492,7 @@
 				if (res) {
 					// console.log(res);
 					this.account = res.name;
-					this.form.account_id = res.id;
+					this.form.account_id = res.account_id;
 				}
 			});
 		},

@@ -1,5 +1,10 @@
 <template>
 	<view class="purchaseStorageHistory">
+		<u-navbar back-icon-color='#ffffff' title="采购入库" :background="background" title-color="#ffffff">
+			<template slot="right">
+				<text class="right_icon" @click="delHistory">删除</text>
+			</template>
+		</u-navbar>
 		<view class="mains">
 			<view class="box">
 				<view class="form_item">
@@ -197,11 +202,16 @@
 <script>
 	import store from '@/store'
 	import {
-		purchaseStorageAdd
+		purchaseStorageEdit,
+		purchaseStorage,
+		purchaseStorageDel
 	} from '../../api/purchaseStorage.js'
 	export default {
 		data() {
 			return {
+				background: {
+					backgroundColor: '#2979ff'
+				},
 				showGoods: false,
 				showtime: false,
 				showGreen: false,
@@ -245,7 +255,8 @@
 				numberUnits: 0,
 				goodsDetails: {},
 				active1: 0,
-				listindex: 0
+				listindex: 0,
+				id: 0
 			}
 		},
 		methods: {
@@ -315,14 +326,14 @@
 			},
 			// 修改价格确定
 			ensured() {
-				this.goodsMoney[this.indexbox.index].moneys[this.indexbox.indexColor] = this.amendMoney
+				this.goodsMoney[this.indexbox.index].moneys[this.indexbox.indexColor] = this.amendMoney;
 				this.goodsAmount = 0;
 				this.shopping.map((v, i) => {
 					v.goodsData.map((v1, i1) => {
 						this.goodsAmount += (this.goodsMoney[i].moneys[i1] * v1.quantity);
-					})
-				})
-				this.goodsAmount = this.goodsAmount.toFixed(2)
+					});
+				});
+				this.goodsAmount = this.goodsAmount.toFixed(2);
 				this.showMoney = false;
 			},
 			// 修改价格取消
@@ -357,7 +368,6 @@
 						})
 						_this.$set(_this.shopping, i, _this.shopping[i])
 					})
-					// console.log(this.goodsMoney);
 					_this.goodsAmount = _this.goodsAmount.toFixed(2)
 				})
 			},
@@ -458,7 +468,7 @@
 							}
 						})
 					})
-					let res = await purchaseStorageAdd(this.form);
+					let res = await purchaseStorageEdit(this.id, this.form);
 					if (!res.code) {
 						uni.navigateTo({
 							url: `/pages/libraryHistory/libraryHistory`
@@ -466,11 +476,142 @@
 					}
 				}
 			},
+			// 删除该采购
+			delHistory() {
+				uni.showModal({
+					title: '提示',
+					content: '确定删除该商品？',
+					success: async function(res) {
+						if (res.confirm) {
+							let res = await purchaseStorageDel(this.id);
+							if (!code) {
+								uni.navigateTo({
+									url: `/pages/libraryHistory/libraryHistory`
+								})
+							}
+						} else if (res.cancel) {
+							console.log("点击了取消");
+						}
+					}
+				});
+			},
+			//初始化
+			async init(id) {
+				let res = await purchaseStorage(id);
+				console.log(res);
+				// 供应商
+				this.form.supplier_id = res.supplier_id;
+				this.supplier = res.supplier.name;
+				this.arrears = Number(res.supplier.balance) + Number(res.supplier.base_money);
+				// 店铺
+				this.shop = res.store.name;
+				this.form.store_id = res.store_id;
+				// 付款账户
+				this.account = res.supplier.name;
+				this.form.account_id = res.account_id;
+
+				this.form.business_time = res.business_time;
+				this.form.pay_money = res.pay_money;
+				this.goodsAmount = Number(res.goods_amount);
+				this.form.discount_amount = res.discount_amount;
+				this.form.other_expense = res.other_expense;
+				this.form.status = res.status;
+				this.form.remarks = res.remarks;
+				// this.form.goods = []
+				// this.shopping = []
+				let arr = []
+				res.goods.map((v, i) => {
+					arr.push({
+						goodsData: []
+					});
+					v.color.map((v1, i1) => {
+						arr[i].goodsData.push({
+							data: [],
+							goodsOf: {
+								id: v.id,
+								images: v.images,
+								main_image: v.main_image,
+								name: v.name,
+								number: v.number,
+								retail_price: v.retail_price
+							},
+							goods_category_id: v.goods_category_id,
+							goods_id: v.id,
+							id: v1.id,
+							name: v1.name,
+							quantity: 0,
+							valNew: 0,
+							valOld: 0
+						})
+					})
+
+				});
+				res.goods.map((v, i) => {
+					arr[i].goodsData.map((v1, i1) => {
+						v.goods_spec.map((v2, i2) => {
+							if (v2.color_id == v1.id) {
+								v1.data.push({
+									goods_spec_info: v2.goods_spec_info,
+									hidden: true,
+									quantity: 0,
+									size: v2.size,
+									id: 0
+								})
+							}
+						})
+
+					})
+					arr[i].goodsData.map((v1, i1) => {
+						res.purchase_goods.map((v2, i2) => {
+							if (v1.id == v2.color_id && v1.goods_id == v2.goods_id) {
+								v1.data.map((v3, i3) => {
+									if (v3.size.id == v2.size_id) {
+										v3.quantity = v2.quantity;
+										v3.id = v2.id;
+										v1.quantity += v3.quantity;
+										v3['price'] = v2.price
+									}
+								})
+							}
+
+						})
+						this.goodsMoney.push({
+							moneys: []
+						})
+						this.goodsMoney[i].moneys.push(v1.data[0].price)
+
+					})
+				});
+				arr.map((v, i) => {
+					this.goodsMoney.push({
+						moneys: []
+					})
+					v.goodsData.map((v1, i1) => {
+						this.goodsAmount += (Number(v1.goodsOf.retail_price) * v1.quantity);
+						this.goodsMoney[i].moneys.push(v1.goodsOf.retail_price);
+						this.numberUnits += v1.quantity;
+					})
+				})
+				// console.log(this.goodsMoney);
+
+				// console.log(arr);
+				this.$store.commit('commercialSpecification', {
+					specificationOfGoods: arr
+				})
+				this.$store.commit('stateGoodFn', {
+					stateGood: true
+				})
+				this.selecGooded();
+			},
+
 		},
 		onLoad(query) {
+			this.id = query.id;
+			this.init(query.id);
 			uni.$on("supplierDatum", (res) => {
 				if (res) {
 					// console.log(res);
+
 					this.form.supplier_id = res.id;
 					this.supplier = res.name;
 					this.arrears = res.balance;
@@ -487,7 +628,7 @@
 				if (res) {
 					// console.log(res);
 					this.account = res.name;
-					this.form.account_id = res.id;
+					this.form.account_id = res.account_id;
 				}
 			});
 		},
@@ -504,9 +645,15 @@
 		display: flex;
 		background-color: #F8F8F8;
 
+		.right_icon {
+			margin-right: 30rpx;
+			color: #FFFFFF;
+		}
+
 		.mains {
 			width: 100%;
 			// height: 100%;
+			margin-top: 88rpx;
 			display: flex;
 			flex-direction: column;
 			background-color: #F8F8F8;
