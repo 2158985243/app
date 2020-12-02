@@ -399,122 +399,196 @@
 				}
 			}
 
+		}, {
+			"path": "pages/unitList/unitList",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/addUnitList/addUnitList",
+			"style": {
+				"navigationBarTitleText": "新增单位",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/barcode/barcode",
+			"style": {
+				"navigationBarTitleText": "单品条码",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/commodityDetails/commodityDetails",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/editCommodity/editCommodity",
+			"style": {
+				"navigationBarTitleText": "编辑商品",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}
+
+		, {
+			"path": "pages/purchaseStorage/purchaseStorage",
+			"style": {
+				"navigationBarTitleText": "采购入库",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/selectAccount/selectAccount",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/selectProducts/selectProducts",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/libraryHistory/libraryHistory",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/purchaseStorageHistory/purchaseStorageHistory",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/storageHistory/storageHistory",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/cancellation/cancellation",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/refer/refer",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/salesReturnHistory/salesReturnHistory",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/addReturn/addReturn",
+			"style": {
+				"navigationBarTitleText": "采购退货",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/returnedGoodsHistory/returnedGoodsHistory",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/haveToReturn/haveToReturn",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/haveBeenCancelled/haveBeenCancelled",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
 	    ,{
-            "path" : "pages/unitList/unitList",
-            "style" :                                                                                    
-            {
-               "navigationStyle": "custom", // 隐藏系统导航栏
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
-            }
-            
-        }
-        ,{
-            "path" : "pages/addUnitList/addUnitList",
-            "style" :                                                                                    
-            {
-               "navigationBarTitleText": "新增单位",
-               "navigationBarBackgroundColor": "#2979ff",
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
-            }
-            
-        }
-        ,{
-            "path" : "pages/barcode/barcode",
-            "style" :                                                                                    
-            {
-               "navigationBarTitleText": "单品条码",
-               "navigationBarBackgroundColor": "#2979ff",
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
-            }
-            
-        }
-        ,{
-            "path" : "pages/commodityDetails/commodityDetails",
-            "style" :                                                                                    
-            {
-               "navigationStyle": "custom", // 隐藏系统导航栏
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
-            }
-            
-        }
-        ,{
-            "path" : "pages/editCommodity/editCommodity",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "编辑商品",
-                "navigationBarBackgroundColor": "#2979ff",
-                "navigationBarTextStyle": "white",
-                "app-plus": {
-                	"scrollIndicator": "none"
-                }
-            }
-            
-        }
-       
-        ,{
-            "path" : "pages/purchaseStorage/purchaseStorage",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "采购入库",
-                "navigationBarBackgroundColor": "#2979ff",
-                "navigationBarTextStyle": "white",
-                "app-plus": {
-                	"scrollIndicator": "none"
-                }
-            }
-            
-        }
-        ,{
-            "path" : "pages/selectAccount/selectAccount",
-            "style" :                                                                                    
-            {
-               "navigationStyle": "custom", // 隐藏系统导航栏
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
-            }
-            
-        }
-        ,{
-            "path" : "pages/selectProducts/selectProducts",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom", // 隐藏系统导航栏
-                "navigationBarTextStyle": "white",
-                "app-plus": {
-                	"scrollIndicator": "none"
-                }
-            }
-            
-        }
-        ,{
-            "path" : "pages/libraryHistory/libraryHistory",
-            "style" :                                                                                    
-            {
-               "navigationStyle": "custom", // 隐藏系统导航栏
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
-            }
-            
-        }
-        ,{
-            "path" : "pages/purchaseStorageHistory/purchaseStorageHistory",
+            "path" : "pages/allocate/allocate",
             "style" :                                                                                    
             {
                "navigationStyle": "custom", // 隐藏系统导航栏

@@ -586,7 +586,7 @@
 
 		.box {
 			margin-bottom: 20rpx;
-
+		
 			.form_item {
 				padding-right: 20rpx;
 				display: flex;
@@ -594,38 +594,38 @@
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
-
+		
 				text {
 					width: 220rpx;
 					// text-align: left;
 					padding-left: 20rpx;
 				}
-
+		
 				.min_exchange {
 					width: 150rpx;
 				}
-
+		
 				.set {
 					width: 80rpx;
 					color: #2979ff;
 				}
-
+		
 				.border_bt {
 					border-bottom: 0.01rem solid #C0C0C0;
 				}
-
+		
 				.man_r {
 					border-left: 0.01rem solid #e3e3e3;
 					padding: 28rpx 15rpx 28rpx 30rpx;
 					// margin: 0 auto;
 				}
-
+		
 			}
-
+		
 			.bottoms {
 				margin-bottom: 80rpx;
 			}
-
+		
 			.form_item2 {
 				width: 100%;
 				display: flex;
@@ -634,13 +634,13 @@
 				margin-bottom: 20rpx;
 				background-color: #FFFFFF;
 				height: 85rpx;
-
+		
 				text {
 					color: #2979ff;
-
+		
 				}
 			}
-
+		
 			.form_item3 {
 				width: 100%;
 				display: flex;
@@ -650,16 +650,16 @@
 				background-color: #FFFFFF;
 				height: 85rpx;
 				margin-bottom: 70rpx;
-
+		
 				text {
 					color: #2979ff;
-
+		
 				}
 			}
-
+		
 			.box1 {
 				margin-bottom: 20rpx;
-
+		
 				.form_item1 {
 					padding-right: 20rpx;
 					display: flex;
@@ -667,17 +667,17 @@
 					background-color: #FFFFFF;
 					margin-bottom: 2rpx;
 					height: 280rpx;
-
+		
 					/deep/.u-add-tips {
 						margin-top: 0;
 					}
-
+		
 					text {
 						width: 180rpx;
 						// text-align: left;
 						padding-left: 20rpx;
 					}
-
+		
 					/deep/.u-delete-icon {
 						top: 0;
 						right: 0;

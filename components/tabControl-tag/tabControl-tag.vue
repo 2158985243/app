@@ -182,13 +182,13 @@
 	.tabList {
 		padding-top: 24rpx;
 		padding-left: 24rpx;
-		padding-bottom: 8rpx;
+		// padding-bottom: 8rpx;
 		white-space: nowrap;
 		text-align: center;
-		margin: 10rpx 0;
+		// margin: 10rpx 0;
 		// border: 1rpx solid #cccccc;
 		// background-color: #2979ff;
-		border-bottom: 0.01rem solid #E5E5E5;
+		// border-bottom: 0.01rem solid #E5E5E5;
 		.tabItem {
 			margin-right: 60rpx;
 			display: inline-block;

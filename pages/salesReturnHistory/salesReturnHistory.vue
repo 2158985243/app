@@ -1,6 +1,6 @@
 <template>
-	<view class="libraryHistory">
-		<u-navbar back-icon-color='#ffffff' title="采购入库历史" :background="background" title-color="#ffffff">
+	<view class="salesReturnHistory">
+		<u-navbar back-icon-color='#ffffff' title="采购退货历史" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="search" @click="toRefer" color="#ffffff" class="right_icon" size="34"></u-icon>
 				<u-icon name="plus" @click="toPurchaseStorage" color="#ffffff" class="right_icon" size="34"></u-icon>
@@ -35,8 +35,8 @@
 
 <script>
 	import {
-		purchaseStorageList
-	} from '../../api/purchaseStorage.js'
+		purchaseRefundList
+	} from '../../api/purchaseRefund.js'
 	import tabControl from '@/components/tabControl-tag/tabControl-tag.vue';
 
 	export default {
@@ -55,7 +55,7 @@
 				],
 				current: 0,
 				items: [{
-					name: '已入库',
+					name: '已退货',
 					status: 1
 				}, {
 					name: '草稿单',
@@ -72,7 +72,7 @@
 		methods: {
 			// 初始化
 			async init() {
-				let res = await purchaseStorageList({
+				let res = await purchaseRefundList({
 					status: 1,
 					page: this.page,
 					page_size: this.page_size
@@ -89,32 +89,32 @@
 					stateGood: false
 				})
 				uni.navigateTo({
-					url: `/pages/purchaseStorage/purchaseStorage`
+					url: `/pages/addReturn/addReturn`
 				})
 			},
 			// 前往查询页面
-			toRefer(){
+			toRefer() {
 				uni.navigateTo({
 					url: `/pages/refer/refer`
 				})
 			},
 			// 
-			toPurchase(item){
+			toPurchase(item) {
 				// console.log(item);
-				if(item.status==0){
+				if (item.status == 0) {
 					uni.navigateTo({
-						url: `/pages/purchaseStorageHistory/purchaseStorageHistory?id=${item.id}`
+						url: `/pages/returnedGoodsHistory/returnedGoodsHistory?id=${item.id}`
 					})
-				}else if(item.status==1){
+				} else if (item.status == 1) {
 					uni.navigateTo({
-						url: `/pages/storageHistory/storageHistory?id=${item.id}`
+						url: `/pages/haveToReturn/haveToReturn?id=${item.id}`
 					})
-				}else if(item.status==2){
+				} else if (item.status == 2) {
 					uni.navigateTo({
-						url: `/pages/cancellation/cancellation?id=${item.id}`
+						url: `/pages/haveBeenCancelled/haveBeenCancelled?id=${item.id}`
 					})
 				}
-				
+
 			},
 			async onClickItem(val) {
 				this.current = val.currentIndex;
@@ -131,28 +131,28 @@
 			async scollSwiper(e) {
 				this.current = e.target.current
 				if (this.list[this.current].length == 0) {
-					if(this.current==0){
-						let res = await purchaseStorageList({
+					if (this.current == 0) {
+						let res = await purchaseRefundList({
 							status: 1,
 							page: this.page,
 							page_size: this.page_size
-						
+
 						});
 						this.list.splice(this.current, 1, res.data);
-					}else if(this.current == 1){
-						let res = await purchaseStorageList({
+					} else if (this.current == 1) {
+						let res = await purchaseRefundList({
 							status: 0,
 							page: this.page,
 							page_size: this.page_size
-						
+
 						});
 						this.list.splice(this.current, 1, res.data);
-					}else{
-						let res = await purchaseStorageList({
+					} else {
+						let res = await purchaseRefundList({
 							status: 2,
 							page: this.page,
 							page_size: this.page_size
-						
+
 						});
 						this.list.splice(this.current, 1, res.data);
 					}
@@ -166,25 +166,25 @@
 			uni.$on("refer", async (result) => {
 				this.page = 1;
 				if (result) {
-					if(this.current==0){
-						let res = await purchaseStorageList({
+					if (this.current == 0) {
+						let res = await purchaseRefundList({
 							status: 1,
 							page: this.page,
 							page_size: this.page_size,
 							...result
 						});
 						this.list.splice(this.current, 1, res.data);
-					}else if(this.current == 1){
-						let res = await purchaseStorageList({
+					} else if (this.current == 1) {
+						let res = await purchaseRefundList({
 							status: 0,
 							page: this.page,
 							page_size: this.page_size,
 							...result
-						
+
 						});
 						this.list.splice(this.current, 1, res.data);
-					}else{
-						let res = await purchaseStorageList({
+					} else {
+						let res = await purchaseRefundList({
 							status: 2,
 							page: this.page,
 							page_size: this.page_size,
@@ -205,7 +205,7 @@
 </script>
 
 <style scoped lang="scss">
-	.libraryHistory {
+	.salesReturnHistory {
 		width: 100%;
 		height: 100%;
 		display: flex;

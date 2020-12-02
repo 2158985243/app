@@ -40,6 +40,23 @@
 				</view>
 			</view>
 			<u-toast ref="uToast" />
+			<!-- 编辑分类-->
+			<u-popup v-model="showedit" class="pop" mode="center" width="80%">
+				<text class="tit">选择门店</text>
+				<view class="box">
+					<u-radio-group v-model="value" :wrap="true">
+						<u-radio shape="square" @change="radioGroupChange($event,item)" v-for="(item, index) in store" :key="index" :name="item.name">
+							{{item.name}}
+							<text class="stale" v-if="item.is_valid==0">已过期</text>
+						</u-radio>
+					</u-radio-group>
+				</view>
+				<view class="btds">
+					<u-button :hair-line="false" @click="abrogate" class="btnChild">取消</u-button>
+					<u-button :hair-line="false" @click='ensure' class="btnChild">确定</u-button>
+				</view>
+			</u-popup>
+			<u-toast ref="uToast" />
 		</view>
 	</view>
 </template>
@@ -51,7 +68,8 @@
 	export default {
 		data() {
 			return {
-				checked: false, 
+				showedit: false,
+				checked: false,
 				custom: {
 					'font-color': '#58a3ff'
 				},
@@ -65,31 +83,62 @@
 				},
 				form: {
 					member_mobile: '15766770632',
-					password: '123456', 
+					password: '123123',
 					account: 'admin',
-					store_id:5
-				}
-
+					store_id:''
+				},
+				store: [],
+				value: '',
+				is_valid: 0,
+				storedata:{}
 			}
 		},
 		methods: {
+			radioGroupChange(v, item) {
+				console.log(v, item);
+				this.form.store_id = item.store_id;
+				this.is_valid = item.is_valid;
+				this.storedata = item
+			},
+			// 取消
+			abrogate() {
+				this.showedit = false;
+			},
+			// 确定
+			async ensure() {
+				// if (!this.is_valid) {
+				// 	this.$refs.uToast.show({
+				// 		title: '选择门店已过期'
+				// 	})
+				// } else {
+					let res = await login(this.form)
+					if (!res.code) {
+						let datas = this.form;
+						datas.checked = this.checked;
+						this.$store.commit('loginStatusAction', {
+							token: res.token
+						});
+						this.$store.commit('storeFn', {
+							store: this.storedata
+						});
+						uni.setStorageSync('userLoginInfo', datas);
+						uni.setStorageSync('userMessage', res);
+						uni.switchTab({
+							url: `/pages/home/home`,
+							fail(e) {
+								console.log(e);
+							}
+						})
+					}
+				// }
+				this.showedit = false;
+			},
 			async register() {
 				let res = await login(this.form)
 				console.log(res);
-				if (!res.code) {
-					let datas = this.form;
-					datas.checked = this.checked;
-					this.$store.commit('loginStatusAction',{token:res.token});
-					uni.setStorageSync('userLoginInfo', datas);
-					uni.setStorageSync('userMessage', res);
-					uni.switchTab({
-						url: `/pages/home/home`,
-						fail(e) {
-							console.log(e);
-						}
-					}) 
+				this.store = res.data.store;
+				this.showedit = true;
 
-				}
 			},
 			enroll: function() {
 				uni.navigateTo({
@@ -100,8 +149,10 @@
 				try {
 					const userLoginInfo = uni.getStorageSync('userLoginInfo');
 					if (userLoginInfo) {
-						this.form = userLoginInfo;
 						this.checked = userLoginInfo.checked;
+						if (this.checked) {
+							this.form = userLoginInfo;
+						}
 					}
 				} catch (e) {
 					// error
@@ -121,6 +172,54 @@
 
 		.tonten {
 			width: 100%;
+		}
+
+		/deep/.uni-scroll-view-content {
+			height: 800rpx;
+		}
+
+		.btds {
+			width: 100%;
+			height: 80rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.tit {
+			display: block;
+			font-size: 30rpx;
+			height: 80rpx;
+			line-height: 80rpx;
+			padding-left: 40rpx;
+		}
+
+		.box {
+			margin: 0 40rpx;
+			height: 640rpx;
+			display: flex;
+			// overflow: hidden;
+			overflow-y: scroll;
+
+			.u-radio {
+				height: 80rpx;
+				border-bottom: 0.01rem solid #C8C7CC;
+
+				/deep/.u-radio__label {
+					width: 100%;
+					color: #0064cf;
+				}
+			}
+
+			.stale {
+				float: right;
+				color: #DD524D;
+			}
+		}
+
+		.btnChild {
+			flex: 1;
+			border-radius: 0 !important;
 		}
 
 		.from_login {

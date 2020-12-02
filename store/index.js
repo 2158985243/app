@@ -11,7 +11,7 @@ export default new Vuex.Store({
 		colorDa: [],
 		specificationOfGoods: [],
 		stateGood:false,
-
+		store:{}
 	},
 	getters: {
 
@@ -35,6 +35,9 @@ export default new Vuex.Store({
 		},
 		stateGoodFn(state,context){
 			state.stateGood = context.stateGood
+		},
+		storeFn(state,context){
+			state.store = context.store
 		}
 	},
 	actions: {

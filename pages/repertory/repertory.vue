@@ -10,17 +10,17 @@
 					<u-icon name="plus" class='add' @click='toPurchaseStorage' color="#cccccc" size="40"></u-icon>
 				</view>
 				<view class="box">
-					<view class="left">
+					<view class="left" @click="toSalesReturnHistory">
 						<u-icon class="logo" name="order" color="#2979ff" size="40"></u-icon>
 						<text>采购退货</text>
 					</view>
-					<u-icon name="plus" class='add' color="#cccccc" size="40"></u-icon>
+					<u-icon name="plus" class='add' @click='toAddReturn' color="#cccccc" size="40"></u-icon>
 				</view>
 			</view>
 
 			<view class="block">
 				<view class="box">
-					<view class="left">
+					<view class="left" @click="toAllocate">
 						<u-icon class="logo" name="order" color="#ffe201" size="40"></u-icon>
 						<text>库存调拨</text>
 					</view>
@@ -82,26 +82,31 @@
 			}
 		},
 		methods: {
+			// 增加商品
 			toAddCommodity(){
 				uni.navigateTo({
 					url: `/pages/addCommodity/addCommodity`
 				})
 			},
+			// 商品分类
 			toCommodityManagement(){
 				uni.navigateTo({
 					url: `/pages/commodityManagement/commodityManagement`
 				})
 			},
+			// 供应商管理
 			toSupplier(){
 				uni.navigateTo({
 					url: `/pages/supplier/supplier`
 				})
 			},
+			// 增加供应商
 			toAddSupplier(){
 				uni.navigateTo({
 					url: `/pages/addSupplier/addSupplier`
 				})
 			},
+			// 增加入库单
 			toPurchaseStorage(){
 				this.$store.commit('commercialSpecification',{
 					specificationOfGoods:[]
@@ -117,6 +122,30 @@
 			toLibraryHistory(){
 				uni.navigateTo({
 					url: `/pages/libraryHistory/libraryHistory`
+				})
+			},
+			// 采购退货
+			toSalesReturnHistory(){
+				uni.navigateTo({
+					url: `/pages/salesReturnHistory/salesReturnHistory`
+				})
+			},
+			// 增加退货单
+			toAddReturn(){
+				this.$store.commit('commercialSpecification',{
+					specificationOfGoods:[]
+				})
+				this.$store.commit('stateGoodFn',{
+					stateGood:false
+				})
+				uni.navigateTo({
+					url: `/pages/addReturn/addReturn`
+				})
+			},
+			// 调拔
+			toAllocate(){
+				uni.navigateTo({
+					url: `/pages/allocate/allocate`
 				})
 			}
 		}

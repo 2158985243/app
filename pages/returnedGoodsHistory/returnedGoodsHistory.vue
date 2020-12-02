@@ -1,6 +1,6 @@
 <template>
-	<view class="purchaseStorageHistory">
-		<u-navbar back-icon-color='#ffffff' title="采购入库" :background="background" title-color="#ffffff">
+	<view class="returnedGoodsHistory">
+		<u-navbar back-icon-color='#ffffff' title="采购退货" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<text class="right_icon" @click="delHistory">删除</text>
 			</template>
@@ -202,10 +202,10 @@
 <script>
 	import store from '@/store'
 	import {
-		purchaseStorageEdit,
-		purchaseStorage,
-		purchaseStorageDel
-	} from '../../api/purchaseStorage.js'
+		purchaseRefundEdit,
+		purchaseRefund,
+		purchaseRefundDel
+	} from '../../api/purchaseRefund.js'
 	export default {
 		data() {
 			return {
@@ -462,33 +462,34 @@
 										color_id: v1.id,
 										size_id: v2.size.id,
 										quantity: v2.quantity,
-										id:v2.id,
+										id: v2.id,
 										price: this.goodsMoney[i].moneys[i1]
 									})
 								})
 							}
 						})
 					})
-					let res = await purchaseStorageEdit(this.id, this.form);
+					let res = await purchaseRefundEdit(this.id, this.form);
 					if (!res.code) {
 						uni.navigateTo({
-							url: `/pages/libraryHistory/libraryHistory`
+							url: `/pages/salesReturnHistory/salesReturnHistory`
 						})
 					}
 				}
 			},
 			// 删除该采购
 			delHistory() {
+				// console.log(this.id);
 				let _this = this
 				uni.showModal({
 					title: '提示',
 					content: '确定删除该商品？',
 					success: async function(res) {
 						if (res.confirm) {
-							let res = await purchaseStorageDel(_this.id);
+							let res = await purchaseRefundDel(_this.id);
 							if (!res.code) {
 								uni.navigateTo({
-									url: `/pages/libraryHistory/libraryHistory`
+									url: `/pages/salesReturnHistory/salesReturnHistory`
 								})
 							}
 						} else if (res.cancel) {
@@ -499,7 +500,7 @@
 			},
 			//初始化
 			async init(id) {
-				let res = await purchaseStorage(id);
+				let res = await purchaseRefund(id);
 				console.log(res);
 				// 供应商
 				this.form.supplier_id = res.supplier_id;
@@ -641,7 +642,7 @@
 </script>
 
 <style scoped lang="scss">
-	.purchaseStorageHistory {
+	.returnedGoodsHistory {
 		width: 100%;
 		display: flex;
 		background-color: #F8F8F8;
