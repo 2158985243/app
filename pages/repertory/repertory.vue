@@ -31,7 +31,7 @@
 						<u-icon class="logo" name="order" color="#2979ff" size="40"></u-icon>
 						<text>库存盘点</text>
 					</view>
-					<u-icon name="plus" class='add' color="#cccccc" size="40"></u-icon>
+					<u-icon name="plus" class='add' color="#cccccc" @click="toAddCheck" size="40"></u-icon>
 				</view>
 			</view>
 
@@ -147,7 +147,13 @@
 				uni.navigateTo({
 					url: `/pages/allocate/allocate`
 				})
-			}
+			},
+			// 增加盘点单
+			toAddCheck(){
+				uni.navigateTo({
+					url: `/pages/addCheck/addCheck`
+				})
+			},
 		}
 	}
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<view class="allocate">
-		<u-navbar back-icon-color='#ffffff' title="库存调拔历史" :background="background" title-color="#ffffff">
+		<u-navbar back-icon-color='#ffffff' title="库存调拨历史" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="search" @click="toRefer" color="#ffffff" class="right_icon" size="34"></u-icon>
 				<u-icon name="plus" @click="toPurchaseStorage" color="#ffffff" class="right_icon" size="34"></u-icon>
@@ -55,14 +55,17 @@
 				],
 				current: 0,
 				items: [{
-					name: '已退货',
+					name: '已调拨',
 					status: 1
+				}, {
+					name: '待调入',
+					status: 2
 				}, {
 					name: '草稿单',
 					status: 0
 				}, {
 					name: '已作废',
-					status: 2
+					status: 3
 				}],
 				page: 1,
 				page_size: 10,
@@ -113,6 +116,10 @@
 					uni.navigateTo({
 						url: `/pages/cancellation/cancellation?id=${item.id}`
 					})
+				} else if (item.status == 3) {
+					uni.navigateTo({
+						url: `/pages/cancellation/cancellation?id=${item.id}`
+					})
 				}
 
 			},
@@ -141,15 +148,23 @@
 						this.list.splice(this.current, 1, res.data);
 					} else if (this.current == 1) {
 						let res = await purchaseRefundList({
+							status: 2,
+							page: this.page,
+							page_size: this.page_size
+
+						});
+						this.list.splice(this.current, 1, res.data);
+					} else if (this.current == 2) {
+						let res = await purchaseRefundList({
 							status: 0,
 							page: this.page,
 							page_size: this.page_size
 
 						});
 						this.list.splice(this.current, 1, res.data);
-					} else {
+					} else if (this.current == 3) {
 						let res = await purchaseRefundList({
-							status: 2,
+							status: 3,
 							page: this.page,
 							page_size: this.page_size
 
@@ -172,23 +187,34 @@
 							page: this.page,
 							page_size: this.page_size,
 							...result
+					
 						});
 						this.list.splice(this.current, 1, res.data);
 					} else if (this.current == 1) {
-						let res = await purchaseRefundList({
-							status: 0,
-							page: this.page,
-							page_size: this.page_size,
-							...result
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else {
 						let res = await purchaseRefundList({
 							status: 2,
 							page: this.page,
 							page_size: this.page_size,
 							...result
+					
+						});
+						this.list.splice(this.current, 1, res.data);
+					} else if (this.current == 2) {
+						let res = await purchaseRefundList({
+							status: 0,
+							page: this.page,
+							page_size: this.page_size,
+							...result
+					
+						});
+						this.list.splice(this.current, 1, res.data);
+					} else if (this.current == 3) {
+						let res = await purchaseRefundList({
+							status: 3,
+							page: this.page,
+							page_size: this.page_size,
+							...result
+					
 						});
 						this.list.splice(this.current, 1, res.data);
 					}

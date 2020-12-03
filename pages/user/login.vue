@@ -115,6 +115,7 @@
 					if (!res.code) {
 						let datas = this.form;
 						datas.checked = this.checked;
+						this.storedata['userName'] = res.member_name
 						this.$store.commit('loginStatusAction', {
 							token: res.token
 						});
