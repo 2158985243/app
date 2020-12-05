@@ -612,6 +612,19 @@
             }
             
         }
+        ,{
+            "path" : "pages/checkSubmenu/checkSubmenu",
+            "style" :                                                                                    
+            {
+               "navigationBarTitleText": "盘点单",
+               "navigationBarBackgroundColor": "#2979ff",
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

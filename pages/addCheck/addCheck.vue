@@ -13,6 +13,7 @@
 					<u-input placeholder='请选择盘点范围' @tap="inventoryRange" :disabled='true' v-model="scopes_name" type="text" />
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
+				<u-action-sheet :list="scopes" @click="scopeItem" v-model="show"></u-action-sheet>
 				<view class="form_item">
 					<text>未盘点商品</text>
 					<view class="lan" @tap="toNoInventory">查看未盘点商品({{noInventory}})</view>
@@ -31,8 +32,8 @@
 							<text class="itemname"><text class="font">{{userName}}</text> {{'(子单'+(index+1)+')'}}</text>
 							<text class="child">{{item.number}}</text>
 							<text class="child">{{item.remarks}}</text>
-							<text class="handle" v-if="item.id == 0">开始盘点</text>
-							<text class="handle" v-else>继续盘点</text>
+							<text class="handle" @click="checkSubmenu(item,index)" v-if="item.id == 0">开始盘点</text>
+							<text class="handle" @click="checkSubmenu(item,index)" v-else>继续盘点</text>
 						</view>
 					</view>
 				</u-swipe-action>
@@ -66,24 +67,25 @@
 
 <script>
 	import store from '@/store'
+	import {checkAdd,checkListDel} from '../../api/check.js'
 	export default {
 		data() {
 			return {
 				shop: '',
 				form: {
 					status: 0,
-					scope: 1,
+					scope: 0,
 					store_id: 0,
 					check_list_ids: []
 				},
 				scopes: [{
-					name: '全店盘点',
+					text: '全店盘点',
 					scope: 1
 				}, {
-					name: '单品盘点',
+					text: '单品盘点',
 					scope: 0
 				}],
-				scopes_name: '全店盘点',
+				scopes_name: '单品盘点',
 				numberUnits: 0, //总数
 				noInventory: 0, //未盘点总数
 				list: ['盘点人', '盘点数量', '备注', '操作'],
@@ -102,17 +104,23 @@
 					}
 				}],
 				userName: store.state.store.userName,
+				show: false,
 
 			}
 		},
 		methods: {
 			// 点击盘点范围
 			inventoryRange() {
-
+				this.show = true;
+			},
+			// 选择了某个盘点
+			scopeItem(v) {
+				this.form.scope = this.scopes[v].scope;
+				this.scopes_name = this.scopes[v].text;
 			},
 			// 初始化
 			async init() {
-				this.shop = store.state.store.name;
+				this.shop = store.state.store.userName;
 				this.form.store_id = store.state.store.store_id;
 			},
 			// 前往店铺
@@ -122,12 +130,15 @@
 				})
 			},
 			// 草稿或者盘点汇总
-			save(v) {
+			async save(v) {
 				console.log(v);
 				if (v) {
 					// 汇总
 				} else {
 					// 草稿
+					
+					let res = await checkAdd(this.form)
+					console.log(res);
 				}
 			},
 			// 未盘点
@@ -137,14 +148,11 @@
 				})
 			},
 			// 点击了某一项
-			click(index, index1) {
-				if(this.bill.length>1){
+			async click(index, index1) {
+					let id = this.bill[index].id;
+					let res = await checkListDel(id);
 					this.bill.splice(index, 1);
 					this.$u.toast(`子单删除成功`);
-				}else{
-					this.$u.toast(`至少需要一个子单，删除失败！`);
-				}
-
 			},
 			// 如果打开一个的时候，不需要关闭其他，则无需实现本方法
 			open(index) {
@@ -163,6 +171,15 @@
 					show: false,
 					remarks: ''
 				})
+			},
+			// 盘点
+			checkSubmenu(item, index) {
+				this.$store.commit('commercialSpecification', {
+					specificationOfGoods: []
+				})
+				uni.navigateTo({
+					url: `/pages/checkSubmenu/checkSubmenu?index=${index}&id=${item.id}`
+				})
 			}
 		},
 		onLoad() {
@@ -172,6 +189,23 @@
 					// console.log(res);
 					this.shop = res.name;
 					this.form.store_id = res.id;
+				}
+			});
+			uni.$on("check", (res) => {
+				if (res) {
+					// console.log(res);
+					this.form.check_list_ids.push(res.id);
+					this.bill[res.checkIndex] = {
+						id: res.id,
+						number: res.number,
+						show: false,
+						remarks: res.remarks
+					}
+					this.$set(this.bill, res.checkIndex, this.bill[res.checkIndex]);
+					// console.log(this.bill);
+					this.bill.map((v)=>{
+						this.numberUnits += v.number;
+					})
 				}
 			});
 		}

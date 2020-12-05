@@ -193,7 +193,6 @@
 							</view>
 						</view>
 					</view>
-
 				</view>
 
 				<view class="btn">
@@ -389,9 +388,11 @@
 			},
 			// 全部尺码组数组变化
 			valChangeAll(val, item, index) {
-				console.log(val, item);
+				item.quantity = 0;
+				item.check = true;
 				item.data.map((v, i) => {
 					v.quantity = v.quantity + (val.value - item.valOld);
+					item.quantity +=v.quantity
 				});
 				item.valOld = item.valNew;
 				this.$set(this.spec, index, this.spec[index])
@@ -567,12 +568,8 @@
 			},
 			// 点击右侧
 			async rightNav(e) {
-				// console.log(store.state.specificationOfGoods);
 				this.active1 = 0;
-				// this.active2 = 0;
-				// this.valAll = [];
 				let arr = this.saveData;
-
 				let num = 1;
 				// 修改选过的商品
 				for (let i = 0; i < arr.length; i++) {
@@ -607,6 +604,7 @@
 							v1['quantity'] = 0;
 							v1['valOld'] = 0;
 							v1['valNew'] = 0;
+							v1['check'] = false;
 							// this.valAll.push(0);
 							res.goods_spec.map((v, i) => {
 								if (v.color_id == v1.id) {

@@ -45,7 +45,8 @@
 				<text class="tit">选择门店</text>
 				<view class="box">
 					<u-radio-group v-model="value" :wrap="true">
-						<u-radio shape="square" @change="radioGroupChange($event,item)" v-for="(item, index) in store" :key="index" :name="item.name">
+						<u-radio shape="square" @change="radioGroupChange($event,item)" v-for="(item, index) in stores" :key="index"
+						 :name="item.name">
 							{{item.name}}
 							<text class="stale" v-if="item.is_valid==0">已过期</text>
 						</u-radio>
@@ -84,21 +85,20 @@
 				form: {
 					member_mobile: '15766770632',
 					password: '123123',
-					account: 'admin',
-					store_id:''
+					account: 'admin'
 				},
-				store: [],
+				stores: [],
 				value: '',
 				is_valid: 0,
-				storedata:{}
+				storedata: {}
 			}
 		},
 		methods: {
 			radioGroupChange(v, item) {
-				console.log(v, item);
 				this.form.store_id = item.store_id;
 				this.is_valid = item.is_valid;
-				this.storedata = item
+				this.storedata = item;
+				// console.log(this.form.store_id);
 			},
 			// 取消
 			abrogate() {
@@ -111,35 +111,37 @@
 				// 		title: '选择门店已过期'
 				// 	})
 				// } else {
-					let res = await login(this.form)
-					if (!res.code) {
-						let datas = this.form;
-						datas.checked = this.checked;
-						this.storedata['userName'] = res.member_name
-						this.$store.commit('loginStatusAction', {
-							token: res.token
-						});
-						this.$store.commit('storeFn', {
-							store: this.storedata
-						});
-						uni.setStorageSync('userLoginInfo', datas);
-						uni.setStorageSync('userMessage', res);
-						uni.switchTab({
-							url: `/pages/home/home`,
-							fail(e) {
-								console.log(e);
-							}
-						})
-					}
+				let res = await login(this.form)
+				if (!res.code) {
+					let datas = this.form;
+					datas.checked = this.checked;
+					this.storedata['userName'] = res.store_name
+					this.storedata['store_id'] = res.store_id
+					this.$store.commit('loginStatusAction', {
+						token: res.token
+					});
+					this.$store.commit('storeFn', {
+						store: this.storedata
+					});
+					uni.setStorageSync('userLoginInfo', datas);
+					uni.setStorageSync('userMessage', res);
+					uni.switchTab({
+						url: `/pages/home/home`,
+						fail(e) {
+							console.log(e);
+						}
+					})
+				}
 				// }
 				this.showedit = false;
 			},
 			async register() {
+				this.form.store_id = ''
 				let res = await login(this.form)
 				console.log(res);
-				this.store = res.data.store;
+				this.stores = res.data.store;
 				this.showedit = true;
-
+				this.value = ''
 			},
 			enroll: function() {
 				uni.navigateTo({
@@ -153,6 +155,7 @@
 						this.checked = userLoginInfo.checked;
 						if (this.checked) {
 							this.form = userLoginInfo;
+
 						}
 					}
 				} catch (e) {
