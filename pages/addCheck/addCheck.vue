@@ -30,7 +30,7 @@
 					<view class="item u-border-bottom">
 						<view class="list title-wrap">
 							<text class="itemname"><text class="font">{{userName}}</text> {{'(子单'+(index+1)+')'}}</text>
-							<text class="child">{{item.number}}</text>
+							<text class="child">{{item.quantity}}</text>
 							<text class="child">{{item.remarks}}</text>
 							<text class="handle" @click="checkSubmenu(item,index)" v-if="item.id == 0">开始盘点</text>
 							<text class="handle" @click="checkSubmenu(item,index)" v-else>继续盘点</text>
@@ -67,7 +67,10 @@
 
 <script>
 	import store from '@/store'
-	import {checkAdd,checkListDel} from '../../api/check.js'
+	import {
+		checkAdd,
+		checkListDel
+	} from '../../api/check.js'
 	export default {
 		data() {
 			return {
@@ -92,7 +95,7 @@
 				bill: [{
 						id: 0,
 						remarks: '',
-						number: 0,
+						quantity: 0,
 						show: false
 					},
 
@@ -134,11 +137,22 @@
 				console.log(v);
 				if (v) {
 					// 汇总
+					if (this.form.check_list_ids.length > 0) {
+						uni.navigateTo({
+							url: '/pages/inventoryPreview/inventoryPreview?obj=' + encodeURIComponent(JSON.stringify(this.form))
+						})
+					} else {
+						this.$u.toast(`单据未保存!`);
+					}
 				} else {
 					// 草稿
-					
+					this.form.status = 0;
 					let res = await checkAdd(this.form)
-					console.log(res);
+					if (!res.code) {
+						uni.navigateTo({
+							url: '/pages/stockTaking/stockTaking?'
+						})
+					}
 				}
 			},
 			// 未盘点
@@ -149,10 +163,10 @@
 			},
 			// 点击了某一项
 			async click(index, index1) {
-					let id = this.bill[index].id;
-					let res = await checkListDel(id);
-					this.bill.splice(index, 1);
-					this.$u.toast(`子单删除成功`);
+				let id = this.bill[index].id;
+				let res = await checkListDel(id);
+				this.bill.splice(index, 1);
+				this.$u.toast(`子单删除成功`);
 			},
 			// 如果打开一个的时候，不需要关闭其他，则无需实现本方法
 			open(index) {
@@ -167,7 +181,7 @@
 			addsubmenu() {
 				this.bill.push({
 					id: 0,
-					number: 0,
+					quantity: 0,
 					show: false,
 					remarks: ''
 				})
@@ -193,19 +207,27 @@
 			});
 			uni.$on("check", (res) => {
 				if (res) {
-					// console.log(res);
-					this.form.check_list_ids.push(res.id);
+					console.log(res.checkIndex);
+					if (this.form.check_list_ids.length > 0) {
+						this.form.check_list_ids.map((v) => {
+							if (res.id != v) {
+								this.form.check_list_ids.push(res.id);
+							}
+						})
+					} else {
+						this.form.check_list_ids.push(res.id);
+					}
 					this.bill[res.checkIndex] = {
 						id: res.id,
-						number: res.number,
+						quantity: res.number,
 						show: false,
 						remarks: res.remarks
 					}
 					this.$set(this.bill, res.checkIndex, this.bill[res.checkIndex]);
-					// console.log(this.bill);
-					this.bill.map((v)=>{
-						this.numberUnits += v.number;
+					this.bill.map((v) => {
+						this.numberUnits += v.quantity;
 					})
+					console.log(this.bill);
 				}
 			});
 		}

@@ -63,10 +63,19 @@ export const checkCounts = () => {
 		return error;
 	});
 };
+// 盘点汇总
+export const getCounts = (data) => {
+	return $http.post("/check/get_counts",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
 
 // 子单列表
-export const checkLists = (id) => {
-	return $http.get("/check_list/list/"+id).then((res) => {
+export const checkLists = (data) => {
+	return $http.get("/check_list/list",data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
@@ -96,8 +105,8 @@ export const checkListId = (id) => {
 
 
 // 更新子单
-export const checkListEdit = (id) => {
-	return $http.post("/check_list/edit/"+id).then((res) => {
+export const checkListEdit = (id,data) => {
+	return $http.post("/check_list/edit/"+id,data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示

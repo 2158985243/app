@@ -55,7 +55,7 @@
 			},
 			top: {
 				type: Number,
-				default: 0
+				default: 88
 			},
 			isEqually: {
 				type: Boolean,
@@ -172,9 +172,9 @@
 
 <style lang="scss" scoped>
 	.fxied {
-		position: fixed;
-		z-index: 2;
-		top: 88rpx !important;
+		// position: fixed;
+		// z-index: 2;
+		// top: 88rpx !important;
 	}
 
 	.textsize {}

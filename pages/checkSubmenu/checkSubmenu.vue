@@ -112,7 +112,7 @@
 								<u-number-box class="listed" v-model="item.valNew" size="24" input-width="60" input-height="40" :min="0"
 								 @change="valChangeAll($event,item,index)"></u-number-box>
 							</view>
-							<view class="size-box-list" v-for="(item1,index1) in item.data" :key="index1" @click="clickSize(item1,index1)">
+							<view class="size-box-list" v-for="(item1,index1) in item.data" :key="index1" >
 								<text class="listed">{{item1.size.name}}</text>
 								<text class="listed" v-if="item1.goods_spec_info">{{item1.goods_spec_info.stock}}</text>
 								<u-number-box class="listed" v-model="item1.quantity" size="24" input-width="60" input-height="40" :min="0"
@@ -136,7 +136,7 @@
 	import {
 		checkListAdd,
 		checkListId,
-
+		checkListEdit
 	} from '../../api/check.js'
 	export default {
 		data() {
@@ -209,8 +209,8 @@
 			// 显示商品分类
 			async showgd(item, index) {
 				this.listindex = index;
-				// console.log(item);
 				this.goodsDetails = JSON.parse(JSON.stringify(item.goodsData));
+				this.$set(this.goodsDetails, index, this.goodsDetails[index])
 				this.showGoods = true;
 			},
 			// 全部尺码数量变化
@@ -297,7 +297,7 @@
 						if (!res.code) {
 							let obj = {}
 							obj['remarks'] = this.form.remarks;
-							obj['id'] = res.check_list_id;
+							obj['id'] = this.id;
 							obj['checkIndex'] = this.checkIndex;
 							obj['number'] = this.numberUnits;
 							uni.$emit('check', obj);
@@ -322,22 +322,6 @@
 				let res = await checkListId(v)
 				let arr = []
 
-				// console.log(newArr);
-				// console.log(res);
-				// let arr = [{
-				// 	goodsData: [{
-				// 		goods_id: res.check_goods[0].goods_id,
-				// 		color_id: res.check_goods[0].color_id,
-				// 		name: res.check_goods[0].color.name,
-				// 		data:[],
-				// 		valNew:0,
-				// 		valOld:0,
-				// 		quantity:0,
-				// 		check:false,
-				// 		goodsOf:{},
-
-				// 	}]
-				// }]
 				res.check_goods.map((v, i) => {
 					arr.push({
 						goodsData: []
@@ -345,14 +329,14 @@
 					v.data.map((v1, i1) => {
 						arr[i].goodsData.push({
 							goods_id: v.goods_id,
-							color_id: v1.color_id,
+							id: v1.color_id,
 							goods_category_id: v.goods.goods_category_id,
 							name: v1.color.name,
 							data: [],
 							valNew: 0,
 							valOld: 0,
 							quantity: 0,
-							check: false,
+							check: true,
 							goodsOf: v.goods,
 						})
 						v1.data.map((v2,i2)=>{
@@ -378,7 +362,10 @@
 						})
 					})
 				})
-				console.log(arr);
+				this.$store.commit('commercialSpecification', {
+					specificationOfGoods: arr
+				})
+				this.selecGooded()
 			}
 		},
 		onLoad(query) {

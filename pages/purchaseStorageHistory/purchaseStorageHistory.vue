@@ -178,7 +178,7 @@
 									<u-number-box class="listed" v-model="item.valNew" size="24" input-width="60" input-height="40" :min="0"
 									 @change="valChangeAll($event,item,index)"></u-number-box>
 								</view>
-								<view class="size-box-list" v-for="(item1,index1) in item.data" :key="index1" @click="clickSize(item1,index1)">
+								<view class="size-box-list" v-for="(item1,index1) in item.data" :key="index1" >
 									<text class="listed">{{item1.size.name}}</text>
 									<text class="listed" v-if="item1.goods_spec_info">{{item1.goods_spec_info.stock}}</text>
 									<u-number-box class="listed" v-model="item1.quantity" size="24" input-width="60" input-height="40" :min="0"

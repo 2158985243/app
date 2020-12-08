@@ -219,7 +219,6 @@
 		.box {
 			width: 100%;
 			height: 100%;
-			margin-top: 88rpx;
 			// display: flex;
 			// flex-direction: column;
 

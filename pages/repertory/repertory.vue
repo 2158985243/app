@@ -24,10 +24,10 @@
 						<u-icon class="logo" name="order" color="#ffe201" size="40"></u-icon>
 						<text>库存调拨</text>
 					</view>
-					<u-icon name="plus" class='add' color="#cccccc" size="40"></u-icon>
+					<u-icon name="plus" class='add' @click="toAddAllocate" color="#cccccc" size="40"></u-icon>
 				</view>
-				<view class="box">
-					<view class="left">
+				<view class="box" >
+					<view class="left" @click="toStockTaking">
 						<u-icon class="logo" name="order" color="#2979ff" size="40"></u-icon>
 						<text>库存盘点</text>
 					</view>
@@ -142,6 +142,18 @@
 					url: `/pages/addReturn/addReturn`
 				})
 			},
+			// 增加调拨单
+			toAddAllocate(){
+				this.$store.commit('commercialSpecification',{
+					specificationOfGoods:[]
+				})
+				this.$store.commit('stateGoodFn',{
+					stateGood:false
+				})
+				uni.navigateTo({
+					url: `/pages/addAllocate/addAllocate`
+				})
+			},
 			// 调拔
 			toAllocate(){
 				uni.navigateTo({
@@ -152,6 +164,12 @@
 			toAddCheck(){
 				uni.navigateTo({
 					url: `/pages/addCheck/addCheck`
+				})
+			},
+			// 
+			toStockTaking(){
+				uni.navigateTo({
+					url: `/pages/stockTaking/stockTaking`
 				})
 			},
 		}
