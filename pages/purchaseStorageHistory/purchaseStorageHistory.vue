@@ -645,7 +645,7 @@
 		width: 100%;
 		display: flex;
 		background-color: #F8F8F8;
-
+		flex-direction: column;
 		.right_icon {
 			margin-right: 30rpx;
 			color: #FFFFFF;
@@ -654,7 +654,6 @@
 		.mains {
 			width: 100%;
 			// height: 100%;
-			margin-top: 88rpx;
 			display: flex;
 			flex-direction: column;
 			background-color: #F8F8F8;

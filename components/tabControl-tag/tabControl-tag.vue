@@ -96,12 +96,9 @@
 								// }
 								this.widthList.push(res.width)
 								this.leftList.push(res.left)
-
 							}).exec()
 
 						})
-						// console.log(this.leftList)
-						// console.log(this.widthList)
 					}
 				});
 			})
@@ -147,10 +144,11 @@
 				if (this.wornScroll - this.newScroll > 0) {
 					for (let i = 0; i < this.leftList.length; i++) {
 						if (i > 1 && i == this.currentIndex) {
-							scoll = this.leftList[i - 1]
+							scoll = this.leftList[i-1]
 						}
 					}
-					// console.log('在向左滑',scoll)
+					// console.log(index,scoll);
+					// console.log('在向左滑',scoll,this.leftList)
 				} else {
 					if (index > 1) {
 						for (let i = 0; i < this.leftList.length; i++) {

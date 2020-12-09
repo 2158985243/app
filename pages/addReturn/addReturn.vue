@@ -369,7 +369,7 @@
 				let _this = this
 				uni.showModal({
 					title: '提示',
-					content: '确定删除该商品吗？',
+					content: '确定移除该商品吗？',
 					success: function(res) {
 						if (res.confirm) {
 							_this.shopping.splice(index, 1);

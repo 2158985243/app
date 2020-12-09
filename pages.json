@@ -659,34 +659,50 @@
 				}
 			}
 
+		}, {
+			"path": "pages/checkCancellation/checkCancellation",
+			"style": {
+				"navigationBarTitleText": "库存盘点",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/addAllocate/addAllocate",
+			"style": {
+				"navigationBarTitleText": "库存调拨",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/stopAllocate/stopAllocate",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/draftAllocate/draftAllocate",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
-	    ,{
-            "path" : "pages/checkCancellation/checkCancellation",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "库存盘点",
-                "navigationBarBackgroundColor": "#2979ff",
-                "navigationBarTextStyle": "white",
-                "app-plus": {
-                	"scrollIndicator": "none"
-                }
-            }
-            
-        }
-        ,{
-            "path" : "pages/addAllocate/addAllocate",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "库存调拨",
-                "navigationBarBackgroundColor": "#2979ff",
-                "navigationBarTextStyle": "white",
-                "app-plus": {
-                	"scrollIndicator": "none"
-                }
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

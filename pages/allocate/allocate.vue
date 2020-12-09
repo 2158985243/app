@@ -3,7 +3,7 @@
 		<u-navbar back-icon-color='#ffffff' title="库存调拨历史" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="search" @click="toRefer" color="#ffffff" class="right_icon" size="34"></u-icon>
-				<u-icon name="plus" @click="toPurchaseStorage" color="#ffffff" class="right_icon" size="34"></u-icon>
+				<u-icon name="plus" @click="toAddAllocate" color="#ffffff" class="right_icon" size="34"></u-icon>
 			</template>
 		</u-navbar>
 		<view class="box">
@@ -15,13 +15,13 @@
 						<view class="list">
 							<view class="list-box" v-for="(itemList,indexList) in item" @click="toPurchase(itemList)">
 								<view class="left">
-									<text class="supplier-name">{{itemList.supplier.name}}</text>
+									<text class="supplier-name">{{itemList.from_store.name}}→{{itemList.to_store.name}}</text>
 									<text>{{itemList.number}}</text>
 									<text>{{itemList.updated_at}}</text>
 								</view>
 								<view class="right">
-									<text class="money">&yen;{{itemList.goods_amount}}</text>
-									<text>{{itemList.store.name}}</text>
+									<text class="money">&yen;{{itemList.price}}</text>
+									<!-- <text>{{itemList.store.name}}</text> -->
 								</view>
 
 							</view>
@@ -35,8 +35,8 @@
 
 <script>
 	import {
-		purchaseRefundList
-	} from '../../api/purchaseRefund.js'
+		allocateList
+	} from '../../api/allocate.js'
 	import tabControl from '@/components/tabControl-tag/tabControl-tag.vue';
 
 	export default {
@@ -49,6 +49,7 @@
 					backgroundColor: '#2979ff'
 				},
 				list: [
+					[],
 					[],
 					[],
 					[]
@@ -75,7 +76,7 @@
 		methods: {
 			// 初始化
 			async init() {
-				let res = await purchaseRefundList({
+				let res = await allocateList({
 					status: 1,
 					page: this.page,
 					page_size: this.page_size
@@ -83,8 +84,8 @@
 				})
 				this.list.splice(0, 1, res.data)
 			},
-			// 前往增加采购信息
-			toPurchaseStorage() {
+			// 增加调拨单
+			toAddAllocate() {
 				this.$store.commit('commercialSpecification', {
 					specificationOfGoods: []
 				})
@@ -92,7 +93,7 @@
 					stateGood: false
 				})
 				uni.navigateTo({
-					url: `/pages/addReturn/addReturn`
+					url: `/pages/addAllocate/addAllocate`
 				})
 			},
 			// 前往查询页面
@@ -106,11 +107,11 @@
 				// console.log(item);
 				if (item.status == 0) {
 					uni.navigateTo({
-						url: `/pages/returnedGoodsHistory/returnedGoodsHistory?id=${item.id}`
+						url: `/pages/draftAllocate/draftAllocate?id=${item.id}`
 					})
 				} else if (item.status == 1) {
 					uni.navigateTo({
-						url: `/pages/haveToReturn/haveToReturn?id=${item.id}`
+						url: `/pages/stopAllocate/stopAllocate?id=${item.id}`
 					})
 				} else if (item.status == 2) {
 					uni.navigateTo({
@@ -136,10 +137,11 @@
 				// }
 			},
 			async scollSwiper(e) {
+				console.log(this.list[this.current].length,this.current);
 				this.current = e.target.current
 				if (this.list[this.current].length == 0) {
 					if (this.current == 0) {
-						let res = await purchaseRefundList({
+						let res = await allocateList({
 							status: 1,
 							page: this.page,
 							page_size: this.page_size
@@ -147,7 +149,7 @@
 						});
 						this.list.splice(this.current, 1, res.data);
 					} else if (this.current == 1) {
-						let res = await purchaseRefundList({
+						let res = await allocateList({
 							status: 2,
 							page: this.page,
 							page_size: this.page_size
@@ -155,7 +157,7 @@
 						});
 						this.list.splice(this.current, 1, res.data);
 					} else if (this.current == 2) {
-						let res = await purchaseRefundList({
+						let res = await allocateList({
 							status: 0,
 							page: this.page,
 							page_size: this.page_size
@@ -163,16 +165,16 @@
 						});
 						this.list.splice(this.current, 1, res.data);
 					} else if (this.current == 3) {
-						let res = await purchaseRefundList({
+						let res = await allocateList({
 							status: 3,
 							page: this.page,
 							page_size: this.page_size
 
 						});
+						console.log(res);
 						this.list.splice(this.current, 1, res.data);
 					}
 				}
-				// console.log(this.current);
 			}
 
 		},
@@ -182,39 +184,39 @@
 				this.page = 1;
 				if (result) {
 					if (this.current == 0) {
-						let res = await purchaseRefundList({
+						let res = await allocateList({
 							status: 1,
 							page: this.page,
 							page_size: this.page_size,
 							...result
-					
+
 						});
 						this.list.splice(this.current, 1, res.data);
 					} else if (this.current == 1) {
-						let res = await purchaseRefundList({
+						let res = await allocateList({
 							status: 2,
 							page: this.page,
 							page_size: this.page_size,
 							...result
-					
+
 						});
 						this.list.splice(this.current, 1, res.data);
 					} else if (this.current == 2) {
-						let res = await purchaseRefundList({
+						let res = await allocateList({
 							status: 0,
 							page: this.page,
 							page_size: this.page_size,
 							...result
-					
+
 						});
 						this.list.splice(this.current, 1, res.data);
 					} else if (this.current == 3) {
-						let res = await purchaseRefundList({
+						let res = await allocateList({
 							status: 3,
 							page: this.page,
 							page_size: this.page_size,
 							...result
-					
+
 						});
 						this.list.splice(this.current, 1, res.data);
 					}

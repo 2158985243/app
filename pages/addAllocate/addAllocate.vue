@@ -3,13 +3,13 @@
 		<view class="mains">
 			<view class="box">
 				<view class="form_item">
-					<text>供应商</text>
-					<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier" type="text" />
+					<text>调出店铺</text>
+					<u-input placeholder='请选择调出店铺' @click="toStore(0)" :disabled='true' v-model="from_store_name" type="text" />
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
-					<text>店铺</text>
-					<u-input placeholder='请选择店铺' @click="toStore" :disabled='true' v-model="shop" type="text" />
+					<text>调入店铺</text>
+					<u-input placeholder='请选择调入店铺' @click="toStore(1)" :disabled='true' v-model="to_store_name" type="text" />
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
@@ -40,7 +40,7 @@
 							<view class="shopp-color">
 								<text class="color-name">{{itemColor.name}}</text>
 								<text class="color-mn" v-if="goodsMoney[index]">&yen;{{goodsMoney[index].moneys[indexColor]}}</text>
-								<u-icon name="edit-pen-fill" @click="showAmend(index,indexColor)" color="#a8a8a8" size="40"></u-icon>
+								<!-- <u-icon name="edit-pen-fill" @click="showAmend(index,indexColor)" color="#a8a8a8" size="40"></u-icon> -->
 								<text class="color-quantity">x{{itemColor.quantity}}</text>
 							</view>
 							<view class="sp-size-name-quantity">
@@ -57,11 +57,22 @@
 					</view>
 				</view>
 			</view>
-		
-			
+			<view class="box ">
+				<view class="form_item">
+					<text>业务时间</text>
+					<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.business_time" type="text" />
+					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+				</view>
+				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :default-time="form.business_time" :params="params"></u-picker>
+				<view class="form_item">
+					<text>备注</text>
+					<u-input v-model="form.remarks" type="text" />
+				</view>
+			</view>
+
 			<view class="foot">
 				<view class="total">
-					合计：{{numberUnits}}件<text class="orgin-money"> &yen;{{goodsAmount-Number(form.discount_amount)+Number(form.other_expense)}}</text>
+					合计：{{numberUnits}}件<text class="orgin-money"> &yen;{{goodsAmount}}</text>
 				</view>
 				<view class="sub">
 					<view class="btnon1" @click="save(0)">
@@ -129,8 +140,8 @@
 <script>
 	import store from '@/store'
 	import {
-		purchaseRefundAdd
-	} from '../../api/purchaseRefund.js'
+		allocateAdd
+	} from '../../api/allocate.js'
 	export default {
 		data() {
 			return {
@@ -153,13 +164,9 @@
 				arrears: 0,
 				form: {
 					status: 0,
-					supplier_id: 0,
-					store_id: 0,
-					discount_amount: 0.00,
-					other_expense: 0.00,
-					account_id: 0,
-					pay_money: 0,
-					business_time: '2020-01-01',
+					from_store_id: 0,
+					to_store_id: 0,
+					business_time: 0,
 					goods: [],
 					remarks: ''
 				},
@@ -178,7 +185,10 @@
 				numberUnits: 0,
 				goodsDetails: {},
 				active1: 0,
-				listindex: 0
+				listindex: 0,
+				from_store_name: '',
+				to_store_name: '',
+				store_from_to: false
 			}
 		},
 		methods: {
@@ -187,27 +197,18 @@
 			confirmTime(v) {
 				this.form.business_time = `${v.year}-${v.month}-${v.day}`;
 			},
-			
-			
-			// 前往供应商
-			toChooseSupplier() {
-				uni.navigateTo({
-					url: '/pages/chooseSupplier/chooseSupplier'
-				})
-			},
+
 			hiddenTime() {
 				this.showtime = true;
 			},
 			// 前往店铺
-			toStore() {
+			toStore(v) {
+				this.store_from_to = false;
+				if (v) {
+					this.store_from_to = true;
+				}
 				uni.navigateTo({
 					url: '/pages/storeManagement/storeManagement?iq=1'
-				})
-			},
-			// 前往选择账户
-			toSelectAccount() {
-				uni.navigateTo({
-					url: '/pages/selectAccount/selectAccount'
 				})
 			},
 			// 前往选择商品
@@ -293,7 +294,7 @@
 				let _this = this
 				uni.showModal({
 					title: '提示',
-					content: '确定删除该商品吗？',
+					content: '确定移除该商品吗？',
 					success: function(res) {
 						if (res.confirm) {
 							_this.shopping.splice(index, 1);
@@ -351,17 +352,13 @@
 			},
 			// 保存
 			async save(v) {
-				if (this.form.supplier_id == 0) {
+				if (this.form.from_store_id == 0) {
 					this.$refs.uToast.show({
-						title: '请选择供应商'
+						title: '请选择调出店铺'
 					})
-				} else if (this.form.store_id == 0) {
+				} else if (this.form.to_store_id == 0) {
 					this.$refs.uToast.show({
-						title: '请选择店铺',
-					})
-				} else if (this.form.account_id == 0) {
-					this.$refs.uToast.show({
-						title: '请选择付款账户',
+						title: '请选择调入店铺',
 					})
 				} else if (this.shopping.length == 0) {
 					this.$refs.uToast.show({
@@ -385,10 +382,10 @@
 							}
 						})
 					})
-					let res = await purchaseRefundAdd(this.form);
+					let res = await allocateAdd(this.form);
 					if (!res.code) {
 						uni.navigateTo({
-							url: `/pages/salesReturnHistory/salesReturnHistory`
+							url: `/pages/allocate/allocate`
 						})
 					}
 				}
@@ -397,28 +394,22 @@
 		onLoad() {
 			let date = new Date();
 			this.form.business_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
-			uni.$on("supplierDatum", (res) => {
-				if (res) {
-					// console.log(res);
-					this.form.supplier_id = res.id;
-					this.supplier = res.name;
-					this.arrears = res.balance;
-				}
-			});
+			this.form.from_store_id = store.state.store.store_id;
+			this.from_store_name = store.state.store.name
+
 			uni.$on("gloEvent", (res) => {
 				if (res) {
 					// console.log(res);
-					this.shop = res.name;
-					this.form.store_id = res.id;
+					if (this.store_from_to) {
+						this.to_store_name = res.name;
+						this.form.to_store_id = res.id;
+					} else {
+						this.from_store_name = res.name;
+						this.form.from_store_id = res.id;
+					}
 				}
 			});
-			uni.$on("selectAccount", (res) => {
-				if (res) {
-					// console.log(res);
-					this.account = res.name;
-					this.form.account_id = res.account_id;
-				}
-			});
+
 		},
 		onShow() {
 			this.selecGooded();
