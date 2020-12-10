@@ -13,6 +13,9 @@
 				<swiper-item v-for="(item,index) in list" :key='index'>
 					<scroll-view scroll-y="true" style="height: 100%;">
 						<view class="list">
+							<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
+							 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
+							 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 							<view class="list-box" v-for="(itemList,indexList) in item" @click="toPurchase(itemList)">
 								<view class="left">
 									<text class="supplier-name">{{itemList.supplier.name}}</text>
@@ -25,15 +28,18 @@
 								</view>
 
 							</view>
+							</k-scroll-view>
 						</view>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
 		</view>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
 <script>
+	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import {
 		purchaseStorageList
 	} from '../../api/purchaseStorage.js'
@@ -41,7 +47,8 @@
 
 	export default {
 		components: {
-			tabControl
+			tabControl,
+			kScrollView
 		},
 		data() {
 			return {
@@ -66,7 +73,18 @@
 				}],
 				page: 1,
 				page_size: 10,
-
+				
+				refreshType: 'custom',
+				refreshTip: '正在下拉',
+				loadTip: '获取更多数据',
+				loadingTip: '正在加载中...',
+				emptyTip: '--到底了--',
+				touchHeight: 50,
+				height: 0,
+				bottom: 0,
+				autoPullUp: true,
+				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
+				last_page: 0,
 			}
 		},
 		methods: {
@@ -78,7 +96,9 @@
 					page_size: this.page_size
 
 				})
-				this.list.splice(0, 1, res.data)
+				// this.list.splice(0, 1, res.data)
+				this.list[this.current].push(...res.data)
+				this.last_page = res.last_page
 			},
 			// 前往增加采购信息
 			toPurchaseStorage() {
@@ -158,8 +178,33 @@
 					}
 				}
 				// console.log(this.current);
-			}
-
+			},
+			// 下拉刷新
+			handlePullDown(stopLoad) {
+				this.page = 1;
+				this.list[this.current] = []
+				this.init()
+				stopLoad ? stopLoad() : '';
+			},
+			// 上拉加载
+			async handleLoadMore(stopLoad) {
+				if (this.page >= this.last_page) {
+					this.$refs.uToast.show({
+						title: '加载到底了',
+						type: 'default',
+						position: 'bottom'
+					})
+			
+				} else {
+					this.page++;
+					this.init()
+				}
+			},
+			handleGoTop() {
+				this.$refs['k-scroll-view'].goTop();
+			},
+			
+			
 		},
 		onLoad() {
 			// this.init()
@@ -223,7 +268,8 @@
 			// flex-direction: column;
 
 			.swiper {
-				height: 100%;
+				margin-top: 84rpx;
+				height: calc(100% - #{84rpx});
 			}
 
 			.list {

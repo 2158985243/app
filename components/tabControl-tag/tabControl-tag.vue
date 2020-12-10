@@ -1,5 +1,5 @@
 <template name="tabControl">
-	<scroll-view scroll-x="true" :style="'background-color:'+bgc+';top:'+top+'px;'" :class="fixed?'fxied':''" :scroll-left='scrollLeft'
+	<scroll-view scroll-x="true" :class="fixed?'fxied':''" :scroll-left='scrollLeft'
 	 scroll-with-animation id="tabcard">
 		<view class="tabList" :style="isEqually?'display: flex;justify-content: space-between;padding-left:0;':''">
 			<view :class="'tabItem'+(currentIndex==index?' thisOpenSelect':'')" :style="isEqually? 'width:'+windowWidth/values.length+'px;margin-right:0;':''"
@@ -170,8 +170,8 @@
 
 <style lang="scss" scoped>
 	.fxied {
-		// position: fixed;
-		// z-index: 2;
+		position: fixed;
+		z-index: 2;
 		// top: 88rpx !important;
 	}
 
@@ -185,7 +185,7 @@
 		text-align: center;
 		// margin: 10rpx 0;
 		// border: 1rpx solid #cccccc;
-		// background-color: #2979ff;
+		background-color: #FFFFFF; 
 		// border-bottom: 0.01rem solid #E5E5E5;
 		.tabItem {
 			margin-right: 60rpx;

@@ -54,6 +54,15 @@ export const allocateCancel = (id) => {
 		return error;
 	});
 };
+// 调入
+export const allocateCallIn = (id) => {
+	return $http.post("/allocate/call_in/"+id).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
 // 统计
 export const allocateCounts = () => {
 	return $http.get("/allocate/counts").then((res) => {

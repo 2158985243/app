@@ -401,11 +401,23 @@
 				if (res) {
 					// console.log(res);
 					if (this.store_from_to) {
-						this.to_store_name = res.name;
-						this.form.to_store_id = res.id;
+						if (res.id == this.form.from_store_id) {
+							this.$refs.uToast.show({
+								title: '选择调入的店铺不能和调出的店铺一致'
+							})
+						} else {
+							this.to_store_name = res.name;
+							this.form.to_store_id = res.id;
+						}
 					} else {
-						this.from_store_name = res.name;
-						this.form.from_store_id = res.id;
+						if (res.id == this.form.to_store_id) {
+							this.$refs.uToast.show({
+								title: '选择调出的店铺不能和调入的店铺一致'
+							})
+						} else {
+							this.from_store_name = res.name;
+							this.form.from_store_id = res.id;
+						}
 					}
 				}
 			});

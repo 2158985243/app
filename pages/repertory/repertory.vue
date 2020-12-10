@@ -58,14 +58,14 @@
 						<u-icon class="logo" name="order" color="#2979ff" size="40"></u-icon>
 						<text>支出管理</text>
 					</view>
-					<u-icon name="plus" class='add' color="#cccccc" size="40"></u-icon>
+					<u-icon name="plus" class='add' color="#cccccc" @click="toExpense"  size="40"></u-icon>
 				</view>
 				<view class="box">
 					<view class="left">
 						<u-icon class="logo" name="order" color="#ff460e" size="40"></u-icon>
 						<text>库存查询</text>
 					</view>
-					<u-icon name="plus" class='add' color="#cccccc" size="40"></u-icon>
+					<u-icon name="plus" class='add' color="#cccccc"  size="40"></u-icon>
 				</view>
 			</view>
 
@@ -170,6 +170,12 @@
 			toStockTaking(){
 				uni.navigateTo({
 					url: `/pages/stockTaking/stockTaking`
+				})
+			},
+			// 
+			toExpense(){
+				uni.navigateTo({
+					url: `/pages/expense/expense`
 				})
 			},
 		}

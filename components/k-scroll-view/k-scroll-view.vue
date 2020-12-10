@@ -6,7 +6,7 @@
 			<text class="my-icons-custom icon-jiantou-refresh" style="color: #4089ff;font-size: 60rpx;"></text>
 		</view>
 		<view class="scroll-load-refresh" v-if="refreshType === 'custom' && showPullDown">
-			<text class=" xuanzhun" v-if="refreshText === loadingTip" style="font-size: 60rpx;height: 120rpx;"></text>
+			<text class=" xuanzhun" style="font-size: 60rpx;height: 120rpx;"></text>
 			{{ refreshText }}
 		</view>
 		<view class="go-to-top-icon" v-if="old.scrollTop > 20" @tap="goTop"><text class="my-icons-custom icon-jiantou-up"
@@ -60,7 +60,7 @@
 			},
 			emptyTip: {
 				type: String,
-				default: '--我是有底线的--'
+				default: '--到底了--'
 			},
 			touchHeight: {
 				type: Number,
@@ -459,15 +459,14 @@
 		}
 
 		.scroll-load-refresh {
-			top: 0;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 		}
 
 		.scroll-load-more {
+			position: fixed;
 			bottom: 0;
-
 			display: flex;
 			justify-content: center;
 			align-items: center;

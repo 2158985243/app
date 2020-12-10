@@ -9,39 +9,46 @@
 		<view class="box">
 			<tabControl :current="current" :values="items" bgc="#fff" :fixed="true" :scrollFlag='true' :isEqually='true'
 			 @clickItem="onClickItem"></tabControl>
-			<swiper class="swiper" @change='scollSwiper' :current='current'>
+			<swiper class="swiper" @change='scollSwiper'  :current='current'>
 				<swiper-item v-for="(item,index) in list" :key='index'>
-					<scroll-view scroll-y="true" style="height: 100%;">
+					<scroll-view scroll-y="true">
 						<view class="list">
-							<view class="list-box" v-for="(itemList,indexList) in item" @click="toPurchase(itemList)">
-								<view class="left">
-									<text class="supplier-name">{{itemList.from_store.name}}→{{itemList.to_store.name}}</text>
-									<text>{{itemList.number}}</text>
-									<text>{{itemList.updated_at}}</text>
-								</view>
-								<view class="right">
-									<text class="money">&yen;{{itemList.price}}</text>
-									<!-- <text>{{itemList.store.name}}</text> -->
-								</view>
+							<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
+							 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
+							 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+								<view class="list-box" v-for="(itemList,indexList) in item" @click="toPurchase(itemList)">
+									<view class="left">
+										<text class="supplier-name">{{itemList.from_store.name}}→{{itemList.to_store.name}}</text>
+										<text>{{itemList.number}}</text>
+										<text>{{itemList.updated_at}}</text>
+									</view>
+									<view class="right">
+										<text class="money">&yen;{{itemList.price}}</text>
+										<!-- <text>{{itemList.store.name}}</text> -->
+									</view>
 
-							</view>
+								</view>
+							</k-scroll-view>
 						</view>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
 		</view>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
 <script>
+	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import {
 		allocateList
 	} from '../../api/allocate.js'
 	import tabControl from '@/components/tabControl-tag/tabControl-tag.vue';
-
+	import store from '@/store'
 	export default {
 		components: {
-			tabControl
+			tabControl,
+			kScrollView
 		},
 		data() {
 			return {
@@ -71,6 +78,17 @@
 				page: 1,
 				page_size: 10,
 
+				refreshType: 'custom',
+				refreshTip: '正在下拉',
+				loadTip: '获取更多数据',
+				loadingTip: '正在加载中...',
+				emptyTip: '--到底了--',
+				touchHeight: 50,
+				height: 0,
+				bottom: 0,
+				autoPullUp: true,
+				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
+				last_page: 0,
 			}
 		},
 		methods: {
@@ -82,7 +100,9 @@
 					page_size: this.page_size
 
 				})
-				this.list.splice(0, 1, res.data)
+				// this.list.splice(0, 1, res.data);
+				this.list[this.current].push(...res.data)
+				this.last_page = res.last_page
 			},
 			// 增加调拨单
 			toAddAllocate() {
@@ -104,22 +124,22 @@
 			},
 			// 
 			toPurchase(item) {
-				// console.log(item);
+				console.log(item.to_store_id, store.state.store.store_id);
 				if (item.status == 0) {
 					uni.navigateTo({
 						url: `/pages/draftAllocate/draftAllocate?id=${item.id}`
+					})
+				} else if (item.to_store_id == store.state.store.store_id) {
+					uni.navigateTo({
+						url: `/pages/callIn/callIn?id=${item.id}`
 					})
 				} else if (item.status == 1) {
 					uni.navigateTo({
 						url: `/pages/stopAllocate/stopAllocate?id=${item.id}`
 					})
-				} else if (item.status == 2) {
-					uni.navigateTo({
-						url: `/pages/cancellation/cancellation?id=${item.id}`
-					})
 				} else if (item.status == 3) {
 					uni.navigateTo({
-						url: `/pages/cancellation/cancellation?id=${item.id}`
+						url: `/pages/cancellationAllocate/cancellationAllocate?id=${item.id}`
 					})
 				}
 
@@ -137,7 +157,7 @@
 				// }
 			},
 			async scollSwiper(e) {
-				console.log(this.list[this.current].length,this.current);
+				// console.log(this.list[this.current].length,this.current);
 				this.current = e.target.current
 				if (this.list[this.current].length == 0) {
 					if (this.current == 0) {
@@ -175,7 +195,31 @@
 						this.list.splice(this.current, 1, res.data);
 					}
 				}
-			}
+			},
+			// 下拉刷新
+			handlePullDown(stopLoad) {
+				this.page = 1;
+				this.list[this.current] = []
+				this.init()
+				stopLoad ? stopLoad() : '';
+			},
+			// 上拉加载
+			async handleLoadMore(stopLoad) {
+				if (this.page >= this.last_page) {
+					this.$refs.uToast.show({
+						title: '加载到底了',
+						type: 'default',
+						position: 'bottom'
+					})
+
+				} else {
+					this.page++;
+					this.init()
+				}
+			},
+			handleGoTop() {
+				this.$refs['k-scroll-view'].goTop();
+			},
 
 		},
 		onLoad() {
@@ -251,13 +295,15 @@
 			// flex-direction: column;
 
 			.swiper {
-				height: 100%;
+				margin-top: 84rpx;
+				height: calc(100% - #{84rpx});
 			}
 
 			.list {
 				width: 100%;
 				display: flex;
 				flex-direction: column;
+				height: 100%;
 
 				.list-box {
 					width: 100%;

@@ -199,8 +199,8 @@
 				from_store_name: '',
 				to_store_name: '',
 				store_from_to: false,
-				id:0,
-				
+				id: 0,
+
 			}
 		},
 		methods: {
@@ -209,7 +209,7 @@
 				let res = await allocate(this.id);
 				this.form = {
 					status: 0,
-					from_store_id:res.from_store_id,
+					from_store_id: res.from_store_id,
 					to_store_id: res.to_store_id,
 					business_time: res.business_time,
 					goods: [],
@@ -244,7 +244,7 @@
 							valOld: 0
 						})
 					})
-			
+
 				});
 				res.goods.map((v, i) => {
 					arr[i].goodsData.map((v1, i1) => {
@@ -259,7 +259,7 @@
 								})
 							}
 						})
-			
+
 					})
 					arr[i].goodsData.map((v1, i1) => {
 						res.allocate_goods.map((v2, i2) => {
@@ -273,13 +273,13 @@
 									}
 								})
 							}
-			
+
 						})
 						this.goodsMoney.push({
 							moneys: []
 						})
 						this.goodsMoney[i].moneys.push(v1.data[0].price)
-			
+
 					})
 				});
 				arr.map((v, i) => {
@@ -510,7 +510,7 @@
 							}
 						})
 					})
-					let res = await allocateEdit(this.id,this.form);
+					let res = await allocateEdit(this.id, this.form);
 					if (!res.code) {
 						uni.navigateTo({
 							url: `/pages/allocate/allocate`
@@ -529,13 +529,24 @@
 
 			uni.$on("gloEvent", (res) => {
 				if (res) {
-					// console.log(res);
 					if (this.store_from_to) {
-						this.to_store_name = res.name;
-						this.form.to_store_id = res.id;
+						if (res.id == this.form.from_store_id) {
+							this.$refs.uToast.show({
+								title: '选择调入的店铺不能和调出的店铺一致'
+							})
+						} else {
+							this.to_store_name = res.name;
+							this.form.to_store_id = res.id;
+						}
 					} else {
-						this.from_store_name = res.name;
-						this.form.from_store_id = res.id;
+						if (res.id == this.form.to_store_id) {
+							this.$refs.uToast.show({
+								title: '选择调出的店铺不能和调入的店铺一致'
+							})
+						} else {
+							this.from_store_name = res.name;
+							this.form.from_store_id = res.id;
+						}
 					}
 				}
 			});
@@ -554,10 +565,12 @@
 		display: flex;
 		flex-direction: column;
 		background-color: #FFFFFF;
+
 		.right_icon {
 			margin-right: 30rpx;
 			color: #FFFFFF;
 		}
+
 		.mains {
 			width: 100%;
 			display: flex;

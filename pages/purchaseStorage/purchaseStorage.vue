@@ -227,7 +227,7 @@
 					other_expense: 0.00,
 					account_id: 0,
 					pay_money: 0,
-					business_time: '2020-01-01',
+					business_time: '',
 					goods: [],
 					remarks: ''
 				},
