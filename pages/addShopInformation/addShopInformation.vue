@@ -119,8 +119,8 @@
 		},
 		onLoad() {
 			const userMessage = uni.getStorageSync('userMessage');
-			this.action = urls.baseURL;
 			this.header.token = "Bearer " + userMessage.token
+			this.action = urls.baseURL;
 			this.formData.type = "store";
 			this.formData.path = "store";
 		}
