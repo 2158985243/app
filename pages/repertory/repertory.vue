@@ -54,7 +54,7 @@
 
 			<view class="block">
 				<view class="box">
-					<view class="left">
+					<view class="left" @click="toExpenseBook">
 						<u-icon class="logo" name="order" color="#2979ff" size="40"></u-icon>
 						<text>支出管理</text>
 					</view>
@@ -178,6 +178,12 @@
 					url: `/pages/expense/expense`
 				})
 			},
+			// 支出管理
+			toExpenseBook(){
+				uni.navigateTo({
+					url: `/pages/expenseBook/expenseBook`
+				})
+			}
 		}
 	}
 </script>

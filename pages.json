@@ -754,6 +754,27 @@
 				}
 			}
 
+		}, {
+			"path": "pages/selecSalesperson/selecSalesperson",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/expenseBook/expenseBook",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+				// "enablePullDownRefresh": true 
+			}
+
 		}
 	],
 	"globalStyle": {

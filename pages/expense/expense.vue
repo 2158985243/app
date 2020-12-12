@@ -25,7 +25,7 @@
 			</view>
 			<view class="form_item">
 				<text>账户</text>
-				<u-input placeholder='' :disabled='true' v-model="account" type="text" />
+				<u-input placeholder='' :disabled='true'  @tap="toSelectAccount" v-model="account" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 
@@ -33,7 +33,7 @@
 		<view class="box ">
 			<view class="form_item">
 				<text>经手人</text>
-				<u-input placeholder='' :disabled='true' v-model="user" type="text" />
+				<u-input placeholder='' :disabled='true' @tap="toSelecSalesperson" v-model="user" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
@@ -97,11 +97,13 @@
 				确定
 			</view>
 		</view>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
 <script>
 	import urls from '../../api/configuration.js'
+	import {expendLogAdd} from '../../api/expendLog.js'
 	export default {
 		data() {
 			return {
@@ -113,10 +115,10 @@
 				user: '', //经手人
 				showtime: false,
 				form: {
-					money: 0.00,
+					money: 0,
 					expend_item_id: 0,
 					account_id: 0,
-					user_id: 0.00,
+					user_id: 0,
 					business_time: '',
 					image: '',
 					remarks: ''
@@ -196,13 +198,45 @@
 			},
 			// 确定
 			async ensure() {
-
+				this.form.money = this.res_number
+				if(this.form.money == 0){
+					this.$refs.uToast.show({
+						title: '请输入金额'
+					})
+				}else if(this.form.expend_item_id == 0){
+					this.$refs.uToast.show({
+						title: '请选择支出项目'
+					})
+				}else if(this.form.account_id == 0){
+					this.$refs.uToast.show({
+						title: '请选择账户'
+					})
+				}else{
+					let res = await expendLogAdd(this.form)
+					if(!res.code){
+						uni.navigateTo({
+							url: '/pages/expenseBook/expenseBook'
+						})
+					}
+				}
 			},
 			toAddArticle() {
 				uni.navigateTo({
 					url: '/pages/article/article'
 				})
-			}
+			},
+			// 前往选择账户
+			toSelectAccount() {
+				uni.navigateTo({
+					url: '/pages/selectAccount/selectAccount'
+				})
+			},
+			// 前往选择经手人
+			toSelecSalesperson() {
+				uni.navigateTo({
+					url: '/pages/selecSalesperson/selecSalesperson'
+				})
+			},
 		},
 		onLoad() {
 			const userMessage = uni.getStorageSync('userMessage');
@@ -217,6 +251,20 @@
 					this.expend_item = res.name;
 					this.form.expend_item_id = res.id
 
+				}
+			});
+			uni.$on("selectAccount", (res) => {
+				if (res) {
+					// console.log(res);
+					this.account = res.name;
+					this.form.account_id = res.account_id;
+				}
+			});
+			uni.$on("selecSalesperson", (res) => {
+				if (res) {
+					console.log(res);
+					this.user = res.name;
+					this.form.user_id = res.id;
 				}
 			});
 		}
@@ -238,8 +286,8 @@
 			flex-wrap: wrap;
 			position: fixed;
 			bottom: 0;
-			border-top: 0.01rem solid #C0C0C0;
-			border-left: 0.01rem solid #C0C0C0;
+			border-top: 0.01rem solid #e3e3e3;
+			border-left: 0.01rem solid #e3e3e3;
 
 			.key {
 				width: 25%;
@@ -250,8 +298,8 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				border-bottom: 0.01rem solid #C0C0C0;
-				border-right: 0.01rem solid #C0C0C0;
+				border-bottom: 0.01rem solid #e3e3e3;
+				border-right: 0.01rem solid #e3e3e3;
 			}
 
 			.lan {
@@ -378,7 +426,7 @@
 				}
 
 				.border_bt {
-					border-bottom: 0.01rem solid #C0C0C0;
+					border-bottom: 0.01rem solid #e3e3e3;
 				}
 
 				.man_r {

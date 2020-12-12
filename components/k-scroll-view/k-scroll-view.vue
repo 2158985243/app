@@ -341,7 +341,7 @@
 				// 隐藏刷新文字提示
 				hk.clearTimer = setTimeout(function() {
 					hk.stopTips();
-				}, 4000);
+				}, 2000);
 			},
 			onPullUp: function() {
 				// 加载更多
@@ -353,7 +353,7 @@
 				// 隐藏上拉提示
 				hk.clearTimer = setTimeout(function() {
 					hk.stopTips();
-				}, 4000);
+				}, 2000);
 			},
 			stopTips(config) {
 				config = config || {};
