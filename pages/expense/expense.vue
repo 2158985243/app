@@ -58,7 +58,7 @@
 				3
 			</view>
 			<view class="key lan" @click="back()">
-				X
+				<u-icon name="backspace" color="#007AFF" size="40"></u-icon>
 			</view>
 			<view class="key" @click="compute('4')">
 				4
