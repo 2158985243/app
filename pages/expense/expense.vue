@@ -132,8 +132,8 @@
 					second: false
 				},
 				formData: {
-					type: '',
-					path: ''
+					type: 'expend',
+					path: 'expend'
 				},
 				header: {
 					token: ''
@@ -171,7 +171,7 @@
 			},
 			onSuccess(data, index, lists, name) {
 				console.log(data, index, lists, name);
-				this.form.images = data.data.url
+				this.form.image = data.data.url
 			},
 			onError(res, index, lists, name) {
 				console.log(res, index, lists, name);

@@ -36,10 +36,10 @@
 
 <script>
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
+	import tabControl from '@/components/tabControl-tag/tabControl-tag.vue';
 	import {
 		checkList
 	} from '../../api/check.js'
-	import tabControl from '@/components/tabControl-tag/tabControl-tag.vue';
 
 	export default {
 		components: {

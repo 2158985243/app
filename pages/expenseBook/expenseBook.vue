@@ -9,26 +9,31 @@
 			<!-- <k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
 			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore"> -->
-			<view class="list" v-for="(item,index) in list" :key="index">
+			<view class="list" v-for="(item,key,index) of list" :key="index">
 				<view class="headers">
 					<view class="li-date">
-						{{item.month}}
+						{{key}}
 					</view>
 					<view class="statistics">
 						<view class="left">
-							<text>支出笔数{{item.number}}</text>
-							<text>支出金额&yen;{{item.money}}</text>
+							<text>支出笔数{{item.length}}</text>
+							<text>支出金额&yen;{{item|sumMoney}}</text>
 						</view>
-						<view class="right" @click="toStatics(item.month)">
+						<view class="right" @click="toStatics(key)">
 							<text>统计</text>
 							<u-icon name="arrow-right" color="#000" size="28"></u-icon>
 						</view>
 					</view>
 				</view>
-				<view class="list-li" v-for="(item_li,index_li) in item.data" :key="index_li">
+				<view class="list-li" v-for="(item_li,index_li) in item" :key="index_li" @click="toSpendItem(item_li)">
 					<view class="expend-item">
-						<text>{{item_li.expend_item.name}}</text>
-						<text>{{item_li.money}}</text>
+						<view class="boo">
+							<text>{{item_li.expend_item.name}}</text>
+							<view class="discard" v-if="item_li.status==0">
+								已作废
+							</view>
+						</view>
+						<text class="red-money">{{item_li.money}}</text>
 					</view>
 					<view class="remark">
 						{{item_li.remarks}}
@@ -78,12 +83,22 @@
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
 				page: 1,
 				page_size: 20,
-				list: [],
+				list: {},
 				last_page: 0,
 				style_input: {
 					'background-color': '#ffffff'
 				}
 			}
+		},
+		filters:{
+			sumMoney(item){
+				let val = 0;
+				item.map((v)=>{
+					val += Number(v.money)
+				})
+				return val.toFixed(2)
+			},
+			
 		},
 		methods: {
 			async init(v) {
@@ -92,38 +107,19 @@
 					page_size: this.page_size,
 					...v
 				});
-				res.data.map(v => {
-					v['number'] = v.data.length;
-					v['money'] = 0;
-					v.data.map(v1 => {
-						v.money += Number(v1.money)
-					})
-					v.money = v.money.toFixed(2)
-				})
-				if (this.list.length > 0) {
-					res.data.map((v1, i1) => {
-						this.list.map((v, i) => {
-							// console.log(v, v1);
-							if (v.month == v1.month) {
-								console.log(v1.month);
-								v.data.push(...v1.data)
-								v.money = (Number(v.money) + Number(v1.money)).toFixed(2)
-							} else {
-								console.log(v1.month);
-								this.list.push(v1)
-							}
-						})
-					})
-				} else {
-					this.list.push(...res.data)
-
+				for(let key in res.data){
+					if(this.list[key]){
+						this.list[key].push(...res.data[key])
+					}else{
+						this.list[key] = res.data[key]
+					}
 				}
 				this.last_page = res.last_page
-				console.log(res, this.list);
+				this.$forceUpdate()
 			},
 			// 下拉刷新
 			handlePullDown(stopLoad) {
-				this.list = []
+				this.list = {}
 				this.page = 1;
 				this.init()
 				stopLoad ? stopLoad() : '';
@@ -163,6 +159,13 @@
 					url: `/pages/expense/expense`
 				})
 			},
+			// 详情
+			toSpendItem(item){
+				console.log(item);
+				uni.navigateTo({
+					url: `/pages/spendItem/spendItem?id=${item.id}`
+				})
+			},
 			// 统计
 			toStatics(mouth) {
 				let now = new Date(); //当前日期
@@ -176,14 +179,13 @@
 				let timeStar = this.$u.timeFormat(Date.parse(monthStartDate) / 1000, 'yyyy-mm-dd'); //s
 				let timeEnd = this.$u.timeFormat(Date.parse(monthEndDate) / 1000, 'yyyy-mm-dd'); //s
 				uni.navigateTo({
-					url: `/pages/statics/statics?timeStar=${timeStar}&timeEnd=${timeEnd}`
+					url: `/pages/statics/statics?timeStar=${timeStar}&timeEnd=${timeEnd}&current=${4}`
 				})
 			}
 
 		},
 		onLoad() {
 			this.init()
-
 		}
 	}
 </script>
@@ -258,6 +260,18 @@
 						display: flex;
 						padding: 10rpx;
 						justify-content: space-between;
+						.boo{
+							width: 100%;
+							display: flex;
+							flex-direction: row;
+							.discard{
+								margin-left: 20rpx;
+								color: #DD524D;
+								border: 1rpx solid #DD524D;
+								font-size: 20rpx;
+								border-radius: 6rpx;
+							}
+						}
 					}
 
 					.remark {
@@ -277,7 +291,9 @@
 			}
 
 		}
-
+		.red-money{
+			color: #DD524D;
+		}
 		.footers {
 			width: 100%;
 			height: 80rpx;

@@ -117,6 +117,7 @@
 					datas.checked = this.checked;
 					this.storedata['userName'] = res.member_name
 					this.storedata['store_id'] = res.store_id
+					this.storedata['storesArr'] = this.stores
 					this.$store.commit('loginStatusAction', {
 						token: res.token
 					});

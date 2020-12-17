@@ -788,6 +788,44 @@
             }
             
         }
+        ,{
+            "path" : "pages/spendingDetails/spendingDetails",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom", // 隐藏系统导航栏
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
+        ,{
+            "path" : "pages/expenseCancellation/expenseCancellation",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "支出详情",
+                "navigationBarBackgroundColor": "#2979ff",
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
+        ,{
+            "path" : "pages/spendItem/spendItem",
+            "style" :                                                                                    
+            {
+               "navigationBarTitleText": "支出详情",
+               "navigationBarBackgroundColor": "#2979ff",
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
