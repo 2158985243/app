@@ -826,6 +826,56 @@
             }
             
         }
+        ,{
+            "path" : "pages/projectQuery/projectQuery",
+            "style" :                                                                                    
+            {
+              "navigationStyle": "custom", // 隐藏系统导航栏
+              "navigationBarTextStyle": "white",
+              "app-plus": {
+              	"scrollIndicator": "none"
+              }
+            }
+            
+        }
+        ,{
+            "path" : "pages/customerLevel/customerLevel",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom", // 隐藏系统导航栏
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
+        ,{
+            "path" : "pages/addCustomerLevel/addCustomerLevel",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "新增等级",
+                "navigationBarBackgroundColor": "#2979ff",
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
+        ,{
+            "path" : "pages/editCustomer/editCustomer",
+            "style" :                                                                                    
+            {
+               "navigationBarTitleText": "编辑等级",
+               "navigationBarBackgroundColor": "#2979ff",
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

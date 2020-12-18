@@ -5,14 +5,13 @@
 		<view class="mains">
 
 			<view class="nav">
-				<view class="nav-date">
+				<view class="nav-date" @click="selectTime">
 					<view class="date">
 						<text>{{start_time}}</text>
 						<text>{{end_time}}</text>
 					</view>
 					<u-icon name="arrow-down-fill" class="" color="#ffffff" size="34"></u-icon>
 					<view class="down-fill-right">
-
 					</view>
 				</view>
 				<view class="nav-money">
@@ -21,15 +20,18 @@
 				</view>
 				<view class="nav-money">
 					<text>笔数</text>
-					<text>{{list.length}}</text>
+					<text>{{total}}</text>
 				</view>
 			</view>
+			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
+			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
+			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 			<view class="list">
 				<view class="li" v-for="(item,index) in list" :key="index" @click="expenseCancellation(item)">
 					<view class="left">
 						<text>{{item.expend_item.name}}</text>
 						<view class="li-date">
-							{{item.time}}|{{item.account.name}}
+							{{item.time}} | {{item.account.name}}
 						</view>
 					</view>
 					<view class="right">
@@ -38,17 +40,35 @@
 					</view>
 				</view>
 			</view>
+			<!-- 数据列表 -->
+			</k-scroll-view>
+			<u-toast ref="uToast" />
+			<view class="dates-time"  v-if="show_time">
+				<view class="time-list" v-for="(item,index) in dates" :key="index" @click="clickDate(index)" :class="index == active? 'active':''">
+					{{item}}
+				</view>
+			</view>
 		</view>
+		<!-- 开始时间 -->
+		<u-picker mode="time" v-model="showtime" @confirm="confirmTime" title="开始时间" :params="params"></u-picker>
+		<!-- 结束时间 -->
+		<u-picker mode="time" v-model="showtime1" @confirm="confirmTime1" title="结束时间" :params="params"></u-picker>
 	</view>
 </template>
 
 <script>
+	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import {
 		expendLoganalyseDetails
 	} from '../../api/expendLog.js'
 	export default {
+		components: {
+			kScrollView
+		},
 		data() {
 			return {
+				showtime: false,
+				showtime1: false,
 				background: {
 					backgroundColor: '#2979ff'
 				},
@@ -61,9 +81,59 @@
 				page_size: 10,
 				list: [],
 				sumMoney: 0,
+				total: 0,
+				show_time: false,
+				dates: ['今天', '昨天', '本周', '本月', '其他'],
+				active: 4,
+				params: {
+					year: true,
+					month: true,
+					day: true,
+					hour: false,
+					minute: false,
+					second: false
+				},
+				
+				
+				refreshType: 'custom',
+				refreshTip: '正在下拉',
+				loadTip: '获取更多数据',
+				loadingTip: '正在加载中...',
+				emptyTip: '--到底了--',
+				touchHeight: 50,
+				height: 100,
+				bottom: 0,
+				autoPullUp: true,
+				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
+				style_input: {
+					'background-color': '#ffffff'
+				},
+				last_page:0,
 			}
 		},
 		methods: {
+			// 下拉刷新
+			handlePullDown(stopLoad) {
+				this.page = 1;
+				this.list = []
+				this.init()
+				stopLoad ? stopLoad() : '';
+			},
+			// 上拉加载
+			async handleLoadMore(stopLoad) {
+				if (this.page >= this.last_page) {
+					this.$refs.uToast.show({
+						title: '加载到底了',
+						type: 'default',
+						position: 'bottom'
+					})
+			
+				} else {
+					this.page++;
+					this.init()
+				}
+			},
+		
 			async init() {
 				let res = await expendLoganalyseDetails({
 					expend_item_id: this.expend_item_id,
@@ -74,8 +144,10 @@
 					page_size: this.page_size
 				})
 				console.log(res);
-				this.list = res.data;
+				this.list.push(...res.data);
+				this.total = res.total;
 				this.sumMoney = res.total_money
+				this.last_page = res.last_page
 			},
 			// 获取当前月份
 			monthDate() {
@@ -99,12 +171,101 @@
 				this.start_time = statrTime;
 				this.end_time = endTime;
 			},
-			// 
-			expenseCancellation(item){
-				console.log(item);
+			// 前往项目详情
+			expenseCancellation(item) {
 				uni.navigateTo({
 					url: `/pages/expenseCancellation/expenseCancellation?id=${item.id}`
 				})
+			},
+			// 选择时间
+			selectTime() {
+				this.show_time = !this.show_time
+			},
+			// 点击某一个时间段
+			async clickDate(index) {
+				this.active = index;
+				this.page = 1;
+				this.page_size = 10;
+				let date = new Date();
+				let seperator1 = "-";
+				let year = date.getFullYear();
+				let month = date.getMonth() + 1;
+				let strDate = date.getDate();
+				if (month >= 1 && month <= 9) {
+					month = "0" + month;
+				}
+				if (strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				if (index == 0) {
+					let currentdate = year + seperator1 + month + seperator1 + strDate;
+					this.start_time = currentdate;
+					this.end_time = currentdate;
+					this.init()
+				} else if (index == 1) {
+					let time = (new Date).getTime() - 24 * 60 * 60 * 1000;
+					let yesterday = new Date(time);
+					let month = yesterday.getMonth();
+					let day = yesterday.getDate();
+					yesterday = yesterday.getFullYear() + "-" + (yesterday.getMonth() > 9 ? (yesterday.getMonth() + 1) : "0" + (
+						yesterday.getMonth() + 1)) + "-" + (yesterday.getDate() > 9 ? (yesterday.getDate()) : "0" + (yesterday.getDate()));
+					this.start_time = yesterday;
+					this.end_time = yesterday;
+					this.init()
+				} else if (index == 2) {
+					let Nowdate = new Date();
+					let WeekFirstDay = new Date(Nowdate - (Nowdate.getDay() - 1) * 86400000); // 本周第一天
+					let WeekLastDay = new Date((WeekFirstDay / 1000 + 6 * 86400) * 1000); // 本周第最后一天
+					// 本周第一天
+					let yearState = WeekFirstDay.getFullYear()
+					let monthState = (WeekFirstDay.getMonth() + 1) < 10 ? "0" + (WeekFirstDay.getMonth() + 1) : (WeekFirstDay.getMonth() +
+						1)
+					let todayState = (WeekFirstDay.getDate() < 10 ? "0" + WeekFirstDay.getDate() : WeekFirstDay.getDate())
+					let statrTime = yearState + seperator1 + monthState + seperator1 + todayState
+					// 本周第一天
+					let yearEnd = WeekLastDay.getFullYear()
+					let monthEnd = (WeekLastDay.getMonth() + 1) < 10 ? "0" + (WeekLastDay.getMonth() + 1) : (WeekLastDay.getMonth() +
+						1)
+					let todayEnd = (WeekLastDay.getDate() < 10 ? "0" + WeekLastDay.getDate() : WeekLastDay.getDate())
+					let endTime = yearEnd + seperator1 + monthEnd + seperator1 + todayEnd
+					this.start_time = statrTime;
+					this.end_time = endTime;
+					this.init()
+				} else if (index == 3) {
+					let Nowdate = new Date();
+					let MonthFirstDay = new Date(Nowdate.getFullYear(), Nowdate.getMonth(), 1);
+					let MonthNextFirstDay = new Date(Nowdate.getFullYear(), Nowdate.getMonth() + 1, 1);
+					let MonthLastDay = new Date(MonthNextFirstDay - 86400000);
+					// 本月第一天
+					let yearState = MonthFirstDay.getFullYear()
+					let monthState = (MonthFirstDay.getMonth() + 1) < 10 ? "0" + (MonthFirstDay.getMonth() + 1) : (MonthFirstDay.getMonth() +
+						1)
+					let todayState = (MonthFirstDay.getDate() < 10 ? "0" + MonthFirstDay.getDate() : MonthFirstDay.getDate())
+					let statrTime = yearState + seperator1 + monthState + seperator1 + todayState
+					// 本月最后一天
+					let yearEnd = MonthLastDay.getFullYear()
+					let monthEnd = (MonthLastDay.getMonth() + 1) < 10 ? "0" + (MonthLastDay.getMonth() + 1) : (MonthLastDay.getMonth() +
+						1)
+					let todayEnd = (MonthLastDay.getDate() < 10 ? "0" + MonthLastDay.getDate() : MonthLastDay.getDate())
+					let endTime = yearEnd + seperator1 + monthEnd + seperator1 + todayEnd
+					this.start_time = statrTime;
+					this.end_time = endTime;
+					this.init()
+				} else if (index == 4) {
+					this.showtime = true;
+				}
+
+				this.show_time = false;
+			},
+			/// 开始时间
+			confirmTime(v) {
+				this.start_time = `${v.year}-${v.month}-${v.day}`;
+				this.showtime1 = true;
+			},
+			// 结束时间
+			async confirmTime1(v) {
+				this.end_time = `${v.year}-${v.month}-${v.day}`;
+				this.init();
 			},
 		},
 		onLoad(query) {
@@ -122,13 +283,40 @@
 <style scoped lang="scss">
 	.spendingDetails {
 		width: 100%;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
+		position: relative;
 
 		/deep/.u-border-bottom:after {
 			border: none;
 		}
 
+		.active {
+			color: #007AFF;
+		}
+
+		//日期选择
+		.dates-time {
+			width: 100%;
+			height: calc(100% - 200rpx - var(--status-bar-height));
+			background-color: rgba($color: #000000, $alpha: 0.3);
+			position: absolute;
+			top: calc(200rpx + var(--status-bar-height));
+			display: flex;
+			flex-direction: row;
+
+			.time-list {
+				flex: 1;
+				display: flex;
+				height: 60rpx;
+				background-color: #FFFFFF;
+				justify-content: center;
+				align-items: center;
+			}
+		}
+
+		// 
 		.nav {
 			width: 100%;
 			height: 140rpx;

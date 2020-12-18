@@ -28,7 +28,6 @@
 				<u-input placeholder='' :disabled='true'  @tap="toSelectAccount" v-model="account" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
-
 		</view>
 		<view class="box ">
 			<view class="form_item">

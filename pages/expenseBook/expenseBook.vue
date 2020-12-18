@@ -2,7 +2,7 @@
 	<view class="expenseBook">
 		<u-navbar back-icon-color='#ffffff' title="支出管理" :background="background" title-color="#ffffff">
 			<template slot="right">
-				<u-icon name="search" @click="toAddShopInformation" color="#ffffff" class="right_icon" size="34"></u-icon>
+				<u-icon name="search" @click="toProjectQuery" color="#ffffff" class="right_icon" size="34"></u-icon>
 			</template>
 		</u-navbar>
 		<view class="mains">
@@ -11,8 +11,9 @@
 			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore"> -->
 			<view class="list" v-for="(item,key,index) of list" :key="index">
 				<view class="headers">
-					<view class="li-date">
-						{{key}}
+					<view class="li-date" @click="showDate">
+						<text>{{key}}</text>
+						<u-icon name="arrow-down" color="#000" size="28"></u-icon>
 					</view>
 					<view class="statistics">
 						<view class="left">
@@ -54,6 +55,7 @@
 			</text>
 
 		</view>
+		<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :params="params"></u-picker>
 	</view>
 </template>
 
@@ -87,18 +89,29 @@
 				last_page: 0,
 				style_input: {
 					'background-color': '#ffffff'
-				}
+				},
+				showtime: false,
+				params: {
+					year: true,
+					month: true,
+					day: false,
+					hour: false,
+					minute: false,
+					second: false
+				},
+				load: false,
+				start_timeL: '',
 			}
 		},
-		filters:{
-			sumMoney(item){
+		filters: {
+			sumMoney(item) {
 				let val = 0;
-				item.map((v)=>{
+				item.map((v) => {
 					val += Number(v.money)
 				})
 				return val.toFixed(2)
 			},
-			
+
 		},
 		methods: {
 			async init(v) {
@@ -107,10 +120,10 @@
 					page_size: this.page_size,
 					...v
 				});
-				for(let key in res.data){
-					if(this.list[key]){
+				for (let key in res.data) {
+					if (this.list[key]) {
 						this.list[key].push(...res.data[key])
-					}else{
+					} else {
 						this.list[key] = res.data[key]
 					}
 				}
@@ -148,9 +161,17 @@
 			},
 			//触底加载更多
 			onReachBottom(e) {
-				this.page++;
-				this.init()
-				console.log('触底加载更多');
+				if (!this.load) {
+					this.page++;
+					this.init()
+					console.log('触底加载更多1');
+				} else {
+					this.page++;
+					this.init({
+						date: this.start_time
+					})
+					console.log('触底加载更多2');
+				}
 
 			},
 			// add
@@ -160,10 +181,15 @@
 				})
 			},
 			// 详情
-			toSpendItem(item){
-				console.log(item);
+			toSpendItem(item) {
 				uni.navigateTo({
 					url: `/pages/spendItem/spendItem?id=${item.id}`
+				})
+			},
+			// 查询
+			toProjectQuery() {
+				uni.navigateTo({
+					url: `/pages/projectQuery/projectQuery`
 				})
 			},
 			// 统计
@@ -181,11 +207,33 @@
 				uni.navigateTo({
 					url: `/pages/statics/statics?timeStar=${timeStar}&timeEnd=${timeEnd}&current=${4}`
 				})
-			}
-
+			},
+			// 选择日期
+			showDate() {
+				this.showtime = true
+			},
+			// 选择的时间
+			confirmTime(v) {
+				this.start_time = `${v.year}-${v.month}`;
+				this.list = {};
+				this.page = 1;
+				this.page_size = 20;
+				this.load = true;
+				this.init({
+					date: this.start_time
+				})
+			},
 		},
 		onLoad() {
 			this.init()
+			uni.$on("projectQuery", (res) => {
+				if (res) {
+					this.list = {}
+					this.page = 1;
+					this.page_size = 20;
+					this.init(res)
+				}
+			});
 		}
 	}
 </script>
@@ -224,6 +272,15 @@
 					display: flex;
 					flex-direction: column;
 
+					.li-date {
+						display: flex;
+						flex-direction: row;
+
+						text {
+							padding-right: 10rpx;
+						}
+					}
+
 					.statistics {
 						display: flex;
 						justify-content: space-between;
@@ -260,16 +317,21 @@
 						display: flex;
 						padding: 10rpx;
 						justify-content: space-between;
-						.boo{
+
+						.boo {
 							width: 100%;
 							display: flex;
 							flex-direction: row;
-							.discard{
+
+							.discard {
 								margin-left: 20rpx;
 								color: #DD524D;
 								border: 1rpx solid #DD524D;
 								font-size: 20rpx;
 								border-radius: 6rpx;
+								display: flex;
+								align-items: center;
+								justify-content: center;
 							}
 						}
 					}
@@ -291,9 +353,11 @@
 			}
 
 		}
-		.red-money{
+
+		.red-money {
 			color: #DD524D;
 		}
+
 		.footers {
 			width: 100%;
 			height: 80rpx;

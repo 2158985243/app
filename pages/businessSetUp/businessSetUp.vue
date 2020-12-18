@@ -9,7 +9,7 @@
 		</view>
 		<view class="box">
 			<uni-list>
-				<uni-list-item title="会员等级" :showExtraIcon='true' :extraIcon='extraIcon[3]' :showArrow='true' :clickable='true'></uni-list-item>
+				<uni-list-item title="会员等级" @click="toCustomerLevel" :showExtraIcon='true' :extraIcon='extraIcon[3]' :showArrow='true' :clickable='true'></uni-list-item>
 				<uni-list-item title="会员等级晋升" :showExtraIcon='true' :extraIcon='extraIcon[4]' :showArrow='true' :clickable='true'></uni-list-item>
 				<uni-list-item title="积分设置" :showExtraIcon='true' :extraIcon='extraIcon[5]' :showArrow='true' :clickable='true'></uni-list-item>
 				<uni-list-item title="支付方式" @click="toPatternOfPayment" :showExtraIcon='true' :extraIcon='extraIcon[6]' :showArrow='true' :clickable='true'></uni-list-item>
@@ -73,19 +73,28 @@
 			}
 		},
 		methods: {
+			// 店铺管理
 			toStoreManagement(){
 				uni.navigateTo({
 					url: `/pages/storeManagement/storeManagement`
 				})
 			},
+			// 员工管理
 			toStaffManagement(){
 				uni.navigateTo({
 					url: `/pages/staffManagement/staffManagement`
 				})
 			},
+			// 支付方式
 			toPatternOfPayment(){
 				uni.navigateTo({
 					url: `/pages/patternOfPayment/patternOfPayment`
+				})
+			},
+			// 会员等级
+			toCustomerLevel(){
+				uni.navigateTo({
+					url: `/pages/customerLevel/customerLevel`
 				})
 			},
 		}
