@@ -24,22 +24,22 @@
 			<view class="nav">
 				<view class="user">
 					<text class="padd">0</text>
-					<text>本月新增会员</text>
+					<text class="min-size">本月新增会员</text>
 				</view>
 				<view class="account">
 					<u-icon class="padd" name="coupon" color="#ffffff" size="50"></u-icon>
-					<text>账户</text>
+					<text class="min-size">账户</text>
 				</view>
 				<view class="repertory">
 					<text class="padd">0</text>
-					<text>库存总数</text>
+					<text class="min-size">库存总数</text>
 				</view>
 			</view>
 		</view>
 		<view class="fot">
 			<view class="aa">
 
-				<view class="account">
+				<view class="account" @click="toMemberManagement">
 					<uni-icons type="contact-filled" color="#0055ff" size="50"></uni-icons>
 					<text>会员管理</text>
 				</view>
@@ -96,6 +96,12 @@
 						url: `/pages/inventory/inventory?val=${res}`
 					})
 				}
+			},
+			// 会员管理
+			toMemberManagement(){
+				uni.navigateTo({
+					url: `/pages/memberManagement/memberManagement`
+				});
 			}
 		},
 		onShow() {
@@ -197,7 +203,9 @@
 					align-items: center;
 					flex-direction: column;
 				}
-
+				.min-size{
+					font-size: 24rpx;
+				}
 				.account {
 					width: 25%;
 					display: flex;

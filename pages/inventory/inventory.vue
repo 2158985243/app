@@ -42,7 +42,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.inventory {
 		.slot-wrap {
 			display: flex;
