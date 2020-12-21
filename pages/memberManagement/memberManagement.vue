@@ -2,7 +2,7 @@
 	<view class="memberManagement">
 		<u-navbar back-icon-color='#ffffff' :background="background">
 			<view class="slot-wrap">
-				<u-search class='search' height='60' @change="search" :show-action="false" :focus='true' :scan="true" shape="square"
+				<u-search class='search' height='60' @change="search" :show-action="false"  :scan="true" shape="square"
 				 placeholder="请输入会员卡号、手机号或姓名" v-model="keyword" @Inventory="handelScan"></u-search>
 			</view>
 			<template slot="right">

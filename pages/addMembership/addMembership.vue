@@ -24,32 +24,44 @@
 				<view class="form_item">
 					<text>等级</text>
 					<u-input placeholder='请选择会员等级' :disabled='true' @tap="toSelectAccount" v-model="customer" type="text" />
-					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+					<u-icon name="arrow-right"  color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
 			<view class="box ">
 				<view class="form_item">
 					<text>性别</text>
-					<u-input placeholder='请输入会员姓名' v-model="form.name" type="text" />
+					<u-radio-group v-model="gender_value" @change="radioGroupChange">
+						<u-radio v-for="(item, index) in genders" :key="index" :name="item.name" :disabled="item.disabled">
+							{{item.name}}
+						</u-radio>
+					</u-radio-group>
+
 				</view>
 				<view class="form_item">
-					<text>生日</text>
-					<u-input placeholder='选择日期' v-model="form.mobile" type="number" />
+					<text>日期</text>
+					<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.birthday" type="text" />
+					<u-icon name="arrow-right"  color="#cccccc" size="28"></u-icon>
 				</view>
+				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :params="params"></u-picker>
 				<view class="form_item">
 					<text>密码</text>
-					<u-input placeholder='请输入六位数字密码' v-model="form.password" type="number" />
+					<u-input placeholder='请输入六位数字密码' class="hidden" maxlength='6' @focus="focused" :clearable='false' v-model="form.password"
+					 type="number" />
+					<u-input placeholder='请输入六位数字密码' maxlength='6' @focus="focused" :clearable='false' v-model="form.password" type="password" />
 				</view>
+				<u-keyboard ref="uKeyboard" mode="number" @change="valChange" @backspace="backspace" v-model="show"></u-keyboard>
 				<view class="form_item">
 					<text>有效期至</text>
-					<u-input placeholder='请选择有效日期' :disabled='true' @tap="toSelectAccount" v-model="customer" type="text" />
+					<u-input placeholder='请选择有效时间' @tap="hiddenTime1" :disabled='true' v-model="form.expire_at" type="text" />
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
+				<u-picker mode="time" v-model="showtime1" @confirm="confirmTime1" :params="params"></u-picker>
 			</view>
-			<view class="box ">
+			<view class="box">
 				<view class="form_item">
 					<text>标签</text>
 					<u-input placeholder='请输入标签' v-model="form.tag" type="text" />
+					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
 					<text>地址</text>
@@ -61,14 +73,16 @@
 				</view>
 				<view class="form_images">
 					<text>上传图片</text>
-					<u-upload width="120" height='120' upload-text='' :limitType='limit' image-mode='aspectFit' :action="action+'/api/upload'"
-					 :header="header" :name="formData.type" :form-data="formData" @on-success="onSuccess" :file-list="fileList"
-					 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="1" :show-progress="false" @on-error='onError'
-					 del-bg-color='#000000'>
-					</u-upload>
+					<view class="img">
+						<u-upload width="120" height='120' upload-text='' :limitType='limit' image-mode='aspectFit' :action="action+'/api/upload'"
+						 :header="header" :name="formData.type" :form-data="formData" @on-success="onSuccess" :file-list="fileList"
+						 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="1" :show-progress="false" @on-error='onError'
+						 del-bg-color='#000000'>
+						</u-upload>
+					</view>
 				</view>
 			</view>
-			
+
 		</view>
 		<view class="btn" v-show="active==0">
 			保存
@@ -83,24 +97,29 @@
 			return {
 				list: ['手工添加', '微信会员'],
 				form: {
-					name:'',
-					mobile:'',
-					number:'',
-					customer_level_id:'',
-					birthday:'',
-					gender:'',
-					password:'',
-					remarks:'',
-					expire_at:'',
-					tag:'',
-					address:'',
+					name: '',
+					mobile: '',
+					number: '',
+					customer_level_id: '',
+					birthday: '',
+					gender: 0,
+					password: '',
+					remarks: '',
+					expire_at: '',
+					tag: '',
+					address: '',
 				},
 				active: 0,
-				customer:'',
+				customer: '',
 				limit: ['png', 'jpg', 'jpeg'],
 				fileList: [],
 				action: '',
-				
+				genders: [{
+					name: '男'
+				}, {
+					name: '女'
+				}],
+				gender_value: '男',
 				params: {
 					year: true,
 					month: true,
@@ -115,31 +134,69 @@
 				},
 				header: {
 					token: ''
-				
+
 				},
+				show: false,
+				showtime: false,
+				showtime1: false,
+
 			}
 		},
 		methods: {
 			itemClick(index) {
 				this.active = index;
+			},
+			hiddenTime() {
+				this.showtime = true;
+			},
+			hiddenTime1() {
+				this.showtime1 = true;
+			},
+			// 选择时间(生日)
+			confirmTime(v) {
+				this.form.birthday = `${v.year}-${v.month}-${v.day}`;
+			},
+			// 选择时间(到期)
+			confirmTime1(v) {
+				this.form.expire_at = `${v.year}-${v.month}-${v.day}`;
+			},
+			// 选择性别
+			radioGroupChange(e) {
+				console.log(e);
+				if (e == '男') {
+					this.form.gender = 0;
+				} else {
+					this.form.gender = 1;
+				}
+			},
+			focused(e) {
+				window.addEventListener("resize", function() {
+					if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
+						window.setTimeout(function() {
+							document.activeElement.scrollIntoViewIfNeeded();
+						}, 0)
+					}
+				})
 			}
+
 		},
 		onLoad() {
 			const userMessage = uni.getStorageSync('userMessage');
 			this.header.token = "Bearer " + userMessage.token
-			
+
 			this.action = urls.baseURL;
 		}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.addMembership {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
 		position: relative;
 		background-color: #F1F1F1;
+
 		.active {
 			color: #FFFFFF;
 			background-color: #80b4ff;
@@ -163,8 +220,9 @@
 			align-items: center;
 			height: 100rpx;
 			position: fixed;
-			top: calc(88rpx + var(--status-bar-height));
+			top: 0;
 			background-color: #2979ff;
+			z-index: 99;
 
 			.list {
 				width: 100%;
@@ -192,85 +250,67 @@
 			width: 100%;
 			display: flex;
 			flex-direction: column;
-			margin: 100rpx 0 80rpx 0 ;
+			margin: 100rpx 0 80rpx 0;
+
 			.box {
+				width: 100%;
 				margin-bottom: 20rpx;
 
-				.other-expenses {
-					width: 100%;
-					display: flex;
-					flex-direction: row;
-					justify-content: center;
-					align-items: center;
-					background-color: #FFFFFF;
-					height: 84rpx;
-
-					.green {
-						padding-left: 20rpx;
-						flex: 1;
-
-						text {
-							background-color: #46c85b;
-							border-radius: 8rpx;
-							padding: 6rpx 10rpx;
-							font-size: 24rpx;
-							color: #FFFFFF;
-						}
-					}
-
-					.green-money {
-						padding-left: 20rpx;
-						flex: 1;
-						color: green;
-					}
-
-					.orgin {
-						padding-left: 20rpx;
-						flex: 1;
-
-						text {
-							background-color: #ffaa00;
-							border-radius: 8rpx;
-							padding: 6rpx 10rpx;
-							font-size: 24rpx;
-							color: #FFFFFF;
-						}
-					}
-
-					.orgin-money {
-						padding-left: 20rpx;
-						flex: 1;
-						color: #ffaa00;
-					}
-				}
-				.form_images{
+				.form_images {
 					padding-right: 20rpx;
 					display: flex;
 					flex-direction: row;
 					align-items: center;
+
 					background-color: #FFFFFF;
 					margin-bottom: 2rpx;
-					
+
 					text {
-						width: 180rpx;
-						// text-align: left;
-						padding-left: 20rpx;
+						padding: 0 30rpx 0 20rpx;
+					}
+
+					.img {
+						display: flex;
+						align-items: center;
 					}
 				}
+
 				.form_item {
-					padding-right: 20rpx;
 					display: flex;
 					flex-direction: row;
 					align-items: center;
 					background-color: #FFFFFF;
+					padding-right: 20rpx;
 					margin-bottom: 2rpx;
+					width: 100%;
 					height: 85rpx;
+					position: relative;
+
+					// justify-content: space-between;
+					.demo {
+						display: flex;
+						justify-content: row;
+					}
+
+					.right {
+						position: absolute;
+						right: 0;
+						text-align: right;
+					}
+
+					.hidden {
+						position: absolute;
+						left: 180rpx;
+						z-index: 99;
+						opacity: 0;
+					}
 
 					text {
 						width: 180rpx;
 						// text-align: left;
 						padding-left: 20rpx;
 					}
+
 
 					.min_exchange {
 						width: 150rpx;
