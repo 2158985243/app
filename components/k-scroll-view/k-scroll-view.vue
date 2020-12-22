@@ -366,7 +366,6 @@
 					if (hk.clearTimer) {
 						clearTimeout(hk.clearTimer);
 					}
-
 					hk.clearTimer = setTimeout(function() {
 						hk.showPullDown = false;
 						hk.showPullUp = false;

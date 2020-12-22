@@ -275,6 +275,7 @@
 		},
 		onShow() {
 			this.monthDate();
+			this.list=[]
 			this.init();
 		}
 	}

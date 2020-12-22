@@ -60,7 +60,8 @@
 				last_page: 0,
 				style_input: {
 					'background-color': '#ffffff'
-				}
+				},
+				iq: 0
 			}
 		},
 		methods: {
@@ -77,13 +78,19 @@
 			},
 			// 编辑
 			toEditCustomer(item) {
-				uni.navigateTo({
-					url: '/pages/editCustomer/editCustomer?item='+ encodeURIComponent(JSON.stringify(item))
+				if (this.iq) {
+					uni.$emit('customerLevel',item)
+					uni.navigateBack()
+				} else {
+					uni.navigateTo({
+						url: '/pages/editCustomer/editCustomer?item=' + encodeURIComponent(JSON.stringify(item))
 
-				})
+					})
+				}
 			}
 		},
-		onLoad() {
+		onLoad(query) {
+			this.iq = query.iq
 			this.init()
 		}
 	}

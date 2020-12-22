@@ -15,7 +15,7 @@
 				</view>
 				<view class="form_item">
 					<text>电话</text>
-					<u-input placeholder='请输入会员手机号码' v-model="form.mobile" type="number" />
+					<u-input placeholder='请输入会员手机号码' maxlength='11' v-model="form.mobile" type="number" />
 				</view>
 				<view class="form_item">
 					<text>卡号</text>
@@ -23,8 +23,8 @@
 				</view>
 				<view class="form_item">
 					<text>等级</text>
-					<u-input placeholder='请选择会员等级' :disabled='true' @tap="toSelectAccount" v-model="customer" type="text" />
-					<u-icon name="arrow-right"  color="#cccccc" size="28"></u-icon>
+					<u-input placeholder='请选择会员等级' :disabled='true' @tap="toCustomerLevel" v-model="customer" type="text" />
+					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
 			<view class="box ">
@@ -40,14 +40,14 @@
 				<view class="form_item">
 					<text>日期</text>
 					<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.birthday" type="text" />
-					<u-icon name="arrow-right"  color="#cccccc" size="28"></u-icon>
+					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :params="params"></u-picker>
 				<view class="form_item">
 					<text>密码</text>
-					<u-input placeholder='请输入六位数字密码' class="hidden" maxlength='6' @focus="focused" :clearable='false' v-model="form.password"
-					 type="number" />
-					<u-input placeholder='请输入六位数字密码' maxlength='6' @focus="focused" :clearable='false' v-model="form.password" type="password" />
+					<u-input placeholder='请输入六位数字密码' class="hidden" maxlength='6' :clearable='false' v-model="form.password" type="number" />
+					<u-input placeholder='请输入六位数字密码' maxlength='6' :password-icon="false" :clearable='false' v-model="form.password"
+					 type="password" />
 				</view>
 				<u-keyboard ref="uKeyboard" mode="number" @change="valChange" @backspace="backspace" v-model="show"></u-keyboard>
 				<view class="form_item">
@@ -84,13 +84,17 @@
 			</view>
 
 		</view>
-		<view class="btn" v-show="active==0">
+		<view class="btn" @click="sure" v-show="active==0">
 			保存
 		</view>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
 <script>
+	import {
+		customerAdd
+	} from '../../api/customer.js'
 	import urls from '../../api/configuration.js'
 	export default {
 		data() {
@@ -108,6 +112,7 @@
 					expire_at: '',
 					tag: '',
 					address: '',
+					image: ''
 				},
 				active: 0,
 				customer: '',
@@ -143,6 +148,15 @@
 			}
 		},
 		methods: {
+			// 上传图片成功fnc
+			onSuccess(data, index, lists, name) {
+				console.log(data, index, lists, name);
+				this.form.image = data.data.url
+			},
+			// 上传图片失败fnc
+			onError(res, index, lists, name) {
+				console.log(res, index, lists, name);
+			},
 			itemClick(index) {
 				this.active = index;
 			},
@@ -169,14 +183,42 @@
 					this.form.gender = 1;
 				}
 			},
-			focused(e) {
-				window.addEventListener("resize", function() {
-					if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
-						window.setTimeout(function() {
-							document.activeElement.scrollIntoViewIfNeeded();
-						}, 0)
-					}
+			// 前往会员等级
+			toCustomerLevel() {
+				uni.navigateTo({
+					url: `/pages/customerLevel/customerLevel?iq=1`
 				})
+			},
+			// 提交
+			async sure() {
+
+				if (this.form.name == '') {
+					this.$refs.uToast.show({
+						title: '请输入姓名'
+					})
+				} else if (this.form.mobile == '') {
+					this.$refs.uToast.show({
+						title: '请输入手机号码'
+					})
+				} else if (!(/^[1]([3-9])[0-9]{9}$/.test(this.form.mobile))) {
+					this.$refs.uToast.show({
+						title: '请输入正确的手机号码'
+					})
+				} else if (this.password) {
+					if (!(/^\d+$/.test(this.password))) {
+						this.$refs.uToast.show({
+							title: '请输入数字类型的密码'
+						})
+					}
+				} else {
+					let res = await customerAdd(this.form)
+					if (!res.code) {
+						uni.navigateTo({
+							url: `/pages/memberManagement/memberManagement`
+						})
+					}
+				}
+
 			}
 
 		},
@@ -185,6 +227,13 @@
 			this.header.token = "Bearer " + userMessage.token
 
 			this.action = urls.baseURL;
+			uni.$on('customerLevel', (res) => {
+				if (res) {
+					this.customer = res.name;
+					this.form.customer_level_id = res.id;
+					// console.log(res);
+				}
+			})
 		}
 	}
 </script>
@@ -299,6 +348,7 @@
 					}
 
 					.hidden {
+						width: 100%;
 						position: absolute;
 						left: 180rpx;
 						z-index: 99;
