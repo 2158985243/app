@@ -1,13 +1,6 @@
 <template>
-	<view class="addMembership">
-		<view class="nav">
-			<view class="list">
-				<view class="nav-list" v-for="(item,index) in list" :key="index" @click="itemClick(index)" :class="index==active? 'active':''">
-					{{item}}
-				</view>
-			</view>
-		</view>
-		<view class="mains" v-show="active==0">
+	<view class="editMember">
+		<view class="mains">
 			<view class="box ">
 				<view class="form_item">
 					<text>姓名</text>
@@ -84,8 +77,14 @@
 			</view>
 
 		</view>
-		<view class="btn" @click="sure" v-show="active==0">
-			保存
+		<view class="btn">
+			<view class="del" @click="del">
+				删除
+			</view>
+			<view class="bc" @click="sure">
+				保存
+			</view>
+
 		</view>
 		<u-toast ref="uToast" />
 	</view>
@@ -93,13 +92,18 @@
 
 <script>
 	import {
-		customerAdd
+		customer,
+		customerEdit,
+		customerDel
 	} from '../../api/customer.js'
 	import urls from '../../api/configuration.js'
 	export default {
 		data() {
 			return {
-				list: ['手工添加', '微信会员'],
+				id: 0,
+				form: {
+					customer_level: {}
+				},
 				form: {
 					name: '',
 					mobile: '',
@@ -124,7 +128,7 @@
 				}, {
 					name: '女'
 				}],
-				gender_value: '男',
+				gender_value: '',
 				params: {
 					year: true,
 					month: true,
@@ -144,10 +148,26 @@
 				show: false,
 				showtime: false,
 				showtime1: false,
-
 			}
 		},
 		methods: {
+			async init(id) {
+				let res = await customer(id);
+				this.form = res;
+				if (res.gender) {
+					this.gender_value = '女'
+				} else {
+					this.gender_value = '男'
+				}
+				this.customer = res.customer_level.name;
+				this.fileList = []
+				if (res.image) {
+					this.fileList.push({
+						url: this.$cfg.domain + res.image
+					})
+				}
+			},
+
 			// 上传图片成功fnc
 			onSuccess(data, index, lists, name) {
 				console.log(data, index, lists, name);
@@ -211,21 +231,40 @@
 						})
 					}
 				} else {
-					let res = await customerAdd(this.form)
+					let res = await customerEdit(this.id, this.form)
 					if (!res.code) {
 						uni.navigateTo({
-							url: `/pages/memberManagement/memberManagement`
+							url: `/pages/customer/customer?id=${this.id}`
 						})
 					}
 				}
-
+				// url: `/pages/memberManagement/memberManagement`
+			},
+			async del() {
+				let _this = this
+				uni.showModal({
+					title: '提示',
+					content: '是否删除该会员？',
+					success: async (res) => {
+						if (res.confirm) {
+							let res = await customerDel(this.id)
+							if (!res.code) {
+								uni.navigateTo({
+									url: `/pages/memberManagement/memberManagement`
+								})
+							}
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
 			}
-
 		},
-		onLoad() {
+		onLoad(query) {
+			this.id = query.id;
 			const userMessage = uni.getStorageSync('userMessage');
 			this.header.token = "Bearer " + userMessage.token
-
+			this.init(query.id)
 			this.action = urls.baseURL;
 			uni.$on('customerLevel', (res) => {
 				if (res) {
@@ -238,8 +277,8 @@
 	}
 </script>
 
-<style lang="scss" scoped>
-	.addMembership {
+<style scoped lang="scss">
+	.editMember {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
@@ -254,13 +293,28 @@
 		.btn {
 			width: 100%;
 			display: flex;
-			justify-content: center;
-			align-items: center;
-			color: #FFFFFF;
-			background-color: #2979ff;
 			position: fixed;
 			bottom: 0;
 			height: 80rpx;
+			flex-direction: row;
+
+			.bc {
+				flex: 1;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #2979ff;
+				color: #FFFFFF;
+			}
+
+			.del {
+				flex: 1;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #666666;
+				color: #FFFFFF;
+			}
 		}
 
 		.nav {
@@ -299,7 +353,7 @@
 			width: 100%;
 			display: flex;
 			flex-direction: column;
-			margin: 100rpx 0 80rpx 0;
+			margin: 0 0 80rpx 0;
 
 			.box {
 				width: 100%;

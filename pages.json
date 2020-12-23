@@ -882,7 +882,20 @@
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/editMember/editMember",
+            "style" :                                                                                    
+            {
+               "navigationBarTitleText": "编辑会员",
+               "navigationBarBackgroundColor": "#2979ff",
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
