@@ -86,7 +86,7 @@
 					<u-icon name="account-fill" color="#ff551d" size="40"></u-icon>
 					<text>余额查询</text>
 				</view>
-				<view class="li">
+				<view class="li" @click="toMemberRegistrationStatistics">
 					<u-icon name="account-fill" color="#ff551d" size="40"></u-icon>
 					<text>注册统计</text>
 				</view>
@@ -116,6 +116,12 @@
 			toStatics(){
 				uni.navigateTo({
 					url: `/pages/statics/statics`
+				})
+			},
+			// 前往支出分析
+			toMemberRegistrationStatistics(){
+				uni.navigateTo({
+					url: `/pages/memberRegistrationStatistics/memberRegistrationStatistics`
 				})
 			},
 		},

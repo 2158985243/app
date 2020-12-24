@@ -869,10 +869,29 @@
 				}
 			}
 
-		}
-
-		, {
+		}, {
 			"path": "pages/customer/customer",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/editMember/editMember",
+			"style": {
+				"navigationBarTitleText": "编辑会员",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/memberRegistrationStatistics/memberRegistrationStatistics",
 			"style": {
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
@@ -883,10 +902,10 @@
 
 		}
 	    ,{
-            "path" : "pages/editMember/editMember",
+            "path" : "pages/customerCountDetails/customerCountDetails",
             "style" :                                                                                    
             {
-               "navigationBarTitleText": "编辑会员",
+               "navigationBarTitleText": "会员注册统计详情",
                "navigationBarBackgroundColor": "#2979ff",
                "navigationBarTextStyle": "white",
                "app-plus": {

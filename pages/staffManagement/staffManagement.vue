@@ -61,7 +61,8 @@
 				url: url.domain,
 				style_input: {
 					'background-color': '#ffffff'
-				}
+				},
+				pull: false,
 			}
 		},
 		methods: {
@@ -89,12 +90,16 @@
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
+
 				if (this.page >= this.last_page) {
-					this.$refs.uToast.show({
-						title: '加载到底了',
-						type: 'default',
-						position: 'bottom'
-					})
+					if (!this.pull) {
+						this.$refs.uToast.show({
+							title: '加载到底了',
+							type: 'default',
+							position: 'bottom'
+						})
+						this.pull = true
+					}
 
 				} else {
 					this.page++;
