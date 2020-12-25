@@ -58,6 +58,7 @@
 				store_id:0
 			}
 		},
+		
 		methods: {
 			async init(store_id, date) {
 				let res = await countDetails({

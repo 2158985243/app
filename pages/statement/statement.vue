@@ -57,7 +57,7 @@
 				<text>统计</text>
 			</view>
 			<view class="list">
-				<view class="li">
+				<view class="li" @click="toProcurementStatistics">
 					<u-icon name="file-text-fill" color="#11c8ff" size="40"></u-icon>
 					<text>采购统计</text>
 				</view>
@@ -122,6 +122,12 @@
 			toMemberRegistrationStatistics(){
 				uni.navigateTo({
 					url: `/pages/memberRegistrationStatistics/memberRegistrationStatistics`
+				})
+			},
+			// 前往采购统计
+			toProcurementStatistics(){
+				uni.navigateTo({
+					url: `/pages/procurementStatistics/procurementStatistics`
 				})
 			},
 		},

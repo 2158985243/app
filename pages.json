@@ -900,21 +900,39 @@
 				}
 			}
 
+		}, {
+			"path": "pages/customerCountDetails/customerCountDetails",
+			"style": {
+				"navigationBarTitleText": "会员注册统计详情",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/procurementStatistics/procurementStatistics",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/toProcurementStatisticsDetails/toProcurementStatisticsDetails",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
-	    ,{
-            "path" : "pages/customerCountDetails/customerCountDetails",
-            "style" :                                                                                    
-            {
-               "navigationBarTitleText": "会员注册统计详情",
-               "navigationBarBackgroundColor": "#2979ff",
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

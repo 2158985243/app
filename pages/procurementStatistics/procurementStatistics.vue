@@ -1,0 +1,469 @@
+<template>
+	<view class="procurementStatistics">
+		<u-navbar back-icon-color='#ffffff' title="支出分析" :background="background" title-color="#ffffff">
+			<template slot="right">
+				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
+			</template>
+		</u-navbar>
+		<view class="mains">
+			<tabControl :current="current" :values="items" bgc="#fff" :fixed="true" :scrollFlag='true' :isEqually='true'
+			 @clickItem="onClickItem"></tabControl>
+			<swiper class="swiper" @change='scollSwiper' :current='current'>
+				<swiper-item v-for="(item,index) in bos" :key='index'>
+					<scroll-view scroll-y="true" style="height: 100%;">
+						<refresh @interrupt="interrupt" @pushToInterrupt="pushToInterrupt" @finished="finished" @scrolltolower="g">
+							<template slot="top">
+								<view :style="'position: absolute; bottom: 0px;height: ' + 40 + 'px;line-height:' + 40 + 'px;  width: 100%;text-align: center;'">{{tip}}</view>
+							</template>
+							<template slot="content">
+								<view class="cen">
+									<view class="list-nav">
+										<view class="nav-item">
+											<text class="red-number">{{count[current]}}</text>
+											<text class="hui-number">采购笔数</text>
+										</view>
+										<view class="nav-item">
+											<text class="red-number">{{sumNumber[current]}}</text>
+											<text class="hui-number">采购数量</text>
+										</view>
+										<view class="nav-item">
+											<text class="red-number">{{sumMoney[current]}}</text>
+											<text class="hui-number">采购金额</text>
+										</view>
+
+									</view>
+									<view class="list" v-for="(item,index) in list[current]" :key="index" @click="toProcurementStatisticsDetails(item)">
+										<view class="left">
+											<view class="img">
+												<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+item.main_image">
+												</u-image>
+											</view>
+											<view class="li-item">
+												<text class="balck">{{item.name}}</text>
+												<text>{{item.number}}</text>
+												<text class="hui-se">单价数量：&yen;{{item.price}}&nbsp;*<text class="li-number"> {{item.quantity}}</text></text>
+											</view>
+										</view>
+										<view class="right">
+											<view class="money">
+												<text>金额： </text>
+												<text class="money">&yen;{{Number(item.price)*Number(item.quantity)}} </text>
+											</view>
+											<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+										</view>
+									</view>
+								</view>
+							</template>
+							<template slot="bottom">
+								<view>
+								</view>
+							</template>
+						</refresh>
+
+					</scroll-view>
+				</swiper-item>
+			</swiper>
+		</view>
+
+
+		<!-- 开始时间 -->
+		<u-picker mode="time" v-model="showtime" @confirm="confirmTime" title="开始时间" :params="params"></u-picker>
+		<!-- 结束时间 -->
+		<u-picker mode="time" v-model="showtime1" @confirm="confirmTime1" title="结束时间" :params="params"></u-picker>
+		<!-- 选择门店 -->
+		<u-select v-model="show" mode="single-column" @confirm="confirmStrores" :list="strots"></u-select>
+	</view>
+</template>
+
+<script>
+	import tabControl from '@/components/tabControl-tag/tabControl-tag.vue';
+	import refresh from '@/components/xing-refresh/xing-refresh.vue'
+	import store from '@/store'
+	import {
+		counts
+	} from '../../api/purchaseStorage.js'
+	export default {
+		components: {
+			tabControl,
+			refresh
+		},
+		data() {
+			return {
+				background: {
+					backgroundColor: '#2979ff'
+				},
+				show: false,
+				showtime: false,
+				showtime1: false,
+				params: {
+					year: true,
+					month: true,
+					day: true,
+					hour: false,
+					minute: false,
+					second: false
+				},
+				list: [
+					[],
+					[],
+					[],
+					[],
+					[]
+				],
+				bos: [
+					[],
+					[],
+					[],
+					[],
+					[]
+				],
+				items: [{
+					name: '今天',
+					status: 0
+				}, {
+					name: '昨日',
+					status: 1
+				}, {
+					name: '7天',
+					status: 2
+				}, {
+					name: '30天',
+					status: 3
+				}, {
+					name: '其它',
+					status: 4
+				}],
+				current: 0,
+				// 下拉
+				tip: '下拉刷新',
+				total: [0, 0, 0, 0, 0],
+				dateAll: {
+					today1: { //今天
+						statrTime: '',
+						endTime: ''
+					},
+					today2: { //昨天
+						statrTime: '',
+						endTime: ''
+					},
+					today3: { //本周
+						statrTime: '',
+						endTime: ''
+					},
+					today4: { //本月
+						statrTime: '',
+						endTime: ''
+					},
+					today5: { //其他
+						statrTime: '',
+						endTime: ''
+					},
+
+				},
+				strots: [], //店铺组
+				page: 1,
+				page_size: 10,
+				start_time: '',
+				end_time: '',
+				sumNumber: [0, 0, 0, 0, 0],
+				sumMoney: [0, 0, 0, 0, 0],
+				count: [0, 0, 0, 0, 0]
+			}
+		},
+		computed: {
+
+		},
+		methods: {
+			// 
+			async confirmStrores(e) {
+				this.store_id = e[0].value
+				if (this.current == 0) {
+					this.init(this.dateAll.today1.statrTime, this.dateAll.today1.endTime)
+				} else if (this.current == 1) {
+					this.init(this.dateAll.today2.statrTime, this.dateAll.today2.endTime)
+				} else if (this.current == 2) {
+					this.init(this.dateAll.today3.statrTime, this.dateAll.today3.endTime)
+				} else if (this.current == 3) {
+					this.init(this.dateAll.today4.statrTime, this.dateAll.today4.endTime)
+				} else if (this.current == 4) {
+					this.init(this.dateAll.today5.statrTime, this.dateAll.today5.endTime)
+				}
+			},
+			// 显示店铺列表
+			showStrore() {
+				this.show = true;
+			},
+			// 店铺数组
+			strored() {
+				let arr = store.state.store.storesArr;
+				if (arr) {
+					arr.map((v) => {
+						this.strots.push({
+							value: v.store_id,
+							label: v.name
+						})
+					})
+				}
+			},
+			// 初始化
+			async init(timeStar, timeEnd) {
+				// 当天
+				let date = new Date();
+				let seperator1 = "-";
+				let year = date.getFullYear();
+				let month = date.getMonth() + 1;
+				let strDate = date.getDate();
+				if (month >= 1 && month <= 9) {
+					month = "0" + month;
+				}
+				if (strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				let currentdate = year + seperator1 + month + seperator1 + strDate;
+				let res = await counts({
+					start_time: timeStar || currentdate,
+					end_time: timeEnd || currentdate,
+					store_id: this.store_id
+				})
+				this.list[this.current] = res;
+				let sum1 = 0;
+				let sum2 = 0;
+				this.count[this.current] = 0;
+				this.list[this.current].map((v) => {
+					sum1 += Number(v.quantity);
+					sum2 += Number(v.quantity) * Number(v.price);
+					this.count[this.current] += Number(v.count);
+				})
+				this.sumNumber[this.current] = Math.abs(sum1);
+				this.sumMoney[this.current] = sum2;
+				this.$forceUpdate()
+
+			},
+			// 点击日期
+			async onClickItem(val) {
+				this.current = val.currentIndex;
+				if (this.current == 4) {
+					this.showtime = true;
+				}
+			},
+			// 移动
+			async scollSwiper(e) {
+				this.current = e.target.current
+				// 移动到哪个
+				if (this.bos[this.current].length == 0) {
+					if (this.current == 0) {
+						let res = this.$date.today()
+						this.dateAll.today1.statrTime = res.statr_time
+						this.dateAll.today1.endTime = res.end_time
+						this.init(res.statr_time, res.end_time)
+					} else if (this.current == 1) {
+						let res = this.$date.yesterday()
+						this.dateAll.today2.statrTime = res.statr_time
+						this.dateAll.today2.endTime = res.end_time
+						this.init(res.statr_time, res.end_time)
+					} else if (this.current == 2) {
+						let res = this.$date.sevenDays()
+						this.dateAll.today3.statrTime = res.statr_time
+						this.dateAll.today3.endTime = res.end_time
+						this.init(res.statr_time, res.end_time)
+					} else if (this.current == 3) {
+						let res = this.$date.thirtyDays()
+						this.dateAll.today4.statrTime = res.statr_time
+						this.dateAll.today4.endTime = res.end_time
+						// console.log(yearEnd, monthEnd, todayEnd);
+						this.init(res.statr_time, res.end_time)
+					} else if (this.current == 4) {
+						this.dateAll.today5.statrTime = this.start_time
+						this.dateAll.today5.endTime = this.end_time
+						this.init(this.start_time, this.end_time)
+
+					}
+
+				}
+			},
+			interrupt(e) {
+				this.tip = '刷新中'
+				//模拟发送请求
+				setTimeout(e, 500);
+				this.tip = '刷新成功';
+			},
+			async pushToInterrupt() {
+				// this.bos[this.current], this.total[this.current]
+				this.tip = '释放刷新';
+			},
+			finished() {
+				this.tip = '下拉刷新';
+			},
+			/// 开始时间
+			confirmTime(v) {
+				this.start_time = `${v.year}-${v.month}-${v.day}`;
+				this.showtime1 = true;
+			},
+			// 结束时间
+			async confirmTime1(v) {
+				this.end_time = `${v.year}-${v.month}-${v.day}`;
+				this.init(this.start_time, this.end_time);
+			},
+			// 
+			toProcurementStatisticsDetails(item) {
+				let start_time = ''
+				let end_time = ''
+				if (this.current == 0) {
+					start_time = this.dateAll.today1.statrTime;
+					end_time = this.dateAll.today1.endTime
+				} else if (this.current == 1) {
+					start_time = this.dateAll.today2.statrTime;
+					end_time = this.dateAll.today2.endTime
+				} else if (this.current == 2) {
+					start_time = this.dateAll.today3.statrTime;
+					end_time = this.dateAll.today3.endTime
+				} else if (this.current == 3) {
+					start_time = this.dateAll.today4.statrTime;
+					end_time = this.dateAll.today4.endTime
+				} else if (this.current == 4) {
+					start_time = this.dateAll.today5.statrTime;
+					end_time = this.dateAll.today5.endTime
+				}
+				uni.navigateTo({
+					url: `/pages/toProcurementStatisticsDetails/toProcurementStatisticsDetails?goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
+				})
+			}
+		},
+		onLoad() {
+			// 获取店铺id
+			this.strored()
+			if (store.state.store.store_id > 0) {
+				this.store_id = store.state.store.store_id;
+			}
+			// 初始化
+			this.init(this.start_time, this.end_time);
+		}
+	}
+</script>
+
+<style scoped lang="scss">
+	.procurementStatistics {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		background-color: #f5f4f8;
+
+		.right_icon {
+			margin-right: 30rpx;
+		}
+
+		.mains {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+
+			.swiper {
+				margin-top: 84rpx;
+				height: calc(100% - 84rpx);
+			}
+
+			.cen {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+
+				.list-nav {
+					width: 100%;
+					display: flex;
+					flex-direction: row;
+					background-color: #FFFFFF;
+					padding: 20rpx;
+					margin: 20rpx 0;
+
+					.nav-item {
+						flex: 1;
+						display: flex;
+						flex-direction: column;
+
+						.red-number {
+							color: #FF5A5F;
+							font-size: 28rpx;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+
+						.hui-number {
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							color: #999999;
+						}
+					}
+				}
+
+				.list {
+					width: 100%;
+					padding: 20rpx;
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					background-color: #FFFFFF;
+					border-bottom: 0.01rem solid #EEEEEE;
+
+					.left {
+						display: flex;
+						flex-direction: row;
+
+						.img {
+							margin-right: 20rpx;
+						}
+
+						.li-item {
+							display: flex;
+							flex-direction: column;
+
+							text {
+								font-size: 20rpx;
+								color: #666666;
+							}
+
+							.balck {
+								font-size: 28rpx;
+								color: #000000;
+							}
+
+							.hui-se {
+								display: flex;
+								flex-direction: row;
+
+								.li-number {
+									color: #FF5A5F;
+									padding-left: 8rpx;
+								}
+							}
+						}
+					}
+
+					.right {
+						display: flex;
+						flex-direction: row;
+						justify-content: center;
+						align-items: center;
+
+						text {
+							font-size: 20rpx;
+						}
+
+						.money {
+							display: flex;
+							flex-direction: row;
+
+							.money {
+								color: #FF5A5F;
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
+</style>

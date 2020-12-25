@@ -54,3 +54,21 @@ export const purchaseStorageCancel = (id) => {
 		return error;
 	});
 };
+// 采购统计
+export const counts = (data) => {
+	return $http.get("/purchase_storage/counts",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 采购统计详情
+export const countDetails = (data) => {
+	return $http.get("/purchase_storage/count_details",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
