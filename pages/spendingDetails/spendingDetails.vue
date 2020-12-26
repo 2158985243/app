@@ -184,6 +184,7 @@
 			// 点击某一个时间段
 			async clickDate(index) {
 				this.active = index;
+				this.list = []
 				this.page = 1;
 				this.page_size = 10;
 				let date = new Date();

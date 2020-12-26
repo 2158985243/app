@@ -44,13 +44,15 @@
 			<u-popup v-model="showedit" class="pop" mode="center" width="80%">
 				<text class="tit">选择门店</text>
 				<view class="box">
-					<u-radio-group v-model="value" :wrap="true">
-						<u-radio shape="square" @change="radioGroupChange($event,item)" v-for="(item, index) in stores" :key="index"
-						 :name="item.name">
-							{{item.name}}
-							<text class="stale" v-if="item.is_valid==0">已过期</text>
-						</u-radio>
-					</u-radio-group>
+					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
+						<u-radio-group v-model="value" :wrap="true">
+							<u-radio shape="square" @change="radioGroupChange($event,item)" v-for="(item, index) in stores" :key="index"
+							 :name="item.name">
+								{{item.name}}
+								<text class="stale" v-if="item.is_valid==0">已过期</text>
+							</u-radio>
+						</u-radio-group>
+					</scroll-view>
 				</view>
 				<view class="btds">
 					<u-button :hair-line="false" @click="abrogate" class="btnChild">取消</u-button>
@@ -183,42 +185,50 @@
 			height: 800rpx;
 		}
 
-		.btds {
-			width: 100%;
-			height: 80rpx;
+
+		.pop {
 			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-
-		.tit {
-			display: block;
-			font-size: 30rpx;
-			height: 80rpx;
-			line-height: 80rpx;
-			padding-left: 40rpx;
-		}
-
-		.box {
-			margin: 0 40rpx;
-			height: 640rpx;
-			display: flex;
-			// overflow: hidden;
-			overflow-y: scroll;
-
-			.u-radio {
+			flex-direction: column;
+			.tit {
+				display: block;
+				font-size: 30rpx;
 				height: 80rpx;
-				border-bottom: 0.01rem solid #C8C7CC;
-
-				/deep/.u-radio__label {
-					width: 100%;
-					color: #0064cf;
-				}
+				line-height: 80rpx;
+				padding-left: 40rpx;
 			}
 
-			.stale {
-				float: right;
-				color: #DD524D;
+			.btds {
+				width: 100%;
+				height: 90rpx;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+			}
+
+			.box {
+				margin: 0 40rpx;
+				height: 640rpx;
+				display: flex;
+				// overflow: hidden;
+				overflow-y: scroll;
+
+				.u-radio {
+					height: 80rpx;
+					border-bottom: 0.01rem solid #C8C7CC;
+
+					/deep/.u-radio__label {
+						width: 100%;
+						color: #0064cf;
+					}
+				}
+
+
+
+				.stale {
+					float: right;
+					color: #DD524D;
+				}
 			}
 		}
 

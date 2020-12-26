@@ -1,6 +1,6 @@
 <template>
 	<view class="procurementStatistics">
-		<u-navbar back-icon-color='#ffffff' title="支出分析" :background="background" title-color="#ffffff">
+		<u-navbar back-icon-color='#ffffff' title="采购统计" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
 			</template>
@@ -191,7 +191,9 @@
 			},
 			// 显示店铺列表
 			showStrore() {
-				this.show = true;
+				uni.navigateTo({
+					url: `/pages/stockEnquiries/stockEnquiries`
+				})
 			},
 			// 店铺数组
 			strored() {
@@ -253,25 +255,25 @@
 				if (this.bos[this.current].length == 0) {
 					if (this.current == 0) {
 						let res = this.$date.today()
-						this.dateAll.today1.statrTime = res.statr_time
+						this.dateAll.today1.statrTime = res.start_time
 						this.dateAll.today1.endTime = res.end_time
-						this.init(res.statr_time, res.end_time)
+						this.init(res.start_time, res.end_time)
 					} else if (this.current == 1) {
 						let res = this.$date.yesterday()
-						this.dateAll.today2.statrTime = res.statr_time
+						this.dateAll.today2.statrTime = res.start_time
 						this.dateAll.today2.endTime = res.end_time
-						this.init(res.statr_time, res.end_time)
+						this.init(res.start_time, res.end_time)
 					} else if (this.current == 2) {
 						let res = this.$date.sevenDays()
-						this.dateAll.today3.statrTime = res.statr_time
+						this.dateAll.today3.statrTime = res.start_time
 						this.dateAll.today3.endTime = res.end_time
-						this.init(res.statr_time, res.end_time)
+						this.init(res.start_time, res.end_time)
 					} else if (this.current == 3) {
 						let res = this.$date.thirtyDays()
-						this.dateAll.today4.statrTime = res.statr_time
+						this.dateAll.today4.statrTime = res.start_time
 						this.dateAll.today4.endTime = res.end_time
 						// console.log(yearEnd, monthEnd, todayEnd);
-						this.init(res.statr_time, res.end_time)
+						this.init(res.start_time, res.end_time)
 					} else if (this.current == 4) {
 						this.dateAll.today5.statrTime = this.start_time
 						this.dateAll.today5.endTime = this.end_time
@@ -337,6 +339,11 @@
 			}
 			// 初始化
 			this.init(this.start_time, this.end_time);
+			uni.$on('stockEnquiries',(res)=>{
+				if(res){
+					this.init(...res)
+				}
+			})
 		}
 	}
 </script>

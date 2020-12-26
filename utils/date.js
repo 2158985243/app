@@ -13,7 +13,7 @@ const today = function() {
 	}
 	let currentdate = year + seperator1 + month + seperator1 + strDate;
 	return {
-		statr_time: currentdate,
+		start_time: currentdate,
 		end_time: currentdate
 	}
 }
@@ -26,7 +26,7 @@ const yesterday = function() {
 	yesterday = yesterday.getFullYear() + "-" + (yesterday.getMonth() > 9 ? (yesterday.getMonth() + 1) : "0" + (
 		yesterday.getMonth() + 1)) + "-" + (yesterday.getDate() > 9 ? (yesterday.getDate()) : "0" + (yesterday.getDate()));
 	return {
-		statr_time: yesterday,
+		start_time: yesterday,
 		end_time: yesterday
 	}
 }
@@ -50,7 +50,7 @@ const thisWeek = function() {
 	let todayEnd = (WeekLastDay.getDate() < 10 ? "0" + WeekLastDay.getDate() : WeekLastDay.getDate())
 	let endTime = yearEnd + seperator1 + monthEnd + seperator1 + todayEnd
 	return {
-		statr_time: statrTime,
+		start_time: statrTime,
 		end_time: endTime
 	}
 }
@@ -75,7 +75,7 @@ const thisMonth = function() {
 	let todayEnd = (MonthLastDay.getDate() < 10 ? "0" + MonthLastDay.getDate() : MonthLastDay.getDate())
 	let endTime = yearEnd + seperator1 + monthEnd + seperator1 + todayEnd
 	return {
-		statr_time: statrTime,
+		start_time: statrTime,
 		end_time: endTime
 	}
 }
@@ -95,7 +95,7 @@ const sevenDays = function() {
 	let D2 = (time2.getDate() > 10 ? time2.getDate() : '0' + time2.getDate())
 	let timer2 = Y2 + '-' + M2 + '-' + D2 // 之前的7天或者30天
 	return {
-		statr_time: timer2,
+		start_time: timer2,
 		end_time: timer1
 	}
 }
@@ -114,7 +114,7 @@ const thirtyDays = function() {
 	let D2 = (time2.getDate() > 10 ? time2.getDate() : '0' + time2.getDate())
 	let timer2 = Y2 + '-' + M2 + '-' + D2 // 之前的7天或者30天
 	return {
-		statr_time: timer2,
+		start_time: timer2,
 		end_time: timer1
 	}
 }

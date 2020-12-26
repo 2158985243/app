@@ -19,6 +19,10 @@
 				<text>供应商</text>
 				<u-input placeholder='' :disabled='true' v-model="form.supplier.name" type='text' />
 			</view>
+			<view class="form_item" >
+				<text>店铺</text>
+				<u-input placeholder='' :disabled='true' v-model="form.store.name" type='text' />
+			</view>
 		</view>
 		<!--  -->
 		<view class="shopping-boxs" v-if="shopping.length>0">
@@ -130,6 +134,7 @@
 					store_account:{},
 					pay_money:'',
 					user:{},
+					store:{},
 					remarks:'',
 				},
 				id:0,
@@ -232,9 +237,10 @@
 						if (res.confirm) {
 							let res = await purchaseStorageCancel(_this.id);
 							if(!res.code){
-								uni.navigateTo({
-									url: `/pages/libraryHistory/libraryHistory`
-								})
+								// uni.navigateTo({
+								// 	url: `/pages/libraryHistory/libraryHistory`
+								// })
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							return true;
