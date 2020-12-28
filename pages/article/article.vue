@@ -132,7 +132,10 @@
 			},
 		},
 		onLoad() {
+		},
+		onShow() {
 			this.init()
+			
 		}
 	}
 </script>

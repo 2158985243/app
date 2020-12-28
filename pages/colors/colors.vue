@@ -49,13 +49,13 @@
 				list: [],
 				datum: [],
 				checkedData: [],
-
+				skip: false,
 			}
 		},
 		methods: {
 			save() {
 				uni.$emit('colorDatum', this.datum);
-				uni.navigateBack();
+				uni.navigateBack()
 			},
 			bindClick(v) {
 				console.log(v);
@@ -134,14 +134,14 @@
 				this.bindClick(this.checkedData)
 			}
 		},
-		onLoad() {
+		onLoad(query) {
 			this.bin();
-			this.init();
-
+			// this.init();
+			
 
 		},
 		onShow() {
-			// this.init();
+			this.init();
 		}
 	}
 </script>

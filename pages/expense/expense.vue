@@ -213,9 +213,7 @@
 				}else{
 					let res = await expendLogAdd(this.form)
 					if(!res.code){
-						uni.navigateTo({
-							url: '/pages/expenseBook/expenseBook'
-						})
+						uni.navigateBack()
 					}
 				}
 			},

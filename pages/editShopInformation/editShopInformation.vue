@@ -126,9 +126,7 @@
 			async save() {
 				let res = await storeEdit(this.id, this.form)
 				if (!res.code) {
-					uni.navigateTo({
-						url: '/pages/storeManagement/storeManagement'
-					})
+					uni.navigateBack()
 				}
 			},
 			del() {
@@ -140,9 +138,7 @@
 							console.log('用户点击确定');
 							let res = await storeDel(this.id)
 							if (!res.code) {
-								uni.navigateTo({
-									url: '/pages/storeManagement/storeManagement'
-								})
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							console.log('用户点击取消');

@@ -85,10 +85,7 @@
 					this.form.discount = Number(this.form.discount)
 					let res = await customerLevelEdit(this.id, this.form);
 					if (!res.code) {
-						uni.navigateTo({
-							url: `/pages/customerLevel/customerLevel`,
-
-						})
+						uni.navigateBack()
 					}
 				}
 			},
@@ -102,9 +99,7 @@
 						if (res.confirm) {
 							let res = await customerLevelDel(_this.id)
 							if (!res.code) {
-								uni.navigateTo({
-									url: '/pages/customerLevel/customerLevel'
-								})
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							console.log('用户点击取消');

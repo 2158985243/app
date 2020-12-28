@@ -20,9 +20,7 @@
 			async save(){
 				let res = await accountAdd({name:this.name})
 				if (!res.code) {
-					uni.navigateTo({
-						url: '/pages/patternOfPayment/patternOfPayment'
-					})
+					uni.navigateBack()
 				}
 			}
 		}

@@ -63,7 +63,6 @@
 		<view class="sig_next">
 			<view class="ver_next" v-show="active==0">
 				<u-button size="medium" @click="nextInf" class="next" type="primary">下一步</u-button>
-				<u-toast ref="uToast" />
 				<u-checkbox-group>
 					<u-checkbox v-model="checked" shape="square">已经订阅并同意</u-checkbox><text class="sty">《西所用户协议》</text>
 				</u-checkbox-group>
@@ -74,6 +73,7 @@
 			<view class="succ_next" v-show="active==2">
 				<u-button size="medium" @click="login()" class="next" type="primary">立即登录</u-button>
 			</view>
+			<u-toast ref="uToast" />
 		</view>
 	</view>
 </template>
@@ -136,10 +136,16 @@
 			async nextInf(index) {
 				if (index == 0) { //信息完善表单
 					let res = await register(this.form)
-					console.log(res)
 					this.resaccount = res;
-					if (res.code == 1) {
-						if (res.msg == '请输入手机号码' || res.msg == '手机号已注册' || res.msg == '请输入不含中文的长度6-20位的密码'|| res.msg == '手机号格式不正确') {
+					console.log(res);
+					if (res.errMsg) {
+						this.$refs.uToast.show({
+							title: '请检查网络故障!',
+							type: 'default',
+							position: 'bottom'
+						})
+					} else if (res.code == 1) {
+						if (res.msg == '请输入手机号码' || res.msg == '手机号已注册' || res.msg == '请输入不含中文的长度6-20位的密码' || res.msg == '手机号格式不正确') {
 							this.active = 0
 						}
 					} else {

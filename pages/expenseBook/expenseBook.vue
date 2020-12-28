@@ -225,7 +225,6 @@
 			},
 		},
 		onLoad() {
-			this.init()
 			uni.$on("projectQuery", (res) => {
 				if (res) {
 					this.list = {}
@@ -234,6 +233,10 @@
 					this.init(res)
 				}
 			});
+		},
+		onShow() {
+			this.list = {}
+			this.init()
 		}
 	}
 </script>

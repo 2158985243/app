@@ -34,9 +34,7 @@
 							console.log('用户点击确定');
 							let res = await accountDel(this.id)
 							if (!res.code) {
-								uni.navigateTo({
-									url: '/pages/patternOfPayment/patternOfPayment'
-								})
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							console.log('用户点击取消');
@@ -48,9 +46,7 @@
 			async save() {
 				let res = await accountEdit(this.id, {name:this.name})
 				if (!res.code) {
-					uni.navigateTo({
-						url: '/pages/patternOfPayment/patternOfPayment'
-					});
+					uni.navigateBack()
 				}
 			},
 		},

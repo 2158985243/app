@@ -104,9 +104,7 @@
 				let res = await storeAdd(this.form)
 				// console.log(res);
 				if (!res.code) {
-					uni.navigateTo({
-						url: '/pages/storeManagement/storeManagement'
-					})
+					uni.navigateBack()
 				}
 			},
 			onSuccess(data, index, lists, name) {

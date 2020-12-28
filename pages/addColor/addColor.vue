@@ -23,9 +23,7 @@
 				let res = await colorAdd({name:this.name})
 				console.log(res);
 				if(!res.code){
-					uni.navigateTo({
-						url:`/pages/colors/colors`
-					})
+					uni.navigateBack()
 				}
 			}
 		}

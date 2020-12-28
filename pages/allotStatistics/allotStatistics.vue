@@ -1,6 +1,6 @@
 <template>
-	<view class="procurementStatistics">
-		<u-navbar back-icon-color='#ffffff' title="采购统计" :background="background" title-color="#ffffff">
+	<view class="allotStatistics">
+		<u-navbar back-icon-color='#ffffff' title="调拨统计" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
 			</template>
@@ -20,15 +20,15 @@
 									<view class="list-nav">
 										<view class="nav-item">
 											<text class="red-number">{{count[current]}}</text>
-											<text class="hui-number">采购笔数</text>
+											<text class="hui-number">调拨笔数</text>
 										</view>
 										<view class="nav-item">
 											<text class="red-number">{{sumNumber[current]}}</text>
-											<text class="hui-number">采购数量</text>
+											<text class="hui-number">调出数量</text>
 										</view>
 										<view class="nav-item">
 											<text class="red-number">{{sumMoney[current]}}</text>
-											<text class="hui-number">采购金额</text>
+											<text class="hui-number">调入金额</text>
 										</view>
 
 									</view>
@@ -359,7 +359,7 @@
 </script>
 
 <style scoped lang="scss">
-	.procurementStatistics {
+	.allotStatistics {
 		width: 100%;
 		height: 100%;
 		display: flex;

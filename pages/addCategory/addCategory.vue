@@ -34,9 +34,7 @@
 					sort: this.sort
 				})
 				if (!res.code) {
-					uni.redirectTo({
-						url: `/pages/category/category`
-					})
+					uni.navigateBack()
 				}
 			}
 		}

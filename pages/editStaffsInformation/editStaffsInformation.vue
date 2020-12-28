@@ -141,9 +141,7 @@
 							console.log('用户点击确定');
 							let res = await staffDel(this.id)
 							if (!res.code) {
-								uni.navigateTo({
-									url: '/pages/staffManagement/staffManagement'
-								})
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							console.log('用户点击取消');
@@ -155,9 +153,7 @@
 			async save(){
 				let res = await staffEdit(this.id,this.form)
 				if (!res.code) {
-					uni.navigateTo({
-						url: '/pages/staffManagement/staffManagement'
-					});
+					uni.navigateBack()
 				}
 			},
 			showPicker() {

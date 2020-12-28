@@ -35,9 +35,7 @@
 					remarks:this.remarks
 				})
 				if (!res.code) {
-					uni.redirectTo({
-						url: `/pages/unitList/unitList`
-					})
+					uni.navigateBack()
 				}
 			}
 		}

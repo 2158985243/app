@@ -294,9 +294,7 @@
 					content: '商品还未保存，确认要退出？',
 					success: function(res) {
 						if (res.confirm) {
-							uni.navigateTo({
-								url: '/pages/commodityManagement/commodityManagement'
-							})
+							uni.navigateBack()
 						} else if (res.cancel) {
 							return true;
 						}
@@ -369,9 +367,7 @@
 				});
 				let res = await goodsEdit(this.id, obj);
 				if (!res.code) {
-					uni.navigateTo({
-						url: '/pages/commodityManagement/commodityManagement'
-					})
+					uni.navigateBack()
 				}
 				// console.log(res);
 			},
@@ -599,9 +595,7 @@
 						if (res.confirm) {
 							let res = await goodsDel(this.id)
 							if (!res.code) {
-								uni.navigateTo({
-									url: '/pages/commodityManagement/commodityManagement'
-								})
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							console.log('用户点击取消');

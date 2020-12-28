@@ -130,6 +130,9 @@
 			},
 		},
 		onLoad() {
+			
+		},
+		onShow() {
 			this.init()
 		}
 	}

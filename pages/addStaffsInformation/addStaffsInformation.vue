@@ -148,13 +148,11 @@
 			},
 			// 保存
 			async save() {
-				this.form.salary=Number(this.form.salary)
+				this.form.salary = Number(this.form.salary)
 				let res = await staffAdd(this.form)
 				// console.log(res);
 				if (!res.code) {
-					uni.navigateTo({
-						url: '/pages/staffManagement/staffManagement'
-					})
+					uni.navigateBack()
 				}
 			},
 			toStore() {

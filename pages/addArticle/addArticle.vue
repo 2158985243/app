@@ -31,9 +31,7 @@
 						
 					})
 					if (!res.code) {
-						uni.redirectTo({
-							url: `/pages/article/article`
-						})
+						uni.navigateBack()
 					}
 				}
 			}

@@ -26,9 +26,7 @@
 					name: this.name
 				})
 				if (!res.code) {
-					uni.redirectTo({
-						url: `/pages/trademark/trademark`
-					})
+					uni.navigateBack()
 				}
 			}
 		}

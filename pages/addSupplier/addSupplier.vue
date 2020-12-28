@@ -133,11 +133,8 @@
 				let res = await supplierAdd(obj)
 				if (!res.code) {
 					if (this.val) {
-						uni.redirectTo({
-							url: '/pages/chooseSupplier/chooseSupplier'
-						})
+						uni.navigateBack()
 					} else {
-
 						uni.navigateTo({
 							url: '/pages/supplier/supplier'
 						})

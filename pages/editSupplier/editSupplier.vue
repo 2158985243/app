@@ -141,9 +141,7 @@
 				let res = await supplierEdit(this.id, this.form);
 				// console.log(res);
 				if (!res.code) {
-					uni.navigateTo({
-						url: `/pages/supplierDetails/supplierDetails?id=${this.id}`
-					})
+					uni.navigateBack()
 				}
 			},
 			async del() {
@@ -155,9 +153,7 @@
 							console.log('用户点击确定');
 							let res = await supplierDel(this.id);
 							if (!res.code) {
-								uni.navigateTo({
-									url: '/pages/supplier/supplier'
-								})
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							console.log('用户点击取消');

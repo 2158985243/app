@@ -44,12 +44,13 @@
 			<u-popup v-model="showedit" class="pop" mode="center" width="80%">
 				<text class="tit">选择门店</text>
 				<view class="box">
-					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y">
+					<scroll-view scroll-y="true" class="scroll-Y">
 						<u-radio-group v-model="value" :wrap="true">
 							<u-radio shape="square" @change="radioGroupChange($event,item)" v-for="(item, index) in stores" :key="index"
 							 :name="item.name">
-								{{item.name}}
-								<text class="stale" v-if="item.is_valid==0">已过期</text>
+								<text>{{item.name}}</text>
+								<!--  -->
+								<text class="stale" v-if="item.is_valid==0" >已过期</text>
 							</u-radio>
 						</u-radio-group>
 					</scroll-view>
@@ -85,8 +86,8 @@
 					'font-size': '40rpx'
 				},
 				form: {
-					member_mobile: '15766770632',
-					password: '123123',
+					member_mobile: '',
+					password: '',
 					account: 'admin'
 				},
 				stores: [],
@@ -142,9 +143,11 @@
 				this.form.store_id = ''
 				let res = await login(this.form)
 				console.log(res);
-				this.stores = res.data.store;
-				this.showedit = true;
-				this.value = ''
+				if (res.code == 2) {
+					this.stores = res.data.store;
+					this.value = ''
+					this.showedit = true;
+				}
 			},
 			enroll: function() {
 				uni.navigateTo({
@@ -189,6 +192,7 @@
 		.pop {
 			display: flex;
 			flex-direction: column;
+
 			.tit {
 				display: block;
 				font-size: 30rpx;
@@ -212,8 +216,11 @@
 				display: flex;
 				// overflow: hidden;
 				overflow-y: scroll;
-
+				/deep/.u-radio-group{
+					width: 100%;
+				}
 				.u-radio {
+					width: 100%;
 					height: 80rpx;
 					border-bottom: 0.01rem solid #C8C7CC;
 

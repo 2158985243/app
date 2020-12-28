@@ -31,8 +31,19 @@
 				<u-input placeholder='请选择商品分类' @tap="toCategory" :disabled='true' v-model="category" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
+			<view class="form_item">
+				<text>单据类型</text>
+				<u-input placeholder='' @tap="show = true" :disabled='true' v-model="itemType" type="text" />
+				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+			</view>
 		</view>
-		
+		<u-popup v-model="show" mode="center" width="60%">
+			<view class="list">
+				<view v-for="(item,index) in types" :key="index" class="li" @click="clickLi(item)">
+					{{item.name}}
+				</view>
+			</view>
+		</u-popup>
 		<view class="box">
 			<view class="form_item">
 				<text>开始日期</text>
@@ -62,14 +73,19 @@
 					backgroundColor: '#2979ff'
 				},
 				form: {
-					keyword:'',
-					start_time:'',
-					end_time:'',
+					keyword: '',
+					start_time: '',
+					supplier_id: '',
+					store_ids:[],
+					brand_id: '',
+					goods_category_id: '',
+					type: 0,
+
 				},
-				supplier:'',
-				shop:'',
-				trademark_name:'',
-				category:'',
+				supplier: '',
+				shop: '',
+				trademark_name: '',
+				category: '',
 				params: {
 					year: true,
 					month: true,
@@ -80,11 +96,32 @@
 				},
 				showtime: false,
 				showtime1: false,
+				show: false,
+				itemType: '全部',
+				types: [{
+						name: '全部',
+						type: 2
+					},
+					{
+						name: '采购入库',
+						type: 0
+					},
+					{
+						name: '采购退货',
+						type: 1
+					},
+				]
 			}
 		},
 		methods: {
-			sure(){
-				uni.$emit('stockEnquiries',this.form)
+			clickLi(item) {
+				this.form.type = item.type;
+				this.itemType = item.name;
+				this.show = false
+			},
+			sure() {
+				console.log(this.form);
+				uni.$emit('stockEnquiries', this.form)
 				uni.navigateBack()
 			},
 			handelScan() {
@@ -116,7 +153,7 @@
 			// 前往店铺
 			toStore() {
 				uni.navigateTo({
-					url: '/pages/storeManagement/storeManagement?iq=1'
+					url: '/pages/storeManagementSelect/storeManagementSelect'
 				})
 			},
 			// 品牌
@@ -156,8 +193,15 @@
 			// 店铺
 			uni.$on("gloEvent", (res) => {
 				if (res) {
-					this.shop = res.name;
-					this.form.store_id = res.id;
+					this.form.store_ids = []
+					let arr = []
+					let ids = []
+					res.map(v => {
+						arr.push(v.name);
+						ids.push(v.id);
+					})
+					this.form.store_ids = ids
+					this.shop = arr.join(',')
 				}
 			});
 			// 品牌
@@ -190,6 +234,20 @@
 		.right_icon {
 			margin-right: 30rpx;
 			color: #FFFFFF;
+		}
+
+		.list {
+			display: flex;
+			width: 100%;
+			flex-direction: column;
+
+			.li {
+				padding: 20rpx 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				border-bottom: 0.01rem solid #E5E5E5;
+			}
 		}
 
 		.box {
@@ -295,7 +353,8 @@
 				}
 			}
 		}
-		.btn{
+
+		.btn {
 			width: 80%;
 			display: flex;
 			align-items: center;

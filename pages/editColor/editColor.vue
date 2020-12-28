@@ -24,9 +24,7 @@
 			async save(){
 				let res = await colorEdit(this.id,{name:this.name})
 				if(!res.code){
-					uni.navigateTo({
-						url: '/pages/colors/colors'
-					})
+					uni.navigateBack()
 				}
 			}
 		},

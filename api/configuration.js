@@ -1,4 +1,6 @@
 export default {
-	baseURL: "https://app.zhongshuyan.com/api",
-	domain:'https:/app.zhongshuyan.com'
+	baseURL: "http://www.yijia.io/api",
+	// baseURL: "https://app.zhongshuyan.com/api",
+	domain:'http://www.yijia.io'
+	// domain:'https://app.zhongshuyan.com'
 }

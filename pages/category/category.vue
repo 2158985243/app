@@ -94,6 +94,7 @@
 			async init() {
 				let res = await goodsCategoryList()
 				if (!res.code) {
+					this.list = []
 					this.list = res;
 				}
 			},
@@ -139,7 +140,10 @@
 			},
 		},
 		onLoad() {
+		},
+		onShow() {
 			this.init()
+			
 		}
 	}
 </script>

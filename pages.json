@@ -944,6 +944,30 @@
             }
             
         }
+        ,{
+            "path" : "pages/storeManagementSelect/storeManagementSelect",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom", // 隐藏系统导航栏
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+        ,{
+            "path" : "pages/allotStatistics/allotStatistics",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom", // 隐藏系统导航栏
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

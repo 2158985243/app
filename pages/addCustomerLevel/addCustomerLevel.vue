@@ -78,9 +78,7 @@
 					this.form.discount = Number(this.form.discount)
 					let res = await customerLevelAdd(this.form);
 					if (!res.code) {
-						uni.navigateTo({
-							url: `/pages/customerLevel/customerLevel`
-						})
+						uni.navigateBack()
 					}
 				}
 			}

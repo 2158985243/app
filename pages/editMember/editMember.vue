@@ -249,9 +249,7 @@
 						if (res.confirm) {
 							let res = await customerDel(this.id)
 							if (!res.code) {
-								uni.navigateTo({
-									url: `/pages/memberManagement/memberManagement`
-								})
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							console.log('用户点击取消');

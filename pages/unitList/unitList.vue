@@ -28,7 +28,7 @@
 					<text>备注:</text>
 					<u-input class='inputs' placeholder="请输入备注" v-model="remarks" type="text" :border="border" />
 				</view>
-				
+
 			</view>
 			<view class="btn">
 				<u-button :hair-line="false" @click="abrogate" class="btnChild">取消</u-button>
@@ -72,7 +72,7 @@
 				sort: 100,
 				id: 0,
 				border: true,
-				remarks:''
+				remarks: ''
 			}
 		},
 		methods: {
@@ -117,7 +117,7 @@
 			async ensure() {
 				let res = await unitEdit(this.id, {
 					name: this.name,
-					remarks:this.remarks
+					remarks: this.remarks
 				})
 				this.showedit = false;
 				if (!res.code) {
@@ -137,8 +137,10 @@
 				this.showdel = false;
 			},
 		},
-		onLoad() {
+		onLoad() {},
+		onShow() {
 			this.init()
+
 		}
 	}
 </script>
@@ -168,13 +170,13 @@
 				text-align: center;
 			}
 
-			
+
 			.nav {
 				display: flex;
 				justify-content: center;
 				align-items: center;
 				padding: 0 20rpx;
-			
+
 				text {
 					padding-right: 10rpx;
 				}

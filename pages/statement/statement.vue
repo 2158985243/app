@@ -65,7 +65,7 @@
 					<u-icon name="file-text-fill" color="#11c8ff" size="40"></u-icon>
 					<text>销售统计</text>
 				</view>
-				<view class="li">
+				<view class="li" @click="toAllotStatistics">
 					<u-icon name="file-text-fill" color="#11c8ff" size="40"></u-icon>
 					<text>调拨统计</text>
 				</view>
@@ -128,6 +128,12 @@
 			toProcurementStatistics(){
 				uni.navigateTo({
 					url: `/pages/procurementStatistics/procurementStatistics`
+				})
+			},
+			// 前往调拨统计
+			toAllotStatistics(){
+				uni.navigateTo({
+					url: `/pages/allotStatistics/allotStatistics`
 				})
 			},
 		},

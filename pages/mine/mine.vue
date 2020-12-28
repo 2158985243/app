@@ -81,7 +81,7 @@
 		},
 		filters: {
 			filterImage(v) {
-				console.log(v);
+				console.log(url.domain +v);
 				if (!v) {
 					return v;
 				}

@@ -1,5 +1,5 @@
 <template>
-	<view class="storeManagement">
+	<view class="storeManagementSelect">
 		<u-navbar back-icon-color='#ffffff' title="店铺管理" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="plus" @click="toAddShopInformation" color="#ffffff" class="right_icon" size="34"></u-icon>
@@ -15,11 +15,26 @@
 						<template slot="header">
 							<u-image width="80rpx" class="header_image" height="80rpx" :src="$cfg.domain+item.images"></u-image>
 						</template>
+						<template slot="footer">
+							<u-checkbox-group>
+								<u-checkbox shape="circle" v-model="item.checked"></u-checkbox>
+							</u-checkbox-group>
+						</template>
 					</uni-list-item>
 				</uni-list>
 				<!-- 数据列表 -->
 			</k-scroll-view>
 			<u-toast ref="uToast" />
+		</view>
+		<view class="btn">
+			<view class="li">
+				<view class="left" @click="checkAll">
+					全选
+				</view>
+				<view class="r" @click="sure">
+					确定
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -57,17 +72,36 @@
 				list: [],
 				last_page: 0,
 				iq: '',
-				url:url.domain
+				url: url.domain,
 			}
 		},
 		methods: {
+			sure(){
+				let obj = []
+				this.list.map(v=>{
+					if(v.checked){
+						obj.push({name:v.name,id:v.id})
+					}
+				})
+				uni.$emit('gloEvent', obj)
+				uni.navigateBack();
+			},
+			checkAll(){
+				this.list.map(v=>{
+					v.checked = true;
+				})
+			},
 			async init() {
 				let res = await storeList({
 					page: this.page,
 					page_size: this.page_size
 				})
-				console.log(res); 
+				console.log(res);
+				res.data.map(v => {
+					v['checked'] = false
+				})
 				this.list.push(...res.data)
+
 				this.last_page = res.last_page
 			},
 			// 下拉刷新
@@ -97,15 +131,8 @@
 			// 前往编辑店铺信息
 			toShopInformation(item) {
 				// let val = JSON.stringify(item)
-				if (this.iq == 1) {
-					uni.$emit('gloEvent',item)
-					uni.navigateBack();
-				} else {
-					uni.navigateTo({
-						url: `/pages/editShopInformation/editShopInformation?id=${item.id}`
-					})
-				}
-
+				
+				item.checked = !item.checked
 			},
 			// 前往新增店铺信息
 			toAddShopInformation() {
@@ -118,21 +145,57 @@
 			this.init();
 			// console.log();
 			this.iq = query.iq
-			
+
 		},
 
 	}
 </script>
 
 <style lang="scss" scoped>
-	.storeManagement {
+	.storeManagementSelect {
 		width: 100vw;
 		height: 100%;
 
 		.header_image {
 			margin-right: 20rpx;
 		}
-
+		.btn{
+			width: 100%;
+			height: 120rpx;
+			border-top: 0.01rem solid #E5E5E5;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: fixed;
+			bottom: 0;
+			background-color: #FFFFFF;
+			z-index: 999;
+			.li{
+				width: 80%;
+				height: 70rpx;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: row;
+				border-radius: 30rpx;
+				background-color: #007AFF;
+				color: #FFFFFF;
+				.left{
+					flex: 1;
+					height: 80%;
+					border-right: 1rpx solid #FFFFFF;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+				.r{
+					flex: 1;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+			}
+		}
 		/deep/.u-image__image {
 			border-radius: 18rpx !important;
 
@@ -140,6 +203,12 @@
 
 		.right_icon {
 			margin-right: 20rpx;
+		}
+		
+		.management_list{
+			width: 100%;
+			display: flex;
+			margin-bottom: 120rpx;
 		}
 	}
 </style>

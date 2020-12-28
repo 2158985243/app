@@ -91,6 +91,9 @@
 		},
 		onLoad(query) {
 			this.iq = query.iq
+			// this.init()
+		},
+		onShow() {
 			this.init()
 		}
 	}
