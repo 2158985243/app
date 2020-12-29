@@ -463,9 +463,7 @@
 					})
 					let res = await purchaseRefundAdd(this.form);
 					if (!res.code) {
-						uni.navigateTo({
-							url: `/pages/salesReturnHistory/salesReturnHistory`
-						})
+						uni.navigateBack()
 					}
 				}
 			},

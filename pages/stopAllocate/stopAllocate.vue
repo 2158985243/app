@@ -212,9 +212,7 @@
 						if (res.confirm) {
 							let res = await allocateCancel(_this.id);
 							if (!res.code) {
-								uni.navigateTo({
-									url: `/pages/allocate/allocate`
-								})
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							return true;

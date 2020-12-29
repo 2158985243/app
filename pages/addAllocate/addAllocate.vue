@@ -384,9 +384,7 @@
 					})
 					let res = await allocateAdd(this.form);
 					if (!res.code) {
-						uni.navigateTo({
-							url: `/pages/allocate/allocate`
-						})
+						uni.navigateBack()
 					}
 				}
 			},

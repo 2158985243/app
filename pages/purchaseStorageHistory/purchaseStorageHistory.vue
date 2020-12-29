@@ -471,9 +471,7 @@
 					})
 					let res = await purchaseStorageEdit(this.id, this.form);
 					if (!res.code) {
-						uni.navigateTo({
-							url: `/pages/libraryHistory/libraryHistory`
-						})
+						uni.navigateBack()
 					}
 				}
 			},
@@ -482,14 +480,12 @@
 				let _this = this
 				uni.showModal({
 					title: '提示',
-					content: '确定删除该商品？',
+					content: '确定删除该入库单？',
 					success: async function(res) {
 						if (res.confirm) {
 							let res = await purchaseStorageDel(_this.id);
 							if (!res.code) {
-								uni.navigateTo({
-									url: `/pages/libraryHistory/libraryHistory`
-								})
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							console.log("点击了取消");

@@ -108,17 +108,13 @@
 
 								let res = await checkEdit(_this.id, _this.form)
 								if (!res.code) {
-									uni.navigateTo({
-										url: `/pages/stockTaking/stockTaking`
-									})
+									uni.navigateBack()
 								}
 							} else {
 
 								let res = await checkAdd(_this.form)
 								if (!res.code) {
-									uni.navigateTo({
-										url: `/pages/stockTaking/stockTaking`
-									})
+									uni.navigateBack()
 								}
 
 							}

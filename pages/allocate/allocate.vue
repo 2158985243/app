@@ -9,7 +9,7 @@
 		<view class="box">
 			<tabControl :current="current" :values="items" bgc="#fff" :fixed="true" :scrollFlag='true' :isEqually='true'
 			 @clickItem="onClickItem"></tabControl>
-			<swiper class="swiper" @change='scollSwiper'  :current='current'>
+			<swiper class="swiper" @change='scollSwiper' :current='current'>
 				<swiper-item v-for="(item,index) in list" :key='index'>
 					<scroll-view scroll-y="true">
 						<view class="list">
@@ -271,6 +271,12 @@
 			//执行计算组件高度方法
 		},
 		onShow() {
+			this.list = [
+				[],
+				[],
+				[],
+				[]
+			]
 			this.init()
 		}
 	}

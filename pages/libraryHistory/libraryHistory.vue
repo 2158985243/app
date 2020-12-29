@@ -16,18 +16,18 @@
 							<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 							 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
 							 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
-							<view class="list-box" v-for="(itemList,indexList) in item" @click="toPurchase(itemList)">
-								<view class="left">
-									<text class="supplier-name">{{itemList.supplier.name}}</text>
-									<text>{{itemList.number}}</text>
-									<text>{{itemList.updated_at}}</text>
-								</view>
-								<view class="right">
-									<text class="money">&yen;{{itemList.goods_amount}}</text>
-									<text>{{itemList.store.name}}</text>
-								</view>
+								<view class="list-box" v-for="(itemList,indexList) in item" @click="toPurchase(itemList)">
+									<view class="left">
+										<text class="supplier-name">{{itemList.supplier.name}}</text>
+										<text>{{itemList.number}}</text>
+										<text>{{itemList.updated_at}}</text>
+									</view>
+									<view class="right">
+										<text class="money">&yen;{{itemList.goods_amount}}</text>
+										<text>{{itemList.store.name}}</text>
+									</view>
 
-							</view>
+								</view>
 							</k-scroll-view>
 						</view>
 					</scroll-view>
@@ -73,7 +73,7 @@
 				}],
 				page: 1,
 				page_size: 10,
-				
+
 				refreshType: 'custom',
 				refreshTip: '正在下拉',
 				loadTip: '获取更多数据',
@@ -113,28 +113,28 @@
 				})
 			},
 			// 前往查询页面
-			toRefer(){
+			toRefer() {
 				uni.navigateTo({
 					url: `/pages/refer/refer`
 				})
 			},
 			// 
-			toPurchase(item){
+			toPurchase(item) {
 				// console.log(item);
-				if(item.status==0){
+				if (item.status == 0) {
 					uni.navigateTo({
 						url: `/pages/purchaseStorageHistory/purchaseStorageHistory?id=${item.id}`
 					})
-				}else if(item.status==1){
+				} else if (item.status == 1) {
 					uni.navigateTo({
 						url: `/pages/storageHistory/storageHistory?id=${item.id}`
 					})
-				}else if(item.status==2){
+				} else if (item.status == 2) {
 					uni.navigateTo({
 						url: `/pages/cancellation/cancellation?id=${item.id}`
 					})
 				}
-				
+
 			},
 			async onClickItem(val) {
 				this.current = val.currentIndex;
@@ -151,28 +151,28 @@
 			async scollSwiper(e) {
 				this.current = e.target.current
 				if (this.list[this.current].length == 0) {
-					if(this.current==0){
+					if (this.current == 0) {
 						let res = await purchaseStorageList({
 							status: 1,
 							page: this.page,
 							page_size: this.page_size
-						
+
 						});
 						this.list.splice(this.current, 1, res.data);
-					}else if(this.current == 1){
+					} else if (this.current == 1) {
 						let res = await purchaseStorageList({
 							status: 0,
 							page: this.page,
 							page_size: this.page_size
-						
+
 						});
 						this.list.splice(this.current, 1, res.data);
-					}else{
+					} else {
 						let res = await purchaseStorageList({
 							status: 2,
 							page: this.page,
 							page_size: this.page_size
-						
+
 						});
 						this.list.splice(this.current, 1, res.data);
 					}
@@ -194,7 +194,7 @@
 						type: 'default',
 						position: 'bottom'
 					})
-			
+
 				} else {
 					this.page++;
 					this.init()
@@ -203,15 +203,15 @@
 			handleGoTop() {
 				this.$refs['k-scroll-view'].goTop();
 			},
-			
-			
+
+
 		},
 		onLoad() {
 			// this.init()
 			uni.$on("refer", async (result) => {
 				this.page = 1;
 				if (result) {
-					if(this.current==0){
+					if (this.current == 0) {
 						let res = await purchaseStorageList({
 							status: 1,
 							page: this.page,
@@ -219,16 +219,16 @@
 							...result
 						});
 						this.list.splice(this.current, 1, res.data);
-					}else if(this.current == 1){
+					} else if (this.current == 1) {
 						let res = await purchaseStorageList({
 							status: 0,
 							page: this.page,
 							page_size: this.page_size,
 							...result
-						
+
 						});
 						this.list.splice(this.current, 1, res.data);
-					}else{
+					} else {
 						let res = await purchaseStorageList({
 							status: 2,
 							page: this.page,
@@ -244,6 +244,11 @@
 			//执行计算组件高度方法
 		},
 		onShow() {
+			this.list = [
+				[],
+				[],
+				[]
+			]
 			this.init()
 		}
 	}

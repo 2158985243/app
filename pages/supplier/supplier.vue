@@ -119,9 +119,12 @@
 			}
 		},
 		onLoad() {
-			this.init();
+			
 
 		},
+		onShow() {
+			this.init();
+		}
 	}
 </script>
 

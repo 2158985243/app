@@ -405,6 +405,9 @@
 
 		},
 		onLoad(query) {
+			
+		},
+		onShow() {
 			this.init()
 			this.brand()
 			this.Total()

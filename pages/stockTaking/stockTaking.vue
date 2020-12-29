@@ -69,7 +69,7 @@
 				}],
 				page: 1,
 				page_size: 10,
-				
+
 				refreshType: 'custom',
 				refreshTip: '正在下拉',
 				loadTip: '获取更多数据',
@@ -180,7 +180,7 @@
 						type: 'default',
 						position: 'bottom'
 					})
-			
+
 				} else {
 					this.page++;
 					this.init()
@@ -229,6 +229,11 @@
 			//执行计算组件高度方法
 		},
 		onShow() {
+			this.list = [
+				[],
+				[],
+				[]
+			]
 			this.init()
 		}
 	}

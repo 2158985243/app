@@ -132,13 +132,13 @@
 				}
 				let res = await supplierAdd(obj)
 				if (!res.code) {
-					if (this.val) {
+					// if (this.val) {
 						uni.navigateBack()
-					} else {
-						uni.navigateTo({
-							url: '/pages/supplier/supplier'
-						})
-					}
+					// } else {
+					// 	uni.navigateTo({
+					// 		url: '/pages/supplier/supplier'
+					// 	})
+					// }
 				}
 			},
 		},

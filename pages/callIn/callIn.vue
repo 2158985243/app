@@ -217,9 +217,7 @@
 			async stamp() {
 				let res = await allocateCallIn(this.id)
 				if (!res.code) {
-					uni.navigateTo({
-						url: `/pages/allocate/allocate`
-					})
+					uni.navigateBack()
 				}
 			},
 			// 前往增加采购信息

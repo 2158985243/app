@@ -1,6 +1,6 @@
 <template>
-	<view class="stockEnquiries">
-		<u-navbar back-icon-color='#ffffff' title="采购查询" :background="background" title-color="#ffffff">
+	<view class="allotQuery">
+		<u-navbar back-icon-color='#ffffff' title="调拨查询" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<text class="right_icon" @click="clear">清空</text>
 			</template>
@@ -10,11 +10,6 @@
 				<text>商品</text>
 				<u-input placeholder='请输入货号/商品名称/条码' v-model="form.keyword" type="text" />
 				<u-icon name="scan" @tap='handelScan' color="#2979ff" size="38"></u-icon>
-			</view>
-			<view class="form_item">
-				<text>供应商</text>
-				<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier" type="text" />
-				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
 				<text>店铺</text>
@@ -31,11 +26,7 @@
 				<u-input placeholder='请选择商品分类' @tap="toCategory" :disabled='true' v-model="category" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
-			<view class="form_item">
-				<text>单据类型</text>
-				<u-input placeholder='' @tap="show = true" :disabled='true' v-model="itemType" type="text" />
-				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
-			</view>
+			
 		</view>
 		<u-popup v-model="show" mode="center" width="60%">
 			<view class="list">
@@ -133,8 +124,8 @@
 				this.show = false
 			},
 			sure() {
-				console.log(this.form);
-				uni.$emit('stockEnquiries', this.form)
+				// console.log(this.form);
+				uni.$emit('allotQuery', this.form)
 				uni.navigateBack()
 			},
 			handelScan() {
@@ -237,7 +228,7 @@
 </script>
 
 <style scoped lang="scss">
-	.stockEnquiries {
+	.allotQuery {
 		width: 100%;
 		height: 100%;
 		display: flex;

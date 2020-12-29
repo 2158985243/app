@@ -209,7 +209,7 @@
 				}
 			},
 			// 初始化
-			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id, type) {
+			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id, type,supplier_id) {
 				// 当天
 				let date = new Date();
 				let seperator1 = "-";
@@ -230,6 +230,7 @@
 					keyword: keyword,
 					brand_id: brand_id,
 					goods_category_id: goods_category_id,
+					supplier_id: supplier_id,
 					type: type || 2
 
 				})
@@ -351,7 +352,7 @@
 				console.log(1);
 				if (res) {
 					console.log(res);
-					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id, res.type)
+					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id, res.type,res.supplier_id)
 				}
 			})
 		}

@@ -73,21 +73,25 @@
 				last_page: 0,
 				iq: '',
 				url: url.domain,
+				pull:false
 			}
 		},
 		methods: {
-			sure(){
+			sure() {
 				let obj = []
-				this.list.map(v=>{
-					if(v.checked){
-						obj.push({name:v.name,id:v.id})
+				this.list.map(v => {
+					if (v.checked) {
+						obj.push({
+							name: v.name,
+							id: v.id
+						})
 					}
 				})
 				uni.$emit('gloEvent', obj)
 				uni.navigateBack();
 			},
-			checkAll(){
-				this.list.map(v=>{
+			checkAll() {
+				this.list.map(v => {
 					v.checked = true;
 				})
 			},
@@ -113,16 +117,18 @@
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
-				if (this.page >= this.last_page) {
-					this.$refs.uToast.show({
-						title: '加载到底了',
-						type: 'default',
-						position: 'bottom'
-					})
-
-				} else {
-					this.page++;
-					this.init()
+				if (!this.pull) {
+					if (this.page >= this.last_page) {
+						this.$refs.uToast.show({
+							title: '加载到底了',
+							type: 'default',
+							position: 'bottom'
+						})
+						this.pull = true
+					} else {
+						this.page++;
+						this.init()
+					}
 				}
 			},
 			handleGoTop() {
@@ -131,7 +137,7 @@
 			// 前往编辑店铺信息
 			toShopInformation(item) {
 				// let val = JSON.stringify(item)
-				
+
 				item.checked = !item.checked
 			},
 			// 前往新增店铺信息
@@ -159,7 +165,8 @@
 		.header_image {
 			margin-right: 20rpx;
 		}
-		.btn{
+
+		.btn {
 			width: 100%;
 			height: 120rpx;
 			border-top: 0.01rem solid #E5E5E5;
@@ -170,7 +177,8 @@
 			bottom: 0;
 			background-color: #FFFFFF;
 			z-index: 999;
-			.li{
+
+			.li {
 				width: 80%;
 				height: 70rpx;
 				display: flex;
@@ -180,7 +188,8 @@
 				border-radius: 30rpx;
 				background-color: #007AFF;
 				color: #FFFFFF;
-				.left{
+
+				.left {
 					flex: 1;
 					height: 80%;
 					border-right: 1rpx solid #FFFFFF;
@@ -188,7 +197,8 @@
 					justify-content: center;
 					align-items: center;
 				}
-				.r{
+
+				.r {
 					flex: 1;
 					display: flex;
 					justify-content: center;
@@ -196,6 +206,7 @@
 				}
 			}
 		}
+
 		/deep/.u-image__image {
 			border-radius: 18rpx !important;
 
@@ -204,8 +215,8 @@
 		.right_icon {
 			margin-right: 20rpx;
 		}
-		
-		.management_list{
+
+		.management_list {
 			width: 100%;
 			display: flex;
 			margin-bottom: 120rpx;

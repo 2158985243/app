@@ -931,44 +931,68 @@
 				}
 			}
 
+		}, {
+			"path": "pages/stockEnquiries/stockEnquiries",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/storeManagementSelect/storeManagementSelect",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/allotStatistics/allotStatistics",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/allotDetails/allotDetails",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/allotQuery/allotQuery",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/checkStatistics/checkStatistics",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
-	    ,{
-            "path" : "pages/stockEnquiries/stockEnquiries",
-            "style" :                                                                                    
-            {
-               "navigationStyle": "custom", // 隐藏系统导航栏
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
-            }
-            
-        }
-        ,{
-            "path" : "pages/storeManagementSelect/storeManagementSelect",
-            "style" :                                                                                    
-            {
-               "navigationStyle": "custom", // 隐藏系统导航栏
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
-            }
-            
-        }
-        ,{
-            "path" : "pages/allotStatistics/allotStatistics",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom", // 隐藏系统导航栏
-                "navigationBarTextStyle": "white",
-                "app-plus": {
-                	"scrollIndicator": "none"
-                }
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

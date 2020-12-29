@@ -69,7 +69,7 @@
 					<u-icon name="file-text-fill" color="#11c8ff" size="40"></u-icon>
 					<text>调拨统计</text>
 				</view>
-				<view class="li last">
+				<view class="li last" @click="toCheckStatistics">
 					<u-icon name="file-text-fill" color="#11c8ff" size="40"></u-icon>
 					<text>盘点统计</text>
 				</view>
@@ -134,6 +134,12 @@
 			toAllotStatistics(){
 				uni.navigateTo({
 					url: `/pages/allotStatistics/allotStatistics`
+				})
+			},
+			// 前往盘点统计
+			toCheckStatistics(){
+				uni.navigateTo({
+					url: `/pages/checkStatistics/checkStatistics`
 				})
 			},
 		},

@@ -149,9 +149,7 @@
 					this.form.status = 0;
 					let res = await checkAdd(this.form)
 					if (!res.code) {
-						uni.navigateTo({
-							url: '/pages/stockTaking/stockTaking?'
-						})
+						uni.navigateBack()
 					}
 				}
 			},

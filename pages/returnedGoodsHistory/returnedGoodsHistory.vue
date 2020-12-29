@@ -471,9 +471,7 @@
 					})
 					let res = await purchaseRefundEdit(this.id, this.form);
 					if (!res.code) {
-						uni.navigateTo({
-							url: `/pages/salesReturnHistory/salesReturnHistory`
-						})
+						uni.navigateBack()
 					}
 				}
 			},
@@ -483,14 +481,12 @@
 				let _this = this
 				uni.showModal({
 					title: '提示',
-					content: '确定删除该商品？',
+					content: '确定删除该采购单？',
 					success: async function(res) {
 						if (res.confirm) {
 							let res = await purchaseRefundDel(_this.id);
 							if (!res.code) {
-								uni.navigateTo({
-									url: `/pages/salesReturnHistory/salesReturnHistory`
-								})
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							console.log("点击了取消");

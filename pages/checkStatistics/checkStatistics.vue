@@ -1,6 +1,6 @@
 <template>
-	<view class="allotStatistics">
-		<u-navbar back-icon-color='#ffffff' title="调拨统计" :background="background" title-color="#ffffff">
+	<view class="checkStatistics">
+		<u-navbar back-icon-color='#ffffff' title="盘点统计" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
 			</template>
@@ -20,15 +20,23 @@
 									<view class="list-nav">
 										<view class="nav-item">
 											<text class="red-number">{{count[current]}}</text>
-											<text class="hui-number">调拨笔数</text>
+											<text class="hui-number">盘点笔数</text>
 										</view>
 										<view class="nav-item">
 											<text class="red-number">{{out_quantity[current]}}</text>
-											<text class="hui-number">调出数量</text>
+											<text class="hui-number">商品数</text>
 										</view>
 										<view class="nav-item">
 											<text class="red-number">{{in_quantity[current]}}</text>
-											<text class="hui-number">调入数量</text>
+											<text class="hui-number">盘点数量</text>
+										</view>
+										<view class="nav-item">
+											<text class="red-number">{{out_quantity[current]}}</text>
+											<text class="hui-number">盈亏数量</text>
+										</view>
+										<view class="nav-item">
+											<text class="red-number">{{in_quantity[current]}}</text>
+											<text class="hui-number">盈亏金额</text>
 										</view>
 
 									</view>
@@ -40,14 +48,15 @@
 											</view>
 											<view class="li-item">
 												<text class="balck">{{item.name}}</text>
-												<text>{{item.number}}</text>
-												<text class="hui-se">零售价：&yen;{{item.retail_price}}</text>
+												<text class="hui-se">盘点数量：{{item.retail_price}}</text>
+												<text class="hui-se ">盈亏数量：<text class="red">{{item.retail_price}}</text> </text>
 											</view>
 										</view>
 										<view class="right">
 											<view class="money">
-												<text>调出数量：<text class="red">{{item.out_quantity}}</text> </text>
-												<text>调入数量：<text class="red">{{item.in_quantity}}</text> </text>
+												<text>{{item.number}}</text>
+												<text>零售价：<text class="">&yen;{{item.out_quantity}}</text> </text>
+												<text>盈亏金额：<text class="">&yen;{{item.in_quantity}}</text> </text>
 											</view>
 											<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 										</view>
@@ -362,7 +371,7 @@
 </script>
 
 <style scoped lang="scss">
-	.allotStatistics {
+	.checkStatistics {
 		width: 100%;
 		height: 100%;
 		display: flex;
@@ -444,11 +453,16 @@
 							text {
 								font-size: 20rpx;
 								color: #666666;
+								// padding-bottom: 10rpx;
 							}
 
 							.balck {
 								font-size: 28rpx;
 								color: #000000;
+							}
+
+							.red {
+								color: #FF5A5F;
 							}
 
 							.hui-se {
@@ -472,6 +486,7 @@
 
 						text {
 							font-size: 20rpx;
+							// padding-bottom: 10rpx;
 						}
 
 						.money {
@@ -479,12 +494,11 @@
 							flex-direction: column;
 							justify-content: center;
 
-							
+
 						}
 					}
-					.red {
-						color: #FF5A5F;
-					}
+
+
 				}
 			}
 		}

@@ -306,14 +306,12 @@
 				let _this = this
 				uni.showModal({
 					title: '提示',
-					content: '确定删除该商品？',
+					content: '确定删除该库存单？',
 					success: async function(res) {
 						if (res.confirm) {
 							let res = await allocateDel(_this.id);
 							if (!res.code) {
-								uni.navigateTo({
-									url: `/pages/allocate/allocate`
-								})
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							console.log("点击了取消");
@@ -512,9 +510,7 @@
 					})
 					let res = await allocateEdit(this.id, this.form);
 					if (!res.code) {
-						uni.navigateTo({
-							url: `/pages/allocate/allocate`
-						})
+						uni.navigateBack()
 					}
 				}
 			},
