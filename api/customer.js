@@ -62,3 +62,21 @@ export const countDetails = (data) => {
 		return error;
 	});
 };
+// 会员余额列表
+export const balanceList = (data) => {
+	return $http.post("/customer/balance_list",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 会员分析
+export const analyse = (data) => {
+	return $http.post("/customer/analyse",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

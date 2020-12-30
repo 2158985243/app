@@ -23,7 +23,7 @@
 											<text class="hui-number">盘点笔数</text>
 										</view>
 										<view class="nav-item">
-											<text class="red-number">{{out_quantity[current]}}</text>
+											<text class="red-number">{{list[current].length}}</text>
 											<text class="hui-number">商品数</text>
 										</view>
 										<view class="nav-item">
@@ -35,7 +35,7 @@
 											<text class="hui-number">盈亏数量</text>
 										</view>
 										<view class="nav-item">
-											<text class="red-number">{{in_quantity[current]}}</text>
+											<text class="red-number">{{money[current]}}</text>
 											<text class="hui-number">盈亏金额</text>
 										</view>
 
@@ -48,15 +48,15 @@
 											</view>
 											<view class="li-item">
 												<text class="balck">{{item.name}}</text>
-												<text class="hui-se">盘点数量：{{item.retail_price}}</text>
-												<text class="hui-se ">盈亏数量：<text class="red">{{item.retail_price}}</text> </text>
+												<text class="hui-se">盘点数量：{{item.quantity}}</text>
+												<text class="hui-se ">盈亏数量：<text class="red">{{item.gain_quantity}}</text> </text>
 											</view>
 										</view>
 										<view class="right">
 											<view class="money">
 												<text>{{item.number}}</text>
-												<text>零售价：<text class="">&yen;{{item.out_quantity}}</text> </text>
-												<text>盈亏金额：<text class="">&yen;{{item.in_quantity}}</text> </text>
+												<text>进货价：<text class="">&yen;{{item.purchase_price}}</text> </text>
+												<text>盈亏金额：<text class="">&yen;{{Number(item.purchase_price)*Number(item.gain_quantity)}}</text> </text>
 											</view>
 											<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 										</view>
@@ -89,8 +89,10 @@
 	import refresh from '@/components/xing-refresh/xing-refresh.vue'
 	import store from '@/store'
 	import {
-		allocateCounts
-	} from '../../api/allocate.js'
+		checkCounts,
+		checkDetails
+	} from '../../api/check.js'
+	
 	export default {
 		components: {
 			tabControl,
@@ -176,6 +178,7 @@
 				end_time: '',
 				out_quantity: [0, 0, 0, 0, 0],
 				in_quantity: [0, 0, 0, 0, 0],
+				money: [0, 0, 0, 0, 0],
 				count: [0, 0, 0, 0, 0],
 				store_id: [],
 				store_ids: []
@@ -221,38 +224,33 @@
 			// 初始化
 			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id) {
 				// 当天
-				let date = new Date();
-				let seperator1 = "-";
-				let year = date.getFullYear();
-				let month = date.getMonth() + 1;
-				let strDate = date.getDate();
-				if (month >= 1 && month <= 9) {
-					month = "0" + month;
-				}
-				if (strDate >= 0 && strDate <= 9) {
-					strDate = "0" + strDate;
-				}
-				let currentdate = year + seperator1 + month + seperator1 + strDate;
-				let res = await allocateCounts({
-					start_time: timeStar || currentdate,
-					end_time: timeEnd || currentdate,
+				
+				let currentdate = this.$date.today()
+				console.log(timeStar);
+				let res = await checkCounts({
+					start_time: timeStar || currentdate.start_time,
+					end_time: timeEnd || currentdate.end_time,
 					store_ids: store_ids || this.store_id,
 					keyword: keyword,
 					brand_id: brand_id,
 					goods_category_id: goods_category_id
 				})
+				console.log(res);
 				if (!res.code) {
 					this.list[this.current] = res;
 					let sum1 = 0;
 					let sum2 = 0;
+					let sum3 = 0;
 					this.count[this.current] = 0;
 					this.list[this.current].map((v) => {
-						sum1 += Number(v.out_quantity);
-						sum2 += Number(v.in_quantity);
-						this.count[this.current] += Number(v.total_amount);
+						sum1 += Number(v.gain_quantity);
+						sum2 += Number(v.quantity);
+						sum3 += Number(v.gain_quantity)*Number(v.purchase_price);
+						this.count[this.current] += Number(v.check_count);
 					})
 					this.out_quantity[this.current] = sum1;
 					this.in_quantity[this.current] = sum2;
+					this.money[this.current] = sum3;
 					this.$forceUpdate()
 				}
 
@@ -348,7 +346,7 @@
 					ids = this.store_id
 				}
 				uni.navigateTo({
-					url: `/pages/allotDetails/allotDetails?store_ids=${ids}&goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
+					url: `/pages/checkDetails/checkDetails?store_ids=${ids}&goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
 				})
 			}
 		},

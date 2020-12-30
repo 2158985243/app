@@ -55,8 +55,17 @@ export const checkCancel = (id) => {
 	});
 };
 // 统计
-export const checkCounts = () => {
-	return $http.get("/check/counts").then((res) => {
+export const checkCounts = (data) => {
+	return $http.post("/check/counts",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 统计详情
+export const checkDetails = (data) => {
+	return $http.post("/check/counts_details",data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示

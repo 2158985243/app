@@ -146,7 +146,9 @@
 			this.start_time = query.start_time;
 			this.end_time = query.end_time;
 			this.title_name = query.title_name;
-			this.store_ids = query.store_ids.split(',');
+			if (query.store_ids) {
+				this.store_ids = query.store_ids.split(',');
+			}
 			this.init()
 		}
 	}
@@ -208,7 +210,7 @@
 					border-bottom: 0.01rem solid #F1F1F1;
 
 					.left {
-						width: 65%;
+						width: 60%;
 						display: flex;
 						flex-direction: column;
 
@@ -224,7 +226,7 @@
 					}
 
 					.right {
-						width: 35%;
+						width: 40%;
 						display: flex;
 						flex-direction: row;
 						color: #666666;

@@ -40,7 +40,7 @@
 					<u-icon name="calendar-fill" color="#ffa322" size="40"></u-icon>
 					<text>商品分析</text>
 				</view>
-				<view class="li">
+				<view class="li" @click="toMemberAnalysis">
 					<u-icon name="calendar-fill" color="#ffa322" size="40"></u-icon>
 					<text>会员分析</text>
 				</view>
@@ -82,7 +82,7 @@
 				<text>会员&员工</text>
 			</view>
 			<view class="list">
-				<view class="li">
+				<view class="li" @click="toBalanceEnquiry">
 					<u-icon name="account-fill" color="#ff551d" size="40"></u-icon>
 					<text>余额查询</text>
 				</view>
@@ -118,10 +118,16 @@
 					url: `/pages/statics/statics`
 				})
 			},
-			// 前往支出分析
+			// 前往注册统计
 			toMemberRegistrationStatistics(){
 				uni.navigateTo({
 					url: `/pages/memberRegistrationStatistics/memberRegistrationStatistics`
+				})
+			},
+			// 前往会员分析
+			toMemberAnalysis(){
+				uni.navigateTo({
+					url: `/pages/memberAnalysis/memberAnalysis`
 				})
 			},
 			// 前往采购统计
@@ -142,6 +148,13 @@
 					url: `/pages/checkStatistics/checkStatistics`
 				})
 			},
+			// 前往余额查询
+			toBalanceEnquiry(){
+				uni.navigateTo({
+					url: `/pages/balanceEnquiry/balanceEnquiry`
+				})
+			},
+			
 		},
 		onLoad() {
 			

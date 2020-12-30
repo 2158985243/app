@@ -991,8 +991,40 @@
 				}
 			}
 
+		}, {
+			"path": "pages/checkDetails/checkDetails",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/balanceEnquiry/balanceEnquiry",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
-	],
+	    ,{
+            "path" : "pages/memberAnalysis/memberAnalysis",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom", // 隐藏系统导航栏
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
