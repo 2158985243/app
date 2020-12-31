@@ -252,7 +252,7 @@
 				flex-direction: column;
 				justify-content: flex-start;
 				// align-items: center;
-				background-color: #C8C7CC;
+				background-color: #e6e5ea;
 				overflow-y: scroll;
 
 				.nav {

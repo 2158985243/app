@@ -397,9 +397,9 @@
 			},
 			async Total(){
 				let res = await getTotal();
+					console.log(res);
 				if(!res.code){
 					this.totalVal = res;
-					console.log(res);
 				}
 			}
 

@@ -17,7 +17,7 @@
 						</template>
 						<template slot="footer">
 							<u-checkbox-group>
-								<u-checkbox shape="circle" v-model="item.checked"></u-checkbox>
+								<u-checkbox shape="circle" @change="checkboxChange" :name="item.name"  v-model="item.checked"></u-checkbox>
 							</u-checkbox-group>
 						</template>
 					</uni-list-item>
@@ -77,6 +77,9 @@
 			}
 		},
 		methods: {
+			checkboxChange(e){
+				console.log(e);
+			},
 			sure() {
 				let obj = []
 				this.list.map(v => {
@@ -138,7 +141,7 @@
 			toShopInformation(item) {
 				// let val = JSON.stringify(item)
 
-				item.checked = !item.checked
+				// item.checked = !item.checked
 			},
 			// 前往新增店铺信息
 			toAddShopInformation() {

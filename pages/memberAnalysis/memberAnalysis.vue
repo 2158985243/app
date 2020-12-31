@@ -34,7 +34,25 @@
 					</scroll-view>
 				</swiper-item>
 			</swiper>
-
+			<view class="nav">
+				<view class="nav-item">
+					<text class="red">{{customer_data.total_customer}}</text>
+					<text class="hui">会员总数</text>
+				</view>
+				<view class="nav-item">
+					<text class="red">{{customer_data.new_customer}}</text>
+					<text class="hui">新增会员</text>
+				</view>
+				<view class="nav-item">
+					<text class="red">{{customer_data.money}}</text>
+					<text class="hui">会员充值</text>
+				</view>
+				<view class="nav-item">
+					<text class="red">{{customer_data.money}}</text>
+					<text class="hui">会员消费</text>
+				</view>
+				
+			</view>
 			<view class="list">
 				<view class="li" v-for="(item,index) in list[current]" :key="index" @click="spendingDetails(item)">
 					<text>{{item.expend_item.name}}</text>
@@ -66,9 +84,6 @@
 	import {
 		analyse
 	} from '../../api/customer.js'
-	import {
-		storeList
-	} from '../../api/store.js'
 	export default {
 		components: {
 			tabControl,
@@ -159,7 +174,8 @@
 				},
 				strots: [], //店铺组
 				page: 1,
-				page_size: 10
+				page_size: 10,
+				customer_data:{}
 			}
 		},
 		methods: {
@@ -204,25 +220,28 @@
 					end_time: timeEnd,
 					store_id: this.store_id
 				})
-				console.log(res);
-				res.data.map((v) => {
-					this.chartData.series.push({
-						name: v.expend_item.name,
-						data: Number(v.money)
+				// console.log(res);
+				this.customer_data = res.customer_data
+				if (!res.rank_list) {
+					res.rank_list.map((v) => {
+						this.chartData.series.push({
+							name: v.expend_item.name,
+							data: Number(v.money)
+						})
 					})
-				})
-				this.bos[this.current] = this.chartData
-				this.list[this.current] = []
-				res.data.map(v => {
-					this.list[this.current].push({
-						...v,
-						ratio: ((Number(v.money) / Number(res.total)) * 100).toFixed(2) + '%'
+					this.bos[this.current] = this.chartData
+					this.list[this.current] = []
+					res.rank_list.map(v => {
+						this.list[this.current].push({
+							...v,
+							ratio: ((Number(v.money) / Number(res.total)) * 100).toFixed(2) + '%'
+						})
 					})
-				})
-				this.total[this.current] = res.total;
-				// console.log(this.chartData);
-				_self.showRing("canvasRing", this.bos[this.current], this.total[this.current])
-				this.$forceUpdate()
+					this.total[this.current] = res.total;
+					// console.log(this.chartData);
+					_self.showRing("canvasRing", this.bos[this.current], this.total[this.current])
+					this.$forceUpdate()
+				}
 			},
 			// 显示canva
 			showRing(canvasId, chartData, total) {
@@ -456,7 +475,31 @@
 				width: 100%;
 				height: 500rpx;
 			}
-
+			
+			.nav{
+				width: 100vw;
+				height: 100rpx;
+				margin: 40rpx 0;
+				display: flex;
+				flex-direction: row;
+				background-color: #FFFFFF;
+				.nav-item{
+					flex: 1;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					.hui{
+						color: #c8c8c8;
+						font-size: 26rpx;
+					}
+					.red{
+						color: #DD524D;
+						font-size:24rpx ;
+					}
+				}
+			}
+			
 			.list {
 				margin-top: 40rpx;
 				width: 100%;
@@ -492,7 +535,8 @@
 				}
 			}
 		}
-
+		
+		
 		//charts
 		.qiun-padding {
 			padding: 2%;

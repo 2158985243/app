@@ -158,8 +158,8 @@
 
 				},
 				strots: [], //店铺组
-				page:1,
-				page_size:10
+				page: 1,
+				page_size: 10
 			}
 		},
 		methods: {
@@ -167,15 +167,15 @@
 			async confirmStrores(e) {
 				this.store_id = e[0].value
 				if (this.current == 0) {
-					this.init(this.dateAll.today1.statrTime,this.dateAll.today1.endTime)
-				}else if (this.current == 1) {
-					this.init(this.dateAll.today2.statrTime,this.dateAll.today2.endTime)
-				}else if (this.current == 2) {
-					this.init(this.dateAll.today3.statrTime,this.dateAll.today3.endTime)
-				}else if (this.current == 3) {
-					this.init(this.dateAll.today4.statrTime,this.dateAll.today4.endTime)
-				}else if (this.current == 4) {
-					this.init(this.dateAll.today5.statrTime,this.dateAll.today5.endTime)
+					this.init(this.dateAll.today1.statrTime, this.dateAll.today1.endTime)
+				} else if (this.current == 1) {
+					this.init(this.dateAll.today2.statrTime, this.dateAll.today2.endTime)
+				} else if (this.current == 2) {
+					this.init(this.dateAll.today3.statrTime, this.dateAll.today3.endTime)
+				} else if (this.current == 3) {
+					this.init(this.dateAll.today4.statrTime, this.dateAll.today4.endTime)
+				} else if (this.current == 4) {
+					this.init(this.dateAll.today5.statrTime, this.dateAll.today5.endTime)
 				}
 			},
 			// 显示店铺列表
@@ -205,24 +205,26 @@
 					store_id: this.store_id
 				})
 				// console.log(res);
-				res.data.map((v) => {
-					this.chartData.series.push({
-						name: v.expend_item.name,
-						data: Number(v.money)
+				if (!res.data.length > 0) {
+					res.data.map((v) => {
+						this.chartData.series.push({
+							name: v.expend_item.name,
+							data: Number(v.money)
+						})
 					})
-				})
-				this.bos[this.current] = this.chartData
-				this.list[this.current] = []
-				res.data.map(v => {
-					this.list[this.current].push({
-						...v,
-						ratio: ((Number(v.money) / Number(res.total)) * 100).toFixed(2) + '%'
+					this.bos[this.current] = this.chartData
+					this.list[this.current] = []
+					res.data.map(v => {
+						this.list[this.current].push({
+							...v,
+							ratio: ((Number(v.money) / Number(res.total)) * 100).toFixed(2) + '%'
+						})
 					})
-				})
-				this.total[this.current] = res.total;
-				// console.log(this.chartData);
-				_self.showRing("canvasRing", this.bos[this.current], this.total[this.current])
-				this.$forceUpdate()
+					this.total[this.current] = res.total;
+					// console.log(this.chartData);
+					_self.showRing("canvasRing", this.bos[this.current], this.total[this.current])
+					this.$forceUpdate()
+				}
 			},
 			// 显示canva
 			showRing(canvasId, chartData, total) {
@@ -388,7 +390,7 @@
 				this.init(this.start_time, this.end_time);
 			},
 			// 前往支出详情
-			spendingDetails(val){
+			spendingDetails(val) {
 				uni.navigateTo({
 					url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}`
 				})
@@ -407,7 +409,7 @@
 				this.start_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
 				this.end_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
 			}
-			if (store.state.store.store_id>0) {
+			if (store.state.store.store_id > 0) {
 				this.store_id = store.state.store.store_id;
 			}
 			if (query.current > 0) {
@@ -418,8 +420,8 @@
 			this.cHeight = uni.upx2px(500);
 			this.init(this.start_time, this.end_time);
 		},
-		onShow(){
-			
+		onShow() {
+
 		}
 	}
 </script>

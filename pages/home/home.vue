@@ -43,7 +43,7 @@
 					<uni-icons type="contact-filled" color="#0055ff" size="50"></uni-icons>
 					<text>会员管理</text>
 				</view>
-				<view class="account">
+				<view class="account" @click="toResaleCashier">
 					<uni-icons type="contact-filled" color="#0055ff" size="70"></uni-icons>
 					<text>零售收银</text>
 				</view>
@@ -102,7 +102,19 @@
 				uni.navigateTo({
 					url: `/pages/memberManagement/memberManagement`
 				});
-			}
+			},
+			// 零售收银
+			toResaleCashier(){
+				this.$store.commit('commercialSpecification',{
+					specificationOfGoods:[]
+				})
+				this.$store.commit('stateGoodFn',{
+					stateGood:false
+				})
+				uni.navigateTo({
+					url: `/pages/resaleCashier/resaleCashier`
+				});
+			},
 		},
 		onShow() {
 			this.keyword =''

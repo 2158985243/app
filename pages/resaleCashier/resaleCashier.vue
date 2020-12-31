@@ -1,8 +1,8 @@
 <template>
-	<view class="selectProducts">
+	<view class="resaleCashier">
 		<u-navbar back-icon-color='#ffffff' :custom-back="quit" title="商品选择" :background="background" title-color="#ffffff">
 			<template slot="right">
-				<u-icon name="plus" @click="toAddCommodity" color="#ffffff" class="right_icon" size="34"></u-icon>
+				<text class="right_icon">挂单</text>
 			</template>
 		</u-navbar>
 		<view class="box">
@@ -34,8 +34,6 @@
 								</view>
 							</view>
 						</view>
-
-
 						<view class="nav-box">
 							<view class="nav-tit">
 								<text class="ht">类别</text>
@@ -136,8 +134,8 @@
 				</view>
 			</view>
 			<!-- <view class="titles">
-				共140种商品，库存数265665454，总成本26564546
-			</view> -->
+					共140种商品，库存数265665454，总成本26564546
+				</view> -->
 		</view>
 		<view class="list">
 			<goods-category :dataList='dataList' @leftNav="leftNav" :saveData="saveData" :vs='vs' @rightNav="rightNav"
@@ -750,11 +748,13 @@
 			// 选完跳转
 			selectedFn() {
 				console.log(this.saveData);
-				if (this.saveData.length>0) {
+				if (this.saveData.length > 0) {
 					this.$store.commit('stateGoodFn', {
 						stateGood: true
 					});
-					uni.navigateBack();
+					uni.navigateTo({
+						url:`/pages/settleAccounts/settleAccounts`
+					})
 				} else {
 					this.$refs.uToast.show({
 						title: '请选择商品',
@@ -775,7 +775,7 @@
 </script>
 
 <style scoped lang="scss">
-	.selectProducts {
+	.resaleCashier {
 		width: 100%;
 		background-color: #e3e3e3;
 		display: flex;
@@ -1112,6 +1112,7 @@
 		}
 
 		.right_icon {
+			color: #FFFFFF;
 			margin-right: 30rpx;
 		}
 
