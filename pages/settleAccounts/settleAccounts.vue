@@ -1,9 +1,20 @@
 <template>
 	<view class="settleAccounts">
 		<view class="member-select">
-			<view class="member">
+			<view class="member" @click="toMemberSelect" v-if="!members.name">
 				<text>会员选择</text>
 				<u-icon name="arrow-down-fill" color="#ffffff" size="24"></u-icon>
+			</view>
+			<view class="membered" v-else>
+				<view class="left">
+					<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$cfg.domain+members.image"></u-image>
+					<text>{{members.name}}</text>
+					<u-icon name="close-circle-fill" color="#ffffff" @click="clear" size="30"></u-icon>
+				</view>
+				<view class="right">
+					<text>余额：{{members.balance}}</text>
+				</view>
+
 			</view>
 		</view>
 		<view class="mains">
@@ -11,21 +22,25 @@
 			<view class="goods-data">
 				<view class="list" v-for="(item,index) in list" :key="index">
 					<view class="goods-list" v-for="(itemGoods,indexGoods) in item.data" :key="indexGoods">
-						<view class="goods-left" v-if="itemGoods.quantity>0">
-							<u-image width="100rpx" mode='aspectFit' border-radius="10" class="header_image" height="100rpx" :src="$cfg.domain+item.goodsOf.main_image"></u-image>
-							<view class="item-left">
-								<text class="hei">{{item.goodsOf.name}} <text class="hui">{{item.goodsOf.number}}</text></text>
-								<text class="zc">{{item.name}}-{{itemGoods.size.name}}</text>
-								<text class="lan">&yen;{{item.goodsOf.retail_price}}</text>
+						<view class="dole" v-if="itemGoods.quantity>0">
+							<view class="goods-left">
+								<u-image width="100rpx" mode='aspectFit' border-radius="10" class="header_image" height="100rpx" :src="$cfg.domain+item.goodsOf.main_image"></u-image>
+								<view class="item-left">
+									<text class="hei">{{item.goodsOf.name}} <text class="hui">{{item.goodsOf.number}}</text></text>
+									<text class="zc">{{item.name}}-{{itemGoods.size.name}}</text>
+									<text class="lan">&yen;{{itemGoods.retail_price}} <text class="underline" v-if="itemGoods.discount != 1">&yen;{{item.goodsOf.retail_price}}</text><text
+										 v-if="itemGoods.discount !=1">(会员折扣{{itemGoods.discount*10}}折)</text>
+									</text>
+								</view>
 							</view>
-						</view>
-						<view class="goods-right" v-if="itemGoods.quantity>0">
-							x{{itemGoods.quantity}}
+							<view class="goods-right">
+								x{{itemGoods.quantity}}
+							</view>
 						</view>
 					</view>
 				</view>
 				<view class="add-goods">
-					<view class="add-left">
+					<view class="add-left" @click="toResale">
 						<u-icon name="plus-circle-fill" color="#2979ff" size="30"></u-icon>
 						<text>增加商品</text>
 					</view>
@@ -38,18 +53,20 @@
 
 			<!-- 其他 -->
 			<view class="box">
-				<view class="item-li">
+				<view class="item-li" @click="show = !show">
 					<view class="box-left">
-						整单折扣
+
+						<text>整单折扣</text>
 					</view>
 					<view class="box-right">
-						<text class="lan">启用</text>
+						<text class="lan">{{discounts || "启用"}}</text>
 						<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
 					</view>
 				</view>
 				<view class="item-li">
 					<view class="box-left">
-						优惠券
+						<text>优惠券</text>
+
 					</view>
 					<view class="box-right">
 						<text>0</text>
@@ -59,36 +76,39 @@
 				<view class="item-li">
 					<view class="box-left">
 						<text>优惠金额</text>
-						<u-input v-model="form.discount_money" height="50" placeholder='请输入优惠金额' type="number" />
+						<u-input v-model="form.discount_money" :clearable="false" height="50" placeholder='请输入优惠金额' type="number" />
 					</view>
 					<view class="box-right">
 					</view>
 				</view>
 			</view>
 			<view class="box">
-				<view class="item-li">
+				<view class="item-li" @tap="toSelecSalesperson">
 					<view class="box-left">
-						销售员
+						<text>销售员</text>
 					</view>
 					<view class="box-right">
+						<text>{{staff}}</text>
 						<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
 					</view>
 				</view>
-				<view class="item-li">
+				<view class="item-li" @tap="hiddenTime">
 					<view class="box-left">
-						销售日期
+						<text>销售日期</text>
 					</view>
 					<view class="box-right">
-						<text>2020-10-10</text>
+						<text>{{form.business_time}}</text>
 						<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
 					</view>
 				</view>
+				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :default-time="form.business_time" :params="params"></u-picker>
 				<view class="item-li">
 					<view class="box-left">
 						<text>获得积分</text>
-						<u-input v-model="form.discount_money" height="50" :disabled="true" placeholder='1元=1积分' type="number" />
+						<u-input v-model="test" height="50" :disabled="true" :placeholder='placeholder' type="number" />
 					</view>
 					<view class="box-right">
+						<text class="lan">{{form.reward_point}}</text>
 						<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
 					</view>
 				</view>
@@ -97,7 +117,7 @@
 				<view class="item-li">
 					<view class="box-left">
 						<text>备注</text>
-						<u-input v-model="form.discount_money" height="50" placeholder='1元=1积分' type="number" />
+						<u-input v-model="form.remarks" :clearable="false" height="50" placeholder='请输入备注' type="number" />
 					</view>
 					<view class="box-right">
 					</view>
@@ -108,28 +128,65 @@
 					</u-checkbox-group>
 				</view>
 			</view>
-
+			<u-popup mode="bottom" v-model="show" height="600rpx">
+				<view class="content">
+					<view class="fot">
+						<view class="edt">
+							编辑
+						</view>
+						<view class="title">
+							整单折扣
+						</view>
+						<view class="qx">
+							取消
+						</view>
+					</view>
+					<scroll-view scroll-y="true" style="height: 440rpx;">
+						<view class="bods">
+							<view class="hezi" v-for="index in 20" :key="index">
+								{{index}}Item
+								<view class="red-del">
+									
+									<u-icon name="close-circle-fill" color="red" size="40"></u-icon>
+								</view>
+							</view>
+							<view class="hezi">
+								+增加
+							</view>
+						</view>
+					</scroll-view>
+					<view class="confrim-btn">
+						<view class="btn">
+							确认
+						</view>
+					</view>
+				</view>
+			</u-popup>
 		</view>
 		<view class="footer">
 			<view class="footer-left">
 				<text>收款</text>
-				<text class="lan-se">&yen;{{}}</text>
+				<text class="lan-se">&yen;{{toMoney}}</text>
 				<u-icon name="edit-pen-fill" color="#ff557f" size="40"></u-icon>
 			</view>
 			<view class="footer-right">
-				<view class="hei">
+				<view class="hei" @click="sure(0)">
 					挂单
 				</view>
-				<view class="lan">
+				<view class="lan" @click="sure(1)">
 					收款
 				</view>
 			</view>
 		</view>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
 <script>
 	import store from '@/store'
+	import {
+		salesOrderAdd
+	} from '../../api/salesOrder.js'
 	export default {
 		data() {
 			return {
@@ -137,7 +194,17 @@
 				sum_number: 0,
 				sum_money: 0,
 				form: {
-					discount_money: ''
+					customer_id: 0,
+					discount_money: '',
+					staff_id: 0,
+					money: 0,
+					reward_point: 0,
+					pay_type: 0,
+					payment: [],
+					status: 0,
+					goods: [],
+					remarks: '',
+
 				},
 				group: [{
 					name: '打印小票',
@@ -145,33 +212,181 @@
 				}, {
 					name: '短信通知',
 					checked: false,
-				}, ]
+				}, ],
+				show: false,
+				showtime: false,
+				params: {
+					year: true,
+					month: true,
+					day: true,
+					hour: false,
+					minute: false,
+					second: false
+				},
+				staff: '', //销售员
+				discounts: '', //打折
+				unit: 1, //积分换算
+				integral: 10,
+				placeholder: '',
+				test: '',
+				members: {
+					name: ''
+				},
+				discount: 0,
+
 			}
 		},
 		computed: {
 			goods() {
 				return store.state.specificationOfGoods;
 			},
+			toMoney() {
+				let money = 0;
+				money = Number(this.sum_money) - Number(this.form.discount_money)
+				this.form.money = money;
+				return money
+			}
 		},
 		methods: {
 			init() {
+				this.list = [];
+				this.sum_number = 0;
+				this.sum_money = 0;
 				this.goods.map((v, i) => {
 					v.goodsData.map((v1, i1) => {
+						v1.data.map((v2, i2) => {
+							v2['retail_price'] = Number(v1.goodsOf.retail_price)
+						})
 						if (v1.quantity > 0) {
 							this.list.push(v1)
 						}
 						this.sum_number += Number(v1.quantity)
-						this.sum_money += Number(v1.quantity) * Number(v1.goodsOf.retail_price)
 					})
 				})
 				console.log(this.list);
+				this.list.map((v, i) => {
+					v.data.map((v1, i1) => {
+						if (v1.quantity > 0) {
+							if (!v1.discount) {
+								v1['discount'] = 1;
+							}
+							v1['retail_price'] = Number(v1.retail_price) * Number(v1.discount)
+							this.sum_money += Number(v1.quantity) * Number(v1.retail_price)
+						}
+					})
+				})
+				this.sum_money = this.sum_money.toFixed(2)
+			},
+			hiddenTime() {
+				this.showtime = true;
+			},
+			// 选择时间
+			confirmTime(v) {
+				this.form.business_time = `${v.year}-${v.month}-${v.day}`;
+			},
+			// 前往选择经手人
+			toSelecSalesperson() {
+				uni.navigateTo({
+					url: '/pages/selecSalesperson/selecSalesperson'
+				})
+			},
+			// 前往选择会员
+			toMemberSelect() {
+				uni.navigateTo({
+					url: '/pages/memberSelect/memberSelect'
+				})
+			},
+			toResale() {
+				uni.navigateTo({
+					url: '/pages/resaleCashier/resaleCashier?account=true'
+				})
+			},
+			async sure(v) {
+				if (this.list) {
+					let arr = []
+					this.list.map((v) => {
+						v.data.map((v1) => {
+							if (v1.quantity != 0) {
+								arr.push({
+									goods_id: v.goods_id,
+									color_id: v.id,
+									size_id: v1.size.id,
+									price: v.goodsOf.retail_price,
+									quantity: v1.quantity,
+									discount: Number(v1.discount),
+									real_price: v1.retail_price
+								})
+							}
+						})
+					})
+					if (this.form.discount_money == "") {
+						this.form.discount_money = 0;
+					}
+					this.form.goods = arr
+					if (!v) {
+						this.form.status = 0;
+						delete this.form.payment
+						let res = await salesOrderAdd(this.form)
+						console.log(res);
+					} else {
+						this.form.status = 1;
+
+					}
+				} else {
+					this.$refs.uToast.show({
+						title: '请选择商品',
+						type: 'default',
+						position: 'bottom'
+					})
+				}
+			},
+			clear() {
+				this.sum_money = 0;
+				this.members = {
+					name: ''
+				}
+				this.list.map(v => {
+					v.data.map(v1 => {
+						if (v1.quantity > 0) {
+							v1.discount = 1;
+							v1.retail_price = v.goodsOf.retail_price
+							this.sum_money += Number(v1.quantity) * Number(v1.retail_price)
+						}
+					})
+				})
+				this.sum_money = this.sum_money.toFixed(2)
 			}
 		},
 		onLoad() {
-			this.init()
+			let date = new Date();
+			this.form.business_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+			this.placeholder = this.unit + '元' + '=' + this.integral + '积分';
+			uni.$on("selecSalesperson", (res) => {
+				if (res) {
+					console.log(res);
+					this.staff = res.name;
+					this.form.staff_id = res.id;
+
+				}
+			});
+			uni.$on("memberSelect", (res) => {
+				if (res) {
+					console.log(res);
+					this.members = res
+					this.form.customer_id = res.id;
+					this.discount = Number(res.customer_level.discount)
+					this.list.map((v) => {
+						console.log(v.data);
+						v.data.map((v1) => {
+							v1['discount'] = res.customer_level.discount;
+						})
+					})
+					console.log(this.list);
+				}
+			});
 		},
 		onShow() {
-
+			this.init()
 		}
 	}
 </script>
@@ -201,6 +416,107 @@
 				align-items: center;
 			}
 
+			.membered {
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+
+				.left {
+					display: flex;
+					flex-direction: row;
+					justify-content: center;
+					align-items: center;
+
+					text {
+						margin-right: 20rpx;
+					}
+				}
+
+				.right {
+					color: #FFFFFF;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					padding-right: 20rpx;
+				}
+
+			}
+
+		}
+
+		.content {
+			display: flex;
+			flex-direction: column;
+			position: relative;
+			.fot {
+				display: flex;
+				justify-content: space-between;
+				height: 80rpx;
+				align-items: center;
+				border-bottom: 0.01rem solid #C8C7CC;
+
+				.edt {
+					color: #007AFF;
+				}
+
+				.title {
+					font-weight: 500;
+				}
+
+				.qx {
+					color: #C0C0C0;
+				}
+			}
+			.bods{width: 100%;
+				display: flex;
+				flex-wrap: wrap;
+				.hezi{
+					margin: 10rpx 2.5%;
+					width: 20%;
+					height: 60rpx;
+					border: 1rpx solid #C0C0C0;
+					color: #C0C0C0;
+					border-radius: 8rpx;
+					// padding: 10rpx;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					position: relative;
+					.red-del{
+						position: absolute;
+						top: -10rpx;
+						right: -10rpx;
+						// width: 40rpx;
+						// height: 40rpx;
+						// background-color: #DD524D;
+						// color: #FFFFFF;
+						// display: flex;
+						// justify-content: center;
+						// align-items: center;
+						border-radius: 50%;
+						// font-size:20rpx;
+					}
+				}
+			}
+			.confrim-btn{
+				width: 100%;
+				display: flex;
+				height: 80rpx;
+				justify-content: center;
+				align-items: center;
+				position: fixed;
+				bottom: 0;
+				.btn{
+					width: 80%;
+					height: 60rpx;
+					color: #FFFFFF;
+					background-color: #007AFF;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					border-radius: 10rpx;
+				}
+			}
 		}
 
 		.mains {
@@ -224,11 +540,16 @@
 				.goods-list {
 					width: 100%;
 					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-					padding: 20rpx;
-					background-color: #FFFFFF;
-					border-bottom: 0.01rem solid #E5E5E5;
+
+					.dole {
+						width: 100%;
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						padding: 20rpx;
+						background-color: #FFFFFF;
+						border-bottom: 0.01rem solid #E5E5E5;
+					}
 
 					.goods-left {
 						display: flex;
@@ -261,6 +582,17 @@
 								padding-top: 10rpx;
 								font-size: 20rpx;
 								color: #007AFF;
+								display: flex;
+								flex-direction: row;
+
+								.underline {
+									text-decoration: line-through;
+								}
+
+								text {
+									color: #808080;
+									padding-left: 10rpx;
+								}
 							}
 						}
 					}
@@ -313,6 +645,7 @@
 					height: 80rpx;
 					padding: 20rpx;
 					background-color: #FFFFFF;
+
 					.rod {
 						padding-left: 30rpx;
 					}
@@ -335,6 +668,7 @@
 						align-items: center;
 
 						text {
+							width: 160rpx;
 							padding-right: 20rpx;
 						}
 

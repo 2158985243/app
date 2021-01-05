@@ -118,6 +118,7 @@
 				},
 				total: 0,
 				last: false,
+				pull: false,
 			}
 		},
 		onLoad(option) {
@@ -149,7 +150,9 @@
 				}
 			},
 			search: function(value) {
-				console.log(value)
+				this.init({
+					keyword: value
+				})
 			},
 			handelScan: function() {
 				// 允许从相机和相册扫码
@@ -191,19 +194,22 @@
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
-				if (this.page >= this.last_page) {
-					if (!this.last) {
-						this.last = true
-						this.$refs.uToast.show({
-							title: '加载到底了',
-							type: 'default',
-							position: 'bottom'
-						})
-					}
+				if (!this.pull) {
+					if (this.page >= this.last_page) {
+						if (!this.last) {
+							this.last = true
+							this.$refs.uToast.show({
+								title: '加载到底了',
+								type: 'default',
+								position: 'bottom'
+							})
+							this.pull = true
+						}
 
-				} else {
-					this.page++;
-					this.init()
+					} else {
+						this.page++;
+						this.init()
+					}
 				}
 				stopLoad ? stopLoad() : '';
 			},

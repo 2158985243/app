@@ -317,6 +317,7 @@
 				numAll: 0,
 				valAll: [],
 				// saveData:[]
+				account: false,
 
 			}
 		},
@@ -752,9 +753,13 @@
 					this.$store.commit('stateGoodFn', {
 						stateGood: true
 					});
-					uni.navigateTo({
-						url:`/pages/settleAccounts/settleAccounts`
-					})
+					if (!this.account) {
+						uni.navigateTo({
+							url: `/pages/settleAccounts/settleAccounts`
+						})
+					} else {
+						uni.navigateBack()
+					}
 				} else {
 					this.$refs.uToast.show({
 						title: '请选择商品',
@@ -770,6 +775,7 @@
 		onLoad(query) {
 			this.init()
 			this.brand();
+			this.account = query.account
 		}
 	}
 </script>

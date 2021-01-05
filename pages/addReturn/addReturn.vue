@@ -239,7 +239,6 @@
 					minute: false,
 					second: false
 				},
-
 				shopping: [],
 				goodsMoney: [],
 				goodsAmount: 0,
