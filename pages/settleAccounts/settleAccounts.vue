@@ -59,7 +59,8 @@
 						<text>整单折扣</text>
 					</view>
 					<view class="box-right">
-						<text class="lan">{{discounts || "启用"}}</text>
+						<text class="lan" v-if="!discounts">{{"启用"}}</text>
+						<text class="lan" v-else>{{(Number(discounts)*10).toFixed(2)+'折' }}</text>
 						<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
 					</view>
 				</view>
@@ -128,41 +129,63 @@
 					</u-checkbox-group>
 				</view>
 			</view>
-			<u-popup mode="bottom" v-model="show" height="600rpx">
+			<!-- 折扣列表 -->
+			<u-popup mode="bottom" v-model="show" z-index="99" @open="open" height="600rpx">
 				<view class="content">
 					<view class="fot">
-						<view class="edt">
-							编辑
+						<view class="edt" @click="edt">
+							<text v-if="!set_del">编辑</text>
+							<text v-else>完成</text>
+
 						</view>
 						<view class="title">
 							整单折扣
 						</view>
-						<view class="qx">
+						<view class="qx" @click="abolish">
 							取消
 						</view>
 					</view>
 					<scroll-view scroll-y="true" style="height: 440rpx;">
 						<view class="bods">
-							<view class="hezi" v-for="index in 20" :key="index">
-								{{index}}Item
-								<view class="red-del">
-									
+							<view class="hezi" v-for="(item,index) in discount_list" :key="index" @click="itemClick(item,index)" :class="active==index? 'active':''">
+								{{(Number(item.discount)*10).toFixed(2)}}折
+								<view class="red-del" v-if="set_del" @click="discountedDel(item,index)">
 									<u-icon name="close-circle-fill" color="red" size="40"></u-icon>
 								</view>
 							</view>
-							<view class="hezi">
+							<view class="hezi" @click="addDiscount">
 								+增加
 							</view>
 						</view>
 					</scroll-view>
 					<view class="confrim-btn">
-						<view class="btn">
+						<view class="btn" @click="notarize">
 							确认
 						</view>
 					</view>
 				</view>
 			</u-popup>
+
 		</view>
+		<!-- 增加折扣 -->
+		<u-popup mode="center" v-model="showed" border-radius="20" width="70%" height="340rpx">
+			<view class="discounted">
+				<view class="discounted-title">
+					输入折扣
+				</view>
+				<view class="input">
+					<u-input v-model="value" :clearable="false" placeholder="9折即0.9,无折扣即1" input-align="center" type="number" :border="true" />
+				</view>
+				<view class="discounted-footer">
+					<view class="qx" @click="abrogate">
+						取消
+					</view>
+					<view class="qd" @click="ensure">
+						确定
+					</view>
+				</view>
+			</view>
+		</u-popup>
 		<view class="footer">
 			<view class="footer-left">
 				<text>收款</text>
@@ -187,9 +210,15 @@
 	import {
 		salesOrderAdd
 	} from '../../api/salesOrder.js'
+	import {
+		discountAdd,
+		discountList,
+		discountDel
+	} from '../../api/discount.js'
 	export default {
 		data() {
 			return {
+				rebate: 0,
 				list: [],
 				sum_number: 0,
 				sum_money: 0,
@@ -214,6 +243,7 @@
 					checked: false,
 				}, ],
 				show: false,
+				showed: false,
 				showtime: false,
 				params: {
 					year: true,
@@ -226,14 +256,17 @@
 				staff: '', //销售员
 				discounts: '', //打折
 				unit: 1, //积分换算
-				integral: 10,
+				integral: 1,
 				placeholder: '',
 				test: '',
 				members: {
 					name: ''
 				},
 				discount: 0,
-
+				discount_list: [],
+				value: '',
+				active: 9999,
+				set_del: false,
 			}
 		},
 		computed: {
@@ -242,7 +275,12 @@
 			},
 			toMoney() {
 				let money = 0;
-				money = Number(this.sum_money) - Number(this.form.discount_money)
+				if(this.discounts){
+					money =( (Number(this.sum_money) - Number(this.form.discount_money))*Number(this.discounts)).toFixed(2)
+					this.form.discount_money = (Number(this.sum_money) - Number(this.form.discount_money) - money).toFixed(2)
+				}else{
+					money = Number(this.sum_money) - Number(this.form.discount_money)
+				}
 				this.form.money = money;
 				return money
 			}
@@ -355,7 +393,118 @@
 					})
 				})
 				this.sum_money = this.sum_money.toFixed(2)
+			},
+			// 初始化折扣
+			async discountFn() {
+				let res = await discountList()
+				// console.log(res);
+				this.discount_list = []
+				res.map((v, i) => {
+					this.discount_list.push(v);
+					this.$set(this.discount_list, i, this.discount_list[i])
+				})
+			},
+			// 显示增加折扣
+			addDiscount() {
+				this.showed = true;
+			},
+			// 确定增加折扣
+			async ensure() {
+				let res = discountAdd({
+					discount: this.value
+				});
+				if (!res.code) {
+					setTimeout(() => {
+						this.discountFn()
+						this.showed = false;
+					}, 500)
+				} else {
+					this.$refs.uToast.show({
+						title: res.msg,
+						type: 'default',
+						position: 'center'
+					})
+				}
+				this.value = ''
+			},
+			// 取消增加折扣
+			abrogate() {
+				this.value = ''
+				this.showed = false;
+			},
+			//显示折扣编辑 
+			edt() {
+				this.active = 9999;
+				this.rebate = '';
+				this.set_del = !this.set_del;
+			},
+			// 取消选择折扣
+			abolish(){
+				this.show = false;
+				this.active = 9999;
+				this.rebate = '';
+				this.set_del = false;
+			},
+			// 点击某个折扣
+			itemClick(item, index) {
+				if (!this.set_del) {
+					this.active = index;
+					this.rebate = item.discount
+				}
+			},
+			// 确认折扣
+			notarize(item) {
+				if (this.rebate) {
+
+					this.discounts = this.rebate;
+					// 待继续
+					
+					this.rebate = '';
+					this.show = false;
+				} else {
+					if (this.set_del) {
+						this.$refs.uToast.show({
+							title: '请完成编辑',
+							type: 'default',
+							position: 'center'
+						})
+					} else {
+						this.$refs.uToast.show({
+							title: '请选择折扣',
+							type: 'default',
+							position: 'center'
+						})
+					}
+				}
+			},
+			// 删除折扣
+			discountedDel(item){
+				let _this = this
+				uni.showModal({
+					title: '折扣编辑',
+					content: '是否删除此折扣？',
+					success: async (res) => {
+						if (res.confirm) {
+							let res = await discountDel(item.id)
+							if (!res.code) {
+								setTimeout(() => {
+									_this.discountFn()
+								}, 500)
+							}
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+			},
+			// 弹框打开
+			open(){
+				this.active = 9999;
+				this.rebate = '';
+				this.set_del = false;
 			}
+
+
 		},
 		onLoad() {
 			let date = new Date();
@@ -386,7 +535,8 @@
 			});
 		},
 		onShow() {
-			this.init()
+			this.init();
+			this.discountFn()
 		}
 	}
 </script>
@@ -397,6 +547,11 @@
 		background-color: #efefef;
 		display: flex;
 		flex-direction: column;
+
+		.active {
+			background-color: #007AFF !important;
+			color: #FFFFFF !important;
+		}
 
 		.member-select {
 			width: 100%;
@@ -444,10 +599,71 @@
 
 		}
 
+		// 增加折扣
+		.discounted {
+			width: 100%;
+			height: 300rpx;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+
+			.discounted-title {
+				width: 100%;
+				height: 120rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.input {
+				width: 100%;
+				height: 100rpx;
+				padding: 0 20rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.discounted-footer {
+				width: 100%;
+				height: 100rpx;
+				padding: 0 20rpx;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				.qx {
+					width: 180rpx;
+					height: 60rpx;
+					border-radius: 10rpx;
+					border: 1rpx solid #C8C7CC;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 26rpx;
+				}
+
+				.qd {
+					width: 180rpx;
+					height: 60rpx;
+					border-radius: 10rpx;
+					display: flex;
+					align-items: center;
+					font-size: 26rpx;
+					justify-content: center;
+					background-color: #007AFF;
+					color: #FFFFFF;
+				}
+			}
+		}
+
+		// 折扣列表
 		.content {
 			display: flex;
 			flex-direction: column;
 			position: relative;
+
 			.fot {
 				display: flex;
 				justify-content: space-between;
@@ -467,38 +683,34 @@
 					color: #C0C0C0;
 				}
 			}
-			.bods{width: 100%;
+
+			.bods {
+				width: 100%;
 				display: flex;
 				flex-wrap: wrap;
-				.hezi{
+
+				.hezi {
 					margin: 10rpx 2.5%;
 					width: 20%;
 					height: 60rpx;
 					border: 1rpx solid #C0C0C0;
 					color: #C0C0C0;
 					border-radius: 8rpx;
-					// padding: 10rpx;
 					display: flex;
 					justify-content: center;
 					align-items: center;
 					position: relative;
-					.red-del{
+
+					.red-del {
 						position: absolute;
 						top: -10rpx;
 						right: -10rpx;
-						// width: 40rpx;
-						// height: 40rpx;
-						// background-color: #DD524D;
-						// color: #FFFFFF;
-						// display: flex;
-						// justify-content: center;
-						// align-items: center;
 						border-radius: 50%;
-						// font-size:20rpx;
 					}
 				}
 			}
-			.confrim-btn{
+
+			.confrim-btn {
 				width: 100%;
 				display: flex;
 				height: 80rpx;
@@ -506,7 +718,8 @@
 				align-items: center;
 				position: fixed;
 				bottom: 0;
-				.btn{
+
+				.btn {
 					width: 80%;
 					height: 60rpx;
 					color: #FFFFFF;
@@ -693,7 +906,7 @@
 			background-color: #FFFFFF;
 			position: fixed;
 			bottom: 0;
-			z-index: 999;
+			z-index: 9;
 			display: flex;
 			justify-content: space-between;
 
