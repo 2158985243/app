@@ -1055,6 +1055,44 @@
             }
             
         }
+        ,{
+            "path" : "pages/pointList/pointList",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom", // 隐藏系统导航栏
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+        ,{
+            "path" : "pages/pointAdd/pointAdd",
+            "style" :                                                                                    
+            {
+               "navigationBarTitleText": "新增积分倍率",
+               "navigationBarBackgroundColor": "#2979ff",
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+        ,{
+            "path" : "pages/pointEdit/pointEdit",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "编辑积分倍率",
+                "navigationBarBackgroundColor": "#2979ff",
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

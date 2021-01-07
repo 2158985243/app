@@ -11,7 +11,7 @@
 			<uni-list>
 				<uni-list-item title="会员等级" @click="toCustomerLevel" :showExtraIcon='true' :extraIcon='extraIcon[3]' :showArrow='true' :clickable='true'></uni-list-item>
 				<uni-list-item title="会员等级晋升" :showExtraIcon='true' :extraIcon='extraIcon[4]' :showArrow='true' :clickable='true'></uni-list-item>
-				<uni-list-item title="积分设置" :showExtraIcon='true' :extraIcon='extraIcon[5]' :showArrow='true' :clickable='true'></uni-list-item>
+				<uni-list-item title="积分设置" @click="toPointList" :showExtraIcon='true' :extraIcon='extraIcon[5]' :showArrow='true' :clickable='true'></uni-list-item>
 				<uni-list-item title="支付方式" @click="toPatternOfPayment" :showExtraIcon='true' :extraIcon='extraIcon[6]' :showArrow='true' :clickable='true'></uni-list-item>
 			</uni-list>
 		</view>
@@ -95,6 +95,12 @@
 			toCustomerLevel(){
 				uni.navigateTo({
 					url: `/pages/customerLevel/customerLevel`
+				})
+			},
+			// 积分设置
+			toPointList(){
+				uni.navigateTo({
+					url: `/pages/pointList/pointList`
 				})
 			},
 		}

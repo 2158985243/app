@@ -77,7 +77,8 @@
 				<view class="item-li">
 					<view class="box-left">
 						<text>优惠金额</text>
-						<u-input v-model="form.discount_money" :clearable="false" height="50" placeholder='请输入优惠金额' type="number" />
+						<u-input v-model="form.discount_money" @input="inputValue" :clearable="false" height="50" placeholder='请输入优惠金额'
+						 type="number" />
 					</view>
 					<view class="box-right">
 					</view>
@@ -189,7 +190,7 @@
 		<view class="footer">
 			<view class="footer-left">
 				<text>收款</text>
-				<text class="lan-se">&yen;{{toMoney}}</text>
+				<text class="lan-se">&yen;{{form.money}}</text>
 				<u-icon name="edit-pen-fill" color="#ff557f" size="40"></u-icon>
 			</view>
 			<view class="footer-right">
@@ -210,6 +211,9 @@
 	import {
 		salesOrderAdd
 	} from '../../api/salesOrder.js'
+	import {
+		pointGetDefault
+	} from '../../api/point.js'
 	import {
 		discountAdd,
 		discountList,
@@ -275,10 +279,10 @@
 			},
 			toMoney() {
 				let money = 0;
-				if(this.discounts){
-					money =( (Number(this.sum_money) - Number(this.form.discount_money))*Number(this.discounts)).toFixed(2)
-					this.form.discount_money = (Number(this.sum_money) - Number(this.form.discount_money) - money).toFixed(2)
-				}else{
+				if (this.discounts) {
+					money = (Number(this.sum_money) * Number(this.discounts)).toFixed(2)
+					this.form.discount_money = (Number(this.sum_money) - money).toFixed(2)
+				} else {
 					money = Number(this.sum_money) - Number(this.form.discount_money)
 				}
 				this.form.money = money;
@@ -286,6 +290,13 @@
 			}
 		},
 		methods: {
+			// 优惠金额
+			inputValue(v) {
+				this.form.discount_money = v
+				this.form.money = Number(this.sum_money) - Number(this.form.discount_money)
+				this.$forceUpdate()
+			},
+			// 初始化
 			init() {
 				this.list = [];
 				this.sum_number = 0;
@@ -301,7 +312,7 @@
 						this.sum_number += Number(v1.quantity)
 					})
 				})
-				console.log(this.list);
+				// console.log(this.list);
 				this.list.map((v, i) => {
 					v.data.map((v1, i1) => {
 						if (v1.quantity > 0) {
@@ -314,6 +325,7 @@
 					})
 				})
 				this.sum_money = this.sum_money.toFixed(2)
+				this.form.money = this.toMoney
 			},
 			hiddenTime() {
 				this.showtime = true;
@@ -439,7 +451,7 @@
 				this.set_del = !this.set_del;
 			},
 			// 取消选择折扣
-			abolish(){
+			abolish() {
 				this.show = false;
 				this.active = 9999;
 				this.rebate = '';
@@ -455,10 +467,10 @@
 			// 确认折扣
 			notarize(item) {
 				if (this.rebate) {
-
 					this.discounts = this.rebate;
 					// 待继续
-					
+					this.form.money = this.toMoney;
+					this.form.reward_point = Math.floor((this.toMoney / Number(this.unit)) * this.integral);
 					this.rebate = '';
 					this.show = false;
 				} else {
@@ -478,7 +490,7 @@
 				}
 			},
 			// 删除折扣
-			discountedDel(item){
+			discountedDel(item) {
 				let _this = this
 				uni.showModal({
 					title: '折扣编辑',
@@ -498,18 +510,27 @@
 				});
 			},
 			// 弹框打开
-			open(){
+			open() {
 				this.active = 9999;
 				this.rebate = '';
 				this.set_del = false;
+			},
+			async pointGetDe() {
+				let res = await pointGetDefault()
+				console.log(res);
+				this.unit = res.money;
+				this.integral = res.point;
+				this.placeholder = res.money + '元' + '=' + res.point + '积分';
+				console.log(this.unit, this.integral);
+				this.form.reward_point = Math.floor((this.toMoney / Number(this.unit)) * this.integral);
 			}
 
 
 		},
 		onLoad() {
+			this.pointGetDe()
 			let date = new Date();
 			this.form.business_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
-			this.placeholder = this.unit + '元' + '=' + this.integral + '积分';
 			uni.$on("selecSalesperson", (res) => {
 				if (res) {
 					console.log(res);
