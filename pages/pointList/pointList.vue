@@ -32,7 +32,7 @@
 						<u-icon name="red-packet" color="#00aaff" class="right_icon" size="46"></u-icon>
 						<view class="bod">
 							<text class="heise">{{itemCustom.money}}元 = {{itemCustom.point}}积分</text>
-							<text>赔率 = {{itemCustom.point}}</text>
+							<text>赔率 = {{(Number(itemCustom.point)/Number(itemCustom.money)).toFixed(2)}}</text>
 						</view>
 						<view class="moren" v-if="itemCustom.default==1">
 							默认倍率

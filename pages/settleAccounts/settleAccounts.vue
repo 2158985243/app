@@ -23,7 +23,7 @@
 				<view class="list" v-for="(item,index) in list" :key="index">
 					<view class="goods-list" v-for="(itemGoods,indexGoods) in item.data" :key="indexGoods">
 						<view class="dole" v-if="itemGoods.quantity>0">
-							<view class="goods-left">
+							<view class="goods-left" @click="togoodsOf(item,index,indexGoods)">
 								<u-image width="100rpx" mode='aspectFit' border-radius="10" class="header_image" height="100rpx" :src="$cfg.domain+item.goodsOf.main_image"></u-image>
 								<view class="item-left">
 									<text class="hei">{{item.goodsOf.name}} <text class="hui">{{item.goodsOf.number}}</text></text>
@@ -104,10 +104,10 @@
 					</view>
 				</view>
 				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :default-time="form.business_time" :params="params"></u-picker>
-				<view class="item-li">
-					<view class="box-left">
+				<view class="item-li" >
+					<view class="box-left" >
 						<text>获得积分</text>
-						<u-input v-model="test" height="50" :disabled="true" :placeholder='placeholder' type="number" />
+						<u-input v-model="test" @click="toIntegralList" height="50" :disabled="true" :placeholder='placeholder' type="number" />
 					</view>
 					<view class="box-right">
 						<text class="lan">{{form.reward_point}}</text>
@@ -346,9 +346,16 @@
 					url: '/pages/memberSelect/memberSelect'
 				})
 			},
+			// 增加商品
 			toResale() {
 				uni.navigateTo({
 					url: '/pages/resaleCashier/resaleCashier?account=true'
+				})
+			},
+			// 
+			toIntegralList(){
+				uni.navigateTo({
+					url: '/pages/IntegralList/IntegralList'
 				})
 			},
 			async sure(v) {
@@ -515,16 +522,26 @@
 				this.rebate = '';
 				this.set_del = false;
 			},
+			// 积分计算
 			async pointGetDe() {
 				let res = await pointGetDefault()
-				console.log(res);
+				// console.log(res);
 				this.unit = res.money;
 				this.integral = res.point;
 				this.placeholder = res.money + '元' + '=' + res.point + '积分';
-				console.log(this.unit, this.integral);
 				this.form.reward_point = Math.floor((this.toMoney / Number(this.unit)) * this.integral);
+			},
+			// 前往编辑商品
+			togoodsOf(item,index,indexGoods){
+				let obj = {
+					item:item,
+					index:index,
+					indexGoods:indexGoods
+				}
+				uni.navigateTo({
+					url:'/pages/editItems/editItems?obj=' + encodeURIComponent(JSON.stringify(obj))
+				})
 			}
-
 
 		},
 		onLoad() {
@@ -533,7 +550,6 @@
 			this.form.business_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
 			uni.$on("selecSalesperson", (res) => {
 				if (res) {
-					console.log(res);
 					this.staff = res.name;
 					this.form.staff_id = res.id;
 
@@ -541,7 +557,6 @@
 			});
 			uni.$on("memberSelect", (res) => {
 				if (res) {
-					console.log(res);
 					this.members = res
 					this.form.customer_id = res.id;
 					this.discount = Number(res.customer_level.discount)
@@ -551,7 +566,14 @@
 							v1['discount'] = res.customer_level.discount;
 						})
 					})
-					console.log(this.list);
+				}
+			});
+			uni.$on("IntegralList", (res) => {
+				if (res) {
+					this.unit = res.money;
+					this.integral = res.point;
+					this.placeholder = res.money + '元' + '=' + res.point + '积分';
+					this.form.reward_point = Math.floor((this.toMoney / Number(this.unit)) * this.integral);
 				}
 			});
 		},
