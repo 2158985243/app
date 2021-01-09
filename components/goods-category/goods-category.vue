@@ -87,19 +87,19 @@
 			};
 		},
 		filters: {
-			filterQuantity(v) {
-				let quantity = 0;
-				let data = this.saveData;
-				for (let i in data) {
-					for (let j in data[i].goodsData) {
-						if (data[i].goodsData[j].goods_id == v) {
-							quantity = quantity + data[i].goodsData[j].quantity;
+			// filterQuantity(v) {
+			// 	let quantity = 0;
+			// 	let data = this.saveData;
+			// 	for (let i in data) {
+			// 		for (let j in data[i].goodsData) {
+			// 			if (data[i].goodsData[j].goods_id == v) {
+			// 				quantity = quantity + data[i].goodsData[j].quantity;
 
-						}
-					}
-				}
-				return quantity;
-			}
+			// 			}
+			// 		}
+			// 	}
+			// 	return quantity;
+			// }
 		},
 		computed: {
 			goodsQuantity() {
@@ -177,19 +177,19 @@
 			this.getSystemIngo()
 		},
 		methods: {
-			filterQuantity(v) {
-				let quantity = 0;
-				let data = store.state.specificationOfGoods;
-				for (let i in data) {
-					for (let j in data[i].goodsData) {
-						if (data[i].goodsData[j].goods_id == v) {
-							quantity = quantity + data[i].goodsData[j].quantity;
+			// filterQuantity(v) {
+			// 	let quantity = 0;
+			// 	let data = store.state.specificationOfGoods;
+			// 	for (let i in data) {
+			// 		for (let j in data[i].goodsData) {
+			// 			if (data[i].goodsData[j].goods_id == v) {
+			// 				quantity = quantity + data[i].goodsData[j].quantity;
 
-						}
-					}
-				}
-				return quantity;
-			},
+			// 			}
+			// 		}
+			// 	}
+			// 	return quantity;
+			// },
 
 			handlePullDown(stopLoad) {
 				this.$emit('handlePullDown', stopLoad)

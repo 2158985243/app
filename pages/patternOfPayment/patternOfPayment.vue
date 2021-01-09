@@ -36,7 +36,7 @@
 				let res = await accountList()
 				// console.log(res);
 				res.map((v, i) => {
-					if (i < 6) {
+					if (v.system==1) {
 						this.list1.push(v)
 					} else {
 						this.list2.push(v)

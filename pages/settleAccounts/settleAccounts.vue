@@ -22,8 +22,8 @@
 			<view class="goods-data">
 				<view class="list" v-for="(item,index) in list" :key="index">
 					<view class="goods-list" v-for="(itemGoods,indexGoods) in item.data" :key="indexGoods">
-						<view class="dole" v-if="itemGoods.quantity>0">
-							<view class="goods-left" @click="togoodsOf(item,index,indexGoods)">
+						<view class="dole" v-if="itemGoods.quantity>0" @click="togoodsOf(item,index,indexGoods)">
+							<view class="goods-left">
 								<u-image width="100rpx" mode='aspectFit' border-radius="10" class="header_image" height="100rpx" :src="$cfg.domain+item.goodsOf.main_image"></u-image>
 								<view class="item-left">
 									<text class="hei">{{item.goodsOf.name}} <text class="hui">{{item.goodsOf.number}}</text></text>
@@ -104,8 +104,8 @@
 					</view>
 				</view>
 				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :default-time="form.business_time" :params="params"></u-picker>
-				<view class="item-li" >
-					<view class="box-left" >
+				<view class="item-li">
+					<view class="box-left">
 						<text>获得积分</text>
 						<u-input v-model="test" @click="toIntegralList" height="50" :disabled="true" :placeholder='placeholder' type="number" />
 					</view>
@@ -187,6 +187,40 @@
 				</view>
 			</view>
 		</u-popup>
+
+		<!-- 支付列表 -->
+		<u-popup mode="bottom" v-model="showPayment" z-index="99" @open="open" height="440rpx">
+			<view class="content">
+				<view class="fot">
+					<view class="left-content">
+						<text>收款：</text>
+						<text class="red">&yen;{{form.money}}</text>
+					</view>
+					<view class="right-content">
+						组合支付
+					</view>
+				</view>
+				<scroll-view scroll-y="true" style="height: 280rpx;">
+					<view class="bods">
+						<block v-for="(item,index) in paymentList" :key="index">
+							<view class="pay" v-if="item.checked" @click="paymentItem(item,index)">
+								<view class="pay-box">
+									<u-icon name="rmb-circle" color="#aaaa7f" size="60"></u-icon>
+									<text class="name">{{item.name}}</text>
+									<u-icon name="checkmark-circle-fill" class="top-right" v-if="activePay==index" color="#ff9a26" size="32"></u-icon>
+								</view>
+							</view>
+						</block>
+					</view>
+				</scroll-view>
+				<view class="confrim-btn">
+					<view class="btn" @click="paySure">
+						确定
+					</view>
+				</view>
+			</view>
+		</u-popup>
+
 		<view class="footer">
 			<view class="footer-left">
 				<text>收款</text>
@@ -208,6 +242,9 @@
 
 <script>
 	import store from '@/store'
+	import {
+		accountList
+	} from '../../api/account.js'
 	import {
 		salesOrderAdd
 	} from '../../api/salesOrder.js'
@@ -249,6 +286,7 @@
 				show: false,
 				showed: false,
 				showtime: false,
+				showPayment: false, //支付方式显示
 				params: {
 					year: true,
 					month: true,
@@ -271,9 +309,13 @@
 				value: '',
 				active: 9999,
 				set_del: false,
+				paymentList: [], //支付方式列表
+				activePay: 9999, //支付方式下标
+				payItem: {}, //支付方式
 			}
 		},
 		computed: {
+
 			goods() {
 				return store.state.specificationOfGoods;
 			},
@@ -290,6 +332,7 @@
 			}
 		},
 		methods: {
+
 			// 优惠金额
 			inputValue(v) {
 				this.form.discount_money = v
@@ -309,17 +352,17 @@
 						if (v1.quantity > 0) {
 							this.list.push(v1)
 						}
-						this.sum_number += Number(v1.quantity)
 					})
 				})
 				// console.log(this.list);
 				this.list.map((v, i) => {
+					this.sum_number += Number(v.quantity)
 					v.data.map((v1, i1) => {
 						if (v1.quantity > 0) {
 							if (!v1.discount) {
 								v1['discount'] = 1;
 							}
-							v1['retail_price'] = Number(v1.retail_price) * Number(v1.discount)
+							v1['retail_price'] = (Number(v1.retail_price) * Number(v1.discount)).toFixed(2)
 							this.sum_money += Number(v1.quantity) * Number(v1.retail_price)
 						}
 					})
@@ -348,16 +391,34 @@
 			},
 			// 增加商品
 			toResale() {
+				this.list.map((k, j) => {
+					k.data.map((k1, j1) => {
+						this.goods.map((v, i) => {
+							v.goodsData.map((v1, i1) => {
+								v1.data.map((v2, i2) => {
+									if (v1.quantity > 0 && k.goods_id == v1.goods_id && k1.size.id == v2.size.id) {
+										v1.quantity = k.quantity;
+										v2.quantity = k1.quantity;
+									}
+								})
+							})
+						})
+					})
+				})
+				this.$store.commit('commercialSpecification', {
+					specificationOfGoods: this.goods
+				})
 				uni.navigateTo({
 					url: '/pages/resaleCashier/resaleCashier?account=true'
 				})
 			},
 			// 
-			toIntegralList(){
+			toIntegralList() {
 				uni.navigateTo({
 					url: '/pages/IntegralList/IntegralList'
 				})
 			},
+			// 挂单或者收款
 			async sure(v) {
 				if (this.list) {
 					let arr = []
@@ -384,10 +445,12 @@
 						this.form.status = 0;
 						delete this.form.payment
 						let res = await salesOrderAdd(this.form)
-						console.log(res);
+						// console.log(res);
 					} else {
 						this.form.status = 1;
-
+						this.activePay = 9999;
+						this.showPayment = true;
+						this.payItem = {};
 					}
 				} else {
 					this.$refs.uToast.show({
@@ -397,6 +460,7 @@
 					})
 				}
 			},
+			// 清空会员
 			clear() {
 				this.sum_money = 0;
 				this.members = {
@@ -532,22 +596,56 @@
 				this.form.reward_point = Math.floor((this.toMoney / Number(this.unit)) * this.integral);
 			},
 			// 前往编辑商品
-			togoodsOf(item,index,indexGoods){
+			togoodsOf(item, index, indexGoods) {
 				let obj = {
-					item:item,
-					index:index,
-					indexGoods:indexGoods
+					item: item,
+					index: index,
+					indexGoods: indexGoods
 				}
 				uni.navigateTo({
-					url:'/pages/editItems/editItems?obj=' + encodeURIComponent(JSON.stringify(obj))
+					url: '/pages/editItems/editItems?obj=' + encodeURIComponent(JSON.stringify(obj))
 				})
+			},
+			// 支付列表
+			async accountd() {
+				let res = await accountList()
+				res.map((v) => {
+					v['checked'] = true;
+					if (v.name == '欠款' || v.name == "余额支付") {
+						v['checked'] = false;
+					}
+				})
+				this.paymentList = res
+			},
+			// 选择的支付方式
+			paymentItem(item, index) {
+				this.activePay = index;
+				this.payItem = item;
+				// console.log(item);
+			},
+			// 确定支付方式
+			async paySure() {
+				this.form.payment = [];
+				this.form.payment.push({
+					account_id: this.payItem.account_id,
+					money: this.form.money
+				})
+				let res = await salesOrderAdd(this.form)
+				if (!res.code) {
+					this.showPayment = false;
+					uni.navigateTo({
+						url: `/pages/paymentSuccess/paymentSuccess?payItem=${this.payItem.name}&money=${this.form.money}`
+					})
+				}
 			}
 
 		},
 		onLoad() {
 			this.pointGetDe()
+			this.accountd()
 			let date = new Date();
 			this.form.business_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+			// 选择销售员
 			uni.$on("selecSalesperson", (res) => {
 				if (res) {
 					this.staff = res.name;
@@ -555,25 +653,58 @@
 
 				}
 			});
+			// 选择会员
 			uni.$on("memberSelect", (res) => {
 				if (res) {
 					this.members = res
 					this.form.customer_id = res.id;
 					this.discount = Number(res.customer_level.discount)
 					this.list.map((v) => {
-						console.log(v.data);
 						v.data.map((v1) => {
 							v1['discount'] = res.customer_level.discount;
 						})
 					})
+					this.paymentList.map((v) => {
+						if (v.name == '欠款' || v.name == "余额支付") {
+							v.checked = true;
+						}
+					})
 				}
 			});
+			// 选择积分
 			uni.$on("IntegralList", (res) => {
 				if (res) {
 					this.unit = res.money;
 					this.integral = res.point;
 					this.placeholder = res.money + '元' + '=' + res.point + '积分';
 					this.form.reward_point = Math.floor((this.toMoney / Number(this.unit)) * this.integral);
+				}
+			});
+			// 编辑商品
+			uni.$on("editItems", (res) => {
+				if (res) {
+					this.list[res.index].data[res.indexGoods].quantity = 0
+					this.list[res.index].data[res.index_later].quantity = res.item.quantity;
+					this.list[res.index].data[res.index_later].discount = res.item.discount;
+					this.list[res.index].data[res.index_later].retail_price = res.item.retail_price;
+					this.list[res.index].quantity = 0;
+					this.list[res.index].data.map((v) => {
+						this.list[res.index].quantity += v.quantity;
+					})
+					// 初始化商品数量和合计
+					this.list.map((v, i) => {
+						this.sum_number += Number(v.quantity)
+						v.data.map((v1, i1) => {
+							if (v1.quantity > 0) {
+								if (!v1.discount) {
+									v1['discount'] = 1;
+								}
+								v1['retail_price'] = (Number(v1.retail_price) * Number(v1.discount))
+								this.sum_money += Number(v1.quantity) * Number(v1.retail_price)
+							}
+						})
+					})
+					this.form.money = this.toMoney
 				}
 			});
 		},
@@ -604,7 +735,7 @@
 			flex-direction: row;
 			color: #FFFFFF;
 			position: fixed;
-			top: calc(80rpx + var(--status-bar-height));
+			top: calc(80rpx+var(--status-bar-height));
 			z-index: 999;
 
 			.member {
@@ -714,6 +845,20 @@
 				align-items: center;
 				border-bottom: 0.01rem solid #C8C7CC;
 
+				.left-content {
+					display: flex;
+					flex-direction: row;
+
+					.red {
+						color: #DD524D;
+					}
+				}
+
+				.right-content {
+					display: flex;
+					color: #add;
+				}
+
 				.edt {
 					color: #007AFF;
 				}
@@ -730,7 +875,40 @@
 			.bods {
 				width: 100%;
 				display: flex;
+				flex-direction: row;
 				flex-wrap: wrap;
+
+				.pay {
+					width: 25%;
+					height: 140rpx;
+					display: flex;
+					position: relative;
+					justify-content: center;
+					align-items: center;
+
+					.pay-box {
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						width: 100%;
+					}
+
+					.name {
+						width: 70%;
+						font-size: 20rpx;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						text-align: center;
+					}
+
+					.top-right {
+						position: absolute;
+						right: 28%;
+						top: 8%;
+					}
+				}
 
 				.hezi {
 					margin: 10rpx 2.5%;

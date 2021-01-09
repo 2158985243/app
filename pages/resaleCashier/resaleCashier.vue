@@ -1,6 +1,7 @@
 <template>
 	<view class="resaleCashier">
-		<u-navbar back-icon-color='#ffffff' :custom-back="quit" title="商品选择" :background="background" title-color="#ffffff">
+		<!-- :custom-back="quit" -->
+		<u-navbar back-icon-color='#ffffff'  title="商品选择" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<text class="right_icon">挂单</text>
 			</template>
@@ -316,14 +317,14 @@
 				aValue: [], //购物车商品尺码数量组
 				numAll: 0,
 				valAll: [],
-				// saveData:[]
+				// saveData: [],
 				account: false,
 
 			}
 		},
 
 		computed: {
-			// 商品组
+			// // 商品组
 			saveData() {
 				return store.state.specificationOfGoods;
 			},
@@ -361,31 +362,31 @@
 			// 	}
 			// },
 		},
-		onBackPress(options) {
-			if (options.from === 'navigateBack') {
-				return false;
-			}
-			this.quit()
-			return true;
-		},
+		// onBackPress(options) {
+		// 	if (options.from === 'navigateBack') {
+		// 		return false;
+		// 	}
+		// 	this.quit()
+		// 	return true;
+		// },
 		methods: {
-			quit() {
-				let _this = this
-				uni.showModal({
-					title: '提示',
-					content: '商品还未保存，确认要退出？',
-					success: function(res) {
-						if (res.confirm) {
-							_this.$store.commit('commercialSpecification', {
-								specificationOfGoods: []
-							})
-							uni.navigateBack()
-						} else if (res.cancel) {
-							return true;
-						}
-					}
-				});
-			},
+			// quit() {
+			// 	let _this = this
+			// 	uni.showModal({
+			// 		title: '提示',
+			// 		content: '商品还未保存，确认要退出？',
+			// 		success: function(res) {
+			// 			if (res.confirm) {
+			// 				_this.$store.commit('commercialSpecification', {
+			// 					specificationOfGoods: []
+			// 				})
+			// 				uni.navigateBack()
+			// 			} else if (res.cancel) {
+			// 				return true;
+			// 			}
+			// 		}
+			// 	});
+			// },
 			// 全部尺码组数组变化
 			valChangeAll(val, item, index) {
 				item.quantity = 0;
@@ -543,8 +544,9 @@
 				res1.map((v, i) => {
 					v['arr'] = [];
 					this.dataList.push(v)
+					this.$set(this.dataList,i,this.dataList[i])
 				})
-
+				
 				// console.log(this.dataList);
 			},
 			// 点击左侧
@@ -698,7 +700,6 @@
 						goodsData: this.spec
 					})
 				}
-				console.log(arr);
 				this.$store.commit('commercialSpecification', {
 					specificationOfGoods: arr
 				})
@@ -724,7 +725,7 @@
 						_this.showShoppingCart = true;
 					}
 				})
-				console.log(this.saveData);
+				// console.log(this.saveData);
 			},
 			// 删除某一个尺码
 			delSize(index, index1, indexSize) {
@@ -776,6 +777,9 @@
 			this.init()
 			this.brand();
 			this.account = query.account
+		},
+		onShow() {
+			
 		}
 	}
 </script>
