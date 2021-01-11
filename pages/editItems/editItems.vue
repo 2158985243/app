@@ -42,7 +42,7 @@
 				<view class="label-name">
 					销售数量
 				</view>
-				<u-number-box :min="1" v-model="item.quantity"></u-number-box>
+				<u-number-box :min="0" v-model="item.quantity"></u-number-box>
 			</view>
 		</view>
 		<u-popup mode="center" v-model="show" border-radius="20" width="70%">

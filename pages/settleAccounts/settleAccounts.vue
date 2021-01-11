@@ -110,7 +110,7 @@
 						<u-input v-model="test" @click="toIntegralList" height="50" :disabled="true" :placeholder='placeholder' type="number" />
 					</view>
 					<view class="box-right">
-						<text class="lan">{{form.reward_point}}</text>
+						<text class="lan" v-if="form.reward_point>0">{{form.reward_point}}</text>
 						<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
 					</view>
 				</view>
@@ -187,6 +187,25 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 编辑收款 -->
+		<u-popup mode="center" v-model="show_edit" border-radius="20" width="70%" height="340rpx">
+			<view class="discounted">
+				<view class="discounted-title">
+					修改收款金额
+				</view>
+				<view class="input">
+					<u-input v-model="money_edit" :clearable="false" placeholder="请输入金额" input-align="center" type="number" :border="true" />
+				</view>
+				<view class="discounted-footer">
+					<view class="qx" @click="show_edit = false">
+						取消
+					</view>
+					<view class="qd" @click="ensureEdit">
+						确定
+					</view>
+				</view>
+			</view>
+		</u-popup>
 
 		<!-- 支付列表 -->
 		<u-popup mode="bottom" v-model="showPayment" z-index="99" @open="open" height="440rpx">
@@ -196,7 +215,7 @@
 						<text>收款：</text>
 						<text class="red">&yen;{{form.money}}</text>
 					</view>
-					<view class="right-content">
+					<view class="right-content" @click="combination">
 						组合支付
 					</view>
 				</view>
@@ -225,7 +244,7 @@
 			<view class="footer-left">
 				<text>收款</text>
 				<text class="lan-se">&yen;{{form.money}}</text>
-				<u-icon name="edit-pen-fill" color="#ff557f" size="40"></u-icon>
+				<u-icon name="edit-pen-fill" @click="showEditMoney" color="#ff557f" size="40"></u-icon>
 			</view>
 			<view class="footer-right">
 				<view class="hei" @click="sure(0)">
@@ -312,6 +331,8 @@
 				paymentList: [], //支付方式列表
 				activePay: 9999, //支付方式下标
 				payItem: {}, //支付方式
+				show_edit: false, //启动修改金额
+				money_edit: '', //修改金额
 			}
 		},
 		computed: {
@@ -420,7 +441,7 @@
 			},
 			// 挂单或者收款
 			async sure(v) {
-				if (this.list) {
+				if (this.list.length > 0) {
 					let arr = []
 					this.list.map((v) => {
 						v.data.map((v1) => {
@@ -466,6 +487,9 @@
 				this.members = {
 					name: ''
 				}
+				this.form.customer_id = 0
+				this.form.reward_point = 0
+
 				this.list.map(v => {
 					v.data.map(v1 => {
 						if (v1.quantity > 0) {
@@ -476,6 +500,7 @@
 					})
 				})
 				this.sum_money = this.sum_money.toFixed(2)
+				this.form.money = this.sum_money-this.form.discount_money
 			},
 			// 初始化折扣
 			async discountFn() {
@@ -541,7 +566,10 @@
 					this.discounts = this.rebate;
 					// 待继续
 					this.form.money = this.toMoney;
-					this.form.reward_point = Math.floor((this.toMoney / Number(this.unit)) * this.integral);
+					if (this.form.customer_id > 0) {
+
+						this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
+					}
 					this.rebate = '';
 					this.show = false;
 				} else {
@@ -593,7 +621,9 @@
 				this.unit = res.money;
 				this.integral = res.point;
 				this.placeholder = res.money + '元' + '=' + res.point + '积分';
-				this.form.reward_point = Math.floor((this.toMoney / Number(this.unit)) * this.integral);
+				if (this.form.customer_id > 0) {
+					this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
+				}
 			},
 			// 前往编辑商品
 			togoodsOf(item, index, indexGoods) {
@@ -609,6 +639,11 @@
 			// 支付列表
 			async accountd() {
 				let res = await accountList()
+				res.unshift({
+					account_id: 0,
+					name: '余额支付',
+
+				})
 				res.map((v) => {
 					v['checked'] = true;
 					if (v.name == '欠款' || v.name == "余额支付") {
@@ -637,6 +672,31 @@
 						url: `/pages/paymentSuccess/paymentSuccess?payItem=${this.payItem.name}&money=${this.form.money}`
 					})
 				}
+			},
+			// 前往组合支付
+			combination() {
+				let obj = {
+					form: this.form,
+					paymentList: this.paymentList
+				}
+				uni.navigateTo({
+					url: '/pages/combination/combination?obj=' + encodeURIComponent(JSON.stringify(obj))
+				})
+			},
+			// 显示修改金额弹框
+			showEditMoney() {
+				this.money_edit = '';
+				this.show_edit = true;
+			},
+			// 确定修改金额
+			ensureEdit() {
+				this.form.money = this.money_edit;
+				if (this.form.customer_id > 0) {
+
+					this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
+				}
+				this.form.discount_money = this.sum_money - this.form.money
+				this.show_edit = false;
 			}
 
 		},
@@ -669,6 +729,7 @@
 							v.checked = true;
 						}
 					})
+					this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
 				}
 			});
 			// 选择积分
@@ -677,7 +738,9 @@
 					this.unit = res.money;
 					this.integral = res.point;
 					this.placeholder = res.money + '元' + '=' + res.point + '积分';
-					this.form.reward_point = Math.floor((this.toMoney / Number(this.unit)) * this.integral);
+					if (this.form.customer_id > 0) {
+						this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
+					}
 				}
 			});
 			// 编辑商品

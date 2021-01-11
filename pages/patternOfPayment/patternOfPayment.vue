@@ -54,7 +54,7 @@
 				})
 			}
 		},
-		onLoad() {
+		onLoad(query) {
 			this.init()
 		}
 	}
