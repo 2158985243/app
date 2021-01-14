@@ -64,9 +64,8 @@
 							</u-checkbox-group>
 						</view>
 						<view class="date">
-							<text class="t1" v-if="item.last_resume_at==0">从未消费</text>
-							<text class="t1" v-if="item.last_resume_at>0">最近到店</text>
-							<text class="t2" v-if="item.last_resume_at>0">{{item.last_resume_at}}</text>
+							<text class="t2">{{item.c_time}}</text>
+							<text class="t1">已注册{{item.days}}天</text>
 						</view>
 
 					</view>
@@ -176,9 +175,14 @@
 					page: this.page,
 					page_size: this.page_size
 				})
+				let today = ((new Date()).getTime()) / 1000;
 				res.data.map((v) => {
-					v['checked'] = false,
-						v.mobile = v.mobile.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
+					let e_time = 0;
+					v['checked'] = false;
+					v.mobile = v.mobile.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+					v.c_time = this.$u.timeFormat(v.created_at, 'yyyy-mm-dd');
+					e_time = today - Number(v.created_at)
+					v.days = Math.floor(e_time / (3600 * 24))
 				})
 				this.list.push(...res.data)
 				this.last_page = res.last_page

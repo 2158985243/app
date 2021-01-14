@@ -3,7 +3,7 @@
 		<!-- :custom-back="quit" -->
 		<u-navbar back-icon-color='#ffffff'  title="商品选择" :background="background" title-color="#ffffff">
 			<template slot="right">
-				<text class="right_icon">挂单</text>
+				<text class="right_icon" @click="toCancelledList">挂单</text>
 			</template>
 		</u-navbar>
 		<view class="box">
@@ -241,6 +241,7 @@
 				</view>
 			</view>
 		</u-popup>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -319,7 +320,9 @@
 				valAll: [],
 				// saveData: [],
 				account: false,
-
+				last_page: 0,
+				mored: {},
+				pull: false
 			}
 		},
 
@@ -417,13 +420,30 @@
 			// 向下拉
 			handlePullDown(stopLoad) {
 				this.page = 1;
-				this.init();
+				let index = 0;
+				if (this.mored.index) {
+					this.index = this.mored.index
+				}
+				this.dataList[index].arr = [];
+				this.loadMore();
 				stopLoad ? stopLoad() : '';
 			},
 			// 向上拉
 			handleLoadMore(stopLoad) {
-				this.page++;
-				this.init()
+				if (!this.pull) {
+					if (this.page >= this.last_page) {
+						this.$refs.uToast.show({
+							title: '加载到底了',
+							type: 'default',
+							position: 'bottom'
+						})
+						this.pull = true
+				
+					} else {
+						this.page++;
+						this.loadMore()
+					}
+				}
 			},
 			// 
 			barlistChecked(e, index) {
@@ -508,14 +528,14 @@
 			popup() {
 				this.show = true;
 			},
-			toAddCommodity() {
+			
+			// 
+			toCancelledList() {
 				uni.navigateTo({
-					url: `/pages/addCommodity/addCommodity`
+					url: `/pages/cancelledList/cancelledList`
 				})
 			},
-			toEditCommodity() {
-
-			},
+			
 			handelScan: function() {
 				// 允许从相机和相册扫码
 				uni.scanCode({
@@ -552,6 +572,7 @@
 			// 点击左侧
 			async leftNav(e) {
 				// this.dataList
+				this.mored = e;
 				this.vs = 1;
 				for (let i = 0; i < this.dataList.length; i++) {
 					if (this.dataList[i].arr.length == 0 && e.index == i) {
@@ -567,6 +588,20 @@
 						break;
 					}
 				}
+			},
+			async loadMore() {
+				let index = 0;
+				if (this.mored.index) {
+					this.index = this.mored.index
+				}
+				let res = await goodsList({
+					page: this.page,
+					page_size: this.page_size,
+					goods_category_id: this.mored.id,
+					keyword: this.keyword
+				});
+				this.dataList[index].arr.push(...res.data);
+				this.$set(this.dataList, index, this.dataList[index])
 			},
 			// 点击右侧
 			async rightNav(e) {
@@ -1087,7 +1122,7 @@
 			width: 100%;
 			height: 80rpx;
 			background: #4d4d4d;
-
+			z-index: 10;
 			.goods-quantity {
 				width: 67%;
 				display: flex;

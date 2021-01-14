@@ -64,3 +64,12 @@ export const salesOrderCounts = (data) => {
 		return error;
 	});
 };
+// 挂单列表
+export const unsalesList = () => {
+	return $http.get("/sales/unsales_list").then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

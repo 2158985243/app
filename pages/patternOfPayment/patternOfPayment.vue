@@ -1,6 +1,6 @@
 <template>
 	<view class="patternOfPayment">
-		<u-navbar back-icon-color='#ffffff' title="支付方式" :background="background" title-color="#ffffff">
+		<u-navbar back-icon-color='#ffffff'  title="支付方式" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="plus" @click="toAddPatternOfPayment" color="#ffffff" class="right_icon" size="34"></u-icon>
 			</template>
@@ -31,7 +31,9 @@
 				list2: []
 			}
 		},
+		
 		methods: {
+			
 			async init() {
 				let res = await accountList()
 				// console.log(res);

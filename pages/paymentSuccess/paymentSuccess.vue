@@ -1,6 +1,6 @@
 <template>
 	<view class="paymentSuccess">
-		<u-navbar back-icon-color='#ffffff' title="支付成功" :background="background" title-color="#ffffff">
+		<u-navbar back-icon-color='#ffffff' :custom-back="quit" title="支付成功" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<view class="right_icon">
 					打印
@@ -12,7 +12,8 @@
 			<text class="red">&yen;{{money}}</text>
 			<text>{{payItem}} 支付成功 </text>
 			<view class="shen-lan" @click="toResaleCashier">
-				继续销售
+				<text v-if="!recharge">继续销售</text>
+				<text v-else>继续充值</text>
 			</view>
 			<view class="qian-lan" @click="toHome">
 				返回首页
@@ -30,10 +31,30 @@
 				},
 				money: 0,
 				payItem: '',
-				combina: 0
+				combina: 0,
+				recharge: 0
 			}
 		},
+		onBackPress(options) {
+			if (options.from === 'navigateBack') {
+				return false;
+			}
+			this.quit()
+			return true;
+		},
 		methods: {
+			quit() {
+				this.$store.commit('commercialSpecification', {
+					specificationOfGoods: []
+				})
+				if (this.combina) {
+					uni.navigateBack({
+						delta: 3
+					})
+				} else {
+					uni.navigateBack()
+				}
+			},
 			// 前往销售
 			toResaleCashier() {
 				this.$store.commit('commercialSpecification', {
@@ -47,6 +68,8 @@
 					uni.navigateBack({
 						delta: 3
 					})
+				} else if (this.recharge) {
+					uni.navigateBack()
 				} else {
 					uni.navigateBack({
 						delta: 2
@@ -67,6 +90,7 @@
 			this.money = query.money;
 			this.payItem = query.payItem;
 			this.combina = query.combina;
+			this.recharge = query.recharge;
 		}
 	}
 </script>

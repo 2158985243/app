@@ -46,6 +46,26 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 输入密码 -->
+		<u-popup mode="center" v-model="show_psd" border-radius="20" width="70%" height="340rpx">
+			<view class="discounted">
+				<view class="discounted-title">
+					请输入会员密码
+				</view>
+				<view class="input">
+					<u-input v-model="password" :clearable="false" placeholder="请输入六位数字密码" input-align="center" type="password"
+					 :border="true" />
+				</view>
+				<view class="discounted-footer">
+					<view class="qx" @click="abrogated">
+						取消
+					</view>
+					<view class="qd" @click="ensured">
+						确定
+					</view>
+				</view>
+			</view>
+		</u-popup>
 		<u-toast ref="uToast" />
 	</view>
 </template>
@@ -66,6 +86,10 @@
 				index: 999,
 				value: '',
 				id: 0,
+				show_psd: false,
+				password: '',
+				oob: {},
+				has_password: 0
 			}
 		},
 		methods: {
@@ -73,26 +97,41 @@
 				this.form.pay_type = 1;
 				this.form.payment = [];
 				let name = []
-				let name_str = ''
-				this.list.map((v)=>{
-					if(v.int_money>0){
+				let name_str = '';
+				let sum_money = 0;
+				this.list.map((v) => {
+					if (v.int_money > 0) {
 						this.form.payment.push({
-							account_id:v.account_id,
-							money:v.int_money
+							account_id: v.account_id,
+							money: v.int_money
 						})
-						name += v.name
+						name += v.name;
+						sum_money += Number(v.int_money)
 					}
-				})
+				});
 				name_str = name.slice(',')
-				if (this.id > 0) {
-					let res = await salesOrderEdit(this.id, this.form)
-				} else {
-					let res = await salesOrderAdd(this.form);
-					if (!res.code) {
-						uni.navigateTo({
-							url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
-						})
+				if (this.form.money <= sum_money) {
+					if (this.id > 0) {
+						let res = await salesOrderEdit(this.id, this.form)
+						if (!res.code) {
+							uni.navigateTo({
+								url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
+							})
+						}
+					} else {
+						let res = await salesOrderAdd(this.form);
+						if (!res.code) {
+							uni.navigateTo({
+								url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
+							})
+						}
 					}
+				} else {
+					this.$refs.uToast.show({
+						title: '支付金额小于收款金额',
+						type: 'default',
+						position: 'center'
+					})
 				}
 			},
 			// 取消
@@ -101,8 +140,8 @@
 			},
 			// 确定
 			ensure() {
+				// if (this.oob) {
 				if (this.money <= this.form.money) {
-
 					let bl = 0;
 					this.list.map((v) => {
 						if (v.int_money > 0) {
@@ -110,25 +149,28 @@
 							if (bl == 2) {
 								v.int_money = 0;
 							} else {
-								v.int_money = Number(this.form.money) - Number(this.money)
+								v.int_money = (Number(this.form.money) - Number(this.money)).toFixed(2)
 							}
 
 						}
 
 					})
 					this.list[this.index].int_money = this.money
-					this.showed = false;
 				} else {
+					this.list[this.index].int_money = this.form.money
 					this.$refs.uToast.show({
 						title: '输入的金额超出收款金额',
 						type: 'default',
 						position: 'center'
 					})
 				}
+				this.showed = false;
+				// }
 			},
 			// 点击某个支付方式
 			clickItem(item, index) {
 				this.value = item.name
+				this.oob = item
 				console.log(item.int_money);
 				this.index = index;
 				let arr = 0;
@@ -141,15 +183,66 @@
 					this.money = Number(this.form.money) - arr
 				}
 				this.showed = true;
+			},
+			// 取消输入密码
+			abrogated() {
+				this.password = ''
+				this.show_psd = false;
+
+			},
+			// 确定输入密码
+			async ensured() {
+				this.form.pay_type = 1;
+				this.form.payment = [];
+				let name = []
+				let name_str = '';
+				let sum_money = 0;
+				this.list.map((v) => {
+					if (v.int_money > 0) {
+						this.form.payment.push({
+							account_id: v.account_id,
+							money: v.int_money
+						})
+						name += v.name;
+						sum_money += Number(v.int_money)
+					}
+				});
+				name_str = name.slice(',')
+				this.form.password = this.password;
+				if (this.form.money <= sum_money) {
+					if (this.id > 0) {
+						let res = await salesOrderEdit(this.id, this.form)
+						if (!res.code) {
+							uni.navigateTo({
+								url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
+							})
+						}
+					} else {
+						let res = await salesOrderAdd(this.form);
+						if (!res.code) {
+							uni.navigateTo({
+								url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
+							})
+						}
+					}
+				} else {
+					this.$refs.uToast.show({
+						title: '支付金额小于收款金额',
+						type: 'default',
+						position: 'center'
+					})
+				}
 			}
 		},
 		onLoad(option) {
 			this.obj = JSON.parse(decodeURIComponent(option.obj));
+			console.log(this.obj);
 			this.list = this.obj.paymentList;
 			this.list.map((v) => {
 				v['int_money'] = 0;
 			})
 			this.form = this.obj.form;
+			this.has_password = this.obj.has_password;
 			this.id = this.obj.id;
 		}
 	}

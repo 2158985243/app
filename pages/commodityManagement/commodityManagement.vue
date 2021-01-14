@@ -144,7 +144,7 @@
 			<goods-category :dataList='dataList' @leftNav="leftNav" :vs='vs' @rightNav="rightNav" @handlePullDown="handlePullDown"
 			 @handleLoadMore="handleLoadMore"></goods-category>
 		</view>
-
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -209,20 +209,40 @@
 				},
 				page: 1,
 				page_size: 10,
-				totalVal:{}
+				totalVal:{},
+				last_page: 0,
+				mored: {},
+				pull: false
 			}
 		},
 		methods: {
 			// 向下拉
 			handlePullDown(stopLoad) {
 				this.page = 1;
-				this.init();
+				let index = 0;
+				if (this.mored.index) {
+					this.index = this.mored.index
+				}
+				this.dataList[index].arr = [];
+				this.loadMore();
 				stopLoad ? stopLoad() : '';
 			},
 			// 向上拉
 			handleLoadMore(stopLoad) {
-				this.page++;
-				this.init()
+				if (!this.pull) {
+					if (this.page >= this.last_page) {
+						this.$refs.uToast.show({
+							title: '加载到底了',
+							type: 'default',
+							position: 'bottom'
+						})
+						this.pull = true
+				
+					} else {
+						this.page++;
+						this.loadMore()
+					}
+				}
 			},
 			// 
 			barlistChecked(e, index) {
@@ -350,8 +370,8 @@
 			},
 			// 点击左侧
 			async leftNav(e) {
-				console.log(e);
 				// this.dataList
+				this.mored = e;
 				this.vs = 1;
 				for (let i = 0; i < this.dataList.length; i++) {
 					if (this.dataList[i].arr.length == 0 && e.index == i) {
@@ -365,6 +385,20 @@
 						break;
 					}
 				}
+			},
+			async loadMore() {
+				let index = 0;
+				if (this.mored.index) {
+					this.index = this.mored.index
+				}
+				let res = await goodsList({
+					page: this.page,
+					page_size: this.page_size,
+					goods_category_id: this.mored.id,
+					keyword: this.keyword
+				});
+				this.dataList[index].arr.push(...res.data);
+				this.$set(this.dataList, index, this.dataList[index])
 			},
 			// 点击右侧
 			rightNav(e) {

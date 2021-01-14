@@ -495,7 +495,7 @@
 			left: calc(50% - 30rpx);
 			width: 60rpx;
 			height: 60rpx;
-			z-index: 999;
+			z-index: 9;
 
 			display: flex;
 			justify-content: center;

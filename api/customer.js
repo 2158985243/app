@@ -80,3 +80,66 @@ export const analyse = (data) => {
 		return error;
 	});
 };
+// 余额调整
+export const balanceAdjust = (data) => {
+	return $http.post("/customer/balance_adjust",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 积分调整
+export const pointAdjust = (data) => {
+	return $http.post("/customer/point_adjust",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 查看新增
+export const getNewCustomer = (data) => {
+	return $http.post("/customer/get_new_customer",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 会员积分记录
+export const getPointLog = (data) => {
+	return $http.post("/customer/get_point_log",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 会员余额记录
+export const getBalanceLog = (data) => {
+	return $http.post("/customer/get_balance_log",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 会员欠款记录
+export const getDebtLog = (data) => {
+	return $http.post("/customer/get_debt_log",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 会员充值
+export const recharge = (data) => {
+	return $http.post("/customer/recharge",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

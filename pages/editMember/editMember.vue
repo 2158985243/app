@@ -233,9 +233,7 @@
 				} else {
 					let res = await customerEdit(this.id, this.form)
 					if (!res.code) {
-						uni.navigateTo({
-							url: `/pages/customer/customer?id=${this.id}`
-						})
+						uni.navigateBack()
 					}
 				}
 				// url: `/pages/memberManagement/memberManagement`

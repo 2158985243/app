@@ -187,6 +187,27 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 输入密码 -->
+		<u-popup mode="center" v-model="show_psd" border-radius="20" width="70%" height="340rpx">
+			<view class="discounted">
+				<view class="discounted-title">
+					请输入会员密码
+				</view>
+				<view class="input">
+					<u-input v-model="password" :clearable="false" placeholder="请输入六位数字密码" input-align="center" type="password" :border="true" />
+				</view>
+				<view class="discounted-footer">
+					<view class="qx" @click="abrogated">
+						取消
+					</view>
+					<view class="qd" @click="ensured">
+						确定
+					</view>
+				</view>
+			</view>
+		</u-popup>
+		
+		
 		<!-- 编辑收款 -->
 		<u-popup mode="center" v-model="show_edit" border-radius="20" width="70%" height="340rpx">
 			<view class="discounted">
@@ -333,6 +354,8 @@
 				payItem: {}, //支付方式
 				show_edit: false, //启动修改金额
 				money_edit: '', //修改金额
+				show_psd:false,
+				password:''
 			}
 		},
 		computed: {
@@ -349,7 +372,7 @@
 					money = Number(this.sum_money) - Number(this.form.discount_money)
 				}
 				this.form.money = money;
-				return money
+				return money.toFixed(2)
 			}
 		},
 		methods: {
@@ -467,6 +490,14 @@
 						delete this.form.payment
 						let res = await salesOrderAdd(this.form)
 						// console.log(res);
+						this.$store.commit('commercialSpecification', {
+							specificationOfGoods: []
+						})
+						if (!res.code) {
+							uni.navigateTo({
+								url: `/pages/resaleCashier/resaleCashier`
+							})
+						}
 					} else {
 						this.form.status = 1;
 						this.activePay = 9999;
@@ -500,7 +531,7 @@
 					})
 				})
 				this.sum_money = this.sum_money.toFixed(2)
-				this.form.money = this.sum_money-this.form.discount_money
+				this.form.money = (this.sum_money - this.form.discount_money).toFixed(2)
 			},
 			// 初始化折扣
 			async discountFn() {
@@ -665,19 +696,24 @@
 					account_id: this.payItem.account_id,
 					money: this.form.money
 				})
-				let res = await salesOrderAdd(this.form)
-				if (!res.code) {
-					this.showPayment = false;
-					uni.navigateTo({
-						url: `/pages/paymentSuccess/paymentSuccess?payItem=${this.payItem.name}&money=${this.form.money}`
-					})
+				if (this.payItem.account_id == 0 && this.members.has_password == 1) {
+					this.show_psd = true;
+				} else {
+					let res = await salesOrderAdd(this.form)
+					if (!res.code) {
+						this.showPayment = false;
+						uni.redirectTo({
+							url: `/pages/paymentSuccess/paymentSuccess?payItem=${this.payItem.name}&money=${this.form.money}`
+						})
+					}
 				}
 			},
 			// 前往组合支付
 			combination() {
 				let obj = {
 					form: this.form,
-					paymentList: this.paymentList
+					paymentList: this.paymentList,
+					has_password:this.members.has_password
 				}
 				uni.navigateTo({
 					url: '/pages/combination/combination?obj=' + encodeURIComponent(JSON.stringify(obj))
@@ -697,10 +733,28 @@
 				}
 				this.form.discount_money = this.sum_money - this.form.money
 				this.show_edit = false;
+			},
+			// 取消输入密码
+			abrogated(){
+				this.password = ''
+				this.show_psd = false;
+				
+			},
+			// 确定输入密码
+			async ensured(){
+				this.form.password = this.password;
+				let res = await salesOrderAdd(this.form)
+				if (!res.code) {
+					this.show_psd = false;
+					this.showPayment = false;
+					uni.navigateTo({
+						url: `/pages/paymentSuccess/paymentSuccess?payItem=${this.payItem.name}&money=${this.form.money}`
+					})
+				}
 			}
 
 		},
-		onLoad() {
+		onLoad(query) {
 			this.pointGetDe()
 			this.accountd()
 			let date = new Date();
@@ -716,6 +770,7 @@
 			// 选择会员
 			uni.$on("memberSelect", (res) => {
 				if (res) {
+					// console.log(res);
 					this.members = res
 					this.form.customer_id = res.id;
 					this.discount = Number(res.customer_level.discount)
@@ -799,7 +854,7 @@
 			color: #FFFFFF;
 			position: fixed;
 			top: calc(80rpx+var(--status-bar-height));
-			z-index: 999;
+			z-index: 9;
 
 			.member {
 				display: flex;
@@ -818,9 +873,10 @@
 					flex-direction: row;
 					justify-content: center;
 					align-items: center;
-
+					padding-left: 20rpx;
 					text {
-						margin-right: 20rpx;
+						color: #FFFFFF;
+						margin: 0 20rpx;
 					}
 				}
 

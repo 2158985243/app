@@ -47,11 +47,11 @@
 			</view>
 		</view>
 		<view class="modulation">
-			<view class="dole">
+			<view class="dole" @click="toBalanceAdjust">
 				<u-icon name="rmb-circle-fill" color="#55aaff" size="60"></u-icon>
 				<text>余额调整</text>
 			</view>
-			<view class="dole">
+			<view class="dole" @click="toPointAdjust">
 				<u-icon name="rmb-circle-fill" color="#55aaff" size="60"></u-icon>
 				<text>积分调整</text>
 			</view>
@@ -104,7 +104,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="btn">
+		<view class="btn" @click="toRecharge">
 			会员充值
 		</view>
 	</view>
@@ -139,11 +139,30 @@
 					url: `/pages/editMember/editMember?id=${this.id}`
 				})
 			},
-			
+			// 前往会员充值
+			toRecharge(){
+				uni.navigateTo({
+					url: '/pages/recharge/recharge?obj=' + encodeURIComponent(JSON.stringify(this.form))
+				})
+			},
+			// 前往余额调整
+			toBalanceAdjust(){
+				uni.navigateTo({
+					url: '/pages/balanceAdjust/balanceAdjust?obj=' + encodeURIComponent(JSON.stringify(this.form))
+				})
+			},
+			// 前往积分调整
+			toPointAdjust(){
+				uni.navigateTo({
+					url: '/pages/pointAdjust/pointAdjust?obj=' + encodeURIComponent(JSON.stringify(this.form))
+				})
+			},
 		},
 		onLoad(query) {
 			this.id = query.id;
-			this.init(query.id);
+		},
+		onShow() {
+			this.init(this.id);
 		}
 	}
 </script>

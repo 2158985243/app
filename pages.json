@@ -1127,8 +1127,64 @@
 				}
 			}
 
+		}, {
+			"path": "pages/cancelledList/cancelledList",
+			"style": {
+				"navigationBarTitleText": "挂单列表",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/editSettleAccounts/editSettleAccounts",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/recharge/recharge",
+			"style": {
+				"navigationBarTitleText": "储值充值",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/balanceAdjust/balanceAdjust",
+			"style": {
+				"navigationBarTitleText": "余额调整",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
-	],
+	    ,{
+            "path" : "pages/pointAdjust/pointAdjust",
+            "style" :                                                                                    
+            {
+               "navigationBarTitleText": "积分调整",
+               "navigationBarBackgroundColor": "#2979ff",
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
