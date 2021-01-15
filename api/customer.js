@@ -98,7 +98,7 @@ export const pointAdjust = (data) => {
 		return error;
 	});
 };
-// 查看新增
+// 查看新增的会员
 export const getNewCustomer = (data) => {
 	return $http.post("/customer/get_new_customer",data).then((res) => {
 		return res;

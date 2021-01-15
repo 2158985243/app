@@ -1170,17 +1170,59 @@
 				}
 			}
 
+		}, {
+			"path": "pages/pointAdjust/pointAdjust",
+			"style": {
+				"navigationBarTitleText": "积分调整",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/pointLog/pointLog",
+			"style": {
+				"navigationBarTitleText": "会员积分",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		}, {
+			"path": "pages/balanceLog/balanceLog",
+			"style": {
+				"navigationBarTitleText": "会员余额",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		}, {
+			"path": "pages/debtLog/debtLog",
+			"style": {
+				"navigationBarTitleText": "还款记录",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
 		}
+
 	    ,{
-            "path" : "pages/pointAdjust/pointAdjust",
+            "path" : "pages/newCustomer/newCustomer",
             "style" :                                                                                    
             {
-               "navigationBarTitleText": "积分调整",
-               "navigationBarBackgroundColor": "#2979ff",
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
+              "navigationBarTitleText": "新增会员",
+              "navigationBarBackgroundColor": "#2979ff",
+              "navigationBarTextStyle": "white",
+              "app-plus": {
+              	"scrollIndicator": "none"
+              }
             }
             
         }

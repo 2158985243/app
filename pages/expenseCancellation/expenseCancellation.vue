@@ -7,7 +7,7 @@
 			</view>
 			<view class="article">
 				<text>支出项目</text>
-				<text>{{form.expend_item.name}}</text>
+				<text v-if="form.expend_item">{{form.expend_item.name}}</text>
 			</view>
 		</view>
 		<view class="box">
@@ -25,15 +25,15 @@
 				</view>
 				<view class="list">
 					<text>支出店铺</text>
-					<text>{{form.store.name}}</text>
+					<text v-if="form.store">{{form.store.name}}</text>
 				</view>
 				<view class="list">
 					<text>支出方式</text>
-					<text>{{form.account.name}}</text>
+					<text  v-if="form.account">{{form.account.name}}</text>
 				</view>
 				<view class="list">
 					<text>经办人</text>
-					<text class="lan">{{form.user.name}}</text>
+					<text class="lan" v-if="form.user">{{form.user.name}}</text>
 				</view>
 				<view class="list">
 					<text>支出备注</text>
@@ -69,14 +69,15 @@
 			async init(id) {
 				let res = await expendLog(id)
 				console.log(res);
-				this.form = res
+				this.form = res;
+				this.$forceUpdate()
 			},
 			async del() {
 				let _this = this
 				uni.showModal({
 					title: '提示',
 					content: '是否作废该单据？',
-					success:async function(res) {
+					success: async function(res) {
 						if (res.confirm) {
 							let res = await expendLogCancel(_this.id);
 							if (!res.code) {
@@ -87,12 +88,12 @@
 						}
 					}
 				});
-				
+
 			}
 		},
 		onLoad(query) {
 			this.id = query.id;
-			this.init(query.id);
+			this.init(this.id);
 		}
 	}
 </script>

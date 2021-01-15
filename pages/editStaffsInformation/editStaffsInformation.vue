@@ -193,7 +193,7 @@
 			async init(id) {
 				let res = await staff(id)
 				this.form = res;
-				console.log(res);
+				this.storeName = res.store.name;
 				this.fileList.push({
 					url: urls.domain + res.images
 				})

@@ -48,16 +48,22 @@
 					<text class="hui">会员充值</text>
 				</view>
 				<view class="nav-item">
-					<text class="red">{{customer_data.money}}</text>
+					<text class="red">{{customer_money[current]}}</text>
 					<text class="hui">会员消费</text>
 				</view>
-				
+
 			</view>
 			<view class="list">
 				<view class="li" v-for="(item,index) in list[current]" :key="index" @click="spendingDetails(item)">
-					<text>{{item.expend_item.name}}</text>
-					<text>{{item.ratio}}</text>
-					<view class="text">
+					<view class="left">
+						<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$cfg.domain+item.customer_image"></u-image>
+						<view class="item-li">
+							<text>{{item.customer_name}}</text>
+							<text>{{item.mobile}}</text>
+						</view>
+						
+					</view>
+					<view class="right">
 						<text>{{item.money}}</text>
 						<u-icon name="arrow-right" color="#bebebe" size="36"></u-icon>
 					</view>
@@ -175,7 +181,10 @@
 				strots: [], //店铺组
 				page: 1,
 				page_size: 10,
-				customer_data:{}
+				customer_data: {},
+				customer_money: [
+					0, 0, 0, 0, 0
+				]
 			}
 		},
 		methods: {
@@ -213,31 +222,35 @@
 			// 初始化
 			async init(timeStar, timeEnd) {
 				this.chartData = {
-					series: []
+					series: [{
+						name: '会员',
+						data: 0
+					}, {
+						name: '散客',
+						data: 0
+					}]
 				}
 				let res = await analyse({
 					start_time: timeStar,
 					end_time: timeEnd,
 					store_id: this.store_id
 				})
-				// console.log(res);
 				this.customer_data = res.customer_data
-				if (!res.rank_list) {
-					res.rank_list.map((v) => {
-						this.chartData.series.push({
-							name: v.expend_item.name,
-							data: Number(v.money)
-						})
-					})
-					this.bos[this.current] = this.chartData
+				if (res.rank_list.length > 0) {
+
 					this.list[this.current] = []
 					res.rank_list.map(v => {
-						this.list[this.current].push({
-							...v,
-							ratio: ((Number(v.money) / Number(res.total)) * 100).toFixed(2) + '%'
-						})
+						if (v.customer_id > 0) {
+							this.list[this.current].push({
+								...v,
+							})
+							this.customer_money[this.current] += Number(v.money)
+						}
+						this.total[this.current] += Number(v.money);
 					})
-					this.total[this.current] = res.total;
+					this.chartData.series[0].data = this.customer_money[this.current]
+					this.chartData.series[1].data = this.total[this.current]
+					this.bos[this.current] = this.chartData
 					// console.log(this.chartData);
 					_self.showRing("canvasRing", this.bos[this.current], this.total[this.current])
 					this.$forceUpdate()
@@ -475,33 +488,36 @@
 				width: 100%;
 				height: 500rpx;
 			}
-			
-			.nav{
+
+			.nav {
 				width: 100vw;
 				height: 100rpx;
 				margin: 40rpx 0;
 				display: flex;
 				flex-direction: row;
 				background-color: #FFFFFF;
-				.nav-item{
+
+				.nav-item {
 					flex: 1;
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
 					align-items: center;
-					.hui{
+
+					.hui {
 						color: #c8c8c8;
 						font-size: 26rpx;
 					}
-					.red{
+
+					.red {
 						color: #DD524D;
-						font-size:24rpx ;
+						font-size: 24rpx;
 					}
 				}
 			}
-			
+
 			.list {
-				margin-top: 40rpx;
+				// margin-top: 40rpx;
 				width: 100%;
 				display: flex;
 				flex-direction: column;
@@ -513,30 +529,38 @@
 					padding: 20rpx;
 					border-bottom: 0.01rem solid #e3e3e3;
 					background-color: #FFFFFF;
-
-					text {
-						flex: 1;
+					.left{
 						display: flex;
-						align-items: center;
-						justify-content: center;
+						flex-direction: row;
+						.item-li{
+							display: flex;
+							flex-direction: column;
+							margin-left: 20rpx;
+						}
+						text {
+							flex: 1;
+							display: flex;
+							// align-items: center;
+							// justify-content: center;
+						}
 					}
 
-					.text {
-						flex: 1;
+					.right {
 						display: flex;
+						flex-direction: row;
 						align-items: center;
-						justify-content: center;
+						// justify-content: center;
 
-						text {
-							display: flex;
-							justify-content: flex-end;
-						}
+						// text {
+						// 	display: flex;
+						// 	justify-content: flex-end;
+						// }
 					}
 				}
 			}
 		}
-		
-		
+
+
 		//charts
 		.qiun-padding {
 			padding: 2%;

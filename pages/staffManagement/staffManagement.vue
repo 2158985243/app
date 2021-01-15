@@ -85,25 +85,26 @@
 			handlePullDown(stopLoad) {
 				this.page = 1;
 				this.list = []
+				this.pull = false
 				this.init()
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
 
-				if (this.page >= this.last_page) {
-					if (!this.pull) {
+				if (!this.pull) {
+					if (this.page >= this.last_page) {
 						this.$refs.uToast.show({
 							title: '加载到底了',
 							type: 'default',
 							position: 'bottom'
 						})
 						this.pull = true
-					}
 
-				} else {
-					this.page++;
-					this.init()
+					} else {
+						this.page++;
+						this.init()
+					}
 				}
 			},
 			handleGoTop() {
@@ -123,9 +124,11 @@
 			}
 		},
 		onLoad() {
-			this.init();
 
 		},
+		onShow() {
+			this.init();
+		}
 
 	}
 </script>

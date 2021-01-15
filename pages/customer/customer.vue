@@ -31,11 +31,11 @@
 				</view>
 			</view>
 			<view class="information-dates">
-				<view class="integral">
+				<view class="integral" @click="toPointLog">
 					<text class="hei">积分</text>
 					<text class="lan">{{form.point}}</text>
 				</view>
-				<view class="balance">
+				<view class="balance" @click="toBalanceLog">
 					<text class="hei">余额(&yen;)</text>
 					<text class="lan">{{form.balance}}</text>
 				</view>
@@ -66,7 +66,7 @@
 
 		</view>
 		<view class="box">
-			<view class="box-item">
+			<view class="box-item" @click="toDebtLog">
 				<text class="box-left hui">欠款</text>
 				<view class="box-right">
 					<text>{{form.debt}}</text>
@@ -139,6 +139,7 @@
 					url: `/pages/editMember/editMember?id=${this.id}`
 				})
 			},
+			
 			// 前往会员充值
 			toRecharge(){
 				uni.navigateTo({
@@ -157,6 +158,26 @@
 					url: '/pages/pointAdjust/pointAdjust?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
+			// 前往积分
+			toPointLog(){
+				uni.navigateTo({
+					url: '/pages/pointLog/pointLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
+				})
+			},
+			// 前往欠款记录
+			toDebtLog(){
+				uni.navigateTo({
+					url: '/pages/debtLog/debtLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
+				})
+			},
+			// 前往余额
+			toBalanceLog(){
+				
+				uni.navigateTo({
+					url: '/pages/balanceLog/balanceLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
+				})
+			},
+			
 		},
 		onLoad(query) {
 			this.id = query.id;

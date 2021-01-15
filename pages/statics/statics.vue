@@ -204,8 +204,7 @@
 					end_time: timeEnd,
 					store_id: this.store_id
 				})
-				// console.log(res);
-				if (!res.data.length > 0) {
+				if (res.data.length > 0) {
 					res.data.map((v) => {
 						this.chartData.series.push({
 							name: v.expend_item.name,
@@ -222,7 +221,7 @@
 					})
 					this.total[this.current] = res.total;
 					// console.log(this.chartData);
-					_self.showRing("canvasRing", this.bos[this.current], this.total[this.current])
+					this.showRing("canvasRing", this.bos[this.current], this.total[this.current])
 					this.$forceUpdate()
 				}
 			},
@@ -404,7 +403,6 @@
 				this.dateAll.today5['statrTime'] = query.timeStar;
 				this.dateAll.today5['endTime'] = query.timeEnd;
 			} else {
-				console.log(1);
 				let date = new Date();
 				this.start_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
 				this.end_time = this.$u.timeFormat(date, 'yyyy-mm-dd');

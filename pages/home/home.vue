@@ -22,7 +22,7 @@
 				<text>销售额</text>
 			</view>
 			<view class="nav">
-				<view class="user">
+				<view class="user" @click="toNewCustomer">
 					<text class="padd">0</text>
 					<text class="min-size">本月新增会员</text>
 				</view>
@@ -101,6 +101,12 @@
 			toMemberManagement(){
 				uni.navigateTo({
 					url: `/pages/memberManagement/memberManagement`
+				});
+			},
+			// 本月新增会员
+			toNewCustomer(){
+				uni.navigateTo({
+					url: `/pages/newCustomer/newCustomer`
 				});
 			},
 			// 零售收银
