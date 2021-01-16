@@ -33,7 +33,7 @@
 		methods: {
 			async init() {
 				let res = await accountList()
-				console.log(res);
+				// console.log(res);
 				this.list = res
 			},
 			toAddPatternOfPayment() {

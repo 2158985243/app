@@ -75,7 +75,7 @@
 					name: '已作废',
 					status: 3
 				}],
-				page: 1,
+				page: [1, 1, 1, 1],
 				page_size: 10,
 
 				refreshType: 'custom',
@@ -88,7 +88,8 @@
 				bottom: 0,
 				autoPullUp: true,
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
-				last_page: 0,
+				last_page: [0, 0, 0, 0],
+				pull: [false, false, false, false]
 			}
 		},
 		methods: {
@@ -96,13 +97,13 @@
 			async init() {
 				let res = await allocateList({
 					status: 1,
-					page: this.page,
+					page: this.page[this.current],
 					page_size: this.page_size
 
 				})
 				// this.list.splice(0, 1, res.data);
 				this.list[this.current].push(...res.data)
-				this.last_page = res.last_page
+				this.last_page[this.current] = res.last_page
 			},
 			// 增加调拨单
 			toAddAllocate() {
@@ -163,7 +164,7 @@
 					if (this.current == 0) {
 						let res = await allocateList({
 							status: 1,
-							page: this.page,
+							page: this.page[this.current],
 							page_size: this.page_size
 
 						});
@@ -171,7 +172,7 @@
 					} else if (this.current == 1) {
 						let res = await allocateList({
 							status: 2,
-							page: this.page,
+							page: this.page[this.current],
 							page_size: this.page_size
 
 						});
@@ -179,7 +180,7 @@
 					} else if (this.current == 2) {
 						let res = await allocateList({
 							status: 0,
-							page: this.page,
+							page: this.page[this.current],
 							page_size: this.page_size
 
 						});
@@ -187,7 +188,7 @@
 					} else if (this.current == 3) {
 						let res = await allocateList({
 							status: 3,
-							page: this.page,
+							page: this.page[this.current],
 							page_size: this.page_size
 
 						});
@@ -198,23 +199,26 @@
 			},
 			// 下拉刷新
 			handlePullDown(stopLoad) {
-				this.page = 1;
-				this.list[this.current] = []
+				this.page[this.current] = 1;
+				this.list[this.current] = [];
+				this.pull[this.current] = false;
 				this.init()
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
-				if (this.page >= this.last_page) {
-					this.$refs.uToast.show({
-						title: '加载到底了',
-						type: 'default',
-						position: 'bottom'
-					})
-
-				} else {
-					this.page++;
-					this.init()
+				if (!this.pull[this.current]) {
+					if (this.page[this.current] >= this.last_page[this.current]) {
+						this.$refs.uToast.show({
+							title: '加载到底了',
+							type: 'default',
+							position: 'bottom'
+						})
+						this.pull[this.current] = true
+					} else {
+						this.page[this.current]++;
+						this.init()
+					}
 				}
 			},
 			handleGoTop() {
@@ -225,12 +229,12 @@
 		onLoad() {
 			// this.init()
 			uni.$on("refer", async (result) => {
-				this.page = 1;
+				this.page[this.current] = 1;
 				if (result) {
 					if (this.current == 0) {
 						let res = await allocateList({
 							status: 1,
-							page: this.page,
+							page: this.page[this.current],
 							page_size: this.page_size,
 							...result
 
@@ -239,7 +243,7 @@
 					} else if (this.current == 1) {
 						let res = await allocateList({
 							status: 2,
-							page: this.page,
+							page: this.page[this.current],
 							page_size: this.page_size,
 							...result
 
@@ -248,7 +252,7 @@
 					} else if (this.current == 2) {
 						let res = await allocateList({
 							status: 0,
-							page: this.page,
+							page: this.page[this.current],
 							page_size: this.page_size,
 							...result
 
@@ -257,7 +261,7 @@
 					} else if (this.current == 3) {
 						let res = await allocateList({
 							status: 3,
-							page: this.page,
+							page: this.page[this.current],
 							page_size: this.page_size,
 							...result
 

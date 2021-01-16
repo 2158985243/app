@@ -18,15 +18,15 @@
 						本月
 					</view>
 				</view>
-				<text class="num">￥{{money}}</text>
+				<text class="num">￥{{salesMoney_total[active]}}</text>
 				<text>销售额</text>
 			</view>
 			<view class="nav">
 				<view class="user" @click="toNewCustomer">
-					<text class="padd">0</text>
+					<text class="padd">{{curtormer_total}}</text>
 					<text class="min-size">本月新增会员</text>
 				</view>
-				<view class="account">
+				<view class="account" @click="toAccountManagement">
 					<u-icon class="padd" name="coupon" color="#ffffff" size="50"></u-icon>
 					<text class="min-size">账户</text>
 				</view>
@@ -57,21 +57,27 @@
 </template>
 
 <script>
+	import {
+		getNewCustomer
+	} from '../../api/customer.js'
+	import {
+		getSalesMoney
+	} from '../../api/salesOrder.js'
+	import store from '@/store'
 	export default {
 		data() {
 			return {
 				keyword: '',
-				money: 12145,
 				active: 0,
+				curtormer_total:0,
+				salesMoney_total:[0,0],
+				page:1,
+				page_size:10,
 			}
 		},
 		methods: {
 			changne(v) {
 				this.active = v;
-				this.money = 2120;
-				if (v == 0) {
-					this.money = 12145;
-				}
 			},
 			toAddMembership() {
 				uni.navigateTo({
@@ -103,6 +109,12 @@
 					url: `/pages/memberManagement/memberManagement`
 				});
 			},
+			// 账户
+			toAccountManagement(){
+				uni.navigateTo({
+					url: `/pages/accountManagement/accountManagement`
+				});
+			},
 			// 本月新增会员
 			toNewCustomer(){
 				uni.navigateTo({
@@ -121,9 +133,35 @@
 					url: `/pages/resaleCashier/resaleCashier`
 				});
 			},
+			async init(v){
+				let res = await getNewCustomer({
+					...v,
+					page: this.page,
+					page_size: this.page_size
+				})
+				this.curtormer_total = res.total;
+				let res1 = await getSalesMoney({
+					...v,
+					page: this.page,
+					page_size: this.page_size
+				})
+				let todays = this.$date.today();
+				let res2 = await getSalesMoney({
+					...todays,
+					store_id:store.state.store.store_id,
+					page: this.page,
+					page_size: this.page_size
+				})
+				this.salesMoney_total[0] = res2.money;
+				this.salesMoney_total[1] = res1. money;
+				this.$forceUpdate()
+			}
+			
 		},
 		onShow() {
-			this.keyword =''
+			this.keyword ='';
+			let dated = this.$date.thisMonth();
+			this.init(dated)
 		}
 	}
 </script>

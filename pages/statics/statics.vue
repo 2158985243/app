@@ -158,7 +158,6 @@
 
 				},
 				strots: [], //店铺组
-				page: 1,
 				page_size: 10
 			}
 		},

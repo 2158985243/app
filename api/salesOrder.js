@@ -73,3 +73,39 @@ export const unsalesList = () => {
 		return error;
 	});
 };
+// 统计详情
+export const countDetails = (data) => {
+	return $http.post("/sales/count_details",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 获取销售额
+export const getSalesMoney = (data) => {
+	return $http.post("/sales/get_sales_money",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 销售分析
+export const analyse = (data) => {
+	return $http.post("/sales/analyse",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 销售分析详情
+export const analyseDetails = (data) => {
+	return $http.post("/sales/analyseDetails",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
