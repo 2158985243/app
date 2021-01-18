@@ -64,7 +64,6 @@
 					stateGood: false
 				})
 				if (this.combina) {
-
 					uni.navigateBack({
 						delta: 3
 					})
@@ -72,7 +71,7 @@
 					uni.navigateBack()
 				} else {
 					uni.navigateBack({
-						delta: 2
+						delta:1
 					})
 				}
 			},

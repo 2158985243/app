@@ -1243,6 +1243,27 @@
 				}
 			}
 
+		}, {
+			"path": "pages/baseMoneyAdjust/baseMoneyAdjust",
+			"style": {
+				"navigationBarTitleText": "初始账户",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/accountLog/accountLog",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
 	],
 	"globalStyle": {
