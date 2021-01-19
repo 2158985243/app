@@ -43,9 +43,18 @@ export const goods = (id) => {
 		return error;
 	});
 };
-// 商品库存
+// 商品总数
 export const getTotal = () => {
 	return $http.get("/goods/get_total").then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 库存查询
+export const stockList = (data) => {
+	return $http.post("/goods/stock_list", data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示

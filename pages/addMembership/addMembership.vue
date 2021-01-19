@@ -213,9 +213,7 @@
 				} else {
 					let res = await customerAdd(this.form)
 					if (!res.code) {
-						uni.navigateTo({
-							url: `/pages/memberManagement/memberManagement`
-						})
+						uni.navigateBack()
 					}
 				}
 

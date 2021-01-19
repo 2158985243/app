@@ -75,7 +75,7 @@ export const unsalesList = () => {
 };
 // 统计详情
 export const countDetails = (data) => {
-	return $http.post("/sales/count_details",data).then((res) => {
+	return $http.post("/sales/counts_details",data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示

@@ -30,8 +30,8 @@
 					<u-icon class="padd" name="coupon" color="#ffffff" size="50"></u-icon>
 					<text class="min-size">账户</text>
 				</view>
-				<view class="repertory">
-					<text class="padd">0</text>
+				<view class="repertory" @click="toStockQuantity">
+					<text class="padd">{{goods_number}}</text>
 					<text class="min-size">库存总数</text>
 				</view>
 			</view>
@@ -63,6 +63,9 @@
 	import {
 		getSalesMoney
 	} from '../../api/salesOrder.js'
+	import {
+		getTotal
+	} from '../../api/goods.js'
 	import store from '@/store'
 	export default {
 		data() {
@@ -73,6 +76,7 @@
 				salesMoney_total:[0,0],
 				page:1,
 				page_size:10,
+				goods_number:0,
 			}
 		},
 		methods: {
@@ -102,6 +106,12 @@
 						url: `/pages/inventory/inventory?val=${res}`
 					})
 				}
+			},
+			// 库存总数
+			toStockQuantity(){
+				uni.navigateTo({
+					url: `/pages/stockQuantity/stockQuantity`
+				});
 			},
 			// 会员管理
 			toMemberManagement(){
@@ -155,6 +165,11 @@
 				this.salesMoney_total[0] = res2.money;
 				this.salesMoney_total[1] = res1. money;
 				this.$forceUpdate()
+			},
+			// 商品总数
+			async getGoodNumer(){
+				let res = await getTotal();
+				this.goods_number = res.goods_stock;
 			}
 			
 		},
@@ -162,6 +177,7 @@
 			this.keyword ='';
 			let dated = this.$date.thisMonth();
 			this.init(dated)
+			this.getGoodNumer()
 		}
 	}
 </script>

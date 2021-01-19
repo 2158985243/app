@@ -178,7 +178,7 @@
 					} else if (v.transaction_type == '会员充值') {
 						if (v.customer) {
 
-							v['declare'] = `说明:会员:充值${v.customer.name}${v.money}元,赠送{{v.reward_money}}元`;
+							v['declare'] = `说明:会员:充值${v.customer.name}${v.money}元,赠送${v.reward_money}元`;
 						}
 					} else if (v.transaction_type == '会员还款') {
 						if (v.customer) {
