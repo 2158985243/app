@@ -1,12 +1,12 @@
 <template>
 	<view class="patternOfPayment">
-		<u-navbar back-icon-color='#ffffff'  title="支付方式" :background="background" title-color="#ffffff">
+		<u-navbar back-icon-color='#ffffff' title="支付方式" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="plus" @click="toAddPatternOfPayment" color="#ffffff" class="right_icon" size="34"></u-icon>
 			</template>
 		</u-navbar>
 		<text class="tit">系统内置支付方式</text>
-		<view class="box" v-for="(item,index) in list1" :key="index">
+		<view class="box" v-for="(item,index) in list1" :key="index" @tap='toEditPatternOfPayment(item)'>
 			<text>{{item.name}}</text>
 		</view>
 		<text class="tit">用户自定义支付方式</text>
@@ -28,17 +28,18 @@
 					backgroundColor: '#2979ff'
 				},
 				list1: [],
-				list2: []
+				list2: [],
+				iq: 0,
 			}
 		},
-		
+
 		methods: {
-			
+
 			async init() {
 				let res = await accountList()
 				// console.log(res);
 				res.map((v, i) => {
-					if (v.system==1) {
+					if (v.system == 1) {
 						this.list1.push(v)
 					} else {
 						this.list2.push(v)
@@ -51,12 +52,22 @@
 				})
 			},
 			toEditPatternOfPayment(item) {
-				uni.navigateTo({
-					url: `/pages/editPatternOfPayment/editPatternOfPayment?id=${item.account_id}&name=${item.name}`
-				})
+				console.log(item);
+				if (!this.iq) {
+					if (!item.system) {
+
+						uni.navigateTo({
+							url: `/pages/editPatternOfPayment/editPatternOfPayment?id=${item.account_id}&name=${item.name}`
+						})
+					}
+				} else {
+					uni.$emit('patternOfPayment', item)
+					uni.navigateBack()
+				}
 			}
 		},
 		onLoad(query) {
+			this.iq = query.iq
 			this.init()
 		}
 	}
@@ -66,15 +77,18 @@
 	.patternOfPayment {
 		height: 100%;
 		background-color: #eeeeee;
+
 		.right_icon {
 			margin-right: 20rpx;
 		}
-		.right{
+
+		.right {
 			position: absolute;
 			right: 20rpx;
 			top: 35%;
-			
+
 		}
+
 		.tit {
 			display: block;
 			width: 100%;

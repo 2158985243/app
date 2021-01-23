@@ -7,6 +7,9 @@
 				<u-search class='search' height='60' @change="search" :show-action="false" :focus='true' :scan="true" shape="square" placeholder="请输入款号或条码快速检索库存"
 				 v-model="keyword" @Inventory="handelScan"></u-search>
 			</view>
+			<template slot="right">
+				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
+			</template>
 		</u-navbar>
 	</view>
 </template>

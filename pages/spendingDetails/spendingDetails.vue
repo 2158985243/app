@@ -26,24 +26,24 @@
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
 			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
-			<view class="list">
-				<view class="li" v-for="(item,index) in list" :key="index" @click="expenseCancellation(item)">
-					<view class="left">
-						<text>{{item.expend_item.name}}</text>
-						<view class="li-date">
-							{{item.time}} | {{item.account.name}}
+				<view class="list">
+					<view class="li" v-for="(item,index) in list" :key="index" @click="expenseCancellation(item)">
+						<view class="left">
+							<text>{{item.expend_item.name}}</text>
+							<view class="li-date">
+								{{item.time}} | {{item.account.name}}
+							</view>
+						</view>
+						<view class="right">
+							<text class="fonts">{{item.money}}</text>
+							<u-icon name="arrow-right" color="#ccc" size="34"></u-icon>
 						</view>
 					</view>
-					<view class="right">
-						<text class="fonts">{{item.money}}</text>
-						<u-icon name="arrow-right" color="#ccc" size="34"></u-icon>
-					</view>
 				</view>
-			</view>
-			<!-- 数据列表 -->
+				<!-- 数据列表 -->
 			</k-scroll-view>
 			<u-toast ref="uToast" />
-			<view class="dates-time"  v-if="show_time">
+			<view class="dates-time" v-if="show_time">
 				<view class="time-list" v-for="(item,index) in dates" :key="index" @click="clickDate(index)" :class="index == active? 'active':''">
 					{{item}}
 				</view>
@@ -93,8 +93,8 @@
 					minute: false,
 					second: false
 				},
-				
-				
+
+
 				refreshType: 'custom',
 				refreshTip: '正在下拉',
 				loadTip: '获取更多数据',
@@ -108,7 +108,7 @@
 				style_input: {
 					'background-color': '#ffffff'
 				},
-				last_page:0,
+				last_page: 0,
 			}
 		},
 		methods: {
@@ -127,13 +127,13 @@
 						type: 'default',
 						position: 'bottom'
 					})
-			
+
 				} else {
 					this.page++;
 					this.init()
 				}
 			},
-		
+
 			async init() {
 				let res = await expendLoganalyseDetails({
 					expend_item_id: this.expend_item_id,
@@ -187,70 +187,26 @@
 				this.list = []
 				this.page = 1;
 				this.page_size = 10;
-				let date = new Date();
-				let seperator1 = "-";
-				let year = date.getFullYear();
-				let month = date.getMonth() + 1;
-				let strDate = date.getDate();
-				if (month >= 1 && month <= 9) {
-					month = "0" + month;
-				}
-				if (strDate >= 0 && strDate <= 9) {
-					strDate = "0" + strDate;
-				}
+
 				if (index == 0) {
-					let currentdate = year + seperator1 + month + seperator1 + strDate;
-					this.start_time = currentdate;
-					this.end_time = currentdate;
+					let currentdate = this.$date.today()
+					this.start_time = currentdate.start_time;
+					this.end_time = currentdate.end_time;
 					this.init()
 				} else if (index == 1) {
-					let time = (new Date).getTime() - 24 * 60 * 60 * 1000;
-					let yesterday = new Date(time);
-					let month = yesterday.getMonth();
-					let day = yesterday.getDate();
-					yesterday = yesterday.getFullYear() + "-" + (yesterday.getMonth() > 9 ? (yesterday.getMonth() + 1) : "0" + (
-						yesterday.getMonth() + 1)) + "-" + (yesterday.getDate() > 9 ? (yesterday.getDate()) : "0" + (yesterday.getDate()));
-					this.start_time = yesterday;
-					this.end_time = yesterday;
+					let currentdate = this.$date.yesterday()
+					this.start_time = currentdate.start_time;
+					this.end_time = currentdate.end_time;
 					this.init()
 				} else if (index == 2) {
-					let Nowdate = new Date();
-					let WeekFirstDay = new Date(Nowdate - (Nowdate.getDay() - 1) * 86400000); // 本周第一天
-					let WeekLastDay = new Date((WeekFirstDay / 1000 + 6 * 86400) * 1000); // 本周第最后一天
-					// 本周第一天
-					let yearState = WeekFirstDay.getFullYear()
-					let monthState = (WeekFirstDay.getMonth() + 1) < 10 ? "0" + (WeekFirstDay.getMonth() + 1) : (WeekFirstDay.getMonth() +
-						1)
-					let todayState = (WeekFirstDay.getDate() < 10 ? "0" + WeekFirstDay.getDate() : WeekFirstDay.getDate())
-					let statrTime = yearState + seperator1 + monthState + seperator1 + todayState
-					// 本周第一天
-					let yearEnd = WeekLastDay.getFullYear()
-					let monthEnd = (WeekLastDay.getMonth() + 1) < 10 ? "0" + (WeekLastDay.getMonth() + 1) : (WeekLastDay.getMonth() +
-						1)
-					let todayEnd = (WeekLastDay.getDate() < 10 ? "0" + WeekLastDay.getDate() : WeekLastDay.getDate())
-					let endTime = yearEnd + seperator1 + monthEnd + seperator1 + todayEnd
-					this.start_time = statrTime;
-					this.end_time = endTime;
+					let currentdate = this.$date.thisWeek()
+					this.start_time = currentdate.start_time;
+					this.end_time = currentdate.end_time;
 					this.init()
 				} else if (index == 3) {
-					let Nowdate = new Date();
-					let MonthFirstDay = new Date(Nowdate.getFullYear(), Nowdate.getMonth(), 1);
-					let MonthNextFirstDay = new Date(Nowdate.getFullYear(), Nowdate.getMonth() + 1, 1);
-					let MonthLastDay = new Date(MonthNextFirstDay - 86400000);
-					// 本月第一天
-					let yearState = MonthFirstDay.getFullYear()
-					let monthState = (MonthFirstDay.getMonth() + 1) < 10 ? "0" + (MonthFirstDay.getMonth() + 1) : (MonthFirstDay.getMonth() +
-						1)
-					let todayState = (MonthFirstDay.getDate() < 10 ? "0" + MonthFirstDay.getDate() : MonthFirstDay.getDate())
-					let statrTime = yearState + seperator1 + monthState + seperator1 + todayState
-					// 本月最后一天
-					let yearEnd = MonthLastDay.getFullYear()
-					let monthEnd = (MonthLastDay.getMonth() + 1) < 10 ? "0" + (MonthLastDay.getMonth() + 1) : (MonthLastDay.getMonth() +
-						1)
-					let todayEnd = (MonthLastDay.getDate() < 10 ? "0" + MonthLastDay.getDate() : MonthLastDay.getDate())
-					let endTime = yearEnd + seperator1 + monthEnd + seperator1 + todayEnd
-					this.start_time = statrTime;
-					this.end_time = endTime;
+					let currentdate = this.$date.thisMonth()
+					this.start_time = currentdate.start_time;
+					this.end_time = currentdate.end_time;
 					this.init()
 				} else if (index == 4) {
 					this.showtime = true;
@@ -276,7 +232,7 @@
 		},
 		onShow() {
 			this.monthDate();
-			this.list=[]
+			this.list = []
 			this.init();
 		}
 	}
@@ -285,7 +241,7 @@
 <style scoped lang="scss">
 	.spendingDetails {
 		width: 100%;
-		height: 100%;
+		min-height: 100%;
 		display: flex;
 		flex-direction: column;
 		position: relative;
@@ -304,7 +260,7 @@
 			height: calc(100% - 200rpx - var(--status-bar-height));
 			background-color: rgba($color: #000000, $alpha: 0.3);
 			position: absolute;
-			top: calc(200rpx + var(--status-bar-height));
+			top: calc(230rpx + var(--status-bar-height));
 			display: flex;
 			flex-direction: row;
 

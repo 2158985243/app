@@ -10,7 +10,7 @@
 			 @clickItem="onClickItem"></tabControl>
 			<swiper class="swiper" @change='scollSwiper' :current='current'>
 				<swiper-item v-for="(item,index) in bos" :key='index'>
-					<scroll-view scroll-y="true" style="height: 100%;">
+					<scroll-view scroll-y="true" >
 						<refresh @interrupt="interrupt" @pushToInterrupt="pushToInterrupt" @finished="finished" @scrolltolower="g">
 							<template slot="top">
 								<view :style="'position: absolute; bottom: 0px;height: ' + 40 + 'px;line-height:' + 40 + 'px;  width: 100%;text-align: center;'">{{tip}}</view>
@@ -222,6 +222,9 @@
 					// console.log(this.chartData);
 					this.showRing("canvasRing", this.bos[this.current], this.total[this.current])
 					this.$forceUpdate()
+				}else {
+					_self.showRing("canvasRing", this.chartData, 0)
+
 				}
 			},
 			// 显示canva
@@ -233,13 +236,13 @@
 					fontSize: 11,
 					legend: true,
 					title: {
-						name: total.toFixed(2),
+						name: total == 0 ? '' :total.toFixed(2) ,
 						color: '#7cb5ec',
 						fontSize: 12 * _self.pixelRatio,
 						offsetY: -5 * _self.pixelRatio,
 					},
 					subtitle: {
-						name: '总支出',
+						name: total == 0 ? '占无数据':'总支出',
 						color: '#666666',
 						fontSize: 12 * _self.pixelRatio,
 						offsetY: 1 * _self.pixelRatio,
@@ -281,74 +284,29 @@
 			},
 			// 移动
 			async scollSwiper(e) {
-				let date = new Date();
-				let seperator1 = "-";
-				let year = date.getFullYear();
-				let month = date.getMonth() + 1;
-				let strDate = date.getDate();
 				this.current = e.target.current
-				if (month >= 1 && month <= 9) {
-					month = "0" + month;
-				}
-				if (strDate >= 0 && strDate <= 9) {
-					strDate = "0" + strDate;
-				}
 				if (this.bos[this.current].length == 0) {
 					if (this.current == 0) {
-						let currentdate = year + seperator1 + month + seperator1 + strDate;
-						this.dateAll.today1.statrTime = currentdate
-						this.dateAll.today1.endTime = currentdate
-						this.init(currentdate, currentdate)
+						let currentdate =this.$date.today()
+						this.dateAll.today1.statrTime = currentdate.start_time
+						this.dateAll.today1.endTime = currentdate.end_time
+						this.init(currentdate.start_time, currentdate.end_time)
 					} else if (this.current == 1) {
-						let time = (new Date).getTime() - 24 * 60 * 60 * 1000;
-						let yesterday = new Date(time);
-						let month = yesterday.getMonth();
-						let day = yesterday.getDate();
-						yesterday = yesterday.getFullYear() + "-" + (yesterday.getMonth() > 9 ? (yesterday.getMonth() + 1) : "0" + (
-							yesterday.getMonth() + 1)) + "-" + (yesterday.getDate() > 9 ? (yesterday.getDate()) : "0" + (yesterday.getDate()));
-						this.dateAll.today2.statrTime = yesterday
-						this.dateAll.today2.endTime = yesterday
-						this.init(yesterday, yesterday)
+						let currentdate =this.$date.yesterday()
+						this.dateAll.today2.statrTime = currentdate.start_time
+						this.dateAll.today2.endTime = currentdate.end_time
+						this.init(currentdate.start_time, currentdate.end_time)
 					} else if (this.current == 2) {
-						let Nowdate = new Date();
-						let WeekFirstDay = new Date(Nowdate - (Nowdate.getDay() - 1) * 86400000); // 本周第一天
-						let WeekLastDay = new Date((WeekFirstDay / 1000 + 6 * 86400) * 1000); // 本周第最后一天
-						// 本周第一天
-						let yearState = WeekFirstDay.getFullYear()
-						let monthState = (WeekFirstDay.getMonth() + 1) < 10 ? "0" + (WeekFirstDay.getMonth() + 1) : (WeekFirstDay.getMonth() +
-							1)
-						let todayState = (WeekFirstDay.getDate() < 10 ? "0" + WeekFirstDay.getDate() : WeekFirstDay.getDate())
-						let statrTime = yearState + seperator1 + monthState + seperator1 + todayState
-						// 本周第一天
-						let yearEnd = WeekLastDay.getFullYear()
-						let monthEnd = (WeekLastDay.getMonth() + 1) < 10 ? "0" + (WeekLastDay.getMonth() + 1) : (WeekLastDay.getMonth() +
-							1)
-						let todayEnd = (WeekLastDay.getDate() < 10 ? "0" + WeekLastDay.getDate() : WeekLastDay.getDate())
-						let endTime = yearEnd + seperator1 + monthEnd + seperator1 + todayEnd
-						this.dateAll.today3.statrTime = statrTime
-						this.dateAll.today3.endTime = endTime
-						this.init(statrTime, endTime)
+						let currentdate =this.$date.thisWeek()
+						this.dateAll.today3.statrTime = currentdate.start_time
+						this.dateAll.today3.endTime = currentdate.end_time
+						this.init(currentdate.start_time, currentdate.end_time)
 					} else if (this.current == 3) {
-						let Nowdate = new Date();
-						let MonthFirstDay = new Date(Nowdate.getFullYear(), Nowdate.getMonth(), 1);
-						let MonthNextFirstDay = new Date(Nowdate.getFullYear(), Nowdate.getMonth() + 1, 1);
-						let MonthLastDay = new Date(MonthNextFirstDay - 86400000);
-						// 本月第一天
-						let yearState = MonthFirstDay.getFullYear()
-						let monthState = (MonthFirstDay.getMonth() + 1) < 10 ? "0" + (MonthFirstDay.getMonth() + 1) : (MonthFirstDay.getMonth() +
-							1)
-						let todayState = (MonthFirstDay.getDate() < 10 ? "0" + MonthFirstDay.getDate() : MonthFirstDay.getDate())
-						let statrTime = yearState + seperator1 + monthState + seperator1 + todayState
-						// 本月最后一天
-						let yearEnd = MonthLastDay.getFullYear()
-						let monthEnd = (MonthLastDay.getMonth() + 1) < 10 ? "0" + (MonthLastDay.getMonth() + 1) : (MonthLastDay.getMonth() +
-							1)
-						let todayEnd = (MonthLastDay.getDate() < 10 ? "0" + MonthLastDay.getDate() : MonthLastDay.getDate())
-						let endTime = yearEnd + seperator1 + monthEnd + seperator1 + todayEnd
-						this.dateAll.today4.statrTime = statrTime
-						this.dateAll.today4.endTime = endTime
+						let currentdate =this.$date.thisMonth()
+						this.dateAll.today4.statrTime = currentdate.start_time
+						this.dateAll.today4.endTime = currentdate.end_time
 						// console.log(yearEnd, monthEnd, todayEnd);
-						this.init(statrTime, endTime)
+						this.init(currentdate.start_time, currentdate.end_time)
 					} else if (this.current == 4) {
 						this.dateAll.today5.statrTime = this.start_time
 						this.dateAll.today5.endTime = this.end_time

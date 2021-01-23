@@ -47,7 +47,7 @@
 					<uni-icons type="contact-filled" color="#0055ff" size="70"></uni-icons>
 					<text>零售收银</text>
 				</view>
-				<view class="account">
+				<view class="account" @click="toSalesInquiry">
 					<uni-icons type="contact-filled" color="#0055ff" size="50"></uni-icons>
 					<text>销售查询</text>
 				</view>
@@ -143,6 +143,14 @@
 					url: `/pages/resaleCashier/resaleCashier`
 				});
 			},
+			// 销售查询
+			toSalesInquiry(){
+				
+				uni.navigateTo({
+					url: `/pages/salesInquiry/salesInquiry`
+				});
+			},
+			
 			async init(v){
 				let res = await getNewCustomer({
 					...v,

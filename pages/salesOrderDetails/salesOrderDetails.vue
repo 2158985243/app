@@ -69,14 +69,14 @@
 		</view>
 		<u-toast ref="uToast" />
 		<view class="btn">
-			<view class="bod_hui">
+			<view class="bod_hui" @click="show = true">
 				退/换货
 			</view>
 			<view class="bod_lan">
 				打印小票
 			</view>
 		</view>
-
+		<u-select v-model="show" @confirm="confirm" mode="single-column" :list="list"></u-select>
 		<view class="pop" v-if="active">
 			已作废
 		</view>
@@ -101,13 +101,29 @@
 					staff: {},
 					user: {},
 				},
+				list:[
+					{
+						value:'0',
+						label:'退货'
+					},
+					{
+						value:'1',
+						label:'换货'
+					}
+				],
 				id: 0,
 				sales_payment: '',
 				sum_money: 0,
-				active: false
+				show: false,
+				active: false,
 			}
 		},
 		methods: {
+			// 
+			confirm(v){
+				console.log(v[0]);
+			},
+			// 初始化
 			async init(id) {
 				let res = await salesOrder(id)
 				this.form = res;

@@ -402,7 +402,7 @@
 			},
 			// 点击右侧
 			rightNav(e) {
-				console.log(e);
+				// console.log(e);
 				uni.navigateTo({
 					url: `/pages/commodityDetails/commodityDetails?id=${e.id}`
 				})

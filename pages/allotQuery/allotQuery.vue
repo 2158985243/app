@@ -184,7 +184,7 @@
 			this.form.start_time = date.start_time;
 			this.form.end_time = date.end_time;
 			if (store.state.store.store_id > 0) {
-				this.store_id = store.state.store.store_id;
+				this.form.store_ids.push(store.state.store.store_id);
 				this.shop = store.state.store.name
 			}
 			// 供应商
