@@ -109,3 +109,12 @@ export const analyseDetails = (data) => {
 		return error;
 	});
 };
+// 退货&换货
+export const refund = (data) => {
+	return $http.post("/sales/refund",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

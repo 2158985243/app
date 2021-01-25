@@ -1344,6 +1344,28 @@
 				}
 			}
 
+		}, {
+			"path": "pages/refund/refund",
+			"style": {
+				"navigationBarTitleText": "退货",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/barter/barter",
+			"style": {
+				"navigationBarTitleText": "换货",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
 	],
 	"globalStyle": {

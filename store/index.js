@@ -11,7 +11,9 @@ export default new Vuex.Store({
 		colorDa: [],
 		specificationOfGoods: [],
 		stateGood:false,
-		store:{}
+		store:{},
+		barterGoods: [],
+		
 	},
 	getters: {
 
@@ -30,14 +32,20 @@ export default new Vuex.Store({
 		sizerDaAction(state, context) {
 			state.sizerDa = context.sizerDa;
 		},
+		// 商品列表
 		commercialSpecification(state, context) {
 			state.specificationOfGoods = context.specificationOfGoods;
 		},
 		stateGoodFn(state,context){
 			state.stateGood = context.stateGood
 		},
+		// 店铺
 		storeFn(state,context){
 			state.store = context.store
+		},
+		// 换货
+		barterFn(state,context){
+			state.barterGoods = context.barterGoods
 		}
 	},
 	actions: {

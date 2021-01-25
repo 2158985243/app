@@ -101,14 +101,13 @@
 					staff: {},
 					user: {},
 				},
-				list:[
-					{
-						value:'0',
-						label:'退货'
+				list: [{
+						value: '0',
+						label: '退货'
 					},
 					{
-						value:'1',
-						label:'换货'
+						value: '1',
+						label: '换货'
 					}
 				],
 				id: 0,
@@ -120,8 +119,32 @@
 		},
 		methods: {
 			// 
-			confirm(v){
+			confirm(v) {
 				console.log(v[0]);
+				let bl = false;
+				this.form.sales_goods.map(v => {
+					if (v.quantity > 0) {
+						bl = true
+					}
+				})
+				if (bl) {
+					if (v[0].value == 1) {
+						uni.navigateTo({
+							url: `/pages/barter/barter?sales_goods=` + encodeURIComponent(JSON.stringify(this.form))
+						})
+					} else {
+						// refund
+						uni.navigateTo({
+							url: `/pages/refund/refund?sales_goods=` + encodeURIComponent(JSON.stringify(this.form))
+						})
+					}
+				} else {
+					this.$refs.uToast.show({
+						title: '消费单没有商品可退换',
+						type: 'default',
+						position: 'bottom'
+					})
+				}
 			},
 			// 初始化
 			async init(id) {
@@ -135,7 +158,6 @@
 						arr.push(v.account.name);
 					}
 				})
-				console.log(res);
 				if (res.status == 2) {
 					this.active = true
 				}
