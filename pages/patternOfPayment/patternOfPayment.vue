@@ -6,9 +6,11 @@
 			</template>
 		</u-navbar>
 		<text class="tit">系统内置支付方式</text>
-		<view class="box" v-for="(item,index) in list1" :key="index" @tap='toEditPatternOfPayment(item)'>
-			<text>{{item.name}}</text>
-		</view>
+		<block v-for="(item,index) in list1" :key="index">
+			<view class="box" v-if="(ip==1&&item.name!='欠款') || ip==0" @tap='toEditPatternOfPayment(item)'>
+				<text>{{item.name}}</text>
+			</view>
+		</block>
 		<text class="tit">用户自定义支付方式</text>
 		<view class="box" @tap="toEditPatternOfPayment(item)" v-for="(item,index) in list2" :key="item.id">
 			<text>{{item.name}}</text>
@@ -30,6 +32,7 @@
 				list1: [],
 				list2: [],
 				iq: 0,
+				ip: 0,
 			}
 		},
 
@@ -38,6 +41,8 @@
 			async init() {
 				let res = await accountList()
 				// console.log(res);
+				this.list1 = []
+				this.list2 = []
 				res.map((v, i) => {
 					if (v.system == 1) {
 						this.list1.push(v)
@@ -68,6 +73,12 @@
 		},
 		onLoad(query) {
 			this.iq = query.iq
+			if (query.ip) {
+				this.ip = query.ip
+
+			}
+		},
+		onShow() {
 			this.init()
 		}
 	}

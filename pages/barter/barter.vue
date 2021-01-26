@@ -50,25 +50,43 @@
 				}
 			}
 		},
+		computed:{
+			sum_money(){
+				let money = 0;
+				this.form.sales_goods.map((v) => {
+					if (v.quantity > 0) {
+						money += Number(v.real_price) * Number(v.quantity)
+					}
+				})
+				return money.toFixed(2)
+			}
+		},
 		methods: {
 			// 下一步
 			next(){
 				this.$store.commit('barterFn',{
-					barterGoods:[]
+					barterGoods:this.form
+				})
+				this.$store.commit('commercialSpecification', {
+					specificationOfGoods: []
+				})
+				uni.navigateTo({
+					url:`/pages/warenauswahl/warenauswahl`
 				})
 			},
 		},
 		onLoad(option) {
 			this.form = JSON.parse(decodeURIComponent(option.sales_goods));
+			console.log(this.form);
 			if (this.form.sales_goods.length > 0) {
-				this.sum_money = 0
+				// this.sum_money = 0
 				this.form.sales_goods.map((v) => {
-					if (v.quantity > 0) {
-						this.sum_money += Number(v.real_price) * Number(v.quantity)
-					}
+					// if (v.quantity > 0) {
+					// 	this.sum_money += Number(v.real_price) * Number(v.quantity)
+					// }
 					v['max'] = this.$u.deepClone(v.quantity);
 				})
-				this.sum_money = this.sum_money.toFixed(2);
+				// this.sum_money = this.sum_money.toFixed(2);
 				this.obj.customer_id = this.form.customer_id;
 				this.obj.staff_id = this.form.staff_id;
 				this.obj.reward_point = this.form.reward_point;

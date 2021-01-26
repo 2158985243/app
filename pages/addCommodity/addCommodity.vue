@@ -54,7 +54,7 @@
 					<u-upload width="100" height='100' upload-text='' image-mode='aspectFit' :limitType='limit' :action="action+'/api/upload'"
 					 :header="header" :name="formData.type" :form-data="formData" @on-success="onSuccess" :file-list="fileList"
 					 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="6" :show-progress="false" @on-error='onError'
-					 del-bg-color='#000000'>
+					 @long-tap="longtap" del-bg-color='#000000'>
 					</u-upload>
 				</view>
 			</view>
@@ -222,8 +222,8 @@
 				storeName: '',
 				limit: ['png', 'jpg', 'jpeg'],
 				formData: {
-					type: '',
-					path: ''
+					type: 'goods',
+					path: 'goods'
 				},
 				fileList: [],
 				action: '',
@@ -295,6 +295,10 @@
 						}
 					}
 				});
+			},
+			// 
+			longtap(item,index){
+				// console.log();
 			},
 			// 时间返回fn
 			confirmTime(v) {

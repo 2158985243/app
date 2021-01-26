@@ -127,7 +127,9 @@
 		onLoad(query) {
 			// console.log(query);
 			this.id = query.id;
-			this.init(query.id)
+		},
+		onShow() {
+			this.init(this.id)
 		}
 	}
 </script>

@@ -39,6 +39,7 @@
 						</view>
 					</view>
 				</view>
+				
 				<view class="add-goods">
 					<view class="add-left" @click="toResale">
 						<u-icon name="plus-circle-fill" color="#2979ff" size="30"></u-icon>

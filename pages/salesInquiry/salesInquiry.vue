@@ -2,7 +2,7 @@
 	<view class="salesInquiry">
 		<u-navbar back-icon-color='#ffffff' :background="background">
 			<view class="slot-wrap">
-				<u-search class='search' height='60' @change="search" :show-action="false" :focus='true' :scan="true" shape="square"
+				<u-search class='search' height='60' @change="search" :show-action="false" :scan="true" shape="square"
 				 placeholder="请输入商品信息、会员信息或销售单号" v-model="keyword" @Inventory="handelScan"></u-search>
 			</view>
 			<template slot="right">

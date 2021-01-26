@@ -227,7 +227,11 @@
 					this.init(date)
 				} else if (this.current == 4) {
 					// let date = this.$data.today();
-					this.init(this.start_time, this.end_time)
+					let date = {
+						start_time: this.start_time,
+						end_time: this.end_time
+					}
+					this.init(date)
 				}
 				stopLoad ? stopLoad() : '';
 			},
@@ -258,7 +262,11 @@
 							this.init(date)
 						} else if (this.current == 4) {
 							// let date = this.$data.today();
-							this.init(this.start_time, this.end_time)
+							let date = {
+								start_time: this.start_time,
+								end_time: this.end_time
+							}
+							this.init(date)
 						}
 					}
 				}
@@ -357,7 +365,7 @@
 			display: flex;
 			flex-direction: row;
 			position: fixed;
-			top: calc(170rpx + var(--status-bar-height));
+			top: calc(167rpx + var(--status-bar-height));
 			z-index: 99;
 			background-color: #FFFFFF;
 

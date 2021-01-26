@@ -53,8 +53,8 @@
 					<text>上传图片</text>
 					<u-upload width="100" height='100' upload-text='' image-mode='aspectFit' :limitType='limit' :action="action+'/api/upload'"
 					 :header="header" :name="formData.type" :form-data="formData" @on-success="onSuccess" :file-list="fileList"
-					 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="6" :show-progress="false" @on-error='onError'
-					 del-bg-color='#000000'>
+					 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="6" :show-progress="false" @on-error='onError' @long-tap="longtap"
+					 @on-uploaded="onUploaded" del-bg-color='#000000'>
 					</u-upload>
 				</view>
 			</view>
@@ -225,8 +225,8 @@
 				storeName: '',
 				limit: ['png', 'jpg', 'jpeg'],
 				formData: {
-					type: '',
-					path: ''
+					type: 'goods',
+					path: 'goods'
 				},
 				fileList: [],
 				action: '',
@@ -301,6 +301,14 @@
 					}
 				});
 			},
+			// 
+			onUploaded(lists, name) {
+				// console.log(lists, name);
+				// console.log(this.fileList);
+			},
+			longtap(){
+				// console.log(1);
+			},
 			// 时间返回fn
 			confirmTime(v) {
 				// console.log(v);
@@ -359,6 +367,7 @@
 						obj[key] = this.form[key];
 					}
 				}
+				console.log(obj);
 				this.$store.commit('colorDaAction', {
 					colorDa: ''
 				});
@@ -377,9 +386,20 @@
 				this.form.images = []
 				lists.map((v, i) => {
 					if (i == 0) {
-						this.form.main_image = v.response.data.url;
+						if (v.response) {
+							this.form.main_image = v.response.data.url;
+						} else {
+							let url = v.url.substr(this.$cfg.domain.length)
+							this.form.main_image = url;
+						}
 					} else {
-						this.form.images.push(v.response.data.url)
+						if (v.response) {
+							this.form.images.push(v.response.data.url)
+						} else {
+							let url = v.url.substr(this.$cfg.domain.length)
+							this.form.images.push(url)
+							
+						}
 					}
 				})
 			},
@@ -479,6 +499,9 @@
 				this.form.exchange = res.exchange;
 				this.form.exchange_value = res.exchange_value;
 				this.form.status = res.status;
+				if (!res.status) {
+					this.checked3 = false
+				}
 				this.form.brand_id = res.goods_info.brand_id;
 				if (res.goods_info.brand) {
 					this.trademark_name = res.goods_info.brand.name;
@@ -602,7 +625,7 @@
 						}
 					}
 				});
-				
+
 			}
 		},
 		onLoad(query) {

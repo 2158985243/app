@@ -16,7 +16,7 @@
 			<view class="box" @tap="itemCilck(item)" v-for="(item,index) in list" :key="item.id">
 				<text>{{item.name}}</text>
 				<view class="">
-					<text>&yen;{{item.money}}</text>
+					<text>&yen;{{item.sum_money}}</text>
 					<u-icon class='right' name="arrow-right" color="#cccccc" size="36"></u-icon>
 				</view>
 			</view>
@@ -52,9 +52,10 @@
 			async init() {
 				let res = await accountList()
 				this.sum_money = 0;
-				// console.log(res);
+				console.log(res);
 				this.list = res;
 				res.map((v) => {
+					v['sum_money'] = (Number(v.base_money) + Number(v.money)).toFixed(2)
 					this.sum_money += Number(v.money)
 				})
 			},

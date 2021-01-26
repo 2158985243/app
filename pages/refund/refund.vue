@@ -35,7 +35,7 @@
 				<text>退款原因</text>
 				<u-input placeholder='请输入退款原因' type='text' v-model="obj.refund_reason" />
 			</view>
-			<view class="form_item">
+			<view class="form_item" v-if="form.customer_id!=0">
 				<text>退返积分</text>
 				<u-input placeholder='' :disabled='true' type='text' v-model="obj.reward_point" />
 			</view>
@@ -59,8 +59,7 @@
 	export default {
 		data() {
 			return {
-				form: {},
-				sum_money: 0,
+				form: {},			
 				account_name: '',
 				obj: {
 					customer_id: 0,
@@ -79,11 +78,29 @@
 				}
 			}
 		},
+		computed:{
+			sum_money(){
+				let money = 0;
+				this.form.sales_goods.map((v) => {
+					if (v.quantity > 0) {
+						money += Number(v.real_price) * Number(v.quantity)
+					}
+				})
+				return money.toFixed(2)
+			}
+		},
 		methods: {
 			toPatternOfPayment() {
-				uni.navigateTo({
-					url: `/pages/patternOfPayment/patternOfPayment?iq=1`
-				})
+				if(this.form.customer_id==0){
+					uni.navigateTo({
+						url: `/pages/patternOfPayment/patternOfPayment?iq=1&ip=1`
+					})
+				}else{
+					uni.navigateTo({
+						url: `/pages/patternOfPayment/patternOfPayment?iq=1`
+					})
+				}
+				
 			},
 			// 确认退货
 			async sure() {
@@ -121,14 +138,9 @@
 			this.form = JSON.parse(decodeURIComponent(option.sales_goods));
 			console.log(this.form);
 			if (this.form.sales_goods.length > 0) {
-				this.sum_money = 0
 				this.form.sales_goods.map((v) => {
-					if (v.quantity > 0) {
-						this.sum_money += Number(v.real_price) * Number(v.quantity)
-					}
 					v['max'] = this.$u.deepClone(v.quantity);
 				})
-				this.sum_money = this.sum_money.toFixed(2);
 				this.obj.customer_id = this.form.customer_id;
 				this.obj.staff_id = this.form.staff_id;
 				this.obj.reward_point = this.form.reward_point;
