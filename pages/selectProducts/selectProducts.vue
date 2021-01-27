@@ -141,7 +141,7 @@
 		</view>
 		<view class="list">
 			<goods-category :dataList='dataList' @leftNav="leftNav" :saveData="saveData" :vs='vs' @rightNav="rightNav"
-			 @handlePullDown="handlePullDown" @handleLoadMore="handleLoadMore"></goods-category>
+			 :condition="condition" @handlePullDown="handlePullDown" @handleLoadMore="handleLoadMore"></goods-category>
 		</view>
 		<view class="shopping-cart">
 			<view class="goods-quantity">
@@ -162,7 +162,8 @@
 					<view class="goodsNews">
 						<text class="goods-name">{{goodsOf.name}}</text>
 						<text class="goods-number">{{goodsOf.number}}</text>
-						<text class="goods-money">&yen;{{goodsOf.retail_price}}</text>
+						<text class="goods-money" v-if="!condition">&yen;{{goodsOf.retail_price}}</text>
+						<text class="goods-money" v-else>&yen;{{goodsOf.purchase_price}}</text>
 					</view>
 				</view>
 				<u-line color="#e6e6e6" />
@@ -216,7 +217,8 @@
 							<view class="goodsNews">
 								<text class="goods-name">{{item.goodsData[0].goodsOf.name}}</text>
 								<text class="goods-number">{{item.goodsData[0].goodsOf.number}}</text>
-								<text class="goods-money">&yen;{{item.goodsData[0].goodsOf.retail_price}}</text>
+								<text class="goods-money" v-if="!condition">&yen;{{item.goodsData[0].goodsOf.retail_price}}</text>
+								<text class="goods-money" v-else>&yen;{{item.goodsData[0].goodsOf.purchase_price}}</text>
 							</view>
 						</view>
 						<view class="color-size">
@@ -322,7 +324,8 @@
 				// saveData:[]
 				last_page: 0,
 				mored: {},
-				pull: false
+				pull: false,
+				condition: 0,
 			}
 		},
 
@@ -348,7 +351,11 @@
 				let arr = store.state.specificationOfGoods;
 				arr.map(v => {
 					v.goodsData.map(v1 => {
-						num += v1.quantity * Number(v1.goodsOf.retail_price);
+						if (!this.condition) {
+							num += v1.quantity * Number(v1.goodsOf.retail_price);
+						} else {
+							num += v1.quantity * Number(v1.goodsOf.purchase_price);
+						}
 					})
 				})
 				return num;
@@ -632,6 +639,7 @@
 								name: res.name,
 								number: res.number,
 								retail_price: res.retail_price,
+								purchase_price: res.purchase_price,
 								main_image: res.main_image,
 								images: res.images
 							};
@@ -806,6 +814,9 @@
 		onLoad(query) {
 			this.init()
 			this.brand();
+			if (query.condition) {
+				this.condition = Number(query.condition);
+			}
 		}
 	}
 </script>

@@ -30,7 +30,7 @@
 							<view class="goodsNews">
 								<text class="goods-name">{{item.goodsData[0].goodsOf.name}}</text>
 								<text class="goods-number">{{item.goodsData[0].goodsOf.number}}</text>
-								<text class="goods-money">&yen;{{item.goodsData[0].goodsOf.retail_price}}</text>
+								<text class="goods-money">&yen;{{item.goodsData[0].goodsOf.purchase_price}}</text>
 							</view>
 						</view>
 						<u-icon name="trash" class='close' @click="delgoods(index)" color="#a8a8a8" size="40"></u-icon>
@@ -149,7 +149,7 @@
 						<view class="goodsNews">
 							<text class="goods-name">{{goodsDetails[0].goodsOf.name}}</text>
 							<text class="goods-number">{{goodsDetails[0].goodsOf.number}}</text>
-							<text class="goods-money">&yen;{{goodsDetails[0].goodsOf.retail_price}}</text>
+							<text class="goods-money">&yen;{{goodsDetails[0].goodsOf.purchase_price}}</text>
 						</view>
 					</view>
 					<u-line color="#e6e6e6" />
@@ -294,7 +294,7 @@
 					})
 				}
 				uni.navigateTo({
-					url: '/pages/selectProducts/selectProducts'
+					url: '/pages/selectProducts/selectProducts?condition=1'
 				})
 			},
 			// 优惠价格确定
@@ -354,8 +354,8 @@
 							moneys: []
 						})
 						v.goodsData.map((v1, i1) => {
-							_this.goodsAmount += (Number(v1.goodsOf.retail_price) * v1.quantity);
-							_this.goodsMoney[i].moneys.push(v1.goodsOf.retail_price);
+							_this.goodsAmount += (Number(v1.goodsOf.purchase_price) * v1.quantity);
+							_this.goodsMoney[i].moneys.push(v1.goodsOf.purchase_price);
 							_this.numberUnits += v1.quantity;
 						})
 						_this.$set(_this.shopping, i, _this.shopping[i])
@@ -491,6 +491,7 @@
 					// console.log(res);
 					this.account = res.name;
 					this.form.account_id = res.account_id;
+					
 				}
 			});
 		},

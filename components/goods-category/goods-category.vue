@@ -23,7 +23,8 @@
 							<view class="cont">
 								<text>{{item1.name}}</text>
 								<text class="number">{{item1.number}}</text>
-								<text class="retail">&yen;{{item1.retail_price}}</text>
+								<text class="retail" v-if="!condition">&yen;{{item1.retail_price}}</text>
+								<text class="retail" v-else >&yen;{{item1.purchase_price}}</text>
 							</view>
 							<text class="numberops" v-if="goodsQuantity[item1.id]">{{goodsQuantity[item1.id].quantity}}</text>
 						</view>
@@ -54,6 +55,10 @@
 				}
 			},
 			vs: {
+				type: Number,
+				default: 0
+			},
+			condition: {
 				type: Number,
 				default: 0
 			}

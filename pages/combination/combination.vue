@@ -15,7 +15,7 @@
 					<text>{{item.name}}</text>
 				</view>
 				<view class="right">
-					<text v-if="item.int_money>0">&yen;{{item.int_money}}</text>
+					<text v-if="item.int_money!=0">&yen; <text v-if="form.money<0">-</text>{{item.int_money}}</text>
 					<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
 				</view>
 			</view>
@@ -73,7 +73,8 @@
 <script>
 	import {
 		salesOrderAdd,
-		salesOrderEdit
+		salesOrderEdit,
+		refund
 	} from '../../api/salesOrder.js'
 	export default {
 		data() {
@@ -87,6 +88,7 @@
 				value: '',
 				id: 0,
 				show_psd: false,
+				is_refund: false, //判断是否为换货页面进入
 				password: '',
 				oob: {},
 				has_password: 0
@@ -103,13 +105,18 @@
 					if (v.int_money > 0) {
 						this.form.payment.push({
 							account_id: v.account_id,
-							money: v.int_money
+							money: this.form.money > 0 ? v.int_money : -v.int_money
 						})
-						name += v.name;
-						sum_money += Number(v.int_money)
+						name.push(v.name);
+						if (this.form.money > 0) {
+							sum_money += Number(v.int_money)
+						} else {
+							sum_money += Number(-v.int_money)
+
+						}
 					}
 				});
-				name_str = name.slice(',')
+				name_str = name.join(',')
 				if (this.form.money <= sum_money) {
 					if (this.id > 0) {
 						let res = await salesOrderEdit(this.id, this.form)
@@ -119,11 +126,21 @@
 							})
 						}
 					} else {
-						let res = await salesOrderAdd(this.form);
-						if (!res.code) {
-							uni.navigateTo({
-								url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
-							})
+						if (this.is_refund) {
+							let res = await refund(this.form);
+							if (!res.code) {
+								uni.navigateTo({
+									url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1&page=6`
+								})
+							}
+						} else {
+
+							let res = await salesOrderAdd(this.form);
+							if (!res.code) {
+								uni.navigateTo({
+									url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
+								})
+							}
 						}
 					}
 				} else {
@@ -141,15 +158,15 @@
 			// 确定
 			ensure() {
 				// if (this.oob) {
-				if (this.money <= this.form.money) {
+				if (this.money <= Math.abs(this.form.money)) {
 					let bl = 0;
 					this.list.map((v) => {
 						if (v.int_money > 0) {
 							++bl;
 							if (bl == 2) {
-								v.int_money = 0;
+								v.int_money = '';
 							} else {
-								v.int_money = (Number(this.form.money) - Number(this.money)).toFixed(2)
+								v.int_money = (Number(Math.abs(this.form.money)) - Number(this.money)).toFixed(2)
 							}
 
 						}
@@ -157,13 +174,14 @@
 					})
 					this.list[this.index].int_money = this.money
 				} else {
-					this.list[this.index].int_money = this.form.money
+					this.list[this.index].int_money = Math.abs(this.form.money)
 					this.$refs.uToast.show({
 						title: '输入的金额超出收款金额',
 						type: 'default',
 						position: 'center'
 					})
 				}
+				this.money = ''
 				this.showed = false;
 				// }
 			},
@@ -171,16 +189,17 @@
 			clickItem(item, index) {
 				this.value = item.name
 				this.oob = item
-				console.log(item.int_money);
 				this.index = index;
 				let arr = 0;
 				this.list.map((v) => {
 					arr += Number(v.int_money)
 				})
+				console.log(arr);
 				if (item.int_money > 0) {
 					this.money = item.int_money
-				} else if (arr > 0) {
-					this.money = Number(this.form.money) - arr
+					console.log('a');
+				} else if (arr > 0 && Number(Math.abs(this.form.money)) - arr > 0) {
+					this.money = Number(Math.abs(this.form.money)) - arr
 				}
 				this.showed = true;
 			},
@@ -209,7 +228,7 @@
 				});
 				name_str = name.slice(',')
 				this.form.password = this.password;
-				if (this.form.money <= sum_money) {
+				if (Math.abs(this.form.money) <= sum_money) {
 					if (this.id > 0) {
 						let res = await salesOrderEdit(this.id, this.form)
 						if (!res.code) {
@@ -238,8 +257,9 @@
 			this.obj = JSON.parse(decodeURIComponent(option.obj));
 			console.log(this.obj);
 			this.list = this.obj.paymentList;
+			this.is_refund = this.obj.is_refund;
 			this.list.map((v) => {
-				v['int_money'] = 0;
+				v['int_money'] = '';
 			})
 			this.form = this.obj.form;
 			this.has_password = this.obj.has_password;

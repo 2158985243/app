@@ -53,7 +53,7 @@
 					<text>上传图片</text>
 					<u-upload width="100" height='100' upload-text='' image-mode='aspectFit' :limitType='limit' :action="action+'/api/upload'"
 					 :header="header" :name="formData.type" :form-data="formData" @on-success="onSuccess" :file-list="fileList"
-					 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="6" :show-progress="false" @on-error='onError'
+					 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="6" :show-progress="false" @on-error='onError' :is_main="true"
 					 @long-tap="longtap" del-bg-color='#000000'>
 					</u-upload>
 				</view>
@@ -297,8 +297,28 @@
 				});
 			},
 			// 
-			longtap(item,index){
+			longtap(lists, index) {
 				// console.log();
+				this.form.images = []
+				lists.map((v, i) => {
+					if (i == 0) {
+						if (v.response) {
+							this.form.main_image = v.response.data.url;
+						} else {
+							let url = v.url.substr(this.$cfg.domain.length)
+							this.form.main_image = url;
+							console.log(url);
+						}
+					} else {
+						if (v.response) {
+							this.form.images.push(v.response.data.url)
+						} else {
+							let url = v.url.substr(this.$cfg.domain.length)
+							this.form.images.push(url)
+
+						}
+					}
+				})
 			},
 			// 时间返回fn
 			confirmTime(v) {

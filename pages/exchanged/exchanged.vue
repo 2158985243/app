@@ -37,8 +37,8 @@
 						</view>
 					</view>
 				</block>
-				<block>
-					<view class="hdr_item" v-for="(item,index) in sales.sales_goods" :key="'sales'+index">
+				<block v-for="(item,index) in sales.sales_goods" :key="'sales'+index">
+					<view class="hdr_item" v-if="item.quantity >0">
 						<view class="left">
 							<u-image width="100rpx" mode='aspectFit' class="header_image" height="100rpx" :src="$cfg.domain+item.goods.main_image"></u-image>
 							<view class="t_item">
@@ -58,7 +58,7 @@
 						<text>增加商品</text>
 					</view>
 					<view class="add-right">
-						<text>共{{sum_number}}件商品</text>
+						<text>共{{sum_number - s_number}}件商品</text>
 						<text>合计&yen;{{sum_money}}</text>
 					</view>
 				</view>
@@ -109,7 +109,7 @@
 				<view class="item-li">
 					<view class="box-left">
 						<text>换货原因</text>
-						<u-input v-model="form.discount_money" :clearable="false" height="50" placeholder='请输入换货原因' type="number" />
+						<u-input v-model="form.refund_reason" :clearable="false" height="50" placeholder='请输入换货原因' type="number" />
 					</view>
 					<view class="box-right">
 					</view>
@@ -130,7 +130,7 @@
 						<u-input v-model="test" @click="toIntegralList" height="50" :disabled="true" :placeholder='placeholder' type="number" />
 					</view>
 					<view class="box-right">
-						<text class="lan" v-if="form.reward_point>0">{{form.reward_point}}</text>
+						<text class="lan" v-if="form.reward_point!=0">{{form.reward_point}}</text>
 						<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
 					</view>
 				</view>
@@ -289,11 +289,8 @@
 				<u-icon name="edit-pen-fill" @click="showEditMoney" color="#ff557f" size="40"></u-icon>
 			</view>
 			<view class="footer-right">
-				<view class="hei" @click="sure(0)">
-					挂单
-				</view>
-				<view class="lan" @click="sure(1)">
-					收款
+				<view class="lan" @click="sure()">
+					换货
 				</view>
 			</view>
 		</view>
@@ -307,7 +304,7 @@
 		accountList
 	} from '../../api/account.js'
 	import {
-		salesOrderAdd
+		refund
 	} from '../../api/salesOrder.js'
 	import {
 		pointGetDefault
@@ -322,8 +319,9 @@
 			return {
 				rebate: 0,
 				list: [],
-				sum_number: 0,
-				sum_money: 0,
+				sum_number: 0, //商品总数
+				sum_money: 0, //商品总价格
+				s_number: 0, //换货的商品数量
 				form: {
 					customer_id: 0,
 					discount_money: '',
@@ -335,6 +333,7 @@
 					status: 0,
 					goods: [],
 					remarks: '',
+					refund_reason: '',
 
 				},
 				group: [{
@@ -403,7 +402,10 @@
 			// 优惠金额
 			inputValue(v) {
 				this.form.discount_money = v
-				this.form.money = Number(this.sum_money) - Number(this.form.discount_money)
+				this.form.money = Number(this.sum_money) - Number(this.form.discount_money);
+				if (this.form.customer_id > 0) {
+					this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
+				}
 				this.$forceUpdate()
 			},
 			// 初始化
@@ -435,8 +437,28 @@
 					})
 				})
 				this.sales = store.state.barterGoods;
+				this.form.customer_id = this.sales.customer_id
+				this.form.staff_id = this.sales.staff_id;
+				if (this.sales.staff) {
+					this.staff = this.sales.staff.name
+				}
+				if (this.sales.customer) {
+					this.members = this.sales.customer
+				}
+				this.form.money = this.sales.money
+				this.form.reward_point = this.sales.reward_point
+				this.form.pay_type = this.sales.pay_type;
+
 				console.log(this.sales);
-				this.sum_money = this.sum_money - Number(this.sales.money)
+				let s_money = 0;
+				this.s_number = 0;
+				this.sales.sales_goods.map((v) => {
+					if (v.quantity > 0) {
+						s_money += Number(v.real_price) * Number(v.quantity);
+						this.s_number += Number(v.quantity)
+					}
+				})
+				this.sum_money = this.sum_money - s_money
 				this.sum_money = this.sum_money.toFixed(2)
 				this.form.money = this.toMoney
 			},
@@ -484,12 +506,20 @@
 			},
 			// 
 			toIntegralList() {
-				uni.navigateTo({
-					url: '/pages/IntegralList/IntegralList'
-				})
+				if (this.form.customer_id != 0) {
+					uni.navigateTo({
+						url: '/pages/IntegralList/IntegralList'
+					})
+				} else {
+					this.$refs.uToast.show({
+						title: '散客没有积分！',
+						type: 'default',
+						position: 'bottom'
+					})
+				}
 			},
 			// 挂单或者收款
-			async sure(v) {
+			async sure() {
 				if (this.list.length > 0) {
 					let arr = []
 					this.list.map((v) => {
@@ -507,29 +537,27 @@
 							}
 						})
 					})
+					this.sales.sales_goods.map(v => {
+						if (v.quantity > 0) {
+
+							arr.push({
+								goods_id: v.goods_id,
+								color_id: v.color_id,
+								size_id: v.size_id,
+								price: v.price,
+								quantity: -v.quantity,
+								discount: Number(v.discount),
+								real_price: v.real_price
+							})
+						}
+					})
 					if (this.form.discount_money == "") {
 						this.form.discount_money = 0;
 					}
 					this.form.goods = arr
-					if (!v) {
-						this.form.status = 0;
-						delete this.form.payment
-						let res = await salesOrderAdd(this.form)
-						// console.log(res);
-						this.$store.commit('commercialSpecification', {
-							specificationOfGoods: []
-						})
-						if (!res.code) {
-							uni.navigateTo({
-								url: `/pages/resaleCashier/resaleCashier`
-							})
-						}
-					} else {
-						this.form.status = 1;
-						this.activePay = 9999;
-						this.showPayment = true;
-						this.payItem = {};
-					}
+					this.form.status = 1;
+					this.activePay = 9999;
+					this.showPayment = true;
 				} else {
 					this.$refs.uToast.show({
 						title: '请选择商品',
@@ -725,7 +753,7 @@
 				if (this.payItem.account_id == 0 && this.members.has_password == 1) {
 					this.show_psd = true;
 				} else {
-					let res = await salesOrderAdd(this.form)
+					let res = await refund(this.form)
 					if (!res.code) {
 						this.showPayment = false;
 						uni.redirectTo({
@@ -739,7 +767,8 @@
 				let obj = {
 					form: this.form,
 					paymentList: this.paymentList,
-					has_password: this.members.has_password
+					has_password: this.members.has_password,
+					is_refund:true
 				}
 				uni.navigateTo({
 					url: '/pages/combination/combination?obj=' + encodeURIComponent(JSON.stringify(obj))
@@ -769,7 +798,7 @@
 			// 确定输入密码
 			async ensured() {
 				this.form.password = this.password;
-				let res = await salesOrderAdd(this.form)
+				let res = await refund(this.form)
 				if (!res.code) {
 					this.show_psd = false;
 					this.showPayment = false;
@@ -848,6 +877,9 @@
 							}
 						})
 					})
+					if (this.form.customer_id > 0) {
+						this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
+					}
 					this.form.money = this.toMoney
 				}
 			});
@@ -1376,7 +1408,7 @@
 				}
 
 				.lan {
-					width: 160rpx;
+					width: 320rpx;
 					height: 100%;
 					display: flex;
 					align-items: center;

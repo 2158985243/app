@@ -382,6 +382,9 @@
 			inputValue(v) {
 				this.form.discount_money = v
 				this.form.money = Number(this.sum_money) - Number(this.form.discount_money)
+				if (this.form.customer_id > 0) {
+					this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
+				}
 				this.$forceUpdate()
 			},
 			// 初始化

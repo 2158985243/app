@@ -42,7 +42,7 @@
 						<view class="goodsNews">
 							<text class="goods-name">{{item.goodsData[0].goodsOf.name}}</text>
 							<text class="goods-number">{{item.goodsData[0].goodsOf.number}}</text>
-							<text class="goods-money">&yen;{{item.goodsData[0].goodsOf.retail_price}}</text>
+							<text class="goods-money">&yen;{{item.goodsData[0].goodsOf.purchase_price}}</text>
 						</view>
 					</view>
 				</view>
@@ -169,7 +169,8 @@
 								main_image: v.main_image,
 								name: v.name,
 								number: v.number,
-								retail_price: v.retail_price
+								purchase_price: v.purchase_price,
+								retail_price: v.retail_price,
 							},
 							goods_category_id: v.goods_category_id,
 							goods_id: v.id,
@@ -223,8 +224,8 @@
 						moneys: []
 					})
 					v.goodsData.map((v1, i1) => {
-						this.goodsAmount += (Number(v1.goodsOf.retail_price) * v1.quantity);
-						this.goodsMoney[i].moneys.push(v1.goodsOf.retail_price);
+						this.goodsAmount += (Number(v1.goodsOf.purchase_price) * v1.quantity);
+						this.goodsMoney[i].moneys.push(v1.goodsOf.purchase_price);
 						this.numberUnits += v1.quantity;
 					})
 				})

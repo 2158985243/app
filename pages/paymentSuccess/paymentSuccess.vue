@@ -32,6 +32,7 @@
 				money: 0,
 				payItem: '',
 				combina: 0,
+				page: 0,
 				recharge: 0
 			}
 		},
@@ -64,14 +65,21 @@
 					stateGood: false
 				})
 				if (this.combina) {
-					uni.navigateBack({
-						delta: 3
-					})
+					if (this.page > 0) {
+						uni.navigateBack({
+							delta: this.page
+						})
+					} else {
+
+						uni.navigateBack({
+							delta: 3
+						})
+					}
 				} else if (this.recharge) {
 					uni.navigateBack()
 				} else {
 					uni.navigateBack({
-						delta:1
+						delta: 1
 					})
 				}
 			},
@@ -89,6 +97,7 @@
 			this.money = query.money;
 			this.payItem = query.payItem;
 			this.combina = query.combina;
+			this.page = Number(query.page);
 			this.recharge = query.recharge;
 		}
 	}
