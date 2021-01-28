@@ -242,7 +242,7 @@
 						offsetY: -5 * _self.pixelRatio,
 					},
 					subtitle: {
-						name: total == 0 ? '占无数据':'总支出',
+						name: total == 0 ? '暂无数据':'总支出',
 						color: '#666666',
 						fontSize: 12 * _self.pixelRatio,
 						offsetY: 1 * _self.pixelRatio,

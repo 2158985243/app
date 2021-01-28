@@ -7,7 +7,7 @@
 				<text>经营</text>
 			</view>
 			<view class="list">
-				<view class="li">
+				<view class="li" @click="toBusinessOverview">
 					<u-icon name="red-packet-fill" color="#0055ff" size="40"></u-icon>
 					<text>营业概况</text>
 				</view>
@@ -158,6 +158,12 @@
 			toBalanceEnquiry(){
 				uni.navigateTo({
 					url: `/pages/balanceEnquiry/balanceEnquiry`
+				})
+			},
+			// 前往营业概况
+			toBusinessOverview(){
+				uni.navigateTo({
+					url: `/pages/businessOverview/businessOverview`
 				})
 			},
 			

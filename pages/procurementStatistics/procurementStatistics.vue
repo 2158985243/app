@@ -340,18 +340,21 @@
 				})
 			}
 		},
-		onLoad() {
+		onLoad(query) {
 			// 获取店铺id
 			this.strored()
 			if (store.state.store.store_id > 0) {
 				this.store_id.push(store.state.store.store_id)
 			}
+			if(query){
+				this.start_time = query.start_time;
+				this.end_time = query.end_time;
+				this.current = Number(query.current);
+			}
 			// 初始化
 			this.init(this.start_time, this.end_time);
 			uni.$on('stockEnquiries', (res) => {
-				console.log(1);
 				if (res) {
-					console.log(res);
 					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id, res.type,res.supplier_id)
 				}
 			})
