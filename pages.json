@@ -1397,6 +1397,16 @@
 				}
 			}
 
+		}, {
+			"path": "pages/cashierCheck/cashierCheck",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
 	],
 	"globalStyle": {

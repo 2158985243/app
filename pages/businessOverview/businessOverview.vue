@@ -8,9 +8,9 @@
 		<view class="mains">
 			<tabControl :current="current" :values="items" bgc="#fff" :fixed="true" :scrollFlag='true' :isEqually='true'
 			 @clickItem="onClickItem"></tabControl>
-			<swiper class="swiper" @change='scollSwiper' :current='current'>
+			<swiper class="swiper" :style="{height:height_mains + 'rpx'}" @change='scollSwiper' :current='current'>
 				<swiper-item v-for="(item,index) in list" :key='index'>
-					<scroll-view scroll-y="true">
+					<scroll-view class="scroll" :style="{height:height_mains + 'rpx'}" :scroll-y="true">
 						<!--  -->
 						<view class="item-list">
 
@@ -97,7 +97,7 @@
 								<view class="right">
 								</view>
 							</view>
-							<view class="item-box">
+							<view class="item-box" @click="toStatics">
 								<view class="left">
 									<u-icon name="red-packet-fill" color="#0055ff" size="40"></u-icon>
 									<view class="txt-li">
@@ -290,7 +290,9 @@
 
 				},
 				strots: [], //店铺组
-				page_size: 10
+				page_size: 10,
+				height_home: 0,
+				height_mains: 0,
 			}
 		},
 		methods: {
@@ -488,19 +490,63 @@
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4`
+						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4`
+					})
+				}
+
+			},
+			// 前往盘点统计
+			toStatics() {
+				if (this.current == 0) {
+					uni.navigateTo({
+						url: `/pages/statics/statics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}`
+					})
+				} else if (this.current == 1) {
+					uni.navigateTo({
+						url: `/pages/statics/statics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}`
+					})
+				} else if (this.current == 2) {
+					uni.navigateTo({
+						url: `/pages/statics/statics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=${this.current}`
+					})
+				} else if (this.current == 3) {
+					uni.navigateTo({
+						url: `/pages/statics/statics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=${this.current}`
+					})
+				} else if (this.current == 4) {
+					uni.navigateTo({
+						url: `/pages/statics/statics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=${this.current}`
 					})
 				}
 
 			},
 			// 前往商品库存
-			toStockQuantity(){
+			toStockQuantity() {
 				uni.navigateTo({
 					url: `/pages/stockQuantity/stockQuantity`
+				})
+			},
+			// 获取手机信息
+			getSystems() {
+				uni.getSystemInfo({
+					success: (res) => {
+						this.height_home = res.windowHeight * 2;
+						let info = uni.createSelectorQuery().select('.mains');
+						info.boundingClientRect(data => {
+							if (data == null) {
+								setTimeout(()=>{
+									this.getSystems()
+								}, 100)
+							} else {
+								this.height_mains = data.height * 2
+							}
+						}).exec();
+					}
 				})
 			}
 		},
 		onLoad(query) {
+
 			this.strored()
 			if (query.timeStar) {
 				this.start_time = query.timeStar;
@@ -521,7 +567,7 @@
 			this.init(this.start_time, this.end_time);
 		},
 		onShow() {
-
+			this.getSystems()
 		}
 	}
 </script>
@@ -543,18 +589,25 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+			flex: 1;
 
 			.swiper {
 				width: 100%;
 				margin-top: 84rpx;
-				height: 1500rpx;
+				// height: 1500rpx;
+				margin-bottom: 20rpx;
+
+				.scroll {
+					// width: 100%;
+					// height: 500rpx;
+				}
 			}
 
 			.item-list {
 				display: flex;
 				flex-direction: column;
 				height: 100%;
-				overflow: hidden;
+				// overflow-y: scroll;
 			}
 
 			.item-box {

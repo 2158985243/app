@@ -11,7 +11,7 @@
 					<u-icon name="red-packet-fill" color="#0055ff" size="40"></u-icon>
 					<text>营业概况</text>
 				</view>
-				<view class="li">
+				<view class="li" @click="toCashierCheck">
 					<u-icon name="red-packet-fill" color="#0055ff" size="40"></u-icon>
 					<text>收银对账</text>
 				</view>
@@ -164,6 +164,12 @@
 			toBusinessOverview(){
 				uni.navigateTo({
 					url: `/pages/businessOverview/businessOverview`
+				})
+			},
+			// 前往收银对账概况
+			toCashierCheck(){
+				uni.navigateTo({
+					url: `/pages/cashierCheck/cashierCheck`
 				})
 			},
 			

@@ -44,14 +44,18 @@
 								<text class="color-quantity">x{{itemColor.quantity}}</text>
 							</view>
 							<view class="sp-size-name-quantity">
-								<view class="sp-size" v-for="(itemSizeName,indexSizeName) in itemColor.data" :key="indexSizeName">
-									<text class="sp-size-name">{{itemSizeName.size.name}}</text>
-								</view>
+								<block v-for="(itemSizeName,indexSizeName) in itemColor.data" :key="indexSizeName">
+									<view class="sp-size" v-if="itemSizeName.quantity>0">
+										<text class="sp-size-name">{{itemSizeName.size.name}}</text>
+									</view>
+								</block>
 							</view>
 							<view class="sp-size-name-quantity">
-								<view class="sp-size" v-for="(itemSizeQuantity,indexSizeQuantity) in itemColor.data" :key="indexSizeQuantity">
-									<text class="sp-size-quantity">{{itemSizeQuantity.quantity}}</text>
-								</view>
+								<block v-for="(itemSizeQuantity,indexSizeQuantity) in itemColor.data" :key="indexSizeQuantity">
+									<view class="sp-size" v-if="itemSizeQuantity.quantity>0">
+										<text class="sp-size-quantity">{{itemSizeQuantity.quantity}}</text>
+									</view>
+								</block>
 							</view>
 						</view>
 					</view>

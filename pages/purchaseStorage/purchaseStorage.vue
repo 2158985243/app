@@ -44,14 +44,18 @@
 								<text class="color-quantity">x{{itemColor.quantity}}</text>
 							</view>
 							<view class="sp-size-name-quantity">
-								<view class="sp-size" v-for="(itemSizeName,indexSizeName) in itemColor.data" :key="indexSizeName">
-									<text class="sp-size-name">{{itemSizeName.size.name}}</text>
-								</view>
+								<block v-for="(itemSizeName,indexSizeName) in itemColor.data" :key="indexSizeName">
+									<view class="sp-size" v-if="itemSizeName.quantity>0">
+										<text class="sp-size-name">{{itemSizeName.size.name}}</text>
+									</view>
+								</block>
 							</view>
 							<view class="sp-size-name-quantity">
-								<view class="sp-size" v-for="(itemSizeQuantity,indexSizeQuantity) in itemColor.data" :key="indexSizeQuantity">
-									<text class="sp-size-quantity">{{itemSizeQuantity.quantity}}</text>
-								</view>
+								<block v-for="(itemSizeQuantity,indexSizeQuantity) in itemColor.data" :key="indexSizeQuantity">
+									<view class="sp-size" v-if="itemSizeQuantity.quantity>0">
+										<text class="sp-size-quantity">{{itemSizeQuantity.quantity}}</text>
+									</view>
+								</block>
 							</view>
 						</view>
 					</view>
@@ -239,7 +243,7 @@
 					minute: false,
 					second: false
 				},
-				
+
 				shopping: [],
 				goodsMoney: [],
 				goodsAmount: 0,
@@ -250,7 +254,7 @@
 			}
 		},
 		methods: {
-			
+
 			// 选择时间
 			confirmTime(v) {
 				this.form.business_time = `${v.year}-${v.month}-${v.day}`;
@@ -450,13 +454,16 @@
 						v.goodsData.map((v1, i1) => {
 							if (v1.quantity > 0) {
 								v1.data.map((v2, i2) => {
-									this.form.goods.push({
-										goods_id: v1.goodsOf.id,
-										color_id: v1.id,
-										size_id: v2.size.id,
-										quantity: v2.quantity,
-										price: this.goodsMoney[i].moneys[i1]
-									})
+									if (v2.quantity > 0) {
+
+										this.form.goods.push({
+											goods_id: v1.goodsOf.id,
+											color_id: v1.id,
+											size_id: v2.size.id,
+											quantity: v2.quantity,
+											price: this.goodsMoney[i].moneys[i1]
+										})
+									}
 								})
 							}
 						})
@@ -491,7 +498,7 @@
 					// console.log(res);
 					this.account = res.name;
 					this.form.account_id = res.account_id;
-					
+
 				}
 			});
 		},

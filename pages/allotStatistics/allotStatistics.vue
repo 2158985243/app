@@ -349,7 +349,7 @@
 			if (store.state.store.store_id > 0) {
 				this.store_id.push(store.state.store.store_id)
 			}
-			if(query){
+			if(query.start_time){
 				this.start_time = query.start_time;
 				this.end_time = query.end_time;
 				this.current = Number(query.current);

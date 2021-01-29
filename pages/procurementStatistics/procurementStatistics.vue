@@ -320,8 +320,10 @@
 				let start_time = ''
 				let end_time = ''
 				if (this.current == 0) {
-					start_time = this.dateAll.today1.statrTime;
-					end_time = this.dateAll.today1.endTime
+					let date = this.$date.today()
+					console.log(date);
+					start_time = date.start_time
+					end_time = date.end_time
 				} else if (this.current == 1) {
 					start_time = this.dateAll.today2.statrTime;
 					end_time = this.dateAll.today2.endTime
@@ -346,7 +348,7 @@
 			if (store.state.store.store_id > 0) {
 				this.store_id.push(store.state.store.store_id)
 			}
-			if(query){
+			if(query.start_time){
 				this.start_time = query.start_time;
 				this.end_time = query.end_time;
 				this.current = Number(query.current);

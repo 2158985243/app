@@ -373,6 +373,11 @@
 			_self = this;
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
+			if(query.start_time){
+				this.start_time = query.start_time;
+				this.end_time = query.end_time;
+				this.current = Number(query.current);
+			}
 			this.init(this.start_time, this.end_time);
 		},
 		onShow() {
