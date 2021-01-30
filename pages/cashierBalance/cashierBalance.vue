@@ -1,6 +1,6 @@
 <template>
-	<view class="cashierCheck">
-		<u-navbar back-icon-color='#ffffff' title="收银对账" :background="background" title-color="#ffffff">
+	<view class="cashierBalance">
+		<u-navbar back-icon-color='#ffffff' title="收支结余" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
 			</template>
@@ -14,39 +14,60 @@
 						<!--  -->
 						<view class="item-list">
 							<view class="header-item">
-								<view :class="active==index_user? 'active':'hd-info'" @click="itemClick(index_user)" v-for="(item_user,index_user) in item"
-								 :key='index_user'>
-									<text class="black">{{item_user.user.name}}</text>
-									<text class="lan">&yen;{{item_user.total_money}}</text>
+								<!-- <text>{{item}}</text> -->
+								<view class="hd-box">
+									<view class="left">
+										<view class="lf-item" @click="tocashierBalanceinfo(item.turnover,0)">
+											<text>营业额</text>
+											<text class="lan">&yen;{{item.turnover}}</text>
+										</view>
+										<view class="lf-item" @click="tocashierBalanceinfo(item.recharge,1)">
+											<text>充值</text>
+											<text class="lan">&yen;{{item.recharge}}</text>
+										</view>
+										<view class="lf-item" @click="tocashierBalanceinfo(item.repayment,2)">
+											<text>还款</text>
+											<text class="lan">&yen;{{item.repayment}}</text>
+										</view>
+
+									</view>
+									<view class="centont">
+										<text class="black">&yen;{{item.payments_money||0}}</text>
+										<text>收支结余</text>
+									</view>
+									<view class="right">
+										<view class="rg-item" @click="tocashierBalanceinfo(item.consume,3)">
+											<text>会员消费</text>
+											<text class="lan">&yen;{{item.consume}}</text>
+										</view>
+										<view class="rg-item" @click="tocashierBalanceinfo(item.expend,4)">
+											<text>支出</text>
+											<text class="lan">&yen;{{item.expend}}</text>
+										</view>
+										<view class="rg-item" @click="tocashierBalanceinfo(item.debt,5)">
+											<text>欠款</text>
+											<text class="lan">&yen;{{item.debt}}</text>
+										</view>
+									</view>
+								</view>
+								<text class="hui">收支结余=营业额-会员消费+充值-支出+还款-还款</text>
+							</view>
+							<view class="cont-list">
+								<view class="account-li" @click="accountClick(item_accounts)" v-for="(item_accounts,index_accounts) in item.accounts"
+								 :key="index_accounts">
+									<view class="left">
+										<text class="black" v-if="item_accounts.account">{{item_accounts.account.name}}</text>
+										<u-line-progress height='10' :percent="(Number(item_accounts.money)/item.payments)*100" :show-percent='false'
+										 :round="true" active-color="#ff9900"></u-line-progress>
+									</view>
+									<view class="right">
+										<text class="lan">&yen;{{item_accounts.money}}</text>
+										<text class="hui">共{{item_accounts.total_num}}笔，占比{{((Number(item_accounts.money)/item.payments)*100).toFixed(2)}}%</text>
+									</view>
+									<u-icon name="arrow-right" color="#cccccc" size="32"></u-icon>
 								</view>
 							</view>
-							<view class="cont-list">
-								<block v-if="item&&item[active]">
-									<block v-for="(item_account,index_account) in item[active].list" :key='index_account'>
-										<view class="account-li" @click="accountClick(item_account)" v-if="item_account.account.name != '欠款' && item_account.account.name != '储值卡'">
-											<text class="black" v-if="item_account.account">{{item_account.account.name}}</text>
-											<view class="right">
-												<text class="lan">&yen;{{item_account.money}}</text>
-												<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
-											</view>
-										</view>
-									</block>
-								</block>
-							</view>
-							<view class="cont-list">
-								<block v-if="item&&item[active]">
-									<block v-for="(item_account,index_account) in item[active].list" :key='index_account'>
-										<view class="account-li" @click="accountClick(item_account)" v-if="item_account.account.name == '欠款' || item_account.account.name == '储值卡'">
-											<text class="black" v-if="item_account.account">{{item_account.account.name}}</text>
-											<view class="right">
-												<text class="lan">&yen;{{item_account.money}}</text>
-												<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
-											</view>
-										</view>
-									</block>
-								</block>
-							</view>
-							<text class="titles"><text class="red">注：</text>储值卡和欠款金额未统计到收银汇总金额中</text>
+
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -66,7 +87,7 @@
 
 	import store from '@/store'
 	import {
-		cashierReconciliation
+		cashierBalance
 	} from '../../api/manage.js'
 	import {
 		storeList
@@ -196,13 +217,20 @@
 				this.chartData = {
 					series: []
 				}
-				let res = await cashierReconciliation({
+				let res = await cashierBalance({
 					start_time: timeStar,
 					end_time: timeEnd,
 					store_id: this.store_id
 				})
 				console.log(res);
-				this.list[this.current] = res
+
+				this.list[this.current] = res;
+				this.list[this.current]['payments'] = 0;
+				this.list[this.current]['payments_money'] = (Number(res.turnover) - Number(res.consume) + Number(res.recharge) -
+					Number(res.expend) + Number(res.repayment) - Number(res.debt)).toFixed(2);
+				res.accounts.map((v) => {
+					this.list[this.current].payments += Number(v.money)
+				})
 				this.$forceUpdate()
 
 			},
@@ -286,30 +314,58 @@
 				if (this.current == 0) {
 					let currentdate = this.$date.today()
 					uni.navigateTo({
-						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}&keys=1`
 					})
 				} else if (this.current == 1) {
 					let currentdate = this.$date.yesterday()
 					uni.navigateTo({
-						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}&keys=1`
 					})
 				} else if (this.current == 2) {
 					let currentdate = this.$date.thisWeek()
 					uni.navigateTo({
-						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}&keys=1`
 					})
 				} else if (this.current == 3) {
 					let currentdate = this.$date.thisMonth()
 					uni.navigateTo({
-						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}&keys=1`
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}`
+						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&account_id=${item.account_id}&start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&keys=1`
 					})
 				}
 
 			},
+			// 前往收支结余详情
+			tocashierBalanceinfo(type, index) {
+				if (this.current == 0) {
+					let currentdate = this.$date.today()
+					uni.navigateTo({
+						url: `/pages/cashierBalanceinfo/cashierBalanceinfo?store_id=${this.store_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}&type=${type}&index=${index}`
+					})
+				} else if (this.current == 1) {
+					let currentdate = this.$date.yesterday()
+					uni.navigateTo({
+						url: `/pages/cashierBalanceinfo/cashierBalanceinfo?store_id=${this.store_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}&type=${type}&index=${index}`
+					})
+				} else if (this.current == 2) {
+					let currentdate = this.$date.thisWeek()
+					uni.navigateTo({
+						url: `/pages/cashierBalanceinfo/cashierBalanceinfo?store_id=${this.store_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}&type=${type}&index=${index}`
+					})
+				} else if (this.current == 3) {
+					let currentdate = this.$date.thisMonth()
+					uni.navigateTo({
+						url: `/pages/cashierBalanceinfo/cashierBalanceinfo?store_id=${this.store_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}&type=${type}&index=${index}`
+					})
+				} else if (this.current == 4) {
+					uni.navigateTo({
+						url: `/pages/cashierBalanceinfo/cashierBalanceinfo?store_id=${this.store_id}&start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&type=${type}&index=${index}`
+					})
+				}
+			}
 		},
 		onLoad(query) {
 			this.strored()
@@ -338,7 +394,7 @@
 </script>
 
 <style scoped lang="scss">
-	.cashierCheck {
+	.cashierBalance {
 		width: 100%;
 		min-height: 100%;
 		display: flex;
@@ -359,6 +415,7 @@
 			.swiper {
 				width: 100%;
 				margin-top: 84rpx;
+				background-color: #FFFFFF;
 
 				.scroll {}
 
@@ -372,60 +429,93 @@
 					// overflow-y: scroll;
 					.header-item {
 						width: 100%;
-						height: 190rpx;
-						overflow-x: scroll;
+						height: 500rpx;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						background-color: #FFFFFF;
+						border-bottom: 20rpx solid #F5F5F5;
 
-						.hd-info {
-							width: 200rpx;
-							height: 170rpx;
-							margin: 10rpx;
-							border-radius: 20rpx;
-							background-color: #EEF2F5;
+						.hui {
+							color: #999999;
+							font-size: 24rpx;
+						}
+
+						.hd-box {
 							display: flex;
-							flex-direction: column;
+							flex-direction: row;
+							justify-content: space-between;
+							width: 100%;
+							height: 430rpx;
 
-							.black {
-								font-weight: 600;
+							.left {
+								width: 25%;
+								height: 100%;
+								display: flex;
+								flex-direction: column;
+
+								.lf-item {
+									flex: 1;
+									display: flex;
+									flex-direction: column;
+									align-items: center;
+									justify-content: center;
+									font-size: 28rpx;
+
+									text {
+										color: #999999;
+									}
+
+									.lan {
+										color: #007AFF;
+									}
+								}
 							}
 
-							text {
-								width: 180rpx;
-								white-space: nowrap;
-								overflow: hidden;
-								text-overflow: ellipsis;
-								padding: 20rpx 10rpx;
+							.centont {
+								width: 50%;
+								height: 100%;
+								display: flex;
+								flex-direction: column;
+								justify-content: center;
+								align-items: center;
+								font-size: 28rpx;
+
+								text {
+									color: #999999;
+									padding: 10rpx 0;
+								}
+
+								.black {
+									color: #000000;
+								}
 							}
 
-							.lan {
-								color: #729ac7;
+							.right {
+								width: 25%;
+								height: 100%;
+								display: flex;
+								flex-direction: column;
+
+								.rg-item {
+									flex: 1;
+									display: flex;
+									flex-direction: column;
+									align-items: center;
+									justify-content: center;
+									font-size: 28rpx;
+
+									text {
+										color: #999999;
+									}
+
+									.lan {
+										color: #007AFF;
+									}
+								}
 							}
 						}
 
-						.active {
-							width: 200rpx;
-							height: 170rpx;
-							margin: 10rpx;
-							border-radius: 15rpx;
-							background-color: #4D8BF3;
-							display: flex;
-							flex-direction: column;
-
-							.black {
-								font-weight: 600;
-							}
-
-							text {
-								width: 180rpx;
-								white-space: nowrap;
-								overflow: hidden;
-								text-overflow: ellipsis;
-								padding: 20rpx 10rpx;
-							}
-
-							.lan {
-								color: #FFFFFF;
-							}
-						}
 					}
 
 					.cont-list {
@@ -443,30 +533,40 @@
 							background-color: #FFFFFF;
 							border-bottom: 0.01rem solid #EEEEEE;
 
-							.black {
-								color: #000000;
+							.left {
+								width: 60%;
+								display: flex;
+								flex-direction: column;
+
+								.black {
+									color: #000000;
+									padding-bottom: 20rpx;
+								}
 							}
 
 							.right {
+								width: 40%;
 								display: flex;
-								flex-direction: row;
+								flex-direction: column;
+
+								text {
+									text-align: right;
+									font-size: 26rpx;
+								}
 
 								.lan {
 									color: #007AFF;
+									padding-bottom: 20rpx;
+								}
+
+								.hui {
+									font-size: 20rpx;
 								}
 							}
+
 						}
 					}
 
-					.titles {
-						font-size: 20rpx;
-						transform: scale(0.90);
-						display: flex;
-
-						.red {
-							color: #FF5A5F;
-						}
-					}
 				}
 
 			}

@@ -35,6 +35,24 @@ export const salesDetails = (data) => {
 		return error;
 	});
 };
+// 收支结余明细列表
+export const balanceDetails = (data) => {
+	return $http.post("/sales/cashier_balance_details", data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 收支结余明细列表2
+export const balanceList = (data) => {
+	return $http.post("/api/cashier_balance_list", data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
 // 供应商对账列表
 export const reconciliation = (data) => {
 	return $http.post("/supplier/reconciliation", data).then((res) => {

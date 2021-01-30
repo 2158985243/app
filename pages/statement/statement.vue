@@ -15,7 +15,7 @@
 					<u-icon name="red-packet-fill" color="#0055ff" size="40"></u-icon>
 					<text>收银对账</text>
 				</view>
-				<view class="li">
+				<view class="li" @click="toCashierBalance">
 					<u-icon name="red-packet-fill" color="#0055ff" size="40"></u-icon>
 					<text>收支结余</text>
 				</view>
@@ -100,7 +100,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 	</view>
 </template>
 
@@ -113,69 +113,75 @@
 		},
 		methods: {
 			// 前往支出分析
-			toStatics(){
+			toStatics() {
 				uni.navigateTo({
 					url: `/pages/statics/statics`
 				})
 			},
 			// 前往注册统计
-			toMemberRegistrationStatistics(){
+			toMemberRegistrationStatistics() {
 				uni.navigateTo({
 					url: `/pages/memberRegistrationStatistics/memberRegistrationStatistics`
 				})
 			},
 			// 前往会员分析
-			toMemberAnalysis(){
+			toMemberAnalysis() {
 				uni.navigateTo({
 					url: `/pages/memberAnalysis/memberAnalysis`
 				})
 			},
 			// 前往采购统计
-			toProcurementStatistics(){
+			toProcurementStatistics() {
 				uni.navigateTo({
 					url: `/pages/procurementStatistics/procurementStatistics`
 				})
 			},
 			// 前往销售统计
-			toSalesStatistics(){
+			toSalesStatistics() {
 				uni.navigateTo({
 					url: `/pages/salesStatistics/salesStatistics`
 				})
 			},
 			// 前往调拨统计
-			toAllotStatistics(){
+			toAllotStatistics() {
 				uni.navigateTo({
 					url: `/pages/allotStatistics/allotStatistics`
 				})
 			},
 			// 前往盘点统计
-			toCheckStatistics(){
+			toCheckStatistics() {
 				uni.navigateTo({
 					url: `/pages/checkStatistics/checkStatistics`
 				})
 			},
 			// 前往余额查询
-			toBalanceEnquiry(){
+			toBalanceEnquiry() {
 				uni.navigateTo({
 					url: `/pages/balanceEnquiry/balanceEnquiry`
 				})
 			},
 			// 前往营业概况
-			toBusinessOverview(){
+			toBusinessOverview() {
 				uni.navigateTo({
 					url: `/pages/businessOverview/businessOverview`
 				})
 			},
 			// 前往收银对账概况
-			toCashierCheck(){
+			toCashierCheck() {
 				uni.navigateTo({
 					url: `/pages/cashierCheck/cashierCheck`
 				})
 			},
-			
+			// 前往收支结余
+			toCashierBalance() {
+				uni.navigateTo({
+					url: `/pages/cashierBalance/cashierBalance`
+				})
+			},
+
 		},
 		onLoad() {
-			
+
 		}
 	}
 </script>
@@ -193,54 +199,62 @@
 		background-color: #f2f2f2;
 		display: flex;
 		flex-direction: column;
-		.box{
+
+		.box {
 			width: 100%;
 			display: flex;
 			flex-direction: column;
 			background-color: #FFFFFF;
 			margin-bottom: 20rpx;
-			.nav{
+
+			.nav {
 				width: 100%;
 				display: flex;
 				flex-direction: row;
 				align-items: center;
 				padding: 10rpx;
 				border-bottom: 0.01rem solid #E5E5E5;
-				.color1{
+
+				.color1 {
 					background-color: #0055ff;
 					width: 8rpx;
 					height: 20rpx;
 					display: flex;
 					margin: 0 10rpx;
 				}
-				.color2{
+
+				.color2 {
 					background-color: #ffa322;
 					width: 8rpx;
 					height: 20rpx;
 					display: flex;
 					margin: 0 10rpx;
 				}
-				.color3{
+
+				.color3 {
 					background-color: #11c8ff;
 					width: 8rpx;
 					height: 20rpx;
 					display: flex;
 					margin: 0 10rpx;
 				}
-				.color4{
+
+				.color4 {
 					background-color: #ff551d;
 					width: 8rpx;
 					height: 20rpx;
 					display: flex;
 					margin: 0 10rpx;
 				}
-				
+
 			}
-			.list{
+
+			.list {
 				width: 100%;
 				display: flex;
 				flex-direction: row;
-				.li{
+
+				.li {
 					flex: 1;
 					width: 100%;
 					display: flex;
@@ -249,12 +263,14 @@
 					align-items: center;
 					border-right: 0.01rem solid #E5E5E5;
 					padding: 20rpx 0;
-					text{
+
+					text {
 						margin-top: 10rpx;
 						font-size: 24rpx;
 					}
 				}
-				.last{
+
+				.last {
 					border-right: 0rem solid #E5E5E5;
 				}
 			}
