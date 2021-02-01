@@ -252,11 +252,13 @@
 			/// 开始时间
 			confirmTime(v) {
 				this.start_time = `${v.year}-${v.month}-${v.day}`;
+				this.dateAll.today5.statrTime = this.start_time 
 				this.showtime1 = true;
 			},
 			// 结束时间
 			async confirmTime1(v) {
 				this.end_time = `${v.year}-${v.month}-${v.day}`;
+				this.dateAll.today5.endTime = this.end_time
 				this.init(this.start_time, this.end_time);
 			},
 			// 获取手机信息

@@ -149,30 +149,10 @@
 				this.sumMoney = res.total_money
 				this.last_page = res.last_page
 			},
-			// 获取当前月份
-			monthDate() {
-				let seperator1 = "-";
-				let Nowdate = new Date();
-				let MonthFirstDay = new Date(Nowdate.getFullYear(), Nowdate.getMonth(), 1);
-				let MonthNextFirstDay = new Date(Nowdate.getFullYear(), Nowdate.getMonth() + 1, 1);
-				let MonthLastDay = new Date(MonthNextFirstDay - 86400000);
-				// 本月第一天
-				let yearState = MonthFirstDay.getFullYear()
-				let monthState = (MonthFirstDay.getMonth() + 1) < 10 ? "0" + (MonthFirstDay.getMonth() + 1) : (MonthFirstDay.getMonth() +
-					1)
-				let todayState = (MonthFirstDay.getDate() < 10 ? "0" + MonthFirstDay.getDate() : MonthFirstDay.getDate())
-				let statrTime = yearState + seperator1 + monthState + seperator1 + todayState
-				// 本月最后一天
-				let yearEnd = MonthLastDay.getFullYear()
-				let monthEnd = (MonthLastDay.getMonth() + 1) < 10 ? "0" + (MonthLastDay.getMonth() + 1) : (MonthLastDay.getMonth() +
-					1)
-				let todayEnd = (MonthLastDay.getDate() < 10 ? "0" + MonthLastDay.getDate() : MonthLastDay.getDate())
-				let endTime = yearEnd + seperator1 + monthEnd + seperator1 + todayEnd
-				this.start_time = statrTime;
-				this.end_time = endTime;
-			},
+		
 			// 前往项目详情
 			expenseCancellation(item) {
+				
 				uni.navigateTo({
 					url: `/pages/expenseCancellation/expenseCancellation?id=${item.id}`
 				})
@@ -229,9 +209,10 @@
 			this.store_id = query.store_id;
 			this.expend_item_id = query.expend_item_id;
 			this.name = query.name;
+			this.start_time = query.start_time;
+			this.end_time = query.end_time;
 		},
 		onShow() {
-			this.monthDate();
 			this.list = []
 			this.init();
 		}

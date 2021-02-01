@@ -146,7 +146,7 @@ $http.dataFactory = async function(res) {
 				errMsg: (httpData.info || httpData.msg)
 			});
 		} else { //其他错误提示
-			if (res.isPrompt) {
+			if (res.isPrompt && typeof httpData.msg == 'string' && httpData.msg.trim() != '') {
 				uni.showToast({
 					title: httpData.info || httpData.msg,
 					icon: "none",

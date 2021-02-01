@@ -34,7 +34,7 @@
 							<text>{{item.date}} {{item.week}}</text>
 							<text>合计&yen;{{item.money}}</text>
 						</view>
-						<view class="li-list" v-for="(item_gd,index_gd) in item.list" :key="index_gd" @click="expenseCancellation(item_gd)">
+						<view class="li-list" v-for="(item_gd,index_gd) in item.list" :key="index_gd" >
 							<view class="left">
 								<view class="left-it">
 									<text class="item-name">{{item_gd.type_name}}</text>
@@ -268,12 +268,7 @@
 				})
 
 			},
-			// 前往项目详情
-			expenseCancellation(item) {
-				uni.navigateTo({
-					url: `/pages/salesOrderDetails/salesOrderDetails?id=${item.id}`
-				})
-			},
+			
 			// 选择时间
 			selectTime() {
 				this.show_time = !this.show_time

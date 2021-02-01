@@ -1437,8 +1437,53 @@
 				}
 			}
 
+		}, {
+			"path": "pages/warenverbrauch/warenverbrauch",
+			"style": {
+				"navigationBarTitleText": "商品消费详情",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/storedDetails/storedDetails",
+			"style": {
+				"navigationBarTitleText": "储值详情",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/repayment/repayment",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
-	],
+	    ,{
+            "path" : "pages/repaymentDetails/repaymentDetails",
+            "style" :                                                                                    
+            {
+               "navigationBarTitleText": "还款详情",
+               "navigationBarBackgroundColor": "#2979ff",
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

@@ -37,7 +37,7 @@ export const salesDetails = (data) => {
 };
 // 收支结余明细列表
 export const balanceDetails = (data) => {
-	return $http.post("/sales/cashier_balance_details", data).then((res) => {
+	return $http.post("/api/cashier_balance_details", data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示

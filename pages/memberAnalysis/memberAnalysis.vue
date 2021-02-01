@@ -279,7 +279,7 @@
 						offsetY: -5 * _self.pixelRatio,
 					},
 					subtitle: {
-						name: total == 0 ?'占无数据':'营业额',
+						name: total == 0 ?'暂无数据':'营业额',
 						color: '#666666',
 						fontSize: 12 * _self.pixelRatio,
 						offsetY: 1 * _self.pixelRatio,
@@ -384,9 +384,7 @@
 			},
 			// 前往支出详情
 			spendingDetails(val) {
-				uni.navigateTo({
-					url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}`
-				})
+				
 			}
 		},
 		onLoad(query) {

@@ -17,15 +17,15 @@
 								<!-- <text>{{item}}</text> -->
 								<view class="hd-box">
 									<view class="left">
-										<view class="lf-item" @click="tocashierBalanceinfo(item.turnover,0)">
+										<view class="lf-item" @click="tocashierBalanceinfo('turnover',0)">
 											<text>营业额</text>
 											<text class="lan">&yen;{{item.turnover}}</text>
 										</view>
-										<view class="lf-item" @click="tocashierBalanceinfo(item.recharge,1)">
+										<view class="lf-item" @click="tocashierBalanceinfo('recharge',1)">
 											<text>充值</text>
 											<text class="lan">&yen;{{item.recharge}}</text>
 										</view>
-										<view class="lf-item" @click="tocashierBalanceinfo(item.repayment,2)">
+										<view class="lf-item" @click="tocashierBalanceinfo('repayment',2)">
 											<text>还款</text>
 											<text class="lan">&yen;{{item.repayment}}</text>
 										</view>
@@ -36,21 +36,21 @@
 										<text>收支结余</text>
 									</view>
 									<view class="right">
-										<view class="rg-item" @click="tocashierBalanceinfo(item.consume,3)">
+										<view class="rg-item" @click="tocashierBalanceinfo('consume',3)">
 											<text>会员消费</text>
 											<text class="lan">&yen;{{item.consume}}</text>
 										</view>
-										<view class="rg-item" @click="tocashierBalanceinfo(item.expend,4)">
+										<view class="rg-item" @click="tocashierBalanceinfo('expend',4)">
 											<text>支出</text>
 											<text class="lan">&yen;{{item.expend}}</text>
 										</view>
-										<view class="rg-item" @click="tocashierBalanceinfo(item.debt,5)">
+										<view class="rg-item" @click="tocashierBalanceinfo('debt',5)">
 											<text>欠款</text>
 											<text class="lan">&yen;{{item.debt}}</text>
 										</view>
 									</view>
 								</view>
-								<text class="hui">收支结余=营业额-会员消费+充值-支出+还款-还款</text>
+								<text class="hui">收支结余=营业额-会员消费+充值-支出+还款-欠款</text>
 							</view>
 							<view class="cont-list">
 								<view class="account-li" @click="accountClick(item_accounts)" v-for="(item_accounts,index_accounts) in item.accounts"
@@ -178,6 +178,8 @@
 				height_home: 0,
 				height_mains: 0,
 				active: 0,
+				type: [],
+
 			}
 		},
 		methods: {
@@ -223,7 +225,26 @@
 					store_id: this.store_id
 				})
 				console.log(res);
-
+				this.type = []
+				this.type.push({
+					money: res.turnover
+				});
+				this.type.push({
+					money: res.recharge
+				});
+				this.type.push({
+					money: res.repayment
+				});
+				this.type.push({
+					money: res.consume
+				});
+				this.type.push({
+					money: res.expend
+				});
+				this.type.push({
+					money: res.debt
+				});
+				console.log(this.type);
 				this.list[this.current] = res;
 				this.list[this.current]['payments'] = 0;
 				this.list[this.current]['payments_money'] = (Number(res.turnover) - Number(res.consume) + Number(res.recharge) -
@@ -280,11 +301,13 @@
 			/// 开始时间
 			confirmTime(v) {
 				this.start_time = `${v.year}-${v.month}-${v.day}`;
+				this.dateAll.today5.statrTime = this.start_time
 				this.showtime1 = true;
 			},
 			// 结束时间
 			async confirmTime1(v) {
 				this.end_time = `${v.year}-${v.month}-${v.day}`;
+				this.dateAll.today5.endTime = this.end_time
 				this.init(this.start_time, this.end_time);
 			},
 			// 获取手机信息
@@ -339,32 +362,73 @@
 
 			},
 			// 前往收支结余详情
-			tocashierBalanceinfo(type, index) {
+			tocashierBalanceinfo(types, index) {
+				// this.type
+				let obj = {}
 				if (this.current == 0) {
 					let currentdate = this.$date.today()
-					uni.navigateTo({
-						url: `/pages/cashierBalanceinfo/cashierBalanceinfo?store_id=${this.store_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}&type=${type}&index=${index}`
-					})
+					obj = {
+						type: this.type,
+						form: {
+							store_id: this.store_id,
+							start_time: currentdate.start_time,
+							end_time: currentdate.end_time,
+							type: types
+						},
+						index: index
+					}
 				} else if (this.current == 1) {
 					let currentdate = this.$date.yesterday()
-					uni.navigateTo({
-						url: `/pages/cashierBalanceinfo/cashierBalanceinfo?store_id=${this.store_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}&type=${type}&index=${index}`
-					})
+					obj = {
+						type: this.type,
+						form: {
+							store_id: this.store_id,
+							start_time: currentdate.start_time,
+							end_time: currentdate.end_time,
+							type: types
+						},
+						index: index
+					}
 				} else if (this.current == 2) {
 					let currentdate = this.$date.thisWeek()
-					uni.navigateTo({
-						url: `/pages/cashierBalanceinfo/cashierBalanceinfo?store_id=${this.store_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}&type=${type}&index=${index}`
-					})
+					obj = {
+						type: this.type,
+						form: {
+							store_id: this.store_id,
+							start_time: currentdate.start_time,
+							end_time: currentdate.end_time,
+							type: types
+						},
+						index: index
+					}
 				} else if (this.current == 3) {
 					let currentdate = this.$date.thisMonth()
-					uni.navigateTo({
-						url: `/pages/cashierBalanceinfo/cashierBalanceinfo?store_id=${this.store_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}&type=${type}&index=${index}`
-					})
+					obj = {
+						type: this.type,
+						form: {
+							store_id: this.store_id,
+							start_time: currentdate.start_time,
+							end_time: currentdate.end_time,
+							type: types
+						},
+						index: index
+					}
 				} else if (this.current == 4) {
-					uni.navigateTo({
-						url: `/pages/cashierBalanceinfo/cashierBalanceinfo?store_id=${this.store_id}&start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&type=${type}&index=${index}`
-					})
-				}
+
+					obj = {
+						type: this.type,
+						form: {
+							store_id: this.store_id,
+							start_time: this.dateAll.today5.statrTime,
+							end_time: this.dateAll.today5.endTime,
+							type: types
+						},
+						index: index
+					}
+				};
+				uni.navigateTo({
+					url: '/pages/cashierBalanceinfo/cashierBalanceinfo?item=' + encodeURIComponent(JSON.stringify(obj))
+				})
 			}
 		},
 		onLoad(query) {

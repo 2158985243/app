@@ -52,13 +52,13 @@
 				height: 0,
 				bottom: 0,
 				autoPullUp: true,
-				stopPullDown: true, 
+				stopPullDown: true,
 				last_page: 0,
 				pull: false,
-				store_id:0
+				store_id: 0
 			}
 		},
-		
+
 		methods: {
 			async init(store_id, date) {
 				let res = await countDetails({
@@ -81,24 +81,24 @@
 			handlePullDown(stopLoad) {
 				this.page = 1;
 				this.list = []
-				this.init( this.store_id,this.date)
+				this.init(this.store_id, this.date)
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
-				if (this.page >= this.last_page) {
-					if (!this.pull) {
+				if (!this.pull) {
+					if (this.page >= this.last_page) {
 						this.$refs.uToast.show({
 							title: '加载到底了',
 							type: 'default',
 							position: 'bottom'
 						})
 						this.pull = true
+
+					} else {
+						this.page++;
+						this.init(this.store_id, this.date)
 					}
-			
-				} else {
-					this.page++;
-					this.init(this.store_id,this.date)
 				}
 			},
 		},

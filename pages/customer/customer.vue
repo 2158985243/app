@@ -66,7 +66,7 @@
 
 		</view>
 		<view class="box">
-			<view class="box-item" @click="toDebtLog">
+			<view class="box-item" @click="toDebtLog" v-if="form.debt>0">
 				<text class="box-left hui">欠款</text>
 				<view class="box-right">
 					<text>{{form.debt}}</text>
@@ -80,7 +80,7 @@
 					<u-icon name="arrow-right" color="#cccccc" size="34"></u-icon>
 				</view>
 			</view>
-			
+
 		</view>
 		<view class="box">
 			<view class="box-item">
@@ -134,50 +134,51 @@
 				this.form.mobile = this.form.mobile.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
 			},
 			// 前往编辑
-			toEditCustomer(){
+			toEditCustomer() {
 				uni.navigateTo({
 					url: `/pages/editMember/editMember?id=${this.id}`
 				})
 			},
-			
+
 			// 前往会员充值
-			toRecharge(){
+			toRecharge() {
 				uni.navigateTo({
 					url: '/pages/recharge/recharge?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
 			// 前往余额调整
-			toBalanceAdjust(){
+			toBalanceAdjust() {
 				uni.navigateTo({
 					url: '/pages/balanceAdjust/balanceAdjust?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
 			// 前往积分调整
-			toPointAdjust(){
+			toPointAdjust() {
 				uni.navigateTo({
 					url: '/pages/pointAdjust/pointAdjust?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
 			// 前往积分
-			toPointLog(){
+			toPointLog() {
 				uni.navigateTo({
 					url: '/pages/pointLog/pointLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
 			// 前往欠款记录
-			toDebtLog(){
+			toDebtLog() {
 				uni.navigateTo({
-					url: '/pages/debtLog/debtLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
+					url: '/pages/repayment/repayment?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
+				
 			},
 			// 前往余额
-			toBalanceLog(){
-				
+			toBalanceLog() {
+
 				uni.navigateTo({
 					url: '/pages/balanceLog/balanceLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
-			
+
 		},
 		onLoad(query) {
 			this.id = query.id;
@@ -196,6 +197,7 @@
 		flex-direction: column;
 		background-color: #F8F8F8;
 		align-items: center;
+
 		.right_icon {
 			margin-right: 30rpx;
 		}
@@ -336,40 +338,46 @@
 				font-size: 20rpx;
 			}
 		}
-		
-		.box{
+
+		.box {
 			width: 100%;
 			display: flex;
 			flex-direction: column;
 			margin-bottom: 20rpx;
-			.box-item{
+
+			.box-item {
 				width: 100%;
 				padding: 20rpx;
 				display: flex;
 				justify-content: space-between;
 				border-bottom: 0.01rem solid #E5E5E5;
 				background-color: #FFFFFF;
-				.box-left{
+
+				.box-left {
 					display: flex;
 					flex-direction: row;
 				}
-				.hui{
+
+				.hui {
 					color: #666666;
 				}
-				.lan{
+
+				.lan {
 					color: #007AFF;
 				}
-				.sett{
+
+				.sett {
 					margin-right: 20rpx;
 				}
-				.box-right{
+
+				.box-right {
 					display: flex;
 					flex-direction: row;
 				}
 			}
 		}
-		
-		.btn{
+
+		.btn {
 			width: 80%;
 			height: 80rpx;
 			border-radius: 10rpx;

@@ -53,7 +53,7 @@
 						<view class="bg" v-if="item.debt>0">
 							欠款
 						</view>
-						<view class="bg" v-if="item.resume_times">
+						<view class="bg" v-if="item.expired">
 							过期
 						</view>
 					</view>
@@ -175,6 +175,9 @@
 					page: this.page,
 					page_size: this.page_size
 				})
+				if(this.page==1){
+					this.list = []
+				}
 				let today = ((new Date()).getTime()) / 1000;
 				res.data.map((v) => {
 					let e_time = 0;
@@ -230,7 +233,6 @@
 		onLoad() {
 		},
 		onShow() {
-			
 			this.init();
 		}
 	}
