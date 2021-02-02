@@ -58,7 +58,8 @@
 				last_page: 0,
 				style_input: {
 					'background-color': '#ffffff'
-				}
+				},
+				pull: false
 			}
 		},
 		methods: {
@@ -85,21 +86,24 @@
 			handlePullDown(stopLoad) {
 				this.page = 1;
 				this.list = [];
+				this.pull = false;
 				this.init();
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
-				if (this.page >= this.last_page) {
-					this.$refs.uToast.show({
-						title: '加载到底了',
-						type: 'default',
-						position: 'bottom'
-					})
-
-				} else {
-					this.page++;
-					this.init()
+				if (!this.pull) {
+					if (this.page >= this.last_page) {
+						this.$refs.uToast.show({
+							title: '加载到底了',
+							type: 'default',
+							position: 'bottom'
+						})
+						this.pull = true;
+					} else {
+						this.page++;
+						this.init()
+					}
 				}
 			},
 			handleGoTop() {
@@ -119,7 +123,7 @@
 			}
 		},
 		onLoad() {
-			
+
 
 		},
 		onShow() {
@@ -130,7 +134,11 @@
 
 <style lang="scss" scoped>
 	.supplier {
-		width: 100vw;
+		width: 100%;
+		min-height: 100%;
+		display: flex;
+		flex-direction: column;
+		background-color: #e7e7e7;
 
 		.search {
 			display: flex;
@@ -156,9 +164,10 @@
 		.list {
 			width: 100%;
 			height: 100rpx;
+			background-color: #FFFFFF;
 			text-indent: 1em;
 			padding: 10rpx 0;
-			border-bottom: 0.01rem solid #999999;
+			border-bottom: 0.01rem solid #dedede;
 		}
 
 		.right_icon {
@@ -166,7 +175,7 @@
 		}
 
 		.weights {
-			color: #C0C0C0;
+			color: #a8a8a8;
 			font-size: 24rpx;
 			padding-top: 16rpx;
 		}

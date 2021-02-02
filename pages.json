@@ -1451,8 +1451,7 @@
 		}, {
 			"path": "pages/storedDetails/storedDetails",
 			"style": {
-				"navigationBarTitleText": "储值详情",
-				"navigationBarBackgroundColor": "#2979ff",
+				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
 					"scrollIndicator": "none"
@@ -1469,21 +1468,73 @@
 				}
 			}
 
+		}, {
+			"path": "pages/repaymentDetails/repaymentDetails",
+			"style": {
+				"navigationBarTitleText": "还款详情",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/pointExchangeList/pointExchangeList",
+			"style": {
+				"navigationBarTitleText": "积分兑换明细",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/rechargeList/rechargeList",
+			"style": {
+				"navigationBarTitleText": "会员充值列表",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/supplierRepayment/supplierRepayment",
+			"style": {
+				"navigationBarTitleText": "供应商还款",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/supplierLog/supplierLog",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/supplierLogDetails/supplierLogDetails",
+			"style": {
+				"navigationBarTitleText": "供应商还款详情",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
-	    ,{
-            "path" : "pages/repaymentDetails/repaymentDetails",
-            "style" :                                                                                    
-            {
-               "navigationBarTitleText": "还款详情",
-               "navigationBarBackgroundColor": "#2979ff",
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

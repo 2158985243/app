@@ -60,12 +60,12 @@
 					</view>
 					<u-icon name="plus" class='add' color="#cccccc" @click="toExpense"  size="40"></u-icon>
 				</view>
-				<view class="box">
+				<view class="box" @click="toStockQuantity">
 					<view class="left">
 						<u-icon class="logo" name="order" color="#ff460e" size="40"></u-icon>
 						<text>库存查询</text>
 					</view>
-					<u-icon name="plus" class='add' color="#cccccc"  size="40"></u-icon>
+					<u-icon name="arrow-right" class='add' color="#cccccc"  size="40"></u-icon>
 				</view>
 			</view>
 
@@ -182,6 +182,12 @@
 			toExpenseBook(){
 				uni.navigateTo({
 					url: `/pages/expenseBook/expenseBook`
+				})
+			},
+			// 库存查询
+			toStockQuantity(){
+				uni.navigateTo({
+					url: `/pages/stockQuantity/stockQuantity`
 				})
 			}
 		}

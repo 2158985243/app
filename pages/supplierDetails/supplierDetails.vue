@@ -25,7 +25,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="box">
 			<view class="form_item">
 				<text>初期欠款</text>
@@ -33,11 +33,11 @@
 					&yen;{{form.base_money}}
 				</view>
 			</view>
-			<view class="form_item">
-				<text>欠供应商商</text>
+			<view class="form_item" @click="toAccountLog">
+				<text>欠供应商</text>
 				<view class="balance">
 					&yen;{{form.balance}}
-				</view> 
+				</view>
 				<u-icon name="arrow-right" color="#9c9c9c" class="ricon" size="40"></u-icon>
 			</view>
 		</view>
@@ -47,34 +47,44 @@
 </template>
 
 <script>
-	import {supplier} from '../../api/supplier.js'
+	import {
+		supplier
+	} from '../../api/supplier.js'
 	export default {
 		data() {
 			return {
 				background: {
 					backgroundColor: '#2979ff'
 				},
-				form:{},
-				id:0,
+				form: {},
+				id: 0,
 			}
 		},
 		methods: {
-			async init(id){
+			async init(id) {
 				let res = await supplier(id);
 				this.form = res;
 			},
 			// 还款
-			async save(){
-					
+			async save() {
+				uni.navigateTo({
+					url: `/pages/supplierRepayment/supplierRepayment?supplier_id=${this.id}&balance=${this.form.balance}&name=${this.form.name}`
+				})
 			},
-			toEditSupplier(){
+			// 编辑
+			toEditSupplier() {
 				uni.navigateTo({
 					url: `/pages/editSupplier/editSupplier?id=${this.id}`
+				})
+			},
+			// 供应商账户流水列表
+			toAccountLog(){
+				uni.navigateTo({
+					url: `/pages/supplierLog/supplierLog?id=${this.id}&name=${this.form.name}`
 				})
 			}
 		},
 		onLoad(query) {
-			console.log(query);
 			this.id = query.id;
 			this.init(this.id)
 		}
@@ -82,40 +92,46 @@
 </script>
 
 <style lang="scss" scoped>
-.supplierDetails{
-	width: 100%;
-	height: 100%;
-	background-color: #F8F8F8;
-	.right_icon {
-		margin-right: 30rpx;
-	}
-	.ricon{
-		float: right;
-	}
-	.btn {
+	.supplierDetails {
 		width: 100%;
-		position: fixed;
-		bottom: 0;
-	}
-	.box {
-		margin-bottom: 20rpx;
-		.form_item {
-			padding-right: 20rpx;
-			display: flex;
-			align-items: center;
-			background-color: #FFFFFF;
-			margin-bottom: 2rpx;
-			height: 85rpx;
-	
-			text {
-				width: 180rpx;
-				// text-align: left;
-				padding-left: 20rpx;
-			}
-			.balance{
-				width: 70%;
+		height: 100%;
+		background-color: #F8F8F8;
+
+		.right_icon {
+			margin-right: 30rpx;
+		}
+
+		.ricon {
+			float: right;
+		}
+
+		.btn {
+			width: 100%;
+			position: fixed;
+			bottom: 0;
+		}
+
+		.box {
+			margin-bottom: 20rpx;
+
+			.form_item {
+				padding-right: 20rpx;
+				display: flex;
+				align-items: center;
+				background-color: #FFFFFF;
+				margin-bottom: 2rpx;
+				height: 85rpx;
+
+				text {
+					width: 180rpx;
+					// text-align: left;
+					padding-left: 20rpx;
+				}
+
+				.balance {
+					width: 70%;
+				}
 			}
 		}
 	}
-}
 </style>

@@ -115,12 +115,15 @@
 			}
 		},
 		onLoad(query) {
-			this.init();
+			
 			// console.log();
 			this.iq = query.iq
 			
 		},
-
+		onShow() {
+			this.list = []
+			this.init();
+		}
 	}
 </script>
 

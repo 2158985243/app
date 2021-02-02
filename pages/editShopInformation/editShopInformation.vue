@@ -85,8 +85,8 @@
 
 				},
 				formData: {
-					type: '',
-					path: ''
+					type: 'store',
+					path: 'store'
 				},
 				id: 0
 			}

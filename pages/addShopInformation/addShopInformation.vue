@@ -79,8 +79,8 @@
 
 				},
 				formData: {
-					type: '',
-					path: ''
+					type: 'store',
+					path: 'store'
 				}
 			}
 		},

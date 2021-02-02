@@ -1,7 +1,5 @@
 <template>
-	<view class="cashierReconciliationDetails">
-		<u-navbar back-icon-color='#ffffff' :title="name" :background="background" title-color="#ffffff">
-		</u-navbar>
+	<view class="rechargeList">
 		<view class="mains">
 			<view class="nav">
 				<view class="nav-date" @click="selectTime">
@@ -15,8 +13,12 @@
 				</view>
 				<view class="nav-item">
 					<view class="nav-money">
-						<text>合计金额</text>
-						<text>{{sumMoney.toFixed(2)}}</text>
+						<text>充值金额</text>
+						<text>{{total_recharge_money}}</text>
+					</view>
+					<view class="nav-money">
+						<text>赠送金额</text>
+						<text>{{total_reward_money}}</text>
 					</view>
 					<view class="nav-money">
 						<text>笔数</text>
@@ -34,21 +36,35 @@
 							<text>{{item.date}} {{item.week}}</text>
 							<text>合计&yen;{{item.money}}</text>
 						</view>
-						<view class="li-list" v-for="(item_gd,index_gd) in item.list" :key="index_gd" >
+						<view class="li-list" v-for="(item_gd,index_gd) in item.list" :key="index_gd" @click="toStoredDetails(item_gd)">
 							<view class="left">
 								<view class="left-it">
-									<text class="item-name">{{item_gd.type_name}}</text>
+									<text class="item-name">{{item_gd.customer.name}}</text>
 									<view class="item-time">
-										<text class="lan">{{item_gd.time}}|{{item_gd.customer?item_gd.customer.name:'散客'}}</text>
+										<text class="lan">{{item_gd.time}}|{{item_gd.account?item_gd.account.name:' '}}</text>
 										<!-- <text>x{{item_gd.quantity}}</text> -->
 									</view>
 								</view>
 							</view>
 							<view class="right">
-								<text :class="item_gd.money>0? 'lan':'red'">&yen;{{item_gd.money}}</text>
-								<text class="right-name">{{keys == 0? item_gd.name:''}}</text>
+								<view class="rg-item">
+
+									<text :class="item_gd.money>0? 'lan':'red'">&yen;{{item_gd.money}}</text>
+									<text class="right-name">赠送&yen;{{item_gd.reward_money}}</text>
+								</view>
+								<u-icon name="arrow-right"color="#cccccc"  size="30"></u-icon>
 							</view>
 						</view>
+						<!-- <view class="left">
+									<text>{{item.expend_item.name}}</text>
+									<view class="li-date">
+										{{item.time}} | {{item.account.name}}
+									</view>
+								</view>
+								<view class="right">
+									<text class="fonts">{{item.money}}</text>
+									<u-icon name="arrow-right" color="#ccc" size="34"></u-icon>
+								</view> -->
 					</view>
 				</view>
 				<!-- 数据列表 -->
@@ -70,9 +86,8 @@
 <script>
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import {
-		salesDetails,
-		balanceList
-	} from '../../api/manage.js'
+		rechargeList
+	} from '../../api/customer.js'
 	export default {
 		components: {
 			kScrollView
@@ -129,7 +144,9 @@
 				},
 				last_page: 0,
 				keys: 0,
-				pull:false
+				total_reward_money: 0,
+				total_recharge_money: 0,
+
 			}
 		},
 		methods: {
@@ -148,120 +165,59 @@
 			// 下拉刷新
 			handlePullDown(stopLoad) {
 				this.page = 1;
-				this.list = [];
-				this.pull = false;
+				this.list = []
 				this.init()
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
-				if(!this.pull){
 				if (this.page >= this.last_page) {
 					this.$refs.uToast.show({
 						title: '加载到底了',
 						type: 'default',
 						position: 'bottom'
 					})
-					this.pull = true;
+
 				} else {
 					this.page++;
 					this.init()
-				}}
+				}
 			},
 
 			async init() {
-				if (this.keys == 0) {
-
-					delete this.form.name
-					let res = await salesDetails({
-						...this.form,
-						page: this.page,
-						page_size: this.page_size
+				delete this.form.current
+				console.log(this.form);
+				let res = await rechargeList({
+					...this.form,
+					page: this.page,
+					page_size: this.page_size
+				})
+				console.log(res);
+				if (this.list.length > 0) {
+					res.list.data.map((v) => {
+						if (this.list[this.list.length - 1].business_time == v.business_time) {
+							this.list[this.list.length - 1].list.push(...v.list)
+						} else {
+							this.list.push(v)
+						}
 					})
-					console.log(res);
-					if (this.list.length > 0) {
-						res.list.data.map((v) => {
-							if (this.list[this.list.length - 1].business_time == v.business_time) {
-								this.list[this.list.length - 1].list.push(...v.list)
-							} else {
-								this.list.push(v)
-							}
-						})
-					} else {
-						this.list.push(...res.list.data);
-					}
-					this.total = res.total_num;
-					this.sumMoney = res.total_money;
-					this.last_page = res.list.last_page
 				} else {
-					delete this.form.name
-					delete this.form.keys
-					let res = await balanceList({
-						...this.form,
-						page: this.page,
-						page_size: this.page_size
-					})
-					console.log(res);
-					if (this.list.length > 0) {
-						res.list.data.map((v) => {
-							if (this.list[this.list.length - 1].business_time == v.business_time) {
-								this.list[this.list.length - 1].list.push(...v.list)
-							} else {
-								this.list.push(v)
-							}
-						})
-					} else {
-						this.list.push(...res.list.data);
-					}
-					this.total = res.total_num;
-					this.sumMoney = res.total_money;
-					this.last_page = res.list.last_page
+					this.list.push(...res.list.data);
 				}
+				this.total = res.total_num;
+				this.total_recharge_money = res.total_recharge_money;
+				this.total_reward_money = res.total_reward_money;
+				this.last_page = res.list.last_page
 				this.list.map((v2) => {
 					v2.list.map((v) => {
 						let arr = [];
 						let sales = [];
-						let num = 0;
-						// v.sales_goods.map((v1) => {
-						// 	arr.push(`${v1.goods.name} x${v1.quantity}`)
-						// 	num += Number(v1.quantity)
-						// });
-						if (v.type == 0) {
-							v['type_name'] = '储蓄卡充值';
-						} else if (v.type == 1) {
-							v['type_name'] = '余额调整';
-						} else if (v.type == 2) {
-							v['type_name'] = '商品消费';
-						} else if (v.transaction_type_id == 0) {
-							v['type_name'] = '采购入库';
-						} else if (v.transaction_type_id == 1) {
-							v['type_name'] = '采购退货';
-						} else if (v.transaction_type_id == 2) {
-							v['type_name'] = '费用支出';
-						} else if (v.transaction_type_id == 3) {
-							v['type_name'] = '账户转入';
-						} else if (v.transaction_type_id == 4) {
-							v['type_name'] = '账户转出';
-						} else if (v.transaction_type_id == 5) {
-							v['type_name'] = '消费结账';
-						} else if (v.transaction_type_id == 6) {
-							v['type_name'] = '商品退款';
-						} else if (v.transaction_type_id == 7) {
-							v['type_name'] = '会员充值';
-						} else if (v.transaction_type_id == 8) {
-							v['type_name'] = '会员还款';
-						} else if (v.transaction_type_id == 9) {
-							v['type_name'] = '会员欠款';
-						}
 
-						v['name'] = arr.join(',');
-
-						v['quantity'] = num.toFixed()
 					})
 				})
 
 			},
-			
+
 			// 选择时间
 			selectTime() {
 				this.show_time = !this.show_time
@@ -314,12 +270,17 @@
 				uni.navigateTo({
 					url: `/pages/screen/screen`
 				})
+			},
+			// 详情
+			toStoredDetails(item){
+				uni.navigateTo({
+					url:`/pages/storedDetails/storedDetails?id=${item.id}&title_name=会员充值详情`
+				})
 			}
 		},
 		onLoad(query) {
 			this.form = query;
 			this.name = query.name;
-			console.log(query);
 			if (query.keys) {
 				this.keys = query.keys
 			}
@@ -342,7 +303,7 @@
 </script>
 
 <style scoped lang="scss">
-	.cashierReconciliationDetails {
+	.rechargeList {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
@@ -506,8 +467,13 @@
 
 					.right {
 						display: flex;
-						flex-direction: column;
-						position: relative;
+						flex-direction: row;
+
+						.rg-item {
+							display: flex;
+							flex-direction: column;
+							position: relative;
+						}
 
 						text {
 							text-align: right;

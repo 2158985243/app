@@ -117,8 +117,8 @@
 					token: ''
 				},
 				formData: {
-					type: '',
-					path: ''
+					type: 'staff',
+					path: 'staff'
 				},
 				storeName: ''
 			}

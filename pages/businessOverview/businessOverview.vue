@@ -74,19 +74,19 @@
 									<text class="gray">库存预警 <text class="black">{{item.goods.warning_count}}</text></text>
 								</view>
 							</view>
-							<view class="item-box">
+							<view class="item-box" @click="toRechargeList">
 								<view class="left">
 									<u-icon name="red-packet-fill" color="#0055ff" size="40"></u-icon>
 									<view class="txt-li">
 										<text class="li-dom">会员充值：<text :class="item.recharge.money>0? 'green':'red'">&yen;{{item.recharge.money}}</text></text>
-										<text class="gray">新增会员<text class="black">{{item.recharge.new_add}}</text></text>
+										<text class="gray">充值笔数<text class="black">{{item.recharge.new_add}}</text></text>
 									</view>
 								</view>
 								<view class="right">
 									<text class="gray">会员总数 <text class="black">{{item.recharge.total}}</text></text>
 								</view>
 							</view>
-							<view class="item-box">
+							<view class="item-box" @click="toPointExchangeList">
 								<view class="left">
 									<u-icon name="red-packet-fill" color="#0055ff" size="40"></u-icon>
 									<view class="txt-li">
@@ -388,34 +388,36 @@
 			/// 开始时间
 			confirmTime(v) {
 				this.start_time = `${v.year}-${v.month}-${v.day}`;
+				this.dateAll.today5.statrTime = this.start_time
 				this.showtime1 = true;
 			},
 			// 结束时间
 			async confirmTime1(v) {
 				this.end_time = `${v.year}-${v.month}-${v.day}`;
+				this.dateAll.today5.endTime = this.end_time
 				this.init(this.start_time, this.end_time);
 			},
 			// 前往采购统计
 			toProcurementStatistics() {
 				if (this.current == 0) {
 					uni.navigateTo({
-						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}`
+						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 1) {
 					uni.navigateTo({
-						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}`
+						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 2) {
 					uni.navigateTo({
-						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4`
+						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 3) {
 					uni.navigateTo({
-						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4`
+						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4`
+						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
 					})
 				}
 
@@ -424,23 +426,23 @@
 			toSalesStatistics() {
 				if (this.current == 0) {
 					uni.navigateTo({
-						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}`
+						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 1) {
 					uni.navigateTo({
-						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}`
+						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 2) {
 					uni.navigateTo({
-						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4`
+						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 3) {
 					uni.navigateTo({
-						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4`
+						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4`
+						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
 					})
 				}
 
@@ -449,23 +451,23 @@
 			toAllotStatistics() {
 				if (this.current == 0) {
 					uni.navigateTo({
-						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}`
+						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 1) {
 					uni.navigateTo({
-						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}`
+						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 2) {
 					uni.navigateTo({
-						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4`
+						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 3) {
 					uni.navigateTo({
-						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4`
+						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4`
+						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
 					})
 				}
 
@@ -474,48 +476,96 @@
 			toCheckStatistics() {
 				if (this.current == 0) {
 					uni.navigateTo({
-						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}`
+						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 1) {
 					uni.navigateTo({
-						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}`
+						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 2) {
 					uni.navigateTo({
-						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4`
+						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 3) {
 					uni.navigateTo({
-						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4`
+						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4`
+						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
 					})
 				}
 
+			},
+			// 会员充值列表
+			toRechargeList(){
+				if (this.current == 0) {
+					uni.navigateTo({
+						url: `/pages/rechargeList/rechargeList?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				} else if (this.current == 1) {
+					uni.navigateTo({
+						url: `/pages/rechargeList/rechargeList?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				} else if (this.current == 2) {
+					uni.navigateTo({
+						url: `/pages/rechargeList/rechargeList?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				} else if (this.current == 3) {
+					uni.navigateTo({
+						url: `/pages/rechargeList/rechargeList?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				} else if (this.current == 4) {
+					uni.navigateTo({
+						url: `/pages/rechargeList/rechargeList?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				}
+			},
+			// 积分兑换
+			toPointExchangeList(){
+				if (this.current == 0) {
+					uni.navigateTo({
+						url: `/pages/pointExchangeList/pointExchangeList?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				} else if (this.current == 1) {
+					uni.navigateTo({
+						url: `/pages/pointExchangeList/pointExchangeList?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				} else if (this.current == 2) {
+					uni.navigateTo({
+						url: `/pages/pointExchangeList/pointExchangeList?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				} else if (this.current == 3) {
+					uni.navigateTo({
+						url: `/pages/pointExchangeList/pointExchangeList?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				} else if (this.current == 4) {
+					uni.navigateTo({
+						url: `/pages/pointExchangeList/pointExchangeList?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				}
 			},
 			// 前往盘点统计
 			toStatics() {
 				if (this.current == 0) {
 					uni.navigateTo({
-						url: `/pages/statics/statics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}`
+						url: `/pages/statics/statics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 1) {
 					uni.navigateTo({
-						url: `/pages/statics/statics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}`
+						url: `/pages/statics/statics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 2) {
 					uni.navigateTo({
-						url: `/pages/statics/statics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=${this.current}`
+						url: `/pages/statics/statics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 3) {
 					uni.navigateTo({
-						url: `/pages/statics/statics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=${this.current}`
+						url: `/pages/statics/statics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/statics/statics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=${this.current}`
+						url: `/pages/statics/statics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				}
 
@@ -557,6 +607,8 @@
 				let date = new Date();
 				this.start_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
 				this.end_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+				this.dateAll.today1['statrTime'] = this.start_time;
+				this.dateAll.today1['endTime'] = this.end_time ;
 			}
 			if (store.state.store.store_id > 0) {
 				this.store_id = store.state.store.store_id;

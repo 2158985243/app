@@ -401,6 +401,7 @@
 				this.start_time = query.start_time;
 				this.end_time = query.end_time;
 				this.current = Number(query.current);
+				this.store_id = query.store_id
 			}
 			this.init(this.start_time, this.end_time);
 		},

@@ -44,3 +44,30 @@ export const supplier = (id) => {
 		return error;
 	});
 };
+// 供应商还款
+export const repayment = (data) => {
+	return $http.post("/supplier/repayment",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 供应商账户流水列表
+export const accountLog = (data) => {
+	return $http.post("/supplier/account_log",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 供应商还款作废
+export const repaymentCancel = (id) => {
+	return $http.post("/supplier/repayment_cancel/"+id).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

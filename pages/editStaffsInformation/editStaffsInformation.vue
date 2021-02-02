@@ -123,8 +123,8 @@
 					token: ''
 				},
 				formData: {
-					type: '',
-					path: ''
+					type: 'staff',
+					path: 'staff'
 				},
 				storeName: '',
 				id:0

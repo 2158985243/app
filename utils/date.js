@@ -83,7 +83,7 @@ const thisMonth = function() {
 // 近7天
 const sevenDays = function() {
 	let time1 = new Date()
-	time1.setTime(time1.getTime() - (24 * 60 * 60 * 1000))
+	time1.setTime(time1.getTime())
 	let Y1 = time1.getFullYear()
 	let M1 = ((time1.getMonth() + 1) > 10 ? (time1.getMonth() + 1) : '0' + (time1.getMonth() + 1))
 	let D1 = (time1.getDate() > 10 ? time1.getDate() : '0' + time1.getDate())

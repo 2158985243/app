@@ -115,8 +115,8 @@
 
 				},
 				formData: {
-					type: '',
-					path: ''
+					type: 'supplier',
+					path: 'supplier'
 				},
 				id: 0
 			}

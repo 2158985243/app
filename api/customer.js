@@ -188,15 +188,6 @@ export const rechargeCancel = (id,data) => {
 		return error;
 	});
 };
-// 会员充值订单详情
-export const rechargeDetails = (id) => {
-	return $http.get("/customer/recharge_details/"+id).then((res) => {
-		return res;
-	}).catch(function(error) {
-		//这里只会在接口是失败状态返回，不需要去处理错误提示
-		return error;
-	});
-};
 // 会员还款订单详情
 export const repaymentDetails = (id) => {
 	return $http.get("/customer/repayment_details/"+id).then((res) => {
@@ -209,6 +200,46 @@ export const repaymentDetails = (id) => {
 // 会员还款订单作废
 export const repaymentCancel = (id) => {
 	return $http.post("/customer/repayment_cancel/"+id).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+
+// 积分兑换明细
+export const pointExchangeList = (data) => {
+	return $http.post("/customer/point_exchange_list",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+
+// 积分兑换详情
+export const pointexchangedetails = (id) => {
+	return $http.get("/customer/point_exchange_details/"+id).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+
+// 会员充值订单详情
+export const rechargeList = (data) => {
+	return $http.post("/customer/recharge_list",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+
+// 积分兑换详情
+export const rechargeDetails = (id) => {
+	return $http.get("/customer/recharge_details/"+id).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示

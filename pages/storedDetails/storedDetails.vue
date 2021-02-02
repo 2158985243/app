@@ -1,5 +1,8 @@
 <template>
 	<view class="storedDetails">
+		<u-navbar back-icon-color='#ffffff' :title="title_name" :background="background" title-color="#ffffff">
+			
+		</u-navbar>
 		<view class="hearder">
 			<view class="hdr_item" >
 				<view class="left">
@@ -114,6 +117,7 @@
 				sum_money: 0,
 				show: false,
 				active: false,
+				title_name:'储值详情'
 			}
 		},
 		methods: {
@@ -185,6 +189,9 @@
 		},
 		onLoad(query) {
 			this.id = query.id;
+			if(query.title_name){
+				this.title_name = query.title_name
+			}
 			this.init(query.id);
 		}
 	}
