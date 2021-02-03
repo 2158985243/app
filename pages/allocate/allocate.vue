@@ -101,6 +101,9 @@
 					page_size: this.page_size
 
 				})
+				if(this.page[this.current]==1){
+					this.list[this.current] = []
+				}
 				// this.list.splice(0, 1, res.data);
 				this.list[this.current].push(...res.data)
 				this.last_page[this.current] = res.last_page
@@ -306,7 +309,7 @@
 
 			.swiper {
 				margin-top: 84rpx;
-				height: calc(100% - #{84rpx});
+				height: calc(100% - 84rpx);
 			}
 
 			.list {

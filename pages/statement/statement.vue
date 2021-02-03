@@ -19,7 +19,7 @@
 					<u-icon name="red-packet-fill" color="#0055ff" size="40"></u-icon>
 					<text>收支结余</text>
 				</view>
-				<view class="li last">
+				<view class="li last" @click="toReconciliation">
 					<u-icon name="red-packet-fill" color="#0055ff" size="40"></u-icon>
 					<text>供应商对账</text>
 				</view>
@@ -176,6 +176,12 @@
 			toCashierBalance() {
 				uni.navigateTo({
 					url: `/pages/cashierBalance/cashierBalance`
+				})
+			},
+			// 前往供应商对账
+			toReconciliation() {
+				uni.navigateTo({
+					url: `/pages/reconciliation/reconciliation`
 				})
 			},
 

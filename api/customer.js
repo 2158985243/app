@@ -246,3 +246,21 @@ export const rechargeDetails = (id) => {
 		return error;
 	});
 };
+// 积分调整列表
+export const pointAdjustList = (data) => {
+	return $http.post("/customer/point_adjust_list",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 余额调整列表
+export const balanceAdjustList = (data) => {
+	return $http.post("/customer/balance_adjust_list",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

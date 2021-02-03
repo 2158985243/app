@@ -1534,7 +1534,67 @@
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/reconciliation/reconciliation",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom", // 隐藏系统导航栏
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+        ,{
+            "path" : "pages/reconciliationRepayment/reconciliationRepayment",
+            "style" :                                                                                    
+            {
+               "navigationBarTitleText": "供应商付款",
+               "navigationBarBackgroundColor": "#2979ff",
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+        ,{
+            "path" : "pages/pointAdjustList/pointAdjustList",
+            "style" :                                                                                    
+            {
+               "navigationStyle": "custom", // 隐藏系统导航栏
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+        ,{
+            "path" : "pages/pointAdjustList/pointQuery/pointQuery",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom", // 隐藏系统导航栏
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
+        ,{
+            "path" : "pages/balanceAdjustList/balanceAdjustList",
+            "style" :                                                                                    
+            { "navigationStyle": "custom", // 隐藏系统导航栏
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

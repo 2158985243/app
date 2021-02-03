@@ -127,8 +127,11 @@
 
 <style lang="scss" scoped>
 	.chooseSupplier {
-		width: 100vw;
-
+		width: 100%;
+		min-height: 100%;
+		display: flex;
+		flex-direction: column;
+		background-color: #e7e7e7;
 		.search {
 			display: flex;
 			align-items: center;
@@ -155,7 +158,8 @@
 			height: 80rpx;
 			line-height: 80rpx;
 			text-indent: 1em;
-			border-bottom: 0.01rem solid #999999;
+			border-bottom: 0.01rem solid #e1e0e5;
+			background-color: #FFFFFF;
 		}
 
 		.right_icon {

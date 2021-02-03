@@ -1,6 +1,6 @@
 <template>
-	<view class="procurementStatistics">
-		<u-navbar back-icon-color='#ffffff' title="采购统计" :background="background" title-color="#ffffff">
+	<view class="pointAdjustList">
+		<u-navbar back-icon-color='#ffffff' title="积分调整" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
 			</template>
@@ -11,60 +11,32 @@
 			<swiper class="swiper" @change='scollSwiper' :current='current'>
 				<swiper-item v-for="(item,index) in bos" :key='index'>
 					<scroll-view scroll-y="true" style="height: 100%;">
-						<!-- <refresh @interrupt="interrupt" @pushToInterrupt="pushToInterrupt" @finished="finished" @scrolltolower="g">
-							<template slot="top">
-								<view :style="'position: absolute; bottom: 0px;height: ' + 40 + 'px;line-height:' + 40 + 'px;  width: 100%;text-align: center;'">{{tip}}</view>
-							</template>
-							<template slot="content"> -->
-							
-								<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
-								 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-								 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
-								<view class="cen">
-									<view class="list-nav">
-										<view class="nav-item">
-											<text class="red-number">{{count[current] || 0}}</text>
-											<text class="hui-number">采购笔数</text>
+						<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
+						 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
+						 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+							<view class="cen">
+								<view class="list" v-for="(item,index) in list[current]" :key="index" @click="toProcurementStatisticsDetails(item)">
+									<view class="left">
+										<view class="img">
+											<u-image width="100" border-radius='10' height="100" mode='aspectFit' :src="$cfg.domain+item.customer.image">
+											</u-image>
 										</view>
-										<view class="nav-item">
-											<text class="red-number">{{sumNumber[current] || 0}}</text>
-											<text class="hui-number">采购数量</text>
+										<view class="li-item">
+											<text class="balck">{{item.customer.name}}</text>
+											<text class="time">{{item.ctime}}</text>
+											<text class="hui-se">{{item.user.name}}</text>
 										</view>
-										<view class="nav-item">
-											<text class="red-number">{{sumMoney[current] || 0}}</text>
-											<text class="hui-number">采购金额</text>
-										</view>
-
 									</view>
-									<view class="list" v-for="(item,index) in list[current]" :key="index" @click="toProcurementStatisticsDetails(item)">
-										<view class="left">
-											<view class="img">
-												<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+item.main_image">
-												</u-image>
-											</view>
-											<view class="li-item">
-												<text class="balck">{{item.name}}</text>
-												<text>{{item.number}}</text>
-												<text class="hui-se">单价数量：&yen;{{item.price}}&nbsp;*<text class="li-number"> {{item.quantity}}</text></text>
-											</view>
-										</view>
-										<view class="right">
-											<view class="money">
-												<text>金额： </text>
-												<text class="money">&yen;{{Number(item.price)*Number(item.quantity)}} </text>
-											</view>
-											<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+									<view class="right">
+										<view class="money">
+											<text :class="item.point>0? 'red':'green'">{{item.point}}</text>
+											<text class="hui center">调整后积分：{{item.after_point}}</text>
+											<text class="hui">{{item.store.name}}</text>
 										</view>
 									</view>
 								</view>
-						<!-- 	</template>
-							<template slot="bottom">
-								<view>
-								</view>
-							</template>
-						</refresh>
- -->
- </k-scroll-view>
+							</view>
+						</k-scroll-view>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -86,8 +58,8 @@
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import store from '@/store'
 	import {
-		counts
-	} from '../../api/purchaseStorage.js'
+		pointAdjustList
+	} from '../../api/customer.js'
 	export default {
 		components: {
 			tabControl,
@@ -171,11 +143,12 @@
 				page_size: 10,
 				start_time: '',
 				end_time: '',
-				sumNumber: [0, 0, 0, 0, 0],
-				sumMoney: [0, 0, 0, 0, 0],
+				out_quantity: [0, 0, 0, 0, 0],
+				in_quantity: [0, 0, 0, 0, 0],
 				count: [0, 0, 0, 0, 0],
 				store_id: [],
-				
+				store_ids: [],
+
 				refreshType: 'custom',
 				refreshTip: '正在下拉',
 				loadTip: '获取更多数据',
@@ -209,10 +182,10 @@
 					this.init(this.dateAll.today5.statrTime, this.dateAll.today5.endTime)
 				}
 			},
-			// 显示店铺列表
+			// 
 			showStrore() {
 				uni.navigateTo({
-					url: `/pages/stockEnquiries/stockEnquiries`
+					url: `/pages/pointAdjustList/pointQuery/pointQuery`
 				})
 			},
 			// 店铺数组
@@ -228,21 +201,17 @@
 				}
 			},
 			// 初始化
-			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id, type,supplier_id) {
+			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id) {
 				// 当天
-				let currentdate = this.$date.today()
-				let res = await counts({
+
+				let currentdate = this.$date.today();
+				let res = await pointAdjustList({
 					start_time: timeStar || currentdate.start_time,
 					end_time: timeEnd || currentdate.end_time,
 					store_ids: store_ids || this.store_ids,
 					keyword: keyword,
-					brand_id: brand_id,
-					goods_category_id: goods_category_id,
-					supplier_id: supplier_id,
-					type: type || 2,
 					page: this.page[this.current],
 					page_size: this.page_size
-
 				})
 				console.log(res);
 				if(this.page[this.current]==1){
@@ -251,13 +220,7 @@
 				if (!res.code) {
 					this.list[this.current].push(...res.data)
 					this.last_page[this.current] = res.last_page
-				
-					this.count[this.current] = res.total_num;
-					this.sumNumber[this.current] = res.total_quantity;
-					this.sumMoney[this.current] = res.total_money;
-					this.$forceUpdate()
 				}
-				
 
 			},
 			// 点击日期
@@ -302,19 +265,6 @@
 
 				}
 			},
-			interrupt(e) {
-				this.tip = '刷新中'
-				//模拟发送请求
-				setTimeout(e, 500);
-				this.tip = '刷新成功';
-			},
-			async pushToInterrupt() {
-				// this.bos[this.current], this.total[this.current]
-				this.tip = '释放刷新';
-			},
-			finished() {
-				this.tip = '下拉刷新';
-			},
 			/// 开始时间
 			confirmTime(v) {
 				this.start_time = `${v.year}-${v.month}-${v.day}`;
@@ -333,9 +283,8 @@
 				let end_time = ''
 				if (this.current == 0) {
 					let date = this.$date.today()
-					console.log(date);
-					start_time = date.start_time
-					end_time = date.end_time
+					start_time = date.start_time;
+					end_time = date.end_time;
 				} else if (this.current == 1) {
 					start_time = this.dateAll.today2.statrTime;
 					end_time = this.dateAll.today2.endTime
@@ -349,9 +298,13 @@
 					start_time = this.dateAll.today5.statrTime;
 					end_time = this.dateAll.today5.endTime
 				}
-				uni.navigateTo({
-					url: `/pages/toProcurementStatisticsDetails/toProcurementStatisticsDetails?goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
-				})
+				let ids = this.store_ids
+				// if (ids.length == 0) {
+				// 	ids = this.store_id
+				// }
+				// uni.navigateTo({
+				// 	url: `/pages/allotDetails/allotDetails?store_ids=${ids}&goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
+				// })
 			},
 			// 下拉刷新
 			handlePullDown(stopLoad) {
@@ -385,19 +338,22 @@
 				this.store_ids = []
 				this.store_ids.push(store.state.store.store_id)
 			}
-			if(query.start_time){
+			if (query.start_time) {
+				this.store_ids = []
 				this.start_time = query.start_time;
 				this.end_time = query.end_time;
 				this.current = Number(query.current);
-				this.store_ids = []
-				this.store_ids.push(Number(query.store_id))
+				if(query.store_id>0){
+					this.store_ids.push(Number(query.store_id))
+				}
 			}
 			// 初始化
 			this.init(this.start_time, this.end_time);
-			uni.$on('stockEnquiries', (res) => {
+			uni.$on('allotQuery', (res) => {
 				if (res) {
+					this.store_ids = res.store_ids
 					this.page[this.current] = 1
-					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id, res.type,res.supplier_id)
+					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id)
 				}
 			})
 		}
@@ -405,7 +361,7 @@
 </script>
 
 <style scoped lang="scss">
-	.procurementStatistics {
+	.pointAdjustList {
 		width: 100%;
 		height: 100%;
 		display: flex;
@@ -431,37 +387,8 @@
 				width: 100%;
 				display: flex;
 				flex-direction: column;
-
-				.list-nav {
-					width: 100%;
-					display: flex;
-					flex-direction: row;
-					background-color: #FFFFFF;
-					padding: 20rpx;
-					margin: 20rpx 0;
-
-					.nav-item {
-						flex: 1;
-						display: flex;
-						flex-direction: column;
-
-						.red-number {
-							color: #FF5A5F;
-							font-size: 28rpx;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-						}
-
-						.hui-number {
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							color: #999999;
-						}
-					}
-				}
-
+				height: 100%;
+				background-color: #FFFFFF;
 				.list {
 					width: 100%;
 					padding: 20rpx;
@@ -472,6 +399,7 @@
 					border-bottom: 0.01rem solid #EEEEEE;
 
 					.left {
+						flex: 1;
 						display: flex;
 						flex-direction: row;
 
@@ -487,7 +415,9 @@
 								font-size: 20rpx;
 								color: #666666;
 							}
-
+							.time{
+								padding: 10rpx 0;
+							}
 							.balck {
 								font-size: 28rpx;
 								color: #000000;
@@ -506,23 +436,40 @@
 					}
 
 					.right {
+						flex: 1;
 						display: flex;
 						flex-direction: row;
-						justify-content: center;
+						justify-content: flex-end;
 						align-items: center;
-
+						
 						text {
 							font-size: 20rpx;
 						}
 
 						.money {
 							display: flex;
-							flex-direction: row;
-
-							.money {
+							flex-direction: column;
+							justify-content: center;
+							.red{
 								color: #FF5A5F;
 							}
+							.green{
+								color: #009D37;
+							}
+							.center{
+								padding: 10rpx 0;
+							}
+							.hui{
+								color: #666666;
+							}
+							text{
+								text-align: right;
+							}
 						}
+					}
+
+					.red {
+						color: #FF5A5F;
 					}
 				}
 			}

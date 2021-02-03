@@ -1,12 +1,13 @@
 <template>
-	<view class="supplierRepayment">
+	<view class="reconciliationRepayment">
 		<view class="box">
 			<view class="box-item">
 				<view class="left">
 					供应商名称
 				</view>
 				<view class="right">
-					<text>{{name}}</text>
+					<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier_name" type="text" />
+					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
 
@@ -71,11 +72,12 @@
 	export default {
 		data() {
 			return {
-				balance: 0,
+				balance: '',
 				supplier_id: 0,
 				account_id: 0,
 				name: '',
 				account_name: '',
+				supplier_name: '',
 				remarks: '',
 				money: '',
 				business_time: ''
@@ -110,16 +112,21 @@
 					}
 				}
 			},
+			// 付款方式
 			toPatternOfPayment() {
 				uni.navigateTo({
 					url: `/pages/patternOfPayment/patternOfPayment?iq=1&ip=1`
 				})
-			}
+			},
+			// 供应商
+			toChooseSupplier() {
+				uni.navigateTo({
+					url: '/pages/chooseSupplier/chooseSupplier'
+				})
+			},
 
 		},
 		onLoad(query) {
-			this.supplier_id = query.supplier_id;
-			this.balance = query.balance;
 			this.name = query.name;
 			let date = this.$date.today()
 			this.business_time = date.start_time;
@@ -129,12 +136,19 @@
 					this.account_name = res.name
 				}
 			})
+			uni.$on("supplierDatum", (res) => {
+				if (res) {
+					this.supplier_id = res.id;
+					this.supplier_name = res.name;
+					this.balance = res.balance;
+				}
+			});
 		}
 	}
 </script>
 
 <style scoped lang="scss">
-	.supplierRepayment {
+	.reconciliationRepayment {
 		width: 100%;
 		display: felx;
 		flex-direction: column;

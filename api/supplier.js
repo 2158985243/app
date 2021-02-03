@@ -71,3 +71,12 @@ export const repaymentCancel = (id) => {
 		return error;
 	});
 };
+// 供应商对账列表
+export const reconciliation = (data) => {
+	return $http.get("/supplier/reconciliation",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

@@ -108,7 +108,7 @@
 								<view class="right">
 								</view>
 							</view>
-							<view class="item-box">
+							<view class="item-box" @click="toPointAdjustList">
 								<view class="left">
 									<u-icon name="red-packet-fill" color="#0055ff" size="40"></u-icon>
 									<view class="txt-li">
@@ -120,7 +120,7 @@
 									<text class="gray">调整会员 <text class="black">{{item.point_adjust.total_num}}</text></text>
 								</view>
 							</view>
-							<view class="item-box">
+							<view class="item-box" @click="toBalanceAdjustList">
 								<view class="left">
 									<u-icon name="red-packet-fill" color="#0055ff" size="40"></u-icon>
 									<view class="txt-li">
@@ -570,6 +570,57 @@
 				}
 
 			},
+			// 前往积分调整
+			toPointAdjustList() {
+				if (this.current == 0) {
+					uni.navigateTo({
+						url: `/pages/pointAdjustList/pointAdjustList?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				} else if (this.current == 1) {
+					uni.navigateTo({
+						url: `/pages/pointAdjustList/pointAdjustList?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				} else if (this.current == 2) {
+					uni.navigateTo({
+						url: `/pages/pointAdjustList/pointAdjustList?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
+					})
+				} else if (this.current == 3) {
+					uni.navigateTo({
+						url: `/pages/pointAdjustList/pointAdjustList?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
+					})
+				} else if (this.current == 4) {
+					uni.navigateTo({
+						url: `/pages/pointAdjustList/pointAdjustList?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
+					})
+				}
+
+			},
+			// 前往积分调整
+			toBalanceAdjustList() {
+				if (this.current == 0) {
+					uni.navigateTo({
+						url: `/pages/balanceAdjustList/balanceAdjustList?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				} else if (this.current == 1) {
+					uni.navigateTo({
+						url: `/pages/balanceAdjustList/balanceAdjustList?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
+					})
+				} else if (this.current == 2) {
+					uni.navigateTo({
+						url: `/pages/balanceAdjustList/balanceAdjustList?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
+					})
+				} else if (this.current == 3) {
+					uni.navigateTo({
+						url: `/pages/balanceAdjustList/balanceAdjustList?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
+					})
+				} else if (this.current == 4) {
+					uni.navigateTo({
+						url: `/pages/balanceAdjustList/balanceAdjustList?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
+					})
+				}
+
+			},
+			
 			// 前往商品库存
 			toStockQuantity() {
 				uni.navigateTo({

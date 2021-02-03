@@ -10,19 +10,19 @@
 			<view class="box-list">
 				<view class="box-item">
 					<text>期初结存</text>
-					<text class="lan">{{sum_money || 0}}</text>
+					<text class="lan">{{sum_money || '0.00'}}</text>
 				</view>
 				<view class="box-item">
 					<text>增加应付款</text>
-					<text class="lan">{{total_need_pay || 0}}</text>
+					<text class="lan">{{total_need_pay || '0.00'}}</text>
 				</view>
 				<view class="box-item">
 					<text>支付合计</text>
-					<text class="lan">{{total_paid || 0}}</text>
+					<text class="lan">{{total_paid || '0.00'}}</text>
 				</view>
 				<view class="box-item">
 					<text>期末欠款</text>
-					<text class="lan">{{final_balance || 0}}</text>
+					<text class="lan">{{final_balance || '0.00'}}</text>
 				</view>
 				
 			</view>
@@ -129,6 +129,7 @@
 			// 结束时间
 			async confirmTime1(v) {
 				this.form.end_time = `${v.year}-${v.month}-${v.day}`;
+				this.page = 1
 				this.init();
 			},
 			async init() {
@@ -138,12 +139,18 @@
 					page_size: this.page_size
 				})
 				console.log(res);
-				if(this.page == 1&&res.data.length>0){
-					this.final_balance = res.data[0].balance
+				if(this.page == 1){
+					this.list = []
 				}
+				
 				this.total_need_pay = res.total_need_pay;
 				this.total_paid = res.total_paid;
 				this.list.push(...res.data);
+				if(this.page == 1&&res.data.length==0){
+					this.final_balance = 0
+				}else {	
+					this.final_balance =this.list[0].balance
+				}
 				this.last_page = res.last_page
 			},
 			// 下拉刷新
@@ -171,10 +178,23 @@
 			},
 			// 
 			tosupplierLogDetails(item){
-				item['name'] = this.name 
-				uni.navigateTo({
-					url:'/pages/supplierLogDetails/supplierLogDetails?item='+ encodeURIComponent(JSON.stringify(item))
-				})
+				if(item.type==2){
+					item['name'] = this.name 
+					uni.navigateTo({
+						url:'/pages/supplierLogDetails/supplierLogDetails?item='+ encodeURIComponent(JSON.stringify(item))
+					})
+				}else if(item.type==0){
+					// 入库
+					uni.navigateTo({
+						url:`/pages/storageHistory/storageHistory?id=${item.purchase.id}`
+					})
+					
+				}else if(item.type == 1){
+					// 退货
+					uni.navigateTo({
+						url:`/pages/haveToReturn/haveToReturn?id=${item.purchase.id}`
+					})
+				}
 			}
 		},
 		onLoad(query) {
