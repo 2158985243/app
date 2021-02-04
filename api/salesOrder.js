@@ -102,7 +102,7 @@ export const analyse = (data) => {
 };
 // 销售分析详情
 export const analyseDetails = (data) => {
-	return $http.post("/sales/analyseDetails",data).then((res) => {
+	return $http.post("/sales/analyse_details",data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示

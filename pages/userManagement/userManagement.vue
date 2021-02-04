@@ -1,12 +1,12 @@
 <template>
-	<view class="staffManagement">
-		<u-navbar back-icon-color='#ffffff' title="员工管理" :background="background" title-color="#ffffff">
+	<view class="userManagement">
+		<u-navbar back-icon-color='#ffffff' title="用户管理" :background="background" title-color="#ffffff">
 			<template slot="right">
-				<u-icon name="plus" @click="toAddShopInformation" color="#ffffff" class="right_icon" size="34"></u-icon>
+				<u-icon name="plus" @click="toAddUserManagement" color="#ffffff" class="right_icon" size="34"></u-icon>
 			</template>
 		</u-navbar>
 		<view class="search">
-			<u-search placeholder="请输入员工姓名或手机号" shape='square' @change="changeInput" height='60' :input-style="style_input"
+			<u-search placeholder="请输入用户编号或名称" shape='square' @change="changeInput" height='60' :input-style="style_input"
 			 :show-action='false' margin='20rpx' v-model="keyword"></u-search>
 		</view>
 		<view class="management_list">
@@ -116,10 +116,10 @@
 					url: `/pages/editStaffsInformation/editStaffsInformation?id=${id}`
 				})
 			},
-			// 前往新增店铺信息
-			toAddShopInformation() {
+			// 前往新增用户信息
+			toAddUserManagement() {
 				uni.navigateTo({
-					url: `/pages/addStaffsInformation/addStaffsInformation`
+					url: `/pages/userManagement/addUserManagement/addUserManagement`
 				})
 			}
 		},
@@ -134,7 +134,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.staffManagement {
+	.userManagement {
 		width: 100vw;
 
 		.search {

@@ -6,24 +6,21 @@
 			</template>
 		</u-navbar>
 		<view class="management_list">
-			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
-			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
-				<uni-list>
-					<uni-list-item :title="item.name" class="listit" v-for="(item,index) in list" :key="index" @click="toShopInformation(item)"
-					 :note="'有效日期:'+item.expired_at" :showArrow='true' :clickable='true'>
-						<template slot="header">
-							<u-image width="80rpx" class="header_image" height="80rpx" :src="$cfg.domain+item.images"></u-image>
-						</template>
-						<template slot="footer">
-							<u-checkbox-group>
-								<u-checkbox shape="circle" @change="checkboxChange" :name="item.name"  v-model="item.checked"></u-checkbox>
-							</u-checkbox-group>
-						</template>
-					</uni-list-item>
-				</uni-list>
-				<!-- 数据列表 -->
-			</k-scroll-view>
+
+			<uni-list>
+				<uni-list-item :title="item.name" class="listit" v-for="(item,index) in list" :key="index" @click="toShopInformation(item)"
+				 :note="'有效日期:'+item.expired_at" :showArrow='true' :clickable='true'>
+					<template slot="header">
+						<u-image width="80rpx" class="header_image" height="80rpx" :src="$cfg.domain+item.images"></u-image>
+					</template>
+					<template slot="footer">
+						<u-checkbox-group>
+							<u-checkbox shape="circle" @change="checkboxChange" :name="item.name" v-model="item.checked"></u-checkbox>
+						</u-checkbox-group>
+					</template>
+				</uni-list-item>
+			</uni-list>
+			<!-- 数据列表 -->
 			<u-toast ref="uToast" />
 		</view>
 		<view class="btn">
@@ -73,11 +70,12 @@
 				last_page: 0,
 				iq: '',
 				url: url.domain,
-				pull:false
+				pull: false,
+				store_ids: []
 			}
 		},
 		methods: {
-			checkboxChange(e){
+			checkboxChange(e) {
 				console.log(e);
 			},
 			sure() {
@@ -100,40 +98,15 @@
 			},
 			async init() {
 				let res = await storeList({
-					page: this.page,
-					page_size: this.page_size
+					get_all: 1
 				})
 				console.log(res);
-				res.data.map(v => {
+				res.map(v => {
 					v['checked'] = false
 				})
-				this.list.push(...res.data)
+				this.list = res;
+			},
 
-				this.last_page = res.last_page
-			},
-			// 下拉刷新
-			handlePullDown(stopLoad) {
-				this.page = 1;
-				this.list = []
-				this.init()
-				stopLoad ? stopLoad() : '';
-			},
-			// 上拉加载
-			async handleLoadMore(stopLoad) {
-				if (!this.pull) {
-					if (this.page >= this.last_page) {
-						this.$refs.uToast.show({
-							title: '加载到底了',
-							type: 'default',
-							position: 'bottom'
-						})
-						this.pull = true
-					} else {
-						this.page++;
-						this.init()
-					}
-				}
-			},
 			handleGoTop() {
 				this.$refs['k-scroll-view'].goTop();
 			},
@@ -154,7 +127,6 @@
 			this.init();
 			// console.log();
 			this.iq = query.iq
-
 		},
 
 	}
@@ -222,6 +194,7 @@
 		.management_list {
 			width: 100%;
 			display: flex;
+			flex-direction: column;
 			margin-bottom: 120rpx;
 		}
 	}

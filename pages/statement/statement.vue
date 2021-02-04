@@ -32,11 +32,11 @@
 				<text>分析</text>
 			</view>
 			<view class="list">
-				<view class="li">
+				<view class="li" @click="toAnalyse">
 					<u-icon name="calendar-fill" color="#ffa322" size="40"></u-icon>
 					<text>销售分析</text>
 				</view>
-				<view class="li">
+				<view class="li" @click="toGoodsAnalyse">
 					<u-icon name="calendar-fill" color="#ffa322" size="40"></u-icon>
 					<text>商品分析</text>
 				</view>
@@ -124,6 +124,18 @@
 					url: `/pages/memberRegistrationStatistics/memberRegistrationStatistics`
 				})
 			},
+			// 前往销售分析
+			toAnalyse() {
+				uni.navigateTo({
+					url: `/pages/analyse/analyse`
+				})
+			},
+			// 前往销售分析
+			toGoodsAnalyse() {
+				uni.navigateTo({
+					url: `/pages/goodsAnalyse/goodsAnalyse`
+				})
+			},
 			// 前往会员分析
 			toMemberAnalysis() {
 				uni.navigateTo({
@@ -136,6 +148,7 @@
 					url: `/pages/procurementStatistics/procurementStatistics`
 				})
 			},
+			
 			// 前往销售统计
 			toSalesStatistics() {
 				uni.navigateTo({

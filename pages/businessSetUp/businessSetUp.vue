@@ -4,7 +4,7 @@
 			<uni-list>
 				<uni-list-item title="店铺管理" @click="toStoreManagement" :showExtraIcon='true' :extraIcon='extraIcon[0]' :showArrow='true' :clickable='true'></uni-list-item>
 				<uni-list-item title="员工管理" @click="toStaffManagement" :showExtraIcon='true' :extraIcon='extraIcon[1]' :showArrow='true' :clickable='true'></uni-list-item>
-				<uni-list-item title="用户管理" :showExtraIcon='true' :extraIcon='extraIcon[2]' :showArrow='true' :clickable='true'></uni-list-item>
+				<uni-list-item title="用户管理" @click="toUserManagement" :showExtraIcon='true' :extraIcon='extraIcon[2]' :showArrow='true' :clickable='true'></uni-list-item>
 			</uni-list>
 		</view>
 		<view class="box">
@@ -83,6 +83,12 @@
 			toStaffManagement(){
 				uni.navigateTo({
 					url: `/pages/staffManagement/staffManagement`
+				})
+			},
+			// 用户管理
+			toUserManagement(){
+				uni.navigateTo({
+					url: `/pages/userManagement/userManagement`
 				})
 			},
 			// 支付方式
