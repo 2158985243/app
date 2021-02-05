@@ -94,7 +94,7 @@
 					<u-icon name="account-fill" color="#ff551d" size="40"></u-icon>
 					<text>调整统计</text>
 				</view>
-				<view class="li last">
+				<view class="li last" @click="toStaffAchievement">
 					<u-icon name="account-fill" color="#ff551d" size="40"></u-icon>
 					<text>业绩统计</text>
 				</view>
@@ -122,6 +122,12 @@
 			toMemberRegistrationStatistics() {
 				uni.navigateTo({
 					url: `/pages/memberRegistrationStatistics/memberRegistrationStatistics`
+				})
+			},
+			// 前往业绩统计
+			toStaffAchievement() {
+				uni.navigateTo({
+					url: `/pages/staffAchievement/staffAchievement`
 				})
 			},
 			// 前往销售分析

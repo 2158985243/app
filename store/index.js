@@ -13,7 +13,9 @@ export default new Vuex.Store({
 		stateGood:false,
 		store:{},
 		barterGoods: [],
-		
+		storeSelet:[],//选择的店铺权限组
+		tademark:[],//选择的品牌权限
+		purview:[],//权限数组
 	},
 	getters: {
 
@@ -46,6 +48,18 @@ export default new Vuex.Store({
 		// 换货
 		barterFn(state,context){
 			state.barterGoods = context.barterGoods
+		},
+		// 店铺权限组
+		storeSeletFn(state,context){
+			state.storeSelet = context.storeSelet
+		},
+		// 品牌权限组
+		tademarkFn(state,context){
+			state.tademark = context.tademark
+		},
+		// 权限组
+		purviewFn(state,context){
+			state.purview = context.purview
 		}
 	},
 	actions: {

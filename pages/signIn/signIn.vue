@@ -7,13 +7,13 @@
 			<view class="verify" v-show="active==0">
 				<u-form :model="form" ref="uForm">
 					<u-form-item label-width="100" label="手机号">
-						<u-input type="number" :clearable=false placeholder='请输入手机号码' v-model="form.mobile"></u-input>
+						<u-input type="number" :clearable="false" placeholder='请输入手机号码' v-model="form.mobile"></u-input>
 					</u-form-item>
 					<u-form-item label-width="100" label="密码">
-						<u-input type="password" :clearable=false placeholder='请输入密码' v-model="form.password" />
+						<u-input type="password" :clearable="false" maxlength='11' placeholder='请输入密码' v-model="form.password" />
 					</u-form-item>
 					<u-form-item label-width="100" label="验证码">
-						<u-input type='number' :clearable=false placeholder='请输入验证码' v-model="form.code"></u-input>
+						<u-input type='number' :clearable="false" placeholder='请输入验证码' v-model="form.code"></u-input>
 						<u-verification-code :seconds="seconds" ref="uCode" @change="codeChange"></u-verification-code>
 						<u-button @tap="getCode">{{tips}}</u-button>
 					</u-form-item>

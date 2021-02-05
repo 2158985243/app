@@ -216,6 +216,10 @@
 			strored() {
 				let arr = store.state.store.storesArr;
 				if (arr) {
+					this.strots.push({
+						value: 0,
+						laber: '全部门店'
+					})
 					arr.map((v) => {
 						this.strots.push({
 							value: v.store_id,
@@ -398,6 +402,8 @@
 				let date = new Date();
 				this.start_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
 				this.end_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+				this.dateAll.today1.statrTime = this.start_time
+				this.dateAll.today1.endTime = this.end_time
 			}
 			if (store.state.store.store_id > 0) {
 				this.store_id = store.state.store.store_id;

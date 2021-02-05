@@ -1,53 +1,52 @@
 import $http from '@/js_sdk/app-request/requestConfig';
-// 员工列表
-export const staffList = (data) => {
-	return $http.get("/staff/list", data).then((res) => {
+// 权限列表
+export const authorityList = (data) => {
+	return $http.get("/authority/list", data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
 		return error;
 	});
 };
-// 新增员工
-export const staffAdd = (data) => {
-	return $http.post("/staff/add", data).then((res) => {
+// 用户列表
+export const userList = (data) => {
+	return $http.get("/user/list", data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
 		return error;
 	});
 };
-
-// 查看员工资料
-export const staff = (id) => {
-	return $http.get("/staff/" + id).then((res) => {
+// 新增用户
+export const userAdd = (data) => {
+	return $http.post("/user/add", data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
 		return error;
 	});
 };
-// 编辑员工
-export const staffEdit = (id, data) => {
-	return $http.post("/staff/edit/" + id, data).then((res) => {
+// 用户编辑
+export const userEdit = (id,data) => {
+	return $http.post("/user/edit/"+id, data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
 		return error;
 	});
 };
-// 删除员工
-export const staffDel = (id) => {
-	return $http.post("/staff/del/" + id).then((res) => {
+// 用户删除
+export const userDel = (id) => {
+	return $http.post("/user/del/"+id).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
 		return error;
 	});
 };
-// 员工业绩统计
-export const staffAchievement = (data) => {
-	return $http.get("/staff/achievement", data).then((res) => {
+// 用户详情
+export const user = (id) => {
+	return $http.get("/user/"+id).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示

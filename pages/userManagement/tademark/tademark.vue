@@ -1,25 +1,13 @@
 <template>
-	<view class="storeManagementSelect">
-		<u-navbar back-icon-color='#ffffff' title="店铺管理" :background="background" title-color="#ffffff">
-			<template slot="right">
-				<u-icon name="plus" @click="toAddShopInformation" color="#ffffff" class="right_icon" size="34"></u-icon>
-			</template>
-		</u-navbar>
+	<view class="tademark">
 		<view class="management_list">
-
-			<uni-list>
-				<uni-list-item :title="item.name" class="listit" v-for="(item,index) in list" :key="index" @click="toShopInformation(item)"
-				 :note="'有效日期:'+item.expired_at" :showArrow='true' :clickable='true'>
-					<template slot="header">
-						<u-image width="80rpx" class="header_image" height="80rpx" :src="$cfg.domain+item.images"></u-image>
-					</template>
-					<template slot="footer">
-						<u-checkbox-group>
-							<u-checkbox shape="circle" @change="checkboxChange" :name="item.name" v-model="item.checked"></u-checkbox>
-						</u-checkbox-group>
-					</template>
-				</uni-list-item>
-			</uni-list>
+			<text class="title"><text class="red">*</text>选择全部品牌，当前以及之后新增的品牌都拥有权限</text>
+			<view class="list" v-for="(item,idnex) in list">
+				<text class="black">{{item.name}}</text>
+				 <u-checkbox-group>
+				 	<u-checkbox shape="circle" @change="checkboxChange" :name="item.name" v-model="item.checked"></u-checkbox>
+				 </u-checkbox-group>
+			</view>
 			<!-- 数据列表 -->
 			<u-toast ref="uToast" />
 		</view>
@@ -38,14 +26,11 @@
 
 <script>
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
-	import url from '../../api/configuration.js'
+	import url from '../../../api/configuration.js'
 	import store from '@/store/index.js'
 	import {
-		uploadImage
-	} from "../../api/uploadImage.js"
-	import {
-		storeList
-	} from "../../api/store.js"
+		brandList
+	} from "../../../api/brand.js"
 	export default {
 		components: {
 			kScrollView
@@ -80,45 +65,50 @@
 				console.log(e);
 			},
 			sure() {
-				let obj = []
 				let ids = []
 				this.list.map(v => {
 					if (v.checked) {
-						obj.push({
-							name: v.name,
-							id: v.id
-						})
+						
 						ids.push(v.id)
 					}
 				})
 				// storeSeletFn
-				this.$store.commit('storeSeletFn', {
-					storeSelet: ids
+				this.$store.commit('tademarkFn', {
+					tademark: ids
 				});
-				uni.$emit('gloEvent', obj)
 				uni.navigateBack();
 			},
 			checkAll() {
 				this.list.map(v => {
 					v.checked = true;
 				})
+				let ids = []
+				this.list.map(v => {
+					if (v.checked) {
+						ids.push(v.id)
+					}
+				})
+				ids.push(0)
+				// storeSeletFn
+				this.$store.commit('tademarkFn', {
+					tademark: ids
+				});
+				uni.navigateBack();
 			},
 			async init() {
-				let res = await storeList({
-					get_all: 1
-				})
+				let res = await brandList()
 				res.map(v => {
 					v['checked'] = false
 				})
 				// console.log(store.state.storeSelet);
-				if(store.state.storeSelet.length>0){
+				if (store.state.tademark.length > 0) {
 					res.map(v => {
-						store.state.storeSelet.map(v1=>{
-							if(v.id==v1){
+						store.state.tademark.map(v1 => {
+							if (v.id == v1) {
 								v.checked = true;
 							}
 						})
-						
+
 					})
 				}
 				this.list = res;
@@ -133,31 +123,36 @@
 
 				// item.checked = !item.checked
 			},
-			// 前往新增店铺信息
-			toAddShopInformation() {
-				uni.navigateTo({
-					url: `/pages/addShopInformation/addShopInformation`
-				})
-			}
+			
 		},
 		onLoad(query) {
 			this.init();
 			// console.log();
 			this.iq = query.iq
 		},
-
+		onShow() {
+			
+		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.storeManagementSelect {
+	.tademark {
 		width: 100vw;
 		height: 100%;
 
 		.header_image {
 			margin-right: 20rpx;
 		}
-
+		.title{
+			font-size: 20rpx;
+			padding: 10rpx 0;
+			background-color: #dedde2;
+			.red{
+				margin: 0 10rpx;
+				color: #FF5A5F;
+			}
+		}
 		.btn {
 			width: 100%;
 			height: 120rpx;
@@ -213,6 +208,15 @@
 			display: flex;
 			flex-direction: column;
 			margin-bottom: 120rpx;
+			.list{
+				width: 100%;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				padding: 20rpx;
+				border: #FFFFFF;
+				border-bottom: 0.01rem solid #E5E5E5;
+			}
 		}
 	}
 </style>

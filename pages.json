@@ -1635,6 +1635,49 @@
 				}
 			}
 
+		}, {
+			"path": "pages/userManagement/tademark/tademark",
+			"style": {
+				"navigationBarTitleText": "品牌权限",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/userManagement/purviewSetting/purviewSetting",
+			"style": {
+				"navigationBarTitleText": "权限设置",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/userManagement/editUserManagement/editUserManagement",
+			"style": {
+				"navigationBarTitleText": "账户/权限编辑",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/staffAchievement/staffAchievement",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
 	],
 	"globalStyle": {

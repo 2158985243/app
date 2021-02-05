@@ -1,6 +1,6 @@
 <template>
 	<view class="analyse">
-		<u-navbar back-icon-color='#ffffff' title="支出分析" :background="background" title-color="#ffffff">
+		<u-navbar back-icon-color='#ffffff' title="销售分析" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
 			</template>
@@ -288,6 +288,10 @@
 			strored() {
 				let arr = store.state.store.storesArr;
 				if (arr) {
+					this.strots.push({
+						value: 0,
+						laber: '全部门店'
+					})
 					arr.map((v) => {
 						this.strots.push({
 							value: v.store_id,
@@ -456,6 +460,8 @@
 				let date = new Date();
 				this.start_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
 				this.end_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+				this.dateAll.today1.statrTime = this.start_time
+				this.dateAll.today1.endTime = this.end_time
 			}
 			if (store.state.store.store_id > 0) {
 				this.store_id = store.state.store.store_id;

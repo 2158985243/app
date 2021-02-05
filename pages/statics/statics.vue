@@ -10,7 +10,7 @@
 			 @clickItem="onClickItem"></tabControl>
 			<swiper class="swiper" @change='scollSwiper' :current='current'>
 				<swiper-item v-for="(item,index) in bos" :key='index'>
-					<scroll-view scroll-y="true" >
+					<scroll-view scroll-y="true">
 						<refresh @interrupt="interrupt" @pushToInterrupt="pushToInterrupt" @finished="finished" @scrolltolower="g">
 							<template slot="top">
 								<view :style="'position: absolute; bottom: 0px;height: ' + 40 + 'px;line-height:' + 40 + 'px;  width: 100%;text-align: center;'">{{tip}}</view>
@@ -185,6 +185,10 @@
 			strored() {
 				let arr = store.state.store.storesArr;
 				if (arr) {
+					this.strots.push({
+						value: 0,
+						laber: '全部门店'
+					})
 					arr.map((v) => {
 						this.strots.push({
 							value: v.store_id,
@@ -222,7 +226,7 @@
 					// console.log(this.chartData);
 					this.showRing("canvasRing", this.bos[this.current], this.total[this.current])
 					this.$forceUpdate()
-				}else {
+				} else {
 					_self.showRing("canvasRing", this.chartData, 0)
 
 				}
@@ -236,13 +240,13 @@
 					fontSize: 11,
 					legend: true,
 					title: {
-						name: total == 0 ? '' :total.toFixed(2) ,
+						name: total == 0 ? '' : total.toFixed(2),
 						color: '#7cb5ec',
 						fontSize: 12 * _self.pixelRatio,
 						offsetY: -5 * _self.pixelRatio,
 					},
 					subtitle: {
-						name: total == 0 ? '暂无数据':'总支出',
+						name: total == 0 ? '暂无数据' : '总支出',
 						color: '#666666',
 						fontSize: 12 * _self.pixelRatio,
 						offsetY: 1 * _self.pixelRatio,
@@ -287,28 +291,28 @@
 				this.current = e.target.current
 				if (this.bos[this.current].length == 0) {
 					if (this.current == 0) {
-						let currentdate =this.$date.today()
+						let currentdate = this.$date.today()
 						this.dateAll.today1.statrTime = currentdate.start_time
 						this.dateAll.today1.endTime = currentdate.end_time
 						this.init(currentdate.start_time, currentdate.end_time)
 					} else if (this.current == 1) {
-						let currentdate =this.$date.yesterday()
+						let currentdate = this.$date.yesterday()
 						this.dateAll.today2.statrTime = currentdate.start_time
 						this.dateAll.today2.endTime = currentdate.end_time
 						this.init(currentdate.start_time, currentdate.end_time)
 					} else if (this.current == 2) {
-						let currentdate =this.$date.thisWeek()
+						let currentdate = this.$date.thisWeek()
 						this.dateAll.today3.statrTime = currentdate.start_time
 						this.dateAll.today3.endTime = currentdate.end_time
 						this.init(currentdate.start_time, currentdate.end_time)
 					} else if (this.current == 3) {
-						let currentdate =this.$date.thisMonth()
+						let currentdate = this.$date.thisMonth()
 						this.dateAll.today4.statrTime = currentdate.start_time
 						this.dateAll.today4.endTime = currentdate.end_time
 						// console.log(yearEnd, monthEnd, todayEnd);
 						this.init(currentdate.start_time, currentdate.end_time)
 					} else if (this.current == 4) {
-						
+
 						this.init(this.start_time, this.end_time)
 
 					}
@@ -373,7 +377,7 @@
 						url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}`
 					})
 				}
-				
+
 			}
 		},
 		onLoad(query) {
@@ -387,6 +391,8 @@
 				let date = new Date();
 				this.start_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
 				this.end_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+				this.dateAll.today1.statrTime = this.start_time
+				this.dateAll.today1.endTime = this.end_time
 			}
 			if (store.state.store.store_id > 0) {
 				this.store_id = store.state.store.store_id;
@@ -397,7 +403,7 @@
 			_self = this;
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
-			if(query.start_time){
+			if (query.start_time) {
 				this.start_time = query.start_time;
 				this.end_time = query.end_time;
 				this.current = Number(query.current);

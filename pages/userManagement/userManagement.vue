@@ -13,14 +13,20 @@
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
 			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
-				<uni-list>
-					<uni-list-item :title="item.name" class="listit" v-for="(item,index) in list" :key="index" @click="toShopInformation(item.id)"
-					 :note="item.mobile" :showArrow='true' :rightText='item.job' :clickable='true'>
-						<template slot="header">
-							<u-image width="100rpx" mode='aspectFit' class="header_image" height="100rpx" :src="url+item.images"></u-image>
-						</template>
-					</uni-list-item>
-				</uni-list>
+				<view class="list"  v-for="(item,index) in list" :key="index" @click="toShopInformation(item)">
+					<view class="left">
+						<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" src="@/static/image/hd.jpg"></u-image>
+						<view class="left-item">
+							<text class="black">{{item.name}} <text class="gray">({{item.account}})</text></text>
+							<text class="gray" v-if="item.is_admin">{{"已有全部权限,可操作全部店铺"}}</text>
+							<text class="gray" v-else>{{`已有权限${item.authority_count}个,可操作店铺${item.store_count}个`}}</text>
+						</view>
+					</view>
+					<view class="right">
+						<text v-if="item.is_admin">管理员</text>
+						<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+					</view>
+				</view>
 				<!-- 数据列表 -->
 			</k-scroll-view>
 			<u-toast ref="uToast" />
@@ -31,8 +37,8 @@
 <script>
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import {
-		staffList
-	} from "../../api/staff.js"
+		userList
+	} from "../../api/user.js"
 	import url from '../../api/configuration.js'
 	export default {
 		components: {
@@ -71,7 +77,7 @@
 				this.init(v)
 			},
 			async init(v) {
-				let res = await staffList({
+				let res = await userList({
 					page: this.page,
 					page_size: this.page_size,
 					keyword: v || ''
@@ -111,13 +117,31 @@
 				this.$refs['k-scroll-view'].goTop();
 			},
 			// 前往编辑店铺信息
-			toShopInformation(id) {
+			toShopInformation(item) {
+				this.$store.commit('storeSeletFn', {
+					storeSelet: []
+				});
+				this.$store.commit('tademarkFn', {
+					tademark: []
+				});
+				this.$store.commit('purviewFn', {
+					purview: []
+				});
 				uni.navigateTo({
-					url: `/pages/editStaffsInformation/editStaffsInformation?id=${id}`
+					url: `/pages/userManagement/editUserManagement/editUserManagement?id=${item.id}&is_admin=${item.is_admin}`
 				})
 			},
 			// 前往新增用户信息
 			toAddUserManagement() {
+				this.$store.commit('storeSeletFn', {
+					storeSelet: []
+				});
+				this.$store.commit('tademarkFn', {
+					tademark: []
+				});
+				this.$store.commit('purviewFn', {
+					purview: []
+				});
 				uni.navigateTo({
 					url: `/pages/userManagement/addUserManagement/addUserManagement`
 				})
@@ -135,8 +159,9 @@
 
 <style lang="scss" scoped>
 	.userManagement {
-		width: 100vw;
-
+		width: 100%;
+		display: flex;
+		flex-direction: column;
 		.search {
 			display: flex;
 			align-items: center;
@@ -144,7 +169,49 @@
 			// height: 80rpx;
 			background-color: #e7e7e7;
 		}
-
+		.management_list{
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			.list{
+				width: 100%;
+				display: flex;
+				padding: 20rpx;
+				flex-direction: row;
+				justify-content: space-between;
+				border-bottom: 0.01rem solid #F1F1F1;
+				background-color: #FFFFFF;
+				.left{
+					display: flex;
+					flex-direction: row;
+					.left-item{
+						display: flex;
+						flex-direction: column;
+						.black{
+							.gray{
+								margin-left: 10rpx;
+								color: #999999;
+								font-size: 24rpx;
+							}
+						}
+						.gray{
+							color: #999999;
+							font-size: 24rpx;
+							padding-top: 10rpx;
+						}
+					}
+				}
+				.right{
+					display: flex;
+					flex-direction: row;
+					justify-content: center;
+					align-items: center;
+					text{
+						color: #007AFF;
+					}
+				}
+			}
+		}
 		/deep/.u-content {
 			background-color: #FFFFFF !important;
 		}

@@ -7,17 +7,17 @@
 			</view>
 			<view class="item-box">
 				<text class="item-title">账号</text>
-				<u-input placeholder='输入用户登录账号' v-model="form.name" type="number" />
+				<u-input placeholder='输入用户登录账号' maxlength='15' v-model="form.account" type="text" />
 			</view>
 			<view class="item-box">
 				<text class="item-title">密码</text>
-				<u-input placeholder='输入用户登录密码' v-model="form.name" type="text" />
+				<u-input placeholder='输入用户登录密码' maxlength='11' v-model="form.password" type="password" />
 			</view>
 		</view>
 		<view class="box">
 			<view class="item-box">
 				<text class="item-title">用户权限</text>
-				<u-input placeholder='请选择用户权限' v-model="form.name" :disabled='true' type="text" />
+				<u-input placeholder='请选择用户权限' @click='purviewSetting' v-model="purview_name" :disabled='true' type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="item-box">
@@ -49,6 +49,7 @@
 
 			</view>
 		</view>
+		<u-toast ref="uToast" />
 		<view class="btn" @click="sure">
 			保存
 		</view>
@@ -56,18 +57,25 @@
 </template>
 
 <script>
+	import store from '@/store/index.js'
+	import {userAdd} from '../../../api/user.js'
 	export default {
 		data() {
 			return {
 				form: {
 					name: '',
-					warning: 0,
-					store_ids: [],
+					account: '',
+					password: '',
+					status:1,
+					store: [],
+					brand: [],
+					authority: [],
 					staff_id: '',
 
 				},
 				checked: true,
 				trademark_name: '', //品牌
+				purview_name: '', //用户权限
 				shop: '', //店铺
 				staff: '', //关联员工
 			}
@@ -80,6 +88,13 @@
 					url: '/pages/storeManagementSelect/storeManagementSelect'
 				})
 			},
+			// 前往用户权限
+			purviewSetting() {
+
+				uni.navigateTo({
+					url: '/pages/userManagement/purviewSetting/purviewSetting'
+				})
+			},
 			// 前往选择经手人
 			toSelecSalesperson() {
 				uni.navigateTo({
@@ -89,34 +104,49 @@
 			// 品牌！！！
 			toTrademark() {
 				uni.navigateTo({
-					url: '/pages/trademark/trademark'
+					url: '/pages/userManagement/tademark/tademark'
 				})
 			},
 			// 账号是否启用
 			warning(v) {
 				// console.log(v);
-				this.form.warning = Number(v);
+				this.form.status = Number(v);
 			},
 			async sure() {
-
+				if(this.form.name==''){
+					this.$refs.uToast.show({
+						title: '请输入姓名',
+						type: 'default',
+						position: 'bottom'
+					})
+				}else if(this.form.account==''){
+					this.$refs.uToast.show({
+						title: '请输入账号',
+						type: 'default',
+						position: 'bottom'
+					})
+				}else if(this.form.password==''){
+					this.$refs.uToast.show({
+						title: '请输入密码',
+						type: 'default',
+						position: 'bottom'
+					})
+				}else if(this.form.account.length<6 || this.form.account.length>15){
+					this.$refs.uToast.show({
+						title: '请输入6-15位账号',
+						type: 'default',
+						position: 'bottom'
+					})
+				}else{
+					
+					let res = await userAdd(this.form);
+					if(!res.code){
+						uni.navigateBack()
+					}
+				}
 			}
 		},
 		onLoad() {
-
-			// 店铺
-			uni.$on("gloEvent", (res) => {
-				if (res) {
-					this.form.store_ids = []
-					let arr = []
-					let ids = []
-					res.map(v => {
-						arr.push(v.name);
-						ids.push(v.id);
-					})
-					this.form.store_ids = ids
-					this.shop = `店铺权限${arr.length}项`
-				}
-			});
 			// 员工
 			uni.$on("selecSalesperson", (res) => {
 				if (res) {
@@ -125,6 +155,42 @@
 
 				}
 			});
+		},
+		onShow() {
+			// 店铺权限
+			if(store.state.storeSelet.length>0){
+				this.form.store = []
+				// this.form.store = store.state.storeSelet
+				store.state.storeSelet.map((v)=>[
+					this.form.store.push({store_id:v,checked:1})
+				])
+				this.shop = `店铺权限${this.form.store.length}项`
+			}
+			// 品牌权限
+			if (store.state.tademark.length > 0){
+				this.form.brand = []
+				let ids = []
+				if(store.state.tademark[store.state.tademark.length-1] > 0){
+					ids = store.state.tademark
+					ids.map(v=>{
+						this.form.brand.push({brand_id:v,checked:1})
+					})
+					
+					this.trademark_name = `品牌权限${ids.length}项`
+				}else{
+					store.state.tademark.pop()
+					ids = store.state.tademark
+					ids.map(v=>{
+						this.form.brand.push({brand_id:v,checked:1})
+					})
+					this.trademark_name = `全部品牌`
+				}
+			}
+			// 用户权限
+			if(store.state.purview.length>0){
+				this.purview_name = `单据权限${store.state.purview.length}项`
+				this.form.authority = store.state.purview
+			}
 		}
 	}
 </script>

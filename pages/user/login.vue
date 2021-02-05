@@ -14,7 +14,7 @@
 							<u-input placeholder='请输入用户账号\boss' :custom-style='custom' :clearable=false v-model="form.account"></u-input>
 						</u-form-item>
 						<u-form-item left-icon='lock' :left-icon-style='color'>
-							<u-input :type='"password"' :custom-style='custom' :clearable=false placeholder='请输入密码' v-model="form.password" />
+							<u-input :type='"password"' :custom-style='custom' maxlength='11' :clearable=false placeholder='请输入密码' v-model="form.password" />
 						</u-form-item>
 					</u-form>
 					<view class="btn">
