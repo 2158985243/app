@@ -102,7 +102,7 @@ const sevenDays = function() {
 // 近30天
 const thirtyDays = function() {
 	let time1 = new Date()
-	time1.setTime(time1.getTime() )
+	time1.setTime(time1.getTime())
 	let Y1 = time1.getFullYear()
 	let M1 = ((time1.getMonth() + 1) > 10 ? (time1.getMonth() + 1) : '0' + (time1.getMonth() + 1))
 	let D1 = (time1.getDate() > 10 ? time1.getDate() : '0' + time1.getDate())
@@ -118,5 +118,58 @@ const thirtyDays = function() {
 		end_time: timer1
 	}
 }
-export default {today,yesterday,thisWeek,thisMonth,sevenDays,thirtyDays}
+
+function getDateStr3(date) {
+	var year = "";
+	var month = "";
+	var day = "";
+	var now = date;
+	year = "" + now.getFullYear();
+	if ((now.getMonth() + 1) < 10) {
+		month = "0" + (now.getMonth() + 1);
+	} else {
+		month = "" + (now.getMonth() + 1);
+	}
+	if ((now.getDate()) < 10) {
+		day = "0" + (now.getDate());
+	} else {
+		day = "" + (now.getDate());
+	}
+	return year + "-" + month + "-" + day;
+}
+// 上个月
+const lastMonth = function() {
+
+	//获取当前时间  
+	var currentDate = new Date();
+	var month = currentDate.getMonth() - 1;
+	if (month < 0) {
+		var n = parseInt((-month) / 12);
+		month += n * 12;
+		currentDate.setFullYear(currentDate.getFullYear() - n);
+	}
+	currentDate = new Date(currentDate.setMonth(month));
+	//获得当前月份0-11  
+	var currentMonth = currentDate.getMonth();
+	//获得当前年份4位年  
+	var currentYear = currentDate.getFullYear();
+	//获得上一个月的第一天  
+	var currentMonthFirstDay = new Date(currentYear, currentMonth, 1);
+	//获得上一月的最后一天  
+	var currentMonthLastDay = new Date(currentYear, currentMonth + 1, 0);
+	//返回  
+	return {
+		start_time: getDateStr3(currentMonthFirstDay),
+		end_time: getDateStr3(currentMonthLastDay)
+	}
+}
+export default {
+	today,
+	yesterday,
+	thisWeek,
+	thisMonth,
+	sevenDays,
+	thirtyDays,
+	lastMonth
+}
 // default

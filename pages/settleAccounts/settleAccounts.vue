@@ -29,7 +29,7 @@
 									<text class="hei">{{item.goodsOf.name}} <text class="hui">{{item.goodsOf.number}}</text></text>
 									<text class="zc">{{item.name}}-{{itemGoods.size.name}}</text>
 									<text class="lan">&yen;{{itemGoods.retail_price}} <text class="underline" v-if="itemGoods.discount != 1">&yen;{{item.goodsOf.retail_price}}</text><text
-										 v-if="itemGoods.discount !=1">(会员折扣{{itemGoods.discount*10}}折)</text>
+										 v-if="itemGoods.discount !=1">(会员折扣{{(itemGoods.discount*10).toFixed(2)}}折)</text>
 									</text>
 								</view>
 							</view>

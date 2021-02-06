@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<movable-area :style="'height:' + scrollHeight + 'px;width:100%'">
+		<movable-area :style="'height:' + scrollHeight + 'px;width:100%;'">
 			<movable-view
 				:style="'height:' + (topHeight + scrollHeight) + 'px;width:100%;z-index:3'"
 				direction="vertical"
@@ -12,7 +12,7 @@
 				@touchend="touchend"
 				@change="change"
 			>
-				<view :style="'height:' + topHeight + 'px;position:relative'"><slot name="top"></slot></view>
+				<view :style="'height:' + topHeight + 'px;position:relative;background-color:#ffffff;'"><slot name="top"></slot></view>
 				<scroll-view 
 				:style="'height:' + scrollHeight + 'px;'" 
 				:scroll-y="status !== 3"

@@ -1,9 +1,6 @@
 <template>
-	<view class="salesOrderDetails">
-		<u-navbar back-icon-color='#ffffff' title="零售详情" :background="background" title-color="#ffffff">
-			<template slot="right">
-				<text class="right_icon" @click="del">作废</text>
-			</template>
+	<view class="detailsStaffDocuments">
+		<u-navbar back-icon-color='#ffffff' title="业绩统计员工单据详情" title-width='320' :background="background" title-color="#ffffff">
 		</u-navbar>
 		<view class="hearder">
 			<view class="hdr_item" v-for="(item,index) in form.sales_goods" :key="index">
@@ -21,8 +18,8 @@
 			</view>
 			<view class="money">
 				<text class="money-sum">&yen;{{sum_money}}</text>
-				<text v-if="form.discount_money>0">满减优惠 <text class="red">&yen;{{0}}</text>,优惠金额<text class="red">&yen;{{form.discount_money}}</text>,优惠券金额<text
-					 class="red">&yen;{{0}}</text>,实收金额<text class="red">&yen;{{form.money}}</text></text>
+				<text v-if="form.discount_money>0">满减优惠 <text class="red">&yen;{{0}}</text>,优惠金额<text class="red">&yen;{{form.discount_money}}</text>,优惠券金额<text class="red">&yen;{{0}}</text>,实收金额<text
+					 class="red">&yen;{{form.money}}</text></text>
 			</view>
 		</view>
 		<view class="box">
@@ -70,18 +67,7 @@
 			</view>
 		</view>
 		<u-toast ref="uToast" />
-		<view class="btn">
-			<view class="bod_hui" @click="show = true">
-				退/换货
-			</view>
-			<view class="bod_lan">
-				打印小票
-			</view>
-		</view>
 		<u-select v-model="show" @confirm="confirm" mode="single-column" :list="list"></u-select>
-		<view class="pop" v-if="active">
-			已作废
-		</view>
 	</view>
 </template>
 
@@ -89,7 +75,7 @@
 	import {
 		salesOrder,
 		salesOrderCancel
-	} from '../../api/salesOrder.js'
+	} from '../../../api/salesOrder.js'
 	export default {
 		data() {
 			return {
@@ -207,7 +193,7 @@
 </script>
 
 <style scoped lang="scss">
-	.salesOrderDetails {
+	.detailsStaffDocuments {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
@@ -246,11 +232,9 @@
 				padding: 20rpx 0;
 				display: flex;
 				flex-direction: column;
-
-				.red {
+				.red{
 					color: #FF5A5F;
 				}
-
 				.money-sum {
 					width: 100%;
 					color: #FF5A5F;

@@ -1678,6 +1678,27 @@
 				}
 			}
 
+		}, {
+			"path": "pages/staffAchievement/performanceDetails/performanceDetails",
+			"style": {
+				"navigationBarTitleText": "业绩详情",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/staffAchievement/detailsStaffDocuments/detailsStaffDocuments",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
 	],
 	"globalStyle": {

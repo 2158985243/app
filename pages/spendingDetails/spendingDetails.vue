@@ -109,6 +109,7 @@
 					'background-color': '#ffffff'
 				},
 				last_page: 0,
+				pull: false
 			}
 		},
 		methods: {
@@ -116,21 +117,25 @@
 			handlePullDown(stopLoad) {
 				this.page = 1;
 				this.list = []
+				this.pull = false
 				this.init()
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
-				if (this.page >= this.last_page) {
-					this.$refs.uToast.show({
-						title: '加载到底了',
-						type: 'default',
-						position: 'bottom'
-					})
+				if (!this.pull) {
 
-				} else {
-					this.page++;
-					this.init()
+					if (this.page >= this.last_page) {
+						this.$refs.uToast.show({
+							title: '加载到底了',
+							type: 'default',
+							position: 'bottom'
+						})
+						this.pull = true
+					} else {
+						this.page++;
+						this.init()
+					}
 				}
 			},
 
@@ -149,10 +154,10 @@
 				this.sumMoney = res.total_money
 				this.last_page = res.last_page
 			},
-		
+
 			// 前往项目详情
 			expenseCancellation(item) {
-				
+
 				uni.navigateTo({
 					url: `/pages/expenseCancellation/expenseCancellation?id=${item.id}`
 				})

@@ -18,7 +18,7 @@
 				<view class="left">
 					<text>{{item.day||item.mouth}}</text>
 					<u-line-progress height='10' :percent="(item.num/sums[active])*100" :show-percent='false' :round="true"
-					 active-color="#ff9900"></u-line-progress>
+					 :active-color="colors[index%4]"></u-line-progress>
 				</view>
 				<view class="right">
 					<text class="red">{{item.num}}</text>
@@ -37,6 +37,7 @@
 	export default {
 		data() {
 			return {
+				colors: ['#2979ff', '#ff9900', '#00aa00', '#55007f'],
 				background: {
 					backgroundColor: '#2979ff'
 				},
