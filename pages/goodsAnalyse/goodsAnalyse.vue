@@ -37,10 +37,7 @@
 						选择日期
 					</view>
 					<view class="right">
-						<text class="gray">7天</text>
-						<text class="gray">15天</text>
-						<text class="gray">30天</text>
-						<text class="gray">其他</text>
+						<text class="gray" v-for="(item,index) in times" :key="index" @click="timesFn(index)" :class="active==index? 'active':'' ">{{item}}</text>
 					</view>
 				</view>
 				<!-- 天数 -->
@@ -49,42 +46,82 @@
 						选择日期
 					</view>
 					<view class="right">
-						<text class="gray">15天</text>
-						<text class="gray">30天</text>
-						<text class="gray">60天</text>
-						<text class="gray">全部</text>
+						<text class="gray" v-for="(item,index) in timed" :key="index" @click="timedFn(index)" :class="active==index? 'active':'' ">{{item}}</text>
 					</view>
 				</view>
 				<view class="nav-title">
-					<text class="gd">商品</text>
+					<text class="gd" v-if="form.type==8">进货金额</text>
+					<text class="gd" v-else>商品</text>
 					<view class="tit-data">
-						<text v-if="form.type==0">上市天数</text>
+						<text v-if="form.type==0||form.type==3">上市天数</text>
 						<text v-if="form.type==1">售罄率</text>
-						<text>进销存</text>
+						<text v-if="form.type==2">毛利</text>
+						<text v-if="form.type==4">滞留天数</text>
+						<text v-if="form.type==0||form.type==1||form.type==2||form.type==3||form.type==4">进销存</text>
+						<text v-if="form.type==5">销售数量</text>
+						<text v-if="form.type==8">进货数量</text>
+						<text v-if="form.type==5||form.type==7||form.type==8">库存数量</text>
+						<text v-if="form.type==6">销售金额</text>
+						<text v-if="form.type==6||form.type==7">库存金额</text>
 					</view>
 				</view>
+
 			</view>
 			<!-- 商品列表 -->
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
 			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
-				<view class="list" v-for="(item,index) in list" :key="index">
+				<view class="list" v-if="form.type==8">
+					<view class="left">
+						<text class="sum">总计:{{total.purchase_money}}</text>
+					</view>
+					<view class="right">
+						<text class="right-day">{{total.purchase}}</text>
+						<text class="right-item">{{total.stock}}</text>
+					</view>
+				</view>
+				<view class="list" v-if="form.type==2||form.type==5||form.type==6||form.type==7">
+					<view class="left">
+						<text class="sum">总计</text>
+					</view>
+					<view class="right">
+						<text class="right-day">{{total.money||total.quantity||total.sales_money}}</text>
+						<text class="right-item">{{total.stock||total.stock_money}}</text>
+					</view>
+				</view>
+				<view class="list" v-for="(item,index) in list" :key="index" @click="toDetails(item)">
 					<view class="left">
 						<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" :src="$cfg.domain+item.main_image"></u-image>
 						<view class="left-item">
 							<text class="black">{{item.number}}<text class="gray">{{item.name}}</text></text>
 							<text class="gy">零售价:&yen;{{item.retail_price}}</text>
-							<text class="gy">实销价:&yen;{{item.real_price}}({{(Number(item.real_price)/Number(item.retail_price)*10).toFixed(2)}}折)</text>
+							<text class="gy" v-if="form.type==1||form.type==2||form.type==3||form.type==5||form.type==6">实销价:&yen;{{item.real_price}}({{(Number(item.real_price)/Number(item.retail_price)*10).toFixed(2)}}折)</text>
+							<text class="gy" v-else>上市天数:{{item.day}}天</text>
+
 						</view>
 					</view>
 					<view class="right">
-						<text class="right-day" v-if="form.type==0">{{item.day}}天</text>
-						<text class="right-day" v-if="form.type==1">{{Number(item.stock)!=0? (Number(item.sales)/Number(item.stock)*100).toFixed(1):(Number(item.sales)*100).toFixed()}}%</text>
-						<view class="right-item">
+						<text class="right-day" v-if="form.type==0||form.type==3">{{item.day}}天</text>
+						<text class="right-day" v-if="form.type==4">{{item.no_sales_day}}天</text>
+						<text class="right-day" v-if="form.type==1">{{item.percent}}</text>
+						<text class="right-day" v-if="form.type==5">{{item.sales}}</text>
+						<text class="right-day" v-if="form.type==2">{{item.money}}</text>
+						<text class="right-day" v-if="form.type==6">{{item.sales_money}}</text>
+						<text class="right-day" v-if="form.type==7">{{item.stock}}</text>
+						<text class="right-day" v-if="form.type==8">{{item.quantity}}</text>
+
+						<view class="right-item" v-if="form.type==5||form.type==8">
+							{{item.stock}}
+						</view>
+						<view class="right-item" v-if="form.type==6||form.type==7">
+							{{item.stock_money}}
+						</view>
+						<view class="right-item" v-if="form.type==0||form.type==1||form.type==2||form.type==3||form.type==4">
 							<text>进货:{{item.purchase}}</text>
 							<text>销售:{{item.sales}}</text>
 							<text>库存:{{item.stock}}</text>
 						</view>
+
 					</view>
 				</view>
 			</k-scroll-view>
@@ -142,8 +179,9 @@
 				form: {
 					type: 0,
 					sort: 1,
-					start_time: '2020-02-01',
-					end_time: '2021-02-01',
+					day: '',
+					start_time: '',
+					end_time: '',
 					page: 1,
 					page_size: 10,
 					options: []
@@ -161,7 +199,7 @@
 					minute: false,
 					second: false
 				},
-				
+
 				list: [],
 				refreshType: 'custom',
 				refreshTip: '正在下拉',
@@ -177,15 +215,79 @@
 					'background-color': '#ffffff'
 				},
 				last_page: 0,
-				pull: false
+				pull: false,
+				total: {},
+				active: 0,
+				times: ['7天', '15天', '30天', '其他'],
+				timed: ['15天', '30天', '60天', '全部'],
 			}
 		},
 		methods: {
+			toDetails(item){
+				uni.navigateTo({
+					url:`/pages/goodsAnalyse/details/details?id=${item.id}`
+				})
+			},
 			// 选择类型
 			navClick(item) {
 				this.show = false;
 				this.sort_name = item.name;
 				this.form.type = item.type;
+				this.form.page = 1;
+				this.active = 0;
+				this.pull = false;
+				// 需要时间段的类型
+				if (this.form.type == 2 || this.form.type == 5 || this.form.type == 6 || this.form.type == 8) {
+					let date = this.$date.sevenDays()
+					this.form.start_time = date.start_time
+					this.form.end_time = date.end_time
+				} else {
+					this.form.start_time = ''
+					this.form.end_time = ''
+				};
+				// 需要时间点的类型
+				if (this.form.type == 4) {
+					this.form.day = 15
+				} else {
+					this.form.day = '';
+				}
+				this.init()
+			},
+			// 选择时间段
+			timesFn(index) {
+				this.active = index
+				this.pull = false
+				if (index == 0) {
+					let date = this.$date.sevenDays()
+					this.form.start_time = date.start_time
+					this.form.end_time = date.end_time
+				} else if (index == 1) {
+					let date = this.$date.halfMonth()
+					this.form.start_time = date.start_time
+					this.form.end_time = date.end_time
+				} else if (index == 2) {
+					let date = this.$date.thirtyDays()
+					this.form.start_time = date.start_time
+					this.form.end_time = date.end_time
+				} else if (index == 3) {
+					this.showtime = true
+				};
+				this.init()
+			},
+			// 选择时间点
+			timedFn(index) {
+				this.active = index;
+				this.pull = false
+				this.form.page = 1;
+				if (index == 0) {
+					this.form.day = 15
+				} else if (index == 1) {
+					this.form.day = 30
+				} else if (index == 2) {
+					this.form.day = 60
+				} else if (index == 3) {
+					this.form.day = 0
+				}
 				this.init()
 			},
 			// 切换排序顺序
@@ -195,24 +297,35 @@
 					this.form.sort = 1
 				} else {
 					this.form.sort = 0
-
 				}
+				this.form.page = 1;
 				this.init()
 			},
 			// 初始化
 			async init() {
 				let res = await analyse(this.form)
 				console.log(res);
-				if(this.form.page==1){
+				if (this.form.page == 1) {
 					this.list = []
 				}
-				this.list.push(...res.list.data);
-				this.last_page = res.list.last_page
+				this.total = res.total
+				if (this.form.type != 4) {
+
+					this.list.push(...res.list.data);
+					this.last_page = res.list.last_page
+				} else {
+					this.list.push(...res.list);
+					if (this.list.length == 10) {
+						this.last_page = this.form.page + 1
+					} else {
+						this.last_page = this.form.page
+					}
+				}
 			},
 
 			// 下拉刷新
 			handlePullDown(stopLoad) {
-				this.page = 1;
+				this.form.page = 1;
 				this.list = []
 				this.pull = false
 				this.init()
@@ -221,8 +334,7 @@
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
 				if (!this.pull) {
-
-					if (this.page >= this.last_page) {
+					if (this.form.page >= this.last_page) {
 						this.$refs.uToast.show({
 							title: '加载到底了',
 							type: 'default',
@@ -230,19 +342,19 @@
 						})
 						this.pull = true
 					} else {
-						this.page++;
+						this.form.page++;
 						this.init()
 					}
 				}
 			},
 			/// 开始时间
 			confirmTime(v) {
-				this.start_time = `${v.year}-${v.month}-${v.day}`;
+				this.form.start_time = `${v.year}-${v.month}-${v.day}`;
 				this.showtime1 = true;
 			},
 			// 结束时间
 			async confirmTime1(v) {
-				this.end_time = `${v.year}-${v.month}-${v.day}`;
+				this.form.end_time = `${v.year}-${v.month}-${v.day}`;
 				this.init();
 			},
 		},
@@ -302,6 +414,7 @@
 			position: fixed;
 			top: calc(88rpx + var(--status-bar-height));
 			z-index: 99;
+
 			.select-left {
 				width: 85%;
 				height: 80rpx;
@@ -350,10 +463,11 @@
 			.nav-header {
 				width: 100%;
 				position: sticky;
-				top:calc(208rpx + var(--status-bar-height));
+				top: calc(208rpx + var(--status-bar-height));
 				display: flex;
 				flex-direction: column;
 				z-index: 99;
+
 				.time-quantum {
 					width: 100%;
 					height: 60rpx;
@@ -371,6 +485,11 @@
 					.right {
 						display: flex;
 						flex-direction: row;
+
+						.active {
+							color: #FFFFFF !important;
+							font-weight: 600;
+						}
 
 						.gray {
 							padding: 0 10rpx;
@@ -413,6 +532,7 @@
 					justify-content: space-between;
 					background-color: #F7F6FB;
 					align-items: center;
+					color: #999999;
 
 					.gd {
 						width: 60%;
@@ -435,8 +555,8 @@
 				}
 
 			}
-			
-			.list{
+
+			.list {
 				width: 100%;
 				display: flex;
 				flex-direction: row;
@@ -444,51 +564,66 @@
 				padding: 20rpx;
 				background-color: #FFFFFF;
 				border-bottom: 0.01rem solid #E5E5E5;
-				.left{
-					width: 60%;
+
+				.left {
+					width: 55%;
 					display: flex;
 					flex-direction: row;
 					align-items: center;
-					.left-item{
+
+					.sum {
+						width: 100%;
+						text-align: center;
+					}
+
+					.left-item {
 						display: flex;
 						flex-direction: column;
 						width: calc(100% - 100rpx);
 						margin-left: 10rpx;
-						.black{
+
+						.black {
 							width: 100%;
-							white-space:nowrap;
-							overflow:hidden;
-							text-overflow:ellipsis;
-							.gray{
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+
+							.gray {
 								color: #999999;
 							}
 						}
-						.gy{
+
+						.gy {
 							color: #999999;
 							font-size: 24rpx;
 						}
 					}
 				}
-				.right{
-					width: 40%;
+
+				.right {
+					width: 45%;
 					display: flex;
 					flex-direction: row;
 					justify-content: center;
 					align-items: center;
-					.right-day{
+
+					.right-day {
 						width: 50%;
 						display: flex;
 						font-size: 20rpx;
 						align-items: center;
 						justify-content: center;
+						color: #007AFF;
 					}
-					.right-item{
+
+					.right-item {
 						width: 50%;
 						display: flex;
 						font-size: 20rpx;
 						flex-direction: column;
 						align-items: center;
-						text{
+
+						text {
 							width: 100%;
 						}
 					}

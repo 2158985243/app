@@ -1699,6 +1699,17 @@
 				}
 			}
 
+		}, {
+			"path": "pages/goodsAnalyse/details/details",
+			"style": {
+				"navigationBarTitleText": "商品详情",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
 	],
 	"globalStyle": {
