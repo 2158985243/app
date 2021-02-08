@@ -79,3 +79,12 @@ export const analyse = (data) => {
 		return error;
 	});
 };
+// 获取商品已用的附加信息（去重）的接口
+export const getInfoUsed = (data) => {
+	return $http.get("/goods/get_info_used", data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

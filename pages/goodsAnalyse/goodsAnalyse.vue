@@ -2,7 +2,7 @@
 	<view class="goodsAnalyse">
 		<u-navbar back-icon-color='#ffffff' title="商品分析" :background="background" title-color="#ffffff">
 			<template slot="right">
-				<u-icon name="arrow-down-fill" color="#ffffff" class="right_icon" size="36"></u-icon>
+				<u-icon name="arrow-down-fill" color="#ffffff" @click="popup" class="right_icon" size="36"></u-icon>
 			</template>
 		</u-navbar>
 		<!-- 标题 -->
@@ -127,6 +127,393 @@
 			</k-scroll-view>
 			<u-toast ref="uToast" />
 		</view>
+
+		<!-- 筛选 -->
+		<u-popup v-model="showed" mode="right" width="80%">
+
+			<view class="popup-right">
+				<view class="pop-title">
+					<u-icon name="arrow-left" color="#000000" @click='showed=false' size="40"></u-icon>
+					<view class="sx">筛选</view>
+					<view class="qd">
+						
+					</view>
+				</view>
+				<view class="pop-list">
+
+					<view class="nav-box">
+						<view class="nav-tit" @click="str_down_up = !str_down_up">
+							<text class="ht">店铺</text>
+							<view class="right">
+								<text class="conts">{{infos.stores|filtersFn}}</text>
+								<u-icon name="arrow-down" v-if="!str_down_up" color="#cccccc" size="28"></u-icon>
+								<u-icon name="arrow-up" v-else color="#cccccc" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="nav-list" v-if="str_down_up">
+							<view class="lak" v-for="(item,index) in infos.stores" :key="index">
+								<view class="nav-name" v-if="index<8">
+									<view class="nav-kk" @click.stop="clickStores(item,index)" :class="item.checked? 'actives':''" >
+										{{item.name}}
+									</view>
+								</view>
+								<view class="nav-name gd" v-if="index==8">
+									<view class="nav-kk " @click.stop="barndArr">
+										更多店铺
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="nav-box">
+						<view class="nav-tit" @click="lb_down_up = !lb_down_up">
+							<text class="ht">类别</text>
+							<view class="right">
+								<text class="conts">{{CategoryList|filtersFn}}</text>
+								<u-icon name="arrow-down" v-if="!lb_down_up" color="#cccccc" size="28"></u-icon>
+								<u-icon name="arrow-up" v-else color="#cccccc" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="nav-list" v-if="lb_down_up">
+							<view class="lak" v-for="(item,index) in CategoryList" :key="index">
+								<view class="nav-name" v-if="index<8">
+									<view class="nav-kk" @click.stop="clickCate(item,index)" :class="item.checked? 'actives':''" >
+										{{item.name}}
+									</view>
+								</view>
+								<view class="nav-name gd" v-if="index==8">
+									<view class="nav-kk" @click.stop="categoryArr">
+										更多类别
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="nav-box">
+						<view class="nav-tit" @click="gd_down_up = !gd_down_up">
+							<text class="ht">商品</text>
+							<view class="right">
+								<text class="conts"></text>
+								<u-icon name="arrow-down" v-if="!gd_down_up" color="#cccccc" size="28"></u-icon>
+								<u-icon name="arrow-up" v-else color="#cccccc" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="nav-list" v-if="gd_down_up">
+							<view class="goods-item">
+								<view class="goods-name">
+									<view class="goods-kk">
+										<u-input placeholder='请输入商品货号/商品名称' input-align='center' height="60" v-model="keyword" type="text" />
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="nav-box">
+						<view class="nav-tit" @click="jg_down_up = !jg_down_up">
+							<text class="ht">价格区间</text>
+							<view class="right">
+								<text class="conts"></text>
+								<u-icon name="arrow-down" v-if="!jg_down_up" color="#cccccc" size="28"></u-icon>
+								<u-icon name="arrow-up" v-else color="#cccccc" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="nav-list" v-if="jg_down_up">
+							<view class="goods-item">
+								<view class="goods-name">
+									<view class="goods-kk">
+										<u-input placeholder='最低价' input-align='center' height="60" v-model="keyword" type="number" />
+									</view>
+									一
+									<view class="goods-kk">
+										<u-input placeholder='最高价' input-align='center' height="60" v-model="keyword" type="number" />
+									</view>
+									
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="nav-box">
+						<view class="nav-tit" @click="year_down_up = !year_down_up">
+							<text class="ht">年份</text>
+							<view class="right">
+								<text class="conts">{{infos.year|filtersFn}}</text>
+								<u-icon name="arrow-down" v-if="!year_down_up" color="#cccccc" size="28"></u-icon>
+								<u-icon name="arrow-up" v-else color="#cccccc" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="nav-list" v-if="year_down_up">
+							<view class="lak" v-for="(item,index) in infos.year" :key="index">
+								<view class="nav-name" v-if="index<8">
+									<view class="nav-kk" @click.stop="clickYears(item,index)" :class="item.checked? 'actives':''">
+										{{item.name}}
+									</view>
+								</view>
+								<view class="nav-name gd" v-if="index==8">
+									<view class="nav-kk " @click.stop="barndArr">
+										更多年份
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="nav-box">
+						<view class="nav-tit" @click="season_down_up = !season_down_up">
+							<text class="ht">季节</text>
+							<view class="right">
+								<text class="conts">{{infos.season|filtersFn}}</text>
+								<u-icon name="arrow-down" v-if="!season_down_up" color="#cccccc" size="28"></u-icon>
+								<u-icon name="arrow-up" v-else color="#cccccc" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="nav-list" v-if="season_down_up">
+							<view class="lak" v-for="(item,index) in infos.season" :key="index">
+								<view class="nav-name" v-if="index<8">
+									<view class="nav-kk" @click.stop="clickSeason(item,index)" :class="item.checked? 'actives':''">
+										{{item.name}}
+									</view>
+								</view>
+								<view class="nav-name gd" v-if="index==8">
+									<view class="nav-kk " @click.stop="barndArr">
+										更多季节
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="nav-box">
+						<view class="nav-tit" @click="pp_down_up = !pp_down_up">
+							<text class="ht">品牌</text>
+							<view class="right">
+								<text class="conts">{{brandList|filtersFn}}</text>
+								<u-icon name="arrow-down" v-if="!pp_down_up" color="#cccccc" size="28"></u-icon>
+								<u-icon name="arrow-up" v-else color="#cccccc" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="nav-list" v-if="pp_down_up">
+							<view class="lak" v-for="(item,index) in brandList" :key="index">
+								<view class="nav-name"  v-if="index<8">
+									<view class="nav-kk" @click.stop="clickBrand(item,index)" :class="item.checked? 'actives':''">
+										{{item.name}}
+									</view>
+								</view>
+								<view class="nav-name gd" v-if="index==8">
+									<view class="nav-kk " @click.stop="barndArr">
+										更多品牌
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="nav-box">
+						<view class="nav-tit" @click="fg_down_up = !fg_down_up">
+							<text class="ht">风格</text>
+							<view class="right">
+								<text class="conts">{{infos.model|filtersFn}}</text>
+								<u-icon name="arrow-down" v-if="!fg_down_up" color="#cccccc" size="28"></u-icon>
+								<u-icon name="arrow-up" v-else color="#cccccc" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="nav-list" v-if="fg_down_up">
+							<view class="lak" v-for="(item,index) in infos.model" :key="index">
+								<view class="nav-name" v-if="index<8">
+									<view class="nav-kk" @click.stop="clickModel(item,index)" :class="item.checked? 'actives':''">
+										{{item.name}}
+									</view>
+								</view>
+								<view class="nav-name gd " v-if="index==8">
+									<view class="nav-kk " @click.stop="barndArr">
+										更多风格
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="nav-box">
+						<view class="nav-tit" @click="ks_down_up = !ks_down_up">
+							<text class="ht">款式</text>
+							<view class="right">
+								<text class="conts">{{infos.style|filtersFn}}</text>
+								<u-icon name="arrow-down" v-if="!ks_down_up" color="#cccccc" size="28"></u-icon>
+								<u-icon name="arrow-up" v-else color="#cccccc" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="nav-list" v-if="ks_down_up">
+							<view class="lak" v-for="(item,index) in infos.style" :key="index">
+								<view class="nav-name"  v-if="index<8">
+									<view class="nav-kk" @click.stop="clickStyle(item,index)" :class="item.checked? 'actives':''">
+										{{item.name}}
+									</view>
+								</view>
+								<view class="nav-name gd" v-if="index==8">
+									<view class="nav-kk " @click.stop="barndArr">
+										更多款式
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="nav-box">
+						<view class="nav-tit" @click="gys_down_up = !gys_down_up">
+							<text class="ht">供应商</text>
+							<view class="right">
+								<text class="conts">{{infos.suppliers|filtersFn}}</text>
+								<u-icon name="arrow-down" v-if="!gys_down_up" color="#cccccc" size="28"></u-icon>
+								<u-icon name="arrow-up" v-else color="#cccccc" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="nav-list" v-if="gys_down_up">
+							<view class="lak" v-for="(item,index) in infos.suppliers" :key="index">
+								<view class="nav-name"  v-if="index<8">
+									<view class="nav-kk" @click.stop="clickSuppliers(item,index)" :class="item.checked? 'actives':''">
+										{{item.name}}
+									</view>
+								</view>
+								<view class="nav-name gd" v-if="index==8">
+									<view class="nav-kk " @click.stop="barndArr">
+										更多供应商
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="nav-box">
+						<view class="nav-tit" @click="st_down_up = !st_down_up">
+							<text class="ht">状态</text>
+							<view class="right">
+								<text class="conts">{{status|filtersFn}}</text>
+								<u-icon name="arrow-down" v-if="!st_down_up" color="#cccccc" size="28"></u-icon>
+								<u-icon name="arrow-up" v-else color="#cccccc" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="nav-list" v-if="st_down_up">
+							<view class="lak" v-for="(item,index) in status" :key="index">
+								<view class="nav-name">
+									<view class="nav-kk" @click.stop="clickStatus(item,index)" :class="item.checked? 'actives':''">
+										{{item.name}}
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+
+
+				</view>
+				<view class="btn">
+
+					<u-button class="open" @click='reset'>重置</u-button>
+					<u-button class="open" type="primary" @click='determine'>确定</u-button>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 店铺 -->
+		<u-popup v-model="show3" mode="right" z-index='10077' width="80%">
+			<view class="popup-right">
+				<view class="pop-title">
+					<u-icon name="arrow-left" color="#000000" @click='show3=false' size="40"></u-icon>
+					<view class="sx">店铺</view>
+					<view class="qd" @click="show3=false">
+						确定
+					</view>
+				</view>
+				<view class="pop-listt">
+					<u-checkbox-group :wrap='true'>
+						<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked" v-for="(item, index) in infos.stores"
+						 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+					</u-checkbox-group>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 风格 -->
+		<u-popup v-model="show4" mode="right" z-index='10077' width="80%">
+			<view class="popup-right">
+				<view class="pop-title">
+					<u-icon name="arrow-left" color="#000000" @click='show4=false' size="40"></u-icon>
+					<view class="sx">风格</view>
+					<view class="qd" @click="show4=false">
+						确定
+					</view>
+				</view>
+				<view class="pop-listt">
+					<u-checkbox-group :wrap='true'>
+						<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked" v-for="(item, index) in infos.model"
+						 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+					</u-checkbox-group>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 款式 -->
+		<u-popup v-model="show5" mode="right" z-index='10077' width="80%">
+			<view class="popup-right">
+				<view class="pop-title">
+					<u-icon name="arrow-left" color="#000000" @click='show5=false' size="40"></u-icon>
+					<view class="sx">款式</view>
+					<view class="qd" @click="show5=false">
+						确定
+					</view>
+				</view>
+				<view class="pop-listt">
+					<u-checkbox-group :wrap='true'>
+						<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked" v-for="(item, index) in infos.style"
+						 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+					</u-checkbox-group>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 供应商 -->
+		<u-popup v-model="show6" mode="right" z-index='10077' width="80%">
+			<view class="popup-right">
+				<view class="pop-title">
+					<u-icon name="arrow-left" color="#000000" @click='show6=false' size="40"></u-icon>
+					<view class="sx">供应商</view>
+					<view class="qd" @click="show6=false">
+						确定
+					</view>
+				</view>
+				<view class="pop-listt">
+					<u-checkbox-group :wrap='true'>
+						<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked" v-for="(item, index) in infos.suppliers"
+						 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+					</u-checkbox-group>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 品牌 -->
+		<u-popup v-model="show1" mode="right" z-index='10077' width="80%">
+			<view class="popup-right">
+				<view class="pop-title">
+					<u-icon name="arrow-left" color="#000000" @click='show1=false' size="40"></u-icon>
+					<view class="sx">品牌</view>
+					<view class="qd" @click="show1=false">
+						确定
+					</view>
+				</view>
+				<view class="pop-listt">
+					<u-checkbox-group :wrap='true'>
+						<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked" v-for="(item, index) in brandList"
+						 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+					</u-checkbox-group>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 类别 -->
+		<u-popup v-model="show2" mode="right" z-index='10077' width="80%">
+			<view class="popup-right">
+				<view class="pop-title">
+					<u-icon name="arrow-left" color="#000000" @click='show2=false' size="40"></u-icon>
+					<view class="sx">类别</view>
+					<view class="qd" @click="show2=false">
+						确定
+					</view>
+				</view>
+				<view class="pop-listt">
+					<u-checkbox-group :wrap='true'>
+						<u-checkbox shape="circle" @change="cartesChecked($event,index)" v-model="item.checked" v-for="(item, index) in CategoryList"
+						 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+					</u-checkbox-group>
+				</view>
+			</view>
+		</u-popup>
+		
 		<!-- 开始时间 -->
 		<u-picker mode="time" v-model="showtime" @confirm="confirmTime" title="开始时间" :params="params"></u-picker>
 		<!-- 结束时间 -->
@@ -135,9 +522,20 @@
 </template>
 
 <script>
+	import {
+		brandList
+	} from '../../api/brand.js'
+	import {
+		supplierList
+	} from '../../api/supplier.js'
+	import store from '@/store'
+	import {
+		goodsCategoryList
+	} from '../../api/goods_category.js'
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import {
-		analyse
+		analyse,
+		getInfoUsed
 	} from '../../api/goods.js'
 	export default {
 		components: {
@@ -145,6 +543,30 @@
 		},
 		data() {
 			return {
+				showed: false,
+				show1: false,
+				show2: false,
+				show3: false,
+				show4: false,
+				show5: false,
+				show6: false,
+				
+				options: {
+					goods_category_id: [], //类别
+					status: [], //状态
+					price: [], //价格
+				},
+				brandList: [],
+				CategoryList: [],
+				status: [{
+					name: '启用',
+					id: 1,
+					checked: false
+				}, {
+					name: '未启用',
+					id: 0,
+					checked: false
+				}],
 				background: {
 					backgroundColor: '#2979ff'
 				},
@@ -184,7 +606,13 @@
 					end_time: '',
 					page: 1,
 					page_size: 10,
-					options: []
+					options:{
+						// keyword:'',
+						// price:{
+						// 	min:'',
+						// 	max:''
+						// }
+					}
 				},
 				sort_checked: false,
 				show: false,
@@ -220,12 +648,169 @@
 				active: 0,
 				times: ['7天', '15天', '30天', '其他'],
 				timed: ['15天', '30天', '60天', '全部'],
+				infos: {
+					model: [], //
+					style: [],
+					stores: [],
+					suppliers:[],
+					year:[
+							{name:'2021',checked:false},
+							{name:'2020',checked:false},
+							{name:'2019',checked:false},
+							{name:'2018',checked:false},
+							{name:'2017',checked:false},
+							{name:'2016',checked:false},
+						],
+					season:[
+							{name:'春季',checked:false},
+							{name:'夏季',checked:false},
+							{name:'秋季',checked:false},
+							{name:'冬季',checked:false},
+							{name:'春秋',checked:false},
+							{name:'秋夏',checked:false},
+							{name:'春夏',checked:false},
+						],
+					
+				}, 
+				keyword:'',
+				min:'',
+				max:'',
+				str_down_up: true, //店铺
+				pp_down_up: false, //品牌
+				lb_down_up: true, //类别
+				gd_down_up: true, //商品
+				jg_down_up: true, //价格
+				year_down_up: false, //年份
+				season_down_up: false, //季节
+				fg_down_up: false, //风格
+				ks_down_up: false, //款式
+				gys_down_up: false, //供应商
+				st_down_up: false, //状态
+			}
+		},
+		filters:{
+			filtersFn(list){
+				let arr = [];
+				list.map(v=>{
+					if(v.checked){
+						arr.push(v.name)
+					}
+				})
+				return arr.join(',')
+				
 			}
 		},
 		methods: {
-			toDetails(item){
+			// 点击全部品牌
+			barndArr() {
+				this.show1 = true;
+			},
+			// 点击全部类别
+			categoryArr() {
+				this.show2 = true;
+			},
+			//
+			barlistChecked(e, index) {
+				this.$set(this.brandList, index, this.brandList[index])
+			},
+			cartesChecked(e, index) {
+				this.$set(this.CategoryList, index, this.CategoryList[index])
+			},
+			// 点击确定
+			determine() {
+				this.CategoryList.map((v, i) => {
+					if (v.checked) {
+						this.options.goods_category_id.push(v.id)
+					}
+				})
+				this.status.map((v, i) => {
+					if (v.checked) {
+						this.options.status.push(v.id)
+					}
+				})
+				this.price.map((v, i) => {
+					if (v.checked) {
+						this.options.price.push(v.id)
+					}
+				})
+				this.showed = false;
+				// console.log(this.options);
+			},
+			// 点击品牌
+			clickBrand(item, index) {
+				// this.actives1 = index;
+				this.$set(this.brandList, index, this.brandList[index]);
+				this.brandList[index].checked = !item.checked;
+			},
+			// 点击类别
+			clickCate(item, index) {
+				// this.actives2 = index;
+				this.$set(this.CategoryList, index, this.CategoryList[index]);
+				this.CategoryList[index].checked = !item.checked;
+			},
+			// 点击状态
+			clickStatus(item, index) {
+				// this.actives3 = index;
+				this.$set(this.status, index, this.status[index]);
+				this.status[index].checked = !item.checked;
+			},
+			// 点击店铺
+			clickStores(item, index) {
+				// this.actives3 = index;
+				this.$set(this.infos.stores, index, this.infos.stores[index]);
+				this.infos.stores[index].checked = !item.checked;
+			},
+			// 点击年份
+			clickYears(item, index) {
+				// this.actives3 = index;
+				this.$set(this.infos.year, index, this.infos.year[index]);
+				this.infos.year[index].checked = !item.checked;
+			},
+			// 点击季节
+			clickSeason(item, index) {
+				// this.actives3 = index;
+				this.$set(this.infos.season, index, this.infos.season[index]);
+				this.infos.season[index].checked = !item.checked;
+			},
+			// 点击风格
+			clickModel(item, index) {
+				// this.actives3 = index;
+				this.$set(this.infos.model, index, this.infos.model[index]);
+				this.infos.model[index].checked = !item.checked;
+			},
+			// 点击款式
+			clickStyle(item, index) {
+				// this.actives3 = index;
+				this.$set(this.infos.style, index, this.infos.style[index]);
+				this.infos.style[index].checked = !item.checked;
+			},
+			// 点击供应商
+			clickSuppliers(item, index) {
+				// this.actives3 = index;
+				this.$set(this.infos.suppliers, index, this.infos.suppliers[index]);
+				this.infos.suppliers[index].checked = !item.checked;
+			},
+			
+			popup() {
+				this.showed = true;
+			},
+			async brand() {
+				let res = await brandList();
+				this.brandList = res;
+				let res1 = await goodsCategoryList()
+				this.CategoryList = res1;
+				// console.log(res);
+				this.brandList.map(v => {
+					v['checked'] = false;
+				})
+				this.CategoryList.map(v => {
+					v['checked'] = false;
+				})
+			},
+			// 详情
+			toDetails(item) {
 				uni.navigateTo({
-					url:`/pages/goodsAnalyse/details/details?id=${item.id}`
+					url: `/pages/goodsAnalyse/details/details?id=${item.id}`
 				})
 			},
 			// 选择类型
@@ -357,9 +942,52 @@
 				this.form.end_time = `${v.year}-${v.month}-${v.day}`;
 				this.init();
 			},
+			// 筛选信息
+			async infoUsed() {
+				let res = await getInfoUsed({
+					type: "all"
+				});
+				let res1 = await supplierList({type:1})
+				if(!res1.code){
+					res1.map(v=>{
+						this.infos.suppliers.push({
+							name:v.name,
+							checked:false,
+							id:v.id
+						})
+					})
+				}
+				console.log(res1);
+				if (!res.code) {
+					res.model.map(v => {
+						this.infos.model.push({
+							name: v,
+							checked: false
+						})
+					})
+					res.style.map(v=>{
+						this.infos.style.push({
+							name: v,
+							checked: false
+						})
+					})
+					let arr = store.state.store.storesArr;
+					if (arr != undefined) {
+						arr.map(v => {
+							this.infos.stores.push({
+								name: v.name,
+								checked: false,
+								id: v.store_id
+							})
+						})
+					}
+				}
+			}
 		},
 		onLoad() {
-			this.init()
+			this.init();
+			this.brand()
+			this.infoUsed()
 		}
 	}
 </script>
@@ -370,6 +998,11 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100%;
+
+		.actives {
+			background-color: #E0EAFD !important;
+			color: #638FCB !important;
+		}
 
 		/deep/.u-border-bottom:after {
 			border-bottom-width: 0;
@@ -625,6 +1258,169 @@
 
 						text {
 							width: 100%;
+						}
+					}
+				}
+			}
+		}
+
+		// 筛选
+		.popup-right {
+			display: flex;
+			flex-direction: column;
+
+			.pop-title {
+				position: fixed;
+				top: 0;
+				display: flex;
+				justify-content: space-between;
+				flex-direction: row;
+				width: 100%;
+				background-color: #FFFFFF;
+				padding: 10rpx 0;
+				border-bottom: 10rpx solid #e2e2e2;
+
+				.sx {
+					text-align: center;
+				}
+				.qd{
+					padding-right: 20rpx;
+					color: #007AFF;
+				}
+				.userd {
+					text-align: center;
+					color: #007AFF;
+				}
+			}
+
+			.pop-listt {
+				margin-top: 60rpx;
+				padding: 20rpx;
+
+				.u-checkbox {
+					height: 80rpx;
+				}
+			}
+
+			.btn {
+				width: 100%;
+				position: fixed;
+				bottom: 0;
+				display: flex;
+				flex-direction: row;
+
+				.open {
+					flex: 1;
+					border-radius: 0;
+					// width: 50%;
+					border: 0;
+				}
+			}
+
+			/deep/uni-button:after {
+				border-radius: 0;
+			}
+
+			.pop-list {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				padding: 20rpx 10rpx;
+				margin-top: 60rpx;
+				margin-bottom: 80rpx;
+				.nav-box {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					padding: 10rpx;
+
+					.nav-tit {
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						align-items: center;
+
+						.ht {
+							font-size: 28rpx;
+							color: #000000;
+							font-weight: 600;
+							padding: 10rpx;
+						}
+
+						.right {
+							display: flex;
+							flex-direction: row;
+
+							.conts {
+								color: #638FCB;
+								font-size: 20rpx;
+								width: 350rpx;
+								white-space: nowrap;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								text-align: right;
+								padding-right: 10rpx;
+							}
+						}
+					}
+
+					.nav-list {
+						width: 100%;
+						display: flex;
+						// justify-content: center;
+						align-items: center;
+						flex-wrap: wrap;
+
+						.lak {
+							width: 33.3%;
+						}
+
+						.nav-name {
+							width: 100%;
+							text-align: center;
+							// padding: 10rpx 0;
+							margin: 10rpx 0;
+
+							.nav-kk {
+								width: 90%;
+								padding: 6rpx 0;
+								// text-align: center;
+								border-radius: 35rpx;
+								background-color: #f0f0f0;
+								overflow: hidden; //将超出的部分隐藏
+								text-overflow: ellipsis; //超出部分用省略号显示
+								display: -webkit-box;
+								-webkit-box-orient: vertical;
+								-webkit-line-clamp: 2;
+							}
+						}
+						.goods-item{
+							width: 100%;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							margin: 10rpx 0;
+							.goods-name{
+								flex: 1;
+								display: flex;
+								flex-direction: row;
+								justify-content: center;
+								align-items: center;
+								.goods-kk{
+									flex: 1;
+									padding:0 10rpx;
+									margin: 0 10rpx;
+									border-radius: 35rpx;
+									background-color: #f0f0f0;
+								}
+							}
+						}
+
+						.gd {
+							.nav-kk {
+								background-color: #FFFFFF !important;
+								border: 1rpx solid #C0C0C0;
+							}
 						}
 					}
 				}

@@ -36,7 +36,6 @@
 							</view>
 						</view>
 
-
 						<view class="nav-box">
 							<view class="nav-tit">
 								<text class="ht">类别</text>
@@ -157,10 +156,10 @@
 	import {
 		brandList
 	} from '../../api/brand.js'
-	import goodsCategory from '@/components/goods-category/goods-category.vue'
 	import {
 		goodsCategoryList
 	} from '../../api/goods_category.js'
+	import goodsCategory from '@/components/goods-category/goods-category.vue'
 	export default {
 		components: {
 			goodsCategory
