@@ -85,7 +85,8 @@
 				autoPullUp: true,
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
 				last_page: [0, 0, 0],
-				pull: [false, false, false]
+				pull: [false, false, false],
+				refer_data:{}
 			}
 		},
 		methods: {
@@ -115,8 +116,9 @@
 			},
 			// 前往查询页面
 			toRefer() {
+				// 
 				uni.navigateTo({
-					url: `/pages/refer/refer`
+					url:'/pages/refer/refer'
 				})
 			},
 			// 
@@ -216,6 +218,7 @@
 			uni.$on("refer", async (result) => {
 				this.page[this.current] = 1;
 				if (result) {
+					// this.refer_data
 					if (this.current == 0) {
 						let res = await purchaseStorageList({
 							status: 1,

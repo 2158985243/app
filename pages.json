@@ -1710,8 +1710,41 @@
 				}
 			}
 
+		}, {
+			"path": "pages/businessSetUp/autoPromotion/autoPromotion",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/businessSetUp/editAutoPromotion/editAutoPromotion",
+			"style": {
+				"navigationBarTitleText": "会员等级晋升编辑",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
-	],
+	    ,{
+            "path" : "pages/addCommodity/goodsStock/goodsStock",
+            "style" :                                                                                    
+            {
+              "navigationStyle": "custom", // 隐藏系统导航栏
+              "navigationBarTextStyle": "white",
+              "app-plus": {
+              	"scrollIndicator": "none"
+              }
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

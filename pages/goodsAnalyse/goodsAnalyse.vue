@@ -136,7 +136,7 @@
 					<u-icon name="arrow-left" color="#000000" @click='showed=false' size="40"></u-icon>
 					<view class="sx">筛选</view>
 					<view class="qd">
-						
+
 					</view>
 				</view>
 				<view class="pop-list">
@@ -153,7 +153,7 @@
 						<view class="nav-list" v-if="str_down_up">
 							<view class="lak" v-for="(item,index) in infos.stores" :key="index">
 								<view class="nav-name" v-if="index<8">
-									<view class="nav-kk" @click.stop="clickStores(item,index)" :class="item.checked? 'actives':''" >
+									<view class="nav-kk" @click.stop="clickStores(item,index)" :class="item.checked? 'actives':''">
 										{{item.name}}
 									</view>
 								</view>
@@ -177,7 +177,7 @@
 						<view class="nav-list" v-if="lb_down_up">
 							<view class="lak" v-for="(item,index) in CategoryList" :key="index">
 								<view class="nav-name" v-if="index<8">
-									<view class="nav-kk" @click.stop="clickCate(item,index)" :class="item.checked? 'actives':''" >
+									<view class="nav-kk" @click.stop="clickCate(item,index)" :class="item.checked? 'actives':''">
 										{{item.name}}
 									</view>
 								</view>
@@ -221,13 +221,13 @@
 							<view class="goods-item">
 								<view class="goods-name">
 									<view class="goods-kk">
-										<u-input placeholder='最低价' input-align='center' height="60" v-model="keyword" type="number" />
+										<u-input placeholder='最低价' input-align='center' height="60" v-model="min" type="number" />
 									</view>
 									一
 									<view class="goods-kk">
-										<u-input placeholder='最高价' input-align='center' height="60" v-model="keyword" type="number" />
+										<u-input placeholder='最高价' input-align='center' height="60" v-model="max" type="number" />
 									</view>
-									
+
 								</view>
 							</view>
 						</view>
@@ -291,7 +291,7 @@
 						</view>
 						<view class="nav-list" v-if="pp_down_up">
 							<view class="lak" v-for="(item,index) in brandList" :key="index">
-								<view class="nav-name"  v-if="index<8">
+								<view class="nav-name" v-if="index<8">
 									<view class="nav-kk" @click.stop="clickBrand(item,index)" :class="item.checked? 'actives':''">
 										{{item.name}}
 									</view>
@@ -339,7 +339,7 @@
 						</view>
 						<view class="nav-list" v-if="ks_down_up">
 							<view class="lak" v-for="(item,index) in infos.style" :key="index">
-								<view class="nav-name"  v-if="index<8">
+								<view class="nav-name" v-if="index<8">
 									<view class="nav-kk" @click.stop="clickStyle(item,index)" :class="item.checked? 'actives':''">
 										{{item.name}}
 									</view>
@@ -363,7 +363,7 @@
 						</view>
 						<view class="nav-list" v-if="gys_down_up">
 							<view class="lak" v-for="(item,index) in infos.suppliers" :key="index">
-								<view class="nav-name"  v-if="index<8">
+								<view class="nav-name" v-if="index<8">
 									<view class="nav-kk" @click.stop="clickSuppliers(item,index)" :class="item.checked? 'actives':''">
 										{{item.name}}
 									</view>
@@ -513,7 +513,7 @@
 				</view>
 			</view>
 		</u-popup>
-		
+
 		<!-- 开始时间 -->
 		<u-picker mode="time" v-model="showtime" @confirm="confirmTime" title="开始时间" :params="params"></u-picker>
 		<!-- 结束时间 -->
@@ -550,7 +550,7 @@
 				show4: false,
 				show5: false,
 				show6: false,
-				
+
 				options: {
 					goods_category_id: [], //类别
 					status: [], //状态
@@ -606,7 +606,7 @@
 					end_time: '',
 					page: 1,
 					page_size: 10,
-					options:{
+					options: {
 						// keyword:'',
 						// price:{
 						// 	min:'',
@@ -652,29 +652,66 @@
 					model: [], //
 					style: [],
 					stores: [],
-					suppliers:[],
-					year:[
-							{name:'2021',checked:false},
-							{name:'2020',checked:false},
-							{name:'2019',checked:false},
-							{name:'2018',checked:false},
-							{name:'2017',checked:false},
-							{name:'2016',checked:false},
-						],
-					season:[
-							{name:'春季',checked:false},
-							{name:'夏季',checked:false},
-							{name:'秋季',checked:false},
-							{name:'冬季',checked:false},
-							{name:'春秋',checked:false},
-							{name:'秋夏',checked:false},
-							{name:'春夏',checked:false},
-						],
-					
-				}, 
-				keyword:'',
-				min:'',
-				max:'',
+					suppliers: [],
+					year: [{
+							name: '2021',
+							checked: false
+						},
+						{
+							name: '2020',
+							checked: false
+						},
+						{
+							name: '2019',
+							checked: false
+						},
+						{
+							name: '2018',
+							checked: false
+						},
+						{
+							name: '2017',
+							checked: false
+						},
+						{
+							name: '2016',
+							checked: false
+						},
+					],
+					season: [{
+							name: '春季',
+							checked: false
+						},
+						{
+							name: '夏季',
+							checked: false
+						},
+						{
+							name: '秋季',
+							checked: false
+						},
+						{
+							name: '冬季',
+							checked: false
+						},
+						{
+							name: '春秋',
+							checked: false
+						},
+						{
+							name: '秋夏',
+							checked: false
+						},
+						{
+							name: '春夏',
+							checked: false
+						},
+					],
+
+				},
+				keyword: '',
+				min: '',
+				max: '',
 				str_down_up: true, //店铺
 				pp_down_up: false, //品牌
 				lb_down_up: true, //类别
@@ -688,16 +725,16 @@
 				st_down_up: false, //状态
 			}
 		},
-		filters:{
-			filtersFn(list){
+		filters: {
+			filtersFn(list) {
 				let arr = [];
-				list.map(v=>{
-					if(v.checked){
+				list.map(v => {
+					if (v.checked) {
 						arr.push(v.name)
 					}
 				})
 				return arr.join(',')
-				
+
 			}
 		},
 		methods: {
@@ -718,23 +755,154 @@
 			},
 			// 点击确定
 			determine() {
+				let a = false;
 				this.CategoryList.map((v, i) => {
 					if (v.checked) {
-						this.options.goods_category_id.push(v.id)
+						if(!a){
+							this.form.options.goods_category_id = []
+							a = true
+						}
+						this.form.options.goods_category_id.push(v.id)
 					}
 				})
+				let b = false
 				this.status.map((v, i) => {
 					if (v.checked) {
-						this.options.status.push(v.id)
+						if(!b){
+							this.form.options.status = []
+							b = true
+						}
+						this.form.options.status.push(v.id)
 					}
 				})
-				this.price.map((v, i) => {
+				let c = false
+				this.brandList.map(v => {
 					if (v.checked) {
-						this.options.price.push(v.id)
+						if(!c){
+							this.form.options.brand_id = []
+							c = true
+						}
+						this.form.options.brand_id.push(v.id)
 					}
 				})
+				let d = false
+				this.infos.stores.map(v => {
+					if (v.checked) {
+						if(!d){
+							this.form.options.store_ids = []
+							d = true
+						}
+						this.form.options.store_ids.push(v.id)
+					}
+				})
+				let e = false
+				this.infos.year.map(v => {
+					if (v.checked) {
+						if(!e){
+							this.form.options.year = []
+							e = true
+						}
+						this.form.options.year.push(v.name)
+					}
+				})
+				let f = false
+				this.infos.season.map(v => {
+					if (v.checked) {
+						if(!c){
+							this.form.options.season = []
+							c = true
+						}
+						this.form.options.season.push(v.name)
+					}
+				})
+				let g = false
+				this.infos.model.map(v => {
+					if (v.checked) {
+						if(!g){
+							this.form.options.model = []
+							g = true
+						}
+						this.form.options.model.push(v.name)
+					}
+				})
+				let h = false
+				this.infos.style.map(v => {
+					if (v.checked) {
+						if(!h){
+							this.form.options.style = []
+							h = true
+						}
+						this.form.options.style.push(v.name)
+					}
+				})
+				let i = false
+				this.infos.suppliers.map(v => {
+					if (v.checked) {
+						if(!i){
+							this.form.options.supplier_id = []
+							i = true
+						}
+						this.form.options.supplier_id.push(v.id)
+					}
+				})
+				
+				if(this.min){
+					this.form.options.price = {}
+					this.form.options.price.min = this.min
+				}
+				if(this.max){
+					this.form.options.price.max = this.max
+				}
+				if(this.keyword){
+					this.form.options.keyword = this.keyword
+				}
 				this.showed = false;
 				// console.log(this.options);
+				this.init()
+			},
+			// 点击重置
+			reset() {
+				this.options = {
+					goods_category_id: [], //类别
+					status: [], //状态
+					price: []
+				}
+				this.brandList.map(v => {
+					v['checked'] = false;
+				})
+				
+				this.CategoryList.map(v => {
+					v['checked'] = false;
+				})
+				this.status.map(v => {
+					v['checked'] = false;
+				})
+				this.infos.stores.map(v => {
+					v['checked'] = false;
+				})
+				this.infos.year.map(v => {
+					v['checked'] = false;
+				})
+				this.infos.season.map(v => {
+					v['checked'] = false;
+				})
+				this.infos.model.map(v => {
+					v['checked'] = false;
+				})
+				this.infos.style.map(v => {
+					v['checked'] = false;
+				})
+				this.infos.suppliers.map(v => {
+					v['checked'] = false;
+				})
+				if(this.form.options.price){
+					this.min = ''
+					this.max = ''
+				}
+				if(this.form.options.keyword){
+					this.keyword = ''
+				}
+				this.$forceUpdate()
 			},
 			// 点击品牌
 			clickBrand(item, index) {
@@ -790,7 +958,7 @@
 				this.$set(this.infos.suppliers, index, this.infos.suppliers[index]);
 				this.infos.suppliers[index].checked = !item.checked;
 			},
-			
+
 			popup() {
 				this.showed = true;
 			},
@@ -947,13 +1115,15 @@
 				let res = await getInfoUsed({
 					type: "all"
 				});
-				let res1 = await supplierList({type:1})
-				if(!res1.code){
-					res1.map(v=>{
+				let res1 = await supplierList({
+					type: 1
+				})
+				if (!res1.code) {
+					res1.map(v => {
 						this.infos.suppliers.push({
-							name:v.name,
-							checked:false,
-							id:v.id
+							name: v.name,
+							checked: false,
+							id: v.id
 						})
 					})
 				}
@@ -965,7 +1135,7 @@
 							checked: false
 						})
 					})
-					res.style.map(v=>{
+					res.style.map(v => {
 						this.infos.style.push({
 							name: v,
 							checked: false
@@ -998,7 +1168,7 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100%;
-
+		background-color: #F7F6FB;
 		.actives {
 			background-color: #E0EAFD !important;
 			color: #638FCB !important;
@@ -1283,10 +1453,12 @@
 				.sx {
 					text-align: center;
 				}
-				.qd{
+
+				.qd {
 					padding-right: 20rpx;
 					color: #007AFF;
 				}
+
 				.userd {
 					text-align: center;
 					color: #007AFF;
@@ -1328,6 +1500,7 @@
 				padding: 20rpx 10rpx;
 				margin-top: 60rpx;
 				margin-bottom: 80rpx;
+
 				.nav-box {
 					width: 100%;
 					display: flex;
@@ -1394,21 +1567,24 @@
 								-webkit-line-clamp: 2;
 							}
 						}
-						.goods-item{
+
+						.goods-item {
 							width: 100%;
 							display: flex;
 							justify-content: center;
 							align-items: center;
 							margin: 10rpx 0;
-							.goods-name{
+
+							.goods-name {
 								flex: 1;
 								display: flex;
 								flex-direction: row;
 								justify-content: center;
 								align-items: center;
-								.goods-kk{
+
+								.goods-kk {
 									flex: 1;
-									padding:0 10rpx;
+									padding: 0 10rpx;
 									margin: 0 10rpx;
 									border-radius: 35rpx;
 									background-color: #f0f0f0;

@@ -52,9 +52,9 @@
 				<view class="form_item1">
 					<text>上传图片</text>
 					<u-upload width="100" height='100' upload-text='' image-mode='aspectFit' :limitType='limit' :action="action+'/api/upload'"
-					 :header="header" :name="formData.type" :form-data="formData" @on-success="onSuccess" :file-list="fileList"
-					 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="6" :show-progress="false" @on-error='onError' @long-tap="longtap" :is_main="true"
-					 @on-uploaded="onUploaded" del-bg-color='#000000'>
+					 :header="header" :name="formData.type" :form-data="formData" @on-remove="onRemove" @on-success="onSuccess"
+					 :file-list="fileList" :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="6" :show-progress="false"
+					 @on-error='onError' @long-tap="longtap" :is_main="true" @on-uploaded="onUploaded" del-bg-color='#000000'>
 					</u-upload>
 				</view>
 			</view>
@@ -74,21 +74,25 @@
 			</view>
 		</view>
 		<view class="box">
-			<view class="form_item">
+			<!-- <view class="form_item">
 				<text>初始库存</text>
 				<u-input placeholder='' :disabled='true' v-model="form.remarks" type="text" />
 				<text class="set">设置</text>
-			</view>
+			</view> -->
 			<view class="form_item">
 				<text>库存预警</text>
 				<u-switch v-model="checked1" @change="warning" active-value="1" inactive-value="0"></u-switch>
+				<text v-if="checked1" class="bounds">上限:</text>
+				<u-input v-if="checked1" placeholder='0' class="bounded" v-model="form.warning_max" type="number" />
+				<text v-if="checked1" class="bounds">下限:</text>
+				<u-input v-if="checked1" placeholder='0' class="bounded" v-model="form.warning_min" type="number" />
+				
 			</view>
 		</view>
 		<view class="box">
 			<view class="form_item">
 				<text>显示顺序</text>
-				<text>{{form.sort}}</text>
-				<!-- <u-input placeholder='请输入备注信息' v-model="form.remarks" type="text" /> -->
+				<u-input placeholder='' v-model="form.sort" type="number" />
 			</view>
 			<view class="form_item">
 				<text>支持积分兑换</text>
@@ -302,12 +306,8 @@
 				});
 			},
 			// 
-			onUploaded(lists, name) {
-				// console.log(lists, name);
-				// console.log(this.fileList);
-			},
-			longtap(lists,index){
-				console.log(lists,index);
+			onUploaded(lists, name) {},
+			longtap(lists, index) {
 				this.form.images = []
 				lists.map((v, i) => {
 					if (i == 0) {
@@ -316,7 +316,6 @@
 						} else {
 							let url = v.url.substr(this.$cfg.domain.length)
 							this.form.main_image = url;
-							console.log(url);
 						}
 					} else {
 						if (v.response) {
@@ -324,19 +323,17 @@
 						} else {
 							let url = v.url.substr(this.$cfg.domain.length)
 							this.form.images.push(url)
-							
+
 						}
 					}
 				})
 			},
 			// 时间返回fn
 			confirmTime(v) {
-				// console.log(v);
 				this.form.year = v.year;
 			},
 			// 季节返回fn
 			confirm(v) {
-				console.log(v);
 				this.form.season = v[0].label;
 			},
 			// 点击选择年份
@@ -350,7 +347,7 @@
 			hidde() {
 				this.his = !this.his;
 			},
-			// 
+			// 保存
 			async save() {
 				if (!store.state.barcodeDa.barcode_array) {
 					this.form.barcode_array = []
@@ -387,7 +384,6 @@
 						obj[key] = this.form[key];
 					}
 				}
-				console.log(obj);
 				this.$store.commit('colorDaAction', {
 					colorDa: ''
 				});
@@ -398,11 +394,9 @@
 				if (!res.code) {
 					uni.navigateBack()
 				}
-				// console.log(res);
 			},
 			// 上传图片成功fnc
 			onSuccess(data, index, lists, name) {
-				console.log(data, index, lists, name);
 				this.form.images = []
 				lists.map((v, i) => {
 					if (i == 0) {
@@ -418,28 +412,49 @@
 						} else {
 							let url = v.url.substr(this.$cfg.domain.length)
 							this.form.images.push(url)
-							
 						}
 					}
 				})
 			},
 			// 上传图片失败fnc
 			onError(res, index, lists, name) {
-				console.log(res, index, lists, name);
+				console.log('上传失败');
+			},
+			// 移除照片
+			onRemove(index, lists, name) {
+				this.fileList.splice(index, 1)
+				if (this.fileList.length > 0) {
+					if (this.fileList[0].url.valueOf(this.$cfg.domain) != -1) {
+						let url = this.fileList[0].url.substr(this.$cfg.domain.length)
+						this.form.main_image = url
+					} else {
+						this.form.main_image = this.fileList[0].url
+					}
+				}
+				if (this.fileList.length > 1) {
+					this.form.images = []
+					this.fileList.map((v, i) => {
+						if (i != 0) {
+							if (v.url.valueOf(this.$cfg.domain) != -1) {
+								let url = v.url.substr(this.$cfg.domain.length)
+								this.form.images.push(url)
+							} else {
+								this.form.images.push(v.url)
+							}
+						}
+					})
+				}
 			},
 			// 商品启用状态开关
 			changeStatus(v) {
-				// console.log(v);
 				this.form.status = Number(v);
 			},
 			// 积分兑换开关
 			exchange(v) {
-				// console.log(v);
 				this.form.exchange = Number(v);
 			},
 			// 预警开关
 			warning(v) {
-				// console.log(v);
 				this.form.warning = Number(v);
 			},
 			toChooseSupplier() {
@@ -487,15 +502,12 @@
 				// 允许从相机和相册扫码
 				uni.scanCode({
 					success: function(res) {
-						console.log('条码类型：' + res.scanType);
-						console.log('条码内容：' + res.result);
 						that.form.barcode = res.result;
 					}
 				});
 			},
 			async good() {
 				let res = await goods(this.id)
-				console.log(res);
 				this.form.name = res.name;
 				this.form.number = res.number;
 				this.form.purchase_price = res.purchase_price;
@@ -614,7 +626,6 @@
 							}
 						})
 					})
-					// console.log(this.form.barcode_array);
 					this.barcodeDa['barcode_array'] = this.form.barcode_array;
 					this.$store.commit('barcodeAction', {
 						barcodes: this.barcodeDa
@@ -640,9 +651,7 @@
 							if (!res.code) {
 								uni.navigateBack()
 							}
-						} else if (res.cancel) {
-							console.log('用户点击取消');
-						}
+						} else if (res.cancel) {}
 					}
 				});
 
@@ -654,19 +663,17 @@
 			this.good()
 			uni.$on("produtName", (res) => {
 				if (res) {
-					// this.storeName  = res.name;
 					this.form.name = res;
 				}
 			});
 			uni.$on("colorDatum", (res) => {
 				if (res) {
-					console.log(res);
 					this.barcodeDa.colorDa = res;
-					// uni.setStorageSync('colorDa', res);
 					this.$store.commit('colorDaAction', {
 						colorDa: res
 					});
 					let str = [];
+					this.form.color_id = []
 					res.map((v, i) => {
 						this.form.color_id.push(v.id);
 						str.push(v.name);
@@ -676,11 +683,11 @@
 			});
 			uni.$on("sizeDatum", (res) => {
 				if (res) {
-					console.log(res);
 					this.$store.commit('sizerDaAction', {
 						sizerDa: res
 					});
 					let str = [];
+					this.form.size_id = []
 					res.map((v, i) => {
 						this.form.size_id.push(v.id);
 						str.push(v.name);
@@ -692,47 +699,26 @@
 			});
 			uni.$on("categoryDatum", (res) => {
 				if (res) {
-					console.log(res);
-					// let str = [];
-					// res.map((v, i) => {
 					this.form.goods_category_id = res.id;
-					// str.push(v.name);
 					this.category = res.name;
-					// })
-					// this.size_name = str.join(',');
 				}
 			});
 			uni.$on("supplierDatum", (res) => {
 				if (res) {
-					// let str = [];
-					// res.map((v, i) => {
 					this.form.supplier_id = res.id;
-					// str.push(v.name);
 					this.supplier = res.name;
-					// })
-					// this.size_name = str.join(',');
 				}
 			});
 			uni.$on("trademarkDatum", (res) => {
 				if (res) {
-					// let str = [];
-					// res.map((v, i) => {
 					this.form.brand_id = res.id;
-					// str.push(v.name);
 					this.trademark_name = res.name;
-					// })
-					// this.size_name = str.join(',');
 				}
 			});
 			uni.$on("unitListDatum", (res) => {
 				if (res) {
-					// let str = [];
-					// res.map((v, i) => {
 					this.form.unit_id = res.id;
-					// str.push(v.name);
 					this.unitList_name = res.name;
-					// })
-					// this.size_name = str.join(',');
 				}
 			});
 
@@ -774,6 +760,7 @@
 			.form_item {
 				padding-right: 20rpx;
 				display: flex;
+				flex-direction: row;
 				align-items: center;
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
@@ -788,14 +775,21 @@
 				.min_exchange {
 					width: 150rpx;
 				}
-
+				
 				.set {
 					width: 80rpx;
 					color: #2979ff;
 				}
-
+				.bounds{
+					width: 90rpx;
+				}
+				
+				.bounded{
+					width: 120rpx;
+					border-bottom: 1rpx solid #cccccc !important;
+				}
 				.border_bt {
-					border-bottom: 0.01rem solid #C0C0C0;
+					border-bottom: 1rpx solid #cccccc !important;
 				}
 
 				.man_r {

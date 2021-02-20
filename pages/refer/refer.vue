@@ -42,6 +42,7 @@
 </template>
 
 <script>
+	import store from '@/store'
 	export default {
 		data() {
 			return {
@@ -71,8 +72,17 @@
 		},
 		methods: {
 			// 确认
-			affirm(){
-				uni.$emit('refer',this.form)
+			affirm() {
+				let obj = {
+					supplier:this.supplier,
+					shop:this.shop,
+					form:this.form
+				}
+				this.$store.commit('referFn', {
+					referDate: obj
+				})
+				uni.$emit('refer', this.form)
+				
 				uni.navigateBack()
 			},
 			// 前往供应商
@@ -104,7 +114,7 @@
 				this.form.end_time = `${v.year}-${v.month}-${v.day}`;
 			},
 			// 清空
-			delHistory(){
+			delHistory() {
 				this.form.supplier_id = 0;
 				this.form.store_id = 0;
 				this.form.number = "";
@@ -112,10 +122,21 @@
 				this.shop = '';
 			}
 		},
-		onLoad() {
-			let date = new Date();
-			this.form.start_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
-			this.form.end_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+		onLoad(option) {
+			let bl = false 
+			for(let key in store.state.referDate){
+				bl = true
+			}
+			if(bl){
+				this.supplier = store.state.referDate.supplier;
+				this.shop =store.state.referDate.shop;
+				this.form = store.state.referDate.form
+			}else{
+				let date = new Date();
+				this.form.start_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+				this.form.end_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+			}
+
 			uni.$on("supplierDatum", (res) => {
 				if (res) {
 					// console.log(res);
@@ -141,9 +162,11 @@
 		display: flex;
 		flex-direction: column;
 		background-color: #F8F8F8;
-		.btn{
+
+		.btn {
 			width: 90vw;
 		}
+
 		.right_icon {
 			margin-right: 30rpx;
 			color: #FFFFFF;

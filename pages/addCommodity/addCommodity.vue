@@ -77,17 +77,21 @@
 			<view class="form_item">
 				<text>初始库存</text>
 				<u-input placeholder='' :disabled='true' v-model="form.remarks" type="text" />
-				<text class="set">设置</text>
+				<text class="set" @click="toGoodsStock">设置</text>
 			</view>
 			<view class="form_item">
 				<text>库存预警</text>
 				<u-switch v-model="checked1" @change="warning" active-value="1" inactive-value="0"></u-switch>
+				<text v-if="checked1" class="bounds">上限:</text>
+				<u-input v-if="checked1" placeholder='0' class="bounded" v-model="form.warning_max" type="number" />
+				<text v-if="checked1" class="bounds">下限:</text>
+				<u-input v-if="checked1" placeholder='0' class="bounded" v-model="form.warning_min" type="number" />
 			</view>
 		</view>
 		<view class="box">
 			<view class="form_item">
 				<text>显示顺序</text>
-				<text>{{form.sort}}</text>
+				<u-input placeholder='' v-model="form.sort" type="number" />
 				<!-- <u-input placeholder='请输入备注信息' v-model="form.remarks" type="text" /> -->
 			</view>
 			<view class="form_item">
@@ -307,7 +311,6 @@
 						} else {
 							let url = v.url.substr(this.$cfg.domain.length)
 							this.form.main_image = url;
-							console.log(url);
 						}
 					} else {
 						if (v.response) {
@@ -468,6 +471,7 @@
 				this.formData.path = "goods";
 
 			},
+			// 设置单品条码
 			toBarcodes() {
 				if (this.barcodeDa.colorDa.length > 0 && this.barcodeDa.sizerDa.length > 0) {
 
@@ -499,6 +503,43 @@
 					})
 				}
 			},
+			// 设置初始库存
+			toGoodsStock(){
+				if (this.barcodeDa.colorDa.length > 0 && this.barcodeDa.sizerDa.length > 0) {
+					this.form.goods_stock = []
+					let arr = store.state.store.storesArr
+					arr.map((y,j)=>{
+						this.form.goods_stock.push({
+							store_id:y.store_id,
+							data:[]
+						}) 
+						this.form.color_id.map((v, i) => {
+							this.form.goods_stock[j].data.push({
+								color_id: v,
+								data: []
+							})
+							this.form.size_id.map((v1, i1) => {
+								this.form.goods_stock[j].data[i].data.push({
+									size_id: v1,
+									stock: ''
+								})
+							})
+						})
+					})
+					
+					this.$store.commit('goodsStockFn', {
+						goodsStockDa: this.form.goods_stock
+					});
+					uni.navigateTo({
+							url: '/pages/addCommodity/goodsStock/goodsStock'
+					})
+				} else {
+					this.$refs.uToast.show({
+						title: '请选择颜色和尺码后再操作！',
+						type: 'defaul'
+					})
+				}
+			}
 		},
 		onLoad() {
 			this.init();
@@ -632,6 +673,15 @@
 				.set {
 					width: 80rpx;
 					color: #2979ff;
+				}
+
+				.bounds {
+					width: 90rpx;
+				}
+
+				.bounded {
+					width: 120rpx;
+					border-bottom: 1rpx solid #cccccc !important;
 				}
 
 				.border_bt {

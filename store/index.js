@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	state: {
 		token: '',
-		barcodeDa: {},
+		barcodeDa: {},//单品条码组
+		goodsStockDa: {},//商品初始库存
 		sizerDa: [],
 		colorDa: [],
 		specificationOfGoods: [],
@@ -16,6 +17,7 @@ export default new Vuex.Store({
 		storeSelet:[],//选择的店铺权限组
 		tademark:[],//选择的品牌权限
 		purview:[],//权限数组
+		referDate:{},//查询数据
 	},
 	getters: {
 
@@ -25,9 +27,15 @@ export default new Vuex.Store({
 			console.log(context);
 			state.token = context.token;
 		},
+		// 条码
 		barcodeAction(state, context) {
 			state.barcodeDa = context.barcodes;
 		},
+		// 条码
+		goodsStockFn(state, context) {
+			state.goodsStockDa = context.goodsStockDa;
+		},
+		
 		colorDaAction(state, context) {
 			state.colorDa = context.colorDa;
 		},
@@ -60,6 +68,10 @@ export default new Vuex.Store({
 		// 权限组
 		purviewFn(state,context){
 			state.purview = context.purview
+		},
+		// 查询
+		referFn(state,context){
+			state.referDate = context.referDate
 		}
 	},
 	actions: {

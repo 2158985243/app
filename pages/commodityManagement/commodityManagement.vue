@@ -208,7 +208,7 @@
 				},
 				page: 1,
 				page_size: 10,
-				totalVal:{},
+				totalVal: {},
 				last_page: 0,
 				mored: {},
 				pull: false
@@ -236,7 +236,7 @@
 							position: 'bottom'
 						})
 						this.pull = true
-				
+
 					} else {
 						this.page++;
 						this.loadMore()
@@ -280,12 +280,18 @@
 
 			},
 			// 点击确定
-			determine() {
+			async determine() {
+				this.options = {
+					goods_category_id: [], //类别
+					status: [], //状态
+					price: []
+				}
 				this.CategoryList.map((v, i) => {
 					if (v.checked) {
 						this.options.goods_category_id.push(v.id)
 					}
 				})
+				
 				this.status.map((v, i) => {
 					if (v.checked) {
 						this.options.status.push(v.id)
@@ -297,7 +303,21 @@
 					}
 				})
 				this.show = false;
-				// console.log(this.options);
+				console.log(this.options);
+				let res = await goodsList({
+					page: this.page,
+					page_size: this.page_size,
+					goods_category_id: this.mored.id,
+					options: this.options,
+					keyword: this.keyword
+				});
+				console.log(res);
+				if (this.mored.index == undefined) {
+					this.dataList[0].arr = res.data;
+				} else {
+
+					this.dataList[this.mored.index].arr = res.data;
+				}
 			},
 			// 点击品牌
 			clickBrand(item, index) {
@@ -327,6 +347,12 @@
 				this.show = true;
 			},
 			toAddCommodity() {
+				this.$store.commit('colorDaAction', {
+					colorDa: []
+				});
+				this.$store.commit('sizerDaAction', {
+					sizerDa: []
+				});
 				uni.navigateTo({
 					url: `/pages/addCommodity/addCommodity`
 				})
@@ -347,7 +373,8 @@
 				let res = await goodsList({
 					page: this.page,
 					page_size: this.page_size,
-					keyword: this.keyword
+					keyword: this.keyword,
+
 				});
 				this.dataList = [];
 				this.dataList.unshift({
@@ -355,7 +382,7 @@
 					id: 0,
 					arr: res.data
 				})
-				
+
 				let res1 = await goodsCategoryList()
 				// console.log(res,res1);
 				res1.map((v, i) => {
@@ -363,15 +390,17 @@
 					v['arr'] = arr
 					this.dataList.push(v)
 				})
-				
+
 				// this.dataList = res.data
 				// console.log(this.dataList);
 			},
 			// 点击左侧
 			async leftNav(e) {
 				// this.dataList
+				console.log(e);
 				this.mored = e;
 				this.vs = 1;
+				this.page = 1
 				for (let i = 0; i < this.dataList.length; i++) {
 					if (this.dataList[i].arr.length == 0 && e.index == i) {
 						let res = await goodsList({
@@ -428,17 +457,17 @@
 					v['checked'] = false;
 				})
 			},
-			async Total(){
+			async Total() {
 				let res = await getTotal();
-					console.log(res);
-				if(!res.code){
+				console.log(res);
+				if (!res.code) {
 					this.totalVal = res;
 				}
 			}
 
 		},
 		onLoad(query) {
-			
+
 		},
 		onShow() {
 			this.init()

@@ -84,6 +84,12 @@
 		methods: {
 			// 增加商品
 			toAddCommodity(){
+				this.$store.commit('colorDaAction', {
+					colorDa: []
+				});
+				this.$store.commit('sizerDaAction', {
+					sizerDa: []
+				});
 				uni.navigateTo({
 					url: `/pages/addCommodity/addCommodity`
 				})
@@ -120,12 +126,20 @@
 			},
 			// 入库历史
 			toLibraryHistory(){
+				let obj = {}
+				this.$store.commit('referFn', {
+					referDate: obj
+				})
 				uni.navigateTo({
 					url: `/pages/libraryHistory/libraryHistory`
 				})
 			},
 			// 采购退货
 			toSalesReturnHistory(){
+				let obj = {}
+				this.$store.commit('referFn', {
+					referDate: obj
+				})
 				uni.navigateTo({
 					url: `/pages/salesReturnHistory/salesReturnHistory`
 				})
@@ -156,6 +170,10 @@
 			},
 			// 调拔
 			toAllocate(){
+				let obj = {}
+				this.$store.commit('referFn', {
+					referDate: obj
+				})
 				uni.navigateTo({
 					url: `/pages/allocate/allocate`
 				})
@@ -168,6 +186,10 @@
 			},
 			// 
 			toStockTaking(){
+				let obj = {}
+				this.$store.commit('referFn', {
+					referDate: obj
+				})
 				uni.navigateTo({
 					url: `/pages/stockTaking/stockTaking`
 				})

@@ -97,6 +97,12 @@
 			},
 			// 添加商品
 			toAddCommodity() {
+				this.$store.commit('colorDaAction', {
+					colorDa: []
+				});
+				this.$store.commit('sizerDaAction', {
+					sizerDa: []
+				});
 				uni.navigateTo({
 					url: `/pages/addCommodity/addCommodity`
 				})

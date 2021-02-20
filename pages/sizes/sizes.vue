@@ -351,12 +351,11 @@
 			backtrack() {
 				let sizerDa = store.state.sizerDa
 				if (sizerDa) {
-					sizerDa.map((v, i) => {
-						// console.log(v);
-						this.list.map((j, k) => {
-							if (v.id == j.id) {
-								let num = 0;
-								j.size.map((v1, i1) => {
+					this.list.map((j, k) => {
+						let num = 0;
+						j.size.map((v1, i1) => {
+							sizerDa.map((v, i) => {
+								if (v.id == v1.id) {
 									if (v.choice) {
 										++num;
 										v1.choice = true;
@@ -364,8 +363,8 @@
 											j.checked = true;
 										}
 									}
-								})
-							}
+								}
+							})
 						})
 					})
 				}

@@ -35,3 +35,21 @@ export const customerLevelDel = (id) => {
 		return error;
 	});
 };
+// 设置会员等级自动晋升
+export const setAutoPromotion = (data) => {
+	return $http.post("/customer_level/set_auto_promotion",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 获取设置会员等级自动晋升
+export const getAutoPromotion = () => {
+	return $http.get("/customer_level/get_auto_promotion").then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
