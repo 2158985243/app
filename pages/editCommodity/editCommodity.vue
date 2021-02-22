@@ -86,7 +86,7 @@
 				<u-input v-if="checked1" placeholder='0' class="bounded" v-model="form.warning_max" type="number" />
 				<text v-if="checked1" class="bounds">下限:</text>
 				<u-input v-if="checked1" placeholder='0' class="bounded" v-model="form.warning_min" type="number" />
-				
+
 			</view>
 		</view>
 		<view class="box">
@@ -390,6 +390,12 @@
 				this.$store.commit('sizerDaAction', {
 					sizerDa: ''
 				});
+				this.$store.commit('goodsStockFn', {
+					goodsStockDa: []
+				});
+				this.$store.commit('barcodeAction', {
+					barcodeDa: {}
+				});
 				let res = await goodsEdit(this.id, obj);
 				if (!res.code) {
 					uni.navigateBack()
@@ -506,8 +512,10 @@
 					}
 				});
 			},
+			// 初始化数据
 			async good() {
 				let res = await goods(this.id)
+				console.log(res);
 				this.form.name = res.name;
 				this.form.number = res.number;
 				this.form.purchase_price = res.purchase_price;
@@ -600,36 +608,37 @@
 			// 设置单品条码
 			toBarcodes() {
 				if (this.barcodeDa.colorDa.length > 0 && this.barcodeDa.sizerDa.length > 0) {
-
-					this.form.barcode_array = []
-					this.form.color_id.map((v, i) => {
-						this.form.barcode_array.push({
-							color_id: v,
-							data: []
-						})
-						this.form.size_id.map((v1, i1) => {
-							this.form.barcode_array[i].data.push({
-								size_id: v1,
-								barcode: ''
+					if (!store.state.barcodeDa.barcode_array) {
+						this.form.barcode_array = []
+						this.form.color_id.map((v, i) => {
+							this.form.barcode_array.push({
+								color_id: v,
+								data: []
+							})
+							this.form.size_id.map((v1, i1) => {
+								this.form.barcode_array[i].data.push({
+									size_id: v1,
+									barcode: ''
+								})
 							})
 						})
-					})
-					this.barcodeDa.goods_spec.map((v, i) => {
-						this.form.barcode_array.map((v1, i1) => {
-							if (v.color_id == v1.color_id) {
-								v1.data.map((j, k) => {
-									if (v.size_id == j.size_id) {
-										j.barcode = v.barcode;
-										j['id'] = v.id
-									}
-								})
-							}
+						this.barcodeDa.goods_spec.map((v, i) => {
+							this.form.barcode_array.map((v1, i1) => {
+								if (v.color_id == v1.color_id) {
+									v1.data.map((j, k) => {
+										if (v.size_id == j.size_id) {
+											j.barcode = v.barcode;
+											j['id'] = v.id
+										}
+									})
+								}
+							})
 						})
-					})
-					this.barcodeDa['barcode_array'] = this.form.barcode_array;
-					this.$store.commit('barcodeAction', {
-						barcodes: this.barcodeDa
-					});
+						this.barcodeDa['barcode_array'] = this.form.barcode_array;
+						this.$store.commit('barcodeAction', {
+							barcodeDa: this.barcodeDa
+						});
+					}
 					uni.navigateTo({
 						url: '/pages/barcode/barcode'
 					})
@@ -679,6 +688,77 @@
 						str.push(v.name);
 					})
 					this.colors_name = str.join(',');
+					// 处理条码和库存
+					if (this.barcodeDa.colorDa.length > 0 && this.barcodeDa.sizerDa.length > 0) {
+						if (store.state.barcodeDa.barcode_array) {
+							let arr = []
+							this.form.color_id.map((v, i) => {
+								let bl = true
+								this.form.barcode_array.map((v1) => {
+									if (v == v1.color_id) {
+										arr.push(v1)
+										bl = false
+									}
+								})
+								// 增加的颜色条码
+								if (bl) {
+									arr.push({
+										color_id: v,
+										data: []
+									})
+									this.form.size_id.map((v1, i1) => {
+										arr[i].data.push({
+											size_id: v1,
+											barcode: ''
+										})
+									})
+								}
+							})
+							let obj = {
+								barcode_array: arr
+							}
+							this.$store.commit('barcodeAction', {
+								barcodeDa: obj
+							});
+						}
+						if (store.state.goodsStockDa.length > 0) {
+							let arr = []
+							store.state.goodsStockDa.map((v, i) => {
+								arr.push({
+									store_id: v.store_id,
+									data: []
+								})
+								v.data.map((v1, i1) => {
+									let bl = true
+									this.form.color_id.map((v2, i2) => {
+										if (v1.color_id == v2) {
+											bl = false
+											arr[i].data[i1].push(v1)
+										}
+									})
+									// 增加的颜色库存
+									if (bl) {
+										this.form.color_id.map((v2, i2) => {
+											v1.push({
+												color_id: v2,
+												data: []
+											})
+											this.form.size_id.map((v3, i3) => {
+												v1.data.push({
+													size_id: v3,
+													stock: ''
+												})
+											})
+										})
+									}
+								})
+							})
+							this.$store.commit('goodsStockFn', {
+								goodsStockDa: arr
+							});
+						}
+					}
+
 				}
 			});
 			uni.$on("sizeDatum", (res) => {
@@ -695,6 +775,80 @@
 					})
 					this.barcodeDa.sizerDa = res;
 					this.size_name = str.join(',');
+					// 处理条码和库存
+					if (this.barcodeDa.colorDa.length > 0 && this.barcodeDa.sizerDa.length > 0) {
+						if (store.state.barcodeDa.barcode_array) {
+							let arr = []
+							this.form.size_id.map((v, i) => {
+								this.form.barcode_array.map((v1, i1) => {
+									let bl = true
+									v1.data.map((v2) => {
+										if (v == v1.size_id) {
+											arr.push(v2)
+											bl = false
+										}
+									})
+									if (bl) {
+										arr.push({
+											color_id: v,
+											data: []
+										})
+										this.form.size_id.map((v3, i3) => {
+											arr[i1].data.push({
+												size_id: v3,
+												barcode: ''
+											})
+										})
+									}
+								})
+
+							})
+							let obj = {
+								barcode_array: arr
+							}
+							this.$store.commit('barcodeAction', {
+								barcodeDa: obj
+							});
+						}
+						if (store.state.goodsStockDa.length > 0) {
+							let arr = []
+							store.state.goodsStockDa.map((v, i) => {
+								arr.push({
+									store_id: v.store_id,
+									data: []
+								})
+								v.data.map((v1, i1) => {
+									arr[i].data[i1].push({
+										color_id: v1.color_id,
+										data: []
+									})
+									v1.data.map((v3, i3) => {
+										let bl = true
+										this.form.size_id.map((v2, i2) => {
+											if (v3.size_id == v2) {
+												arr[i].data[i1].data[i3].push(v3)
+												bl = false
+											}
+										})
+										// 增加的尺码库存
+										if (bl) {
+											this.form.size_id.map((v5, i5) => {
+												v3.data.push({
+													size_id: v5,
+													stock: ''
+												})
+											})
+										}
+									})
+
+								})
+							})
+							this.$store.commit('goodsStockFn', {
+								goodsStockDa: arr
+							});
+						}
+					}
+
 				}
 			});
 			uni.$on("categoryDatum", (res) => {
@@ -775,19 +929,21 @@
 				.min_exchange {
 					width: 150rpx;
 				}
-				
+
 				.set {
 					width: 80rpx;
 					color: #2979ff;
 				}
-				.bounds{
+
+				.bounds {
 					width: 90rpx;
 				}
-				
-				.bounded{
+
+				.bounded {
 					width: 120rpx;
 					border-bottom: 1rpx solid #cccccc !important;
 				}
+
 				.border_bt {
 					border-bottom: 1rpx solid #cccccc !important;
 				}

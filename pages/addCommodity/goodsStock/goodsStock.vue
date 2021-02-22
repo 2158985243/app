@@ -68,6 +68,7 @@
 				let a2 = store.state.colorDa
 				let a3 = store.state.sizerDa
 				this.list.map((v, i) => {
+					v['checked'] = false
 					a1.map((v1, i1) => {
 						if (v1.store_id == v.store_id) {
 							v['name'] = v1.name
@@ -76,9 +77,12 @@
 									if (v2.color_id == v3.id) {
 										v2['name'] = v3.name
 										v2.data.map((v4, i4) => {
+											if(v4.stock>0&&!v.checked){
+												v['checked'] = true
+											}
 											a3.map((v5, i5) => {
-												if (v4.size_id = v5.id) {
-													v4['name'] = v5.name
+												if (v4.size_id == v5.id) {
+													v4['name'] = v5.name	
 												}
 											})
 										})
@@ -87,13 +91,26 @@
 							})
 						}
 					})
-
+				this.$set(this.list,i,this.list[i])
 				})
-				console.log(this.list);
 			},
 			// 确认
 			sure() {
-
+				let obj = this.$u.deepClone(this.list);
+				obj.map((v)=>{
+					delete v.name;
+					delete v.checked;
+					v.data.map((v1)=>{
+						delete v1.name
+						v1.data.map((v2)=>{
+							delete v2.name
+						})
+					})
+				})
+				this.$store.commit('goodsStockFn', {
+					goodsStockDa: obj
+				});
+				uni.navigateBack()
 			}
 		},
 		onLoad() {
@@ -177,6 +194,8 @@
 				display: flex;
 				flex-direction: column;
 				background-color: #FFFFFF;
+				overflow: hidden;
+				overflow-y: scroll;
 
 				.r-item {
 					border-bottom: 0.01rem solid #E5E5E5;

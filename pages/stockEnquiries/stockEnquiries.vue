@@ -133,7 +133,6 @@
 				this.show = false
 			},
 			sure() {
-				console.log(this.form);
 				uni.$emit('stockEnquiries', this.form)
 				uni.navigateBack()
 			},

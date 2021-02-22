@@ -7,7 +7,7 @@ export default new Vuex.Store({
 	state: {
 		token: '',
 		barcodeDa: {},//单品条码组
-		goodsStockDa: {},//商品初始库存
+		goodsStockDa: [],//商品初始库存
 		sizerDa: [],
 		colorDa: [],
 		specificationOfGoods: [],
@@ -29,9 +29,9 @@ export default new Vuex.Store({
 		},
 		// 条码
 		barcodeAction(state, context) {
-			state.barcodeDa = context.barcodes;
+			state.barcodeDa = context.barcodeDa;
 		},
-		// 条码
+		// 库存
 		goodsStockFn(state, context) {
 			state.goodsStockDa = context.goodsStockDa;
 		},
