@@ -98,7 +98,6 @@
 					page: this.page,
 					page_size: this.page_size,
 				})
-				console.log(res);
 				this.list.push(...res.data);
 				this.total = res.total;
 				this.out_number = 0;

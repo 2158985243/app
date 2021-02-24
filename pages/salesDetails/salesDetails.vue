@@ -116,7 +116,6 @@
 					delete obj.staff_id
 				}
 				let res = await countDetails(obj)
-				console.log(res);
 				this.list.push(...res.list.data);
 				this.total = res.total;
 				this.last_page = res.list.last_page

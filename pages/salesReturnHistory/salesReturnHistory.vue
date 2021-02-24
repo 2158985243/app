@@ -26,7 +26,6 @@
 										<text class="money">&yen;{{itemList.goods_amount}}</text>
 										<text>{{itemList.store.name}}</text>
 									</view>
-
 								</view>
 							</k-scroll-view>
 						</view>
@@ -86,21 +85,44 @@
 				autoPullUp: true,
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
 				last_page: [0, 0, 0],
-				pull: [false, false, false]
+				pull: [false, false, false],
+				refer_data:{}
 			}
 		},
 		methods: {
 			// 初始化
 			async init() {
-				let res = await purchaseRefundList({
-					status: 1,
-					page: this.page[this.current],
-					page_size: this.page_size
-
-				})
-				// this.list.splice(0, 1, res.data);
-				this.list[this.current].push(...res.data)
-				this.last_page[this.current] = res.last_page
+				if (this.list[this.current].length == 0) {
+					if (this.current == 0) {
+						let res = await purchaseRefundList({
+							status: 1,
+							page: this.page[this.current],
+							page_size: this.page_size,
+							...this.refer_data
+						});
+						this.list[this.current].push(...res.data)
+						this.last_page[this.curren] = res.last_page
+					} else if (this.current == 1) {
+						let res = await purchaseRefundList({
+							status: 0,
+							page: this.page[this.current],
+							page_size: this.page_size,
+							...this.refer_data
+				
+						});
+						this.list[this.current].push(...res.data)
+						this.last_page[this.curren] = res.last_page
+					} else {
+						let res = await purchaseRefundList({
+							status: 2,
+							page: this.page[this.current],
+							page_size: this.page_size,
+							...this.refer_data
+						});
+						this.list[this.current].push(...res.data)
+						this.last_page[this.curren] = res.last_page
+					}
+				}
 			},
 			// 前往增加采购信息
 			toPurchaseStorage() {
@@ -140,45 +162,10 @@
 			},
 			async onClickItem(val) {
 				this.current = val.currentIndex;
-				// if (this.list[this.current].length == 0) {
-				// 	let res = await purchaseStorageList({
-				// 		status: val.item.status,
-				// 		page: this.page,
-				// 		page_size: this.page_size
-
-				// 	});
-				// 	this.list.splice(this.current, 1, res.data);
-				// }
 			},
 			async scollSwiper(e) {
 				this.current = e.target.current
-				if (this.list[this.current].length == 0) {
-					if (this.current == 0) {
-						let res = await purchaseRefundList({
-							status: 1,
-							page: this.page[this.current][this.current],
-							page_size: this.page_size
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else if (this.current == 1) {
-						let res = await purchaseRefundList({
-							status: 0,
-							page: this.page[this.current],
-							page_size: this.page_size
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else {
-						let res = await purchaseRefundList({
-							status: 2,
-							page: this.page[this.current],
-							page_size: this.page_size
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					}
-				}
+				this.init()
 				// console.log(this.current);
 			},
 			// 下拉刷新
@@ -211,49 +198,34 @@
 
 		},
 		onLoad() {
-			// this.init()
+			let date = this.$date.thirtyDays()
+			this.refer_data.start_time = date.start_time
+			this.refer_data.end_time = date.end_time
+			this.init()
 			uni.$on("refer", async (result) => {
 				this.page[this.current] = 1;
 				if (result) {
-					if (this.current == 0) {
-						let res = await purchaseRefundList({
-							status: 1,
-							page: this.page[this.current],
-							page_size: this.page_size,
-							...result
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else if (this.current == 1) {
-						let res = await purchaseRefundList({
-							status: 0,
-							page: this.page[this.current],
-							page_size: this.page_size,
-							...result
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else {
-						let res = await purchaseRefundList({
-							status: 2,
-							page: this.page[this.current],
-							page_size: this.page_size,
-							...result
-						});
-						this.list.splice(this.current, 1, res.data);
-					}
+					this.refer_data = result
+					this.init()
 				}
 			});
+			uni.$on('salesReturnHistory',async (result)=>{
+				if(result){
+					this.list = [
+						[],
+						[],
+						[]
+					]
+					this.init()
+				}
+			})
+			
 		},
 		onReady() {
 			//执行计算组件高度方法
 		},
 		onShow() {
-			this.list = [
-				[],
-				[],
-				[]
-			]
-			this.init()
+			
 		}
 	}
 </script>

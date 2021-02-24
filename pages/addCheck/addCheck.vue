@@ -134,7 +134,6 @@
 			},
 			// 草稿或者盘点汇总
 			async save(v) {
-				console.log(v);
 				if (v) {
 					// 汇总
 					if (this.form.check_list_ids.length > 0) {
@@ -149,6 +148,7 @@
 					this.form.status = 0;
 					let res = await checkAdd(this.form)
 					if (!res.code) {
+						uni.$emit('stockTaking',true)
 						uni.navigateBack()
 					}
 				}

@@ -203,6 +203,9 @@
 						justify-content: center;
 						align-items: center;
 						color: #FFFFFF;
+						white-space:nowrap;
+						overflow:hidden;
+						text-overflow:ellipsis;
 					}
 				}
 

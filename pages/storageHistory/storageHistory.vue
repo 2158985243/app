@@ -241,6 +241,7 @@
 								// uni.navigateTo({
 								// 	url: `/pages/libraryHistory/libraryHistory`
 								// })
+								uni.$emit('purchaseStorage',true)
 								uni.navigateBack()
 							}
 						} else if (res.cancel) {

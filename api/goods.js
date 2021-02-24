@@ -63,7 +63,7 @@ export const stockList = (data) => {
 };
 // 商品详情-库存
 export const getStock = (data) => {
-	return $http.post("/goods/get_stock", data).then((res) => {
+	return $http.get("/goods/get_stock", data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示

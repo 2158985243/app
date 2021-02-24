@@ -470,6 +470,7 @@
 					})
 					let res = await purchaseStorageAdd(this.form);
 					if (!res.code) {
+						uni.$emit('purchaseStorage',true)
 						uni.navigateBack()
 					}
 				}

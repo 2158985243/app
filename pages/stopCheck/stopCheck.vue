@@ -240,9 +240,8 @@
 						if (res.confirm) {
 							let res = await checkCancel(_this.id);
 							if (!res.code) {
-								uni.navigateTo({
-									url: `/pages/stockTaking/stockTaking`
-								})
+								uni.$emit('stockTaking',true)
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							console.log("点击了取消");

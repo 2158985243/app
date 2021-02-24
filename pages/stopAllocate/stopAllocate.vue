@@ -212,6 +212,7 @@
 						if (res.confirm) {
 							let res = await allocateCancel(_this.id);
 							if (!res.code) {
+								uni.$emit('allocate',true)
 								uni.navigateBack()
 							}
 						} else if (res.cancel) {

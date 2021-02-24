@@ -388,6 +388,7 @@
 					})
 					let res = await allocateAdd(this.form);
 					if (!res.code) {
+						uni.$emit('allocate',true)
 						uni.navigateBack()
 					}
 				}

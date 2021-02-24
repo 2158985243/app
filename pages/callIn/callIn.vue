@@ -202,9 +202,8 @@
 						if (res.confirm) {
 							let res = await allocateCancel(_this.id);
 							if (!res.code) {
-								uni.navigateTo({
-									url: `/pages/allocate/allocate`
-								})
+								uni.$emit('allocate',true)
+								uni.navigateBack()
 							}
 						} else if (res.cancel) {
 							return true;
@@ -217,6 +216,7 @@
 			async stamp() {
 				let res = await allocateCallIn(this.id)
 				if (!res.code) {
+					uni.$emit('allocate',true)
 					uni.navigateBack()
 				}
 			},

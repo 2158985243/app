@@ -86,21 +86,44 @@
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
 				last_page: [0, 0, 0],
 				pull: [false, false, false],
-				refer_data:{}
+				refer_data: {},
+
 			}
 		},
 		methods: {
 			// 初始化
 			async init() {
-				let res = await purchaseStorageList({
-					status: 1,
-					page: this.page[this.current],
-					page_size: this.page_size
+				if (this.list[this.current].length == 0) {
+					if (this.current == 0) {
+						let res = await purchaseStorageList({
+							status: 1,
+							page: this.page[this.current],
+							page_size: this.page_size,
+							...this.refer_data
+						});
+						this.list[this.current].push(...res.data)
+						this.last_page[this.curren] = res.last_page
+					} else if (this.current == 1) {
+						let res = await purchaseStorageList({
+							status: 0,
+							page: this.page[this.current],
+							page_size: this.page_size,
+							...this.refer_data
 
-				})
-				// this.list.splice(0, 1, res.data)
-				this.list[this.current].push(...res.data)
-				this.last_page[this.curren] = res.last_page
+						});
+						this.list[this.current].push(...res.data)
+						this.last_page[this.curren] = res.last_page
+					} else {
+						let res = await purchaseStorageList({
+							status: 2,
+							page: this.page[this.current],
+							page_size: this.page_size,
+							...this.refer_data
+						});
+						this.list[this.current].push(...res.data)
+						this.last_page[this.curren] = res.last_page
+					}
+				}
 			},
 			// 前往增加采购信息
 			toPurchaseStorage() {
@@ -118,7 +141,7 @@
 			toRefer() {
 				// 
 				uni.navigateTo({
-					url:'/pages/refer/refer'
+					url: '/pages/refer/refer'
 				})
 			},
 			// 
@@ -153,33 +176,7 @@
 			},
 			async scollSwiper(e) {
 				this.current = e.target.current
-				if (this.list[this.current].length == 0) {
-					if (this.current == 0) {
-						let res = await purchaseStorageList({
-							status: 1,
-							page: this.page[this.current],
-							page_size: this.page_size
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else if (this.current == 1) {
-						let res = await purchaseStorageList({
-							status: 0,
-							page: this.page[this.current],
-							page_size: this.page_size
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else {
-						let res = await purchaseStorageList({
-							status: 2,
-							page: this.page[this.current],
-							page_size: this.page_size
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					}
-				}
+				this.init()
 				// console.log(this.current);
 			},
 			// 下拉刷新
@@ -214,50 +211,35 @@
 
 		},
 		onLoad() {
-			// this.init()
+			
+			let date = this.$date.thirtyDays()
+			this.refer_data.start_time = date.start_time
+			this.refer_data.end_time = date.end_time
+			this.init()
 			uni.$on("refer", async (result) => {
 				this.page[this.current] = 1;
 				if (result) {
-					// this.refer_data
-					if (this.current == 0) {
-						let res = await purchaseStorageList({
-							status: 1,
-							page: this.page[this.current],
-							page_size: this.page_size,
-							...result
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else if (this.current == 1) {
-						let res = await purchaseStorageList({
-							status: 0,
-							page: this.page[this.current],
-							page_size: this.page_size,
-							...result
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else {
-						let res = await purchaseStorageList({
-							status: 2,
-							page: this.page[this.current],
-							page_size: this.page_size,
-							...result
-						});
-						this.list.splice(this.current, 1, res.data);
-					}
+					this.refer_data = result
+					this.init()
 				}
 			});
+			uni.$on('purchaseStorage',async (result)=>{
+				if(result){
+					this.list = [
+						[],
+						[],
+						[]
+					]
+					this.init()
+				}
+			})
 		},
 		onReady() {
 			//执行计算组件高度方法
+			
 		},
 		onShow() {
-			this.list = [
-				[],
-				[],
-				[]
-			]
-			this.init()
+
 		}
 	}
 </script>

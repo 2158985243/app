@@ -238,9 +238,7 @@
 						if (res.confirm) {
 							let res = await purchaseRefundCancel(_this.id);
 							if (!res.code) {
-								// uni.navigateTo({
-								// 	url: `/pages/salesReturnHistory/salesReturnHistory`
-								// })
+								uni.$emit('salesReturnHistory',true)
 								uni.navigateBack()
 							}
 						} else if (res.cancel) {

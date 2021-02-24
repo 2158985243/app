@@ -471,6 +471,7 @@
 					})
 					let res = await purchaseStorageEdit(this.id, this.form);
 					if (!res.code) {
+						uni.$emit('purchaseStorage',true)
 						uni.navigateBack()
 					}
 				}

@@ -510,6 +510,7 @@
 					})
 					let res = await allocateEdit(this.id, this.form);
 					if (!res.code) {
+						uni.$emit('allocate',true)
 						uni.navigateBack()
 					}
 				}

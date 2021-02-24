@@ -212,6 +212,10 @@
 				this.title_name = store.state.store.name;
 				this.form.store_id = store.state.store.store_id;
 				if (arr) {
+					this.strots.push({
+						value: 0,
+						label: '全部'
+					})
 					arr.map((v) => {
 						this.strots.push({
 							value: v.store_id,

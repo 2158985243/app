@@ -471,6 +471,7 @@
 					})
 					let res = await purchaseRefundEdit(this.id, this.form);
 					if (!res.code) {
+						uni.$emit('salesReturnHistory',true)
 						uni.navigateBack()
 					}
 				}

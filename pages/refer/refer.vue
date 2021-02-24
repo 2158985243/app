@@ -132,9 +132,9 @@
 				this.shop =store.state.referDate.shop;
 				this.form = store.state.referDate.form
 			}else{
-				let date = new Date();
-				this.form.start_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
-				this.form.end_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+				let date = this.$date.thirtyDays()
+				this.form.start_time = date.start_time
+				this.form.end_time = date.end_time
 			}
 
 			uni.$on("supplierDatum", (res) => {

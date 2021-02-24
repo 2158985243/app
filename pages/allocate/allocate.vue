@@ -89,24 +89,54 @@
 				autoPullUp: true,
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
 				last_page: [0, 0, 0, 0],
-				pull: [false, false, false, false]
+				pull: [false, false, false, false],
+				refer_data:{}
 			}
 		},
 		methods: {
 			// 初始化
 			async init() {
-				let res = await allocateList({
-					status: 1,
-					page: this.page[this.current],
-					page_size: this.page_size
-
-				})
-				if(this.page[this.current]==1){
-					this.list[this.current] = []
+				if (this.list[this.current].length == 0) {
+					if (this.current == 0) {
+						let res = await allocateList({
+							status: 1,
+							page: this.page[this.current],
+							page_size: this.page_size,
+							...this.refer_data
+						});
+						this.list[this.current].push(...res.data)
+						this.last_page[this.curren] = res.last_page
+					} else if (this.current == 1) {
+						let res = await allocateList({
+							status:2,
+							page: this.page[this.current],
+							page_size: this.page_size,
+							...this.refer_data
+				
+						});
+						this.list[this.current].push(...res.data)
+						this.last_page[this.curren] = res.last_page
+					}else if (this.current == 2) {
+						let res = await allocateList({
+							status:0,
+							page: this.page[this.current],
+							page_size: this.page_size,
+							...this.refer_data
+				
+						});
+						this.list[this.current].push(...res.data)
+						this.last_page[this.curren] = res.last_page
+					} else {
+						let res = await allocateList({
+							status: 3,
+							page: this.page[this.current],
+							page_size: this.page_size,
+							...this.refer_data
+						});
+						this.list[this.current].push(...res.data)
+						this.last_page[this.curren] = res.last_page
+					}
 				}
-				// this.list.splice(0, 1, res.data);
-				this.list[this.current].push(...res.data)
-				this.last_page[this.current] = res.last_page
 			},
 			// 增加调拨单
 			toAddAllocate() {
@@ -128,14 +158,13 @@
 			},
 			// 
 			toPurchase(item) {
-				console.log(item.to_store_id, store.state.store.store_id);
-				if (item.status == 0) {
-					uni.navigateTo({
-						url: `/pages/draftAllocate/draftAllocate?id=${item.id}`
-					})
-				} else if (item.to_store_id == store.state.store.store_id) {
+				if (item.to_store_id == store.state.store.store_id) {
 					uni.navigateTo({
 						url: `/pages/callIn/callIn?id=${item.id}`
+					})
+				} else if (item.status == 0) {
+					uni.navigateTo({
+						url: `/pages/draftAllocate/draftAllocate?id=${item.id}`
 					})
 				} else if (item.status == 1) {
 					uni.navigateTo({
@@ -150,55 +179,11 @@
 			},
 			async onClickItem(val) {
 				this.current = val.currentIndex;
-				// if (this.list[this.current].length == 0) {
-				// 	let res = await purchaseStorageList({
-				// 		status: val.item.status,
-				// 		page: this.page,
-				// 		page_size: this.page_size
-
-				// 	});
-				// 	this.list.splice(this.current, 1, res.data);
-				// }
 			},
 			async scollSwiper(e) {
 				// console.log(this.list[this.current].length,this.current);
 				this.current = e.target.current
-				if (this.list[this.current].length == 0) {
-					if (this.current == 0) {
-						let res = await allocateList({
-							status: 1,
-							page: this.page[this.current],
-							page_size: this.page_size
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else if (this.current == 1) {
-						let res = await allocateList({
-							status: 2,
-							page: this.page[this.current],
-							page_size: this.page_size
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else if (this.current == 2) {
-						let res = await allocateList({
-							status: 0,
-							page: this.page[this.current],
-							page_size: this.page_size
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else if (this.current == 3) {
-						let res = await allocateList({
-							status: 3,
-							page: this.page[this.current],
-							page_size: this.page_size
-
-						});
-						console.log(res);
-						this.list.splice(this.current, 1, res.data);
-					}
-				}
+				this.init()
 			},
 			// 下拉刷新
 			handlePullDown(stopLoad) {
@@ -231,60 +216,33 @@
 		},
 		onLoad() {
 			// this.init()
+			let date = this.$date.thirtyDays()
+			this.refer_data.start_time = date.start_time
+			this.refer_data.end_time = date.end_time
+			this.init()
 			uni.$on("refer", async (result) => {
 				this.page[this.current] = 1;
 				if (result) {
-					if (this.current == 0) {
-						let res = await allocateList({
-							status: 1,
-							page: this.page[this.current],
-							page_size: this.page_size,
-							...result
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else if (this.current == 1) {
-						let res = await allocateList({
-							status: 2,
-							page: this.page[this.current],
-							page_size: this.page_size,
-							...result
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else if (this.current == 2) {
-						let res = await allocateList({
-							status: 0,
-							page: this.page[this.current],
-							page_size: this.page_size,
-							...result
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					} else if (this.current == 3) {
-						let res = await allocateList({
-							status: 3,
-							page: this.page[this.current],
-							page_size: this.page_size,
-							...result
-
-						});
-						this.list.splice(this.current, 1, res.data);
-					}
+					this.refer_data = result
+					this.init()
 				}
 			});
+			uni.$on('allocate',async (result)=>{
+				if(result){
+					this.list = [
+						[],
+						[],
+						[],
+						[]
+					]
+					this.init()
+				}
+			})
 		},
 		onReady() {
 			//执行计算组件高度方法
 		},
 		onShow() {
-			this.list = [
-				[],
-				[],
-				[],
-				[]
-			]
-			this.init()
 		}
 	}
 </script>

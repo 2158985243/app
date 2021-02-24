@@ -177,9 +177,8 @@
 					this.form.status = 0;
 					let res = await checkEdit(this.id, this.form)
 					if (!res.code) {
-						uni.navigateTo({
-							url: '/pages/stockTaking/stockTaking?'
-						})
+						uni.$emit('stockTaking',true)
+						uni.navigateBack()
 					}
 				}
 			},
