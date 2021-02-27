@@ -121,19 +121,19 @@
 						<view class="sotck-nav">
 							<view class="sotck-title">
 								<text>笔数</text>
-								<text>{{total}}</text>
+								<text>{{total||0}}</text>
 							</view>
 							<view class="sotck-title">
 								<text>数量</text>
-								<text>{{number_sum}}</text>
+								<text>{{number_sum||0}}</text>
 							</view>
 							<view class="sotck-title">
 								<text>进阶</text>
-								<text>{{price}}</text>
+								<text>{{price||0}}</text>
 							</view>
 							<view class="sotck-title">
 								<text>金额</text>
-								<text>{{money}}</text>
+								<text>{{money||0}}</text>
 							</view>
 						</view>
 						<view class="sotck-item">
@@ -158,15 +158,15 @@
 						<view class="sotck-nav">
 							<view class="sotck-title">
 								<text>笔数</text>
-								<text>{{total_2}}</text>
+								<text>{{total_2||0}}</text>
 							</view>
 							<view class="sotck-title">
 								<text>调出数量</text>
-								<text>{{out_number}}</text>
+								<text>{{out_number||0}}</text>
 							</view>
 							<view class="sotck-title">
 								<text>调入数量</text>
-								<text>{{in_number}}</text>
+								<text>{{in_number||0}}</text>
 							</view>
 						</view>
 						<view class="sotck-item">
@@ -190,11 +190,11 @@
 						<view class="sotck-nav">
 							<view class="sotck-title">
 								<text>笔数</text>
-								<text>{{total_3.total_counts}}</text>
+								<text>{{total_3.total_counts||0}}</text>
 							</view>
 							<view class="sotck-title">
 								<text>数量</text>
-								<text>{{total_3.total_quantity}}</text>
+								<text>{{total_3.total_quantity||0}}</text>
 							</view>
 							<view class="sotck-title">
 								<text>进价</text>
@@ -202,11 +202,11 @@
 							</view>
 							<view class="sotck-title">
 								<text>售价</text>
-								<text>{{total_3.sale_price}}</text>
+								<text>{{total_3.sale_price||0}}</text>
 							</view>
 							<view class="sotck-title">
 								<text>金额</text>
-								<text>{{total_3.total_money}}</text>
+								<text>{{total_3.total_money||0}}</text>
 							</view>
 							<view class="sotck-title">
 								<text>毛利</text>
@@ -243,6 +243,10 @@
 				</scroll-view>
 			</view>
 		</u-popup>
+		<!-- 开始时间 -->
+		<u-picker mode="time" v-model="showtime" @confirm="confirmTime" title="开始时间" :params="params"></u-picker>
+		<!-- 结束时间 -->
+		<u-picker mode="time" v-model="showtime1" @confirm="confirmTime1" title="结束时间" :params="params"></u-picker>
 	</view>
 </template>
 
@@ -264,6 +268,16 @@
 	export default {
 		data() {
 			return {
+				showtime: false,
+				showtime1: false,
+				params: {
+					year: true,
+					month: true,
+					day: true,
+					hour: false,
+					minute: false,
+					second: false
+				},
 				background: {
 					backgroundColor: '#2979ff'
 				},
@@ -335,7 +349,7 @@
 			// 点模式
 			async itemClick(index) {
 				this.item_active = index;
-				if (index == 1) {
+				if (index == 1&&this.nav_list[index].data.length==0) {
 					let res = await countDetails({
 						...this.form,
 						start_time: this.start_time,
@@ -352,7 +366,7 @@
 						this.price = Number(v.price)
 					})
 					this.nav_list[1].data = res.data
-				} else if (index == 2) {
+				} else if (index == 2&&this.nav_list[index].data.length==0) {
 					let res = await countsDetails({
 						...this.form,
 						start_time: this.start_time,
@@ -368,7 +382,7 @@
 						this.in_number += Number(v.in_quantity)
 					})
 					this.nav_list[2].data = res.data
-				}else if (index == 3) {
+				}else if (index == 3&&this.nav_list[index].data.length==0) {
 					let res = await counts({
 						...this.form,
 						start_time: this.start_time,
@@ -381,8 +395,391 @@
 				}
 			},
 			// 点时间
-			dateClick(index) {
+			async dateClick(index) {
 				this.date_active = index;
+				if(index==0){
+					let date = this.$date.today()
+					this.start_time = date.start_time
+					this.end_time = date.end_time
+					if(this.item_active==0){
+						let res = await getStock(this.form);
+						let color_data = []
+						let stocks = []
+						res.map(v => {
+							color_data.push(v.color_id);
+							this.stock_sum += Number(v.stock)
+							this.sales_sum += Number(v.sales)
+						})
+						this.stock_sum.toFixed()
+						this.sales_sum.toFixed()
+						let color_ids = [...new Set(color_data)]
+						color_ids.map(v => {
+							stocks.push({
+								color_id: v,
+								data: []
+							})
+						})
+						res.map((v) => {
+							stocks.map(v1 => {
+								if (v.color_id == v1.color_id) {
+									v1['name'] = v.color.name
+									v1.data.push(v)
+								}
+							})
+						})
+						this.nav_list[0].data = stocks
+					}else if (this.item_active == 1) {
+						let res = await countDetails({
+							...this.form,
+							start_time: this.start_time,
+							end_time: this.end_time,
+							page: 1,
+							page_size: 20
+						})
+						this.total = res.total;
+						this.money = 0;
+						this.number_sum = 0;
+						res.data.map((v) => {
+							this.money += Number(v.price) * Number(v.quantity)
+							this.number_sum += Number(v.quantity)
+							this.price = Number(v.price)
+						})
+						this.nav_list[1].data = res.data
+					} else if (this.item_active == 2) {
+						let res = await countsDetails({
+							...this.form,
+							start_time: this.start_time,
+							end_time: this.end_time,
+							page: 1,
+							page_size: 20
+						})
+						this.total_2 = res.total;
+						this.out_number = 0;
+						this.in_number = 0;
+						res.data.map((v) => {
+							this.out_number += Number(v.out_quantity)
+							this.in_number += Number(v.in_quantity)
+						})
+						this.nav_list[2].data = res.data
+					}else if (this.item_active == 3) {
+						let res = await counts({
+							...this.form,
+							start_time: this.start_time,
+							end_time: this.end_time,
+							page: 1,
+							page_size: 20
+						})
+						this.total_3 = res.total;
+						this.nav_list[3].data = res.list.data
+					}
+				}else if(index == 1){
+					let date = this.$date.yesterday()
+					this.start_time = date.start_time
+					this.end_time = date.end_time
+					if(this.item_active==0){
+						let res = await getStock(this.form);
+						let color_data = []
+						let stocks = []
+						res.map(v => {
+							color_data.push(v.color_id);
+							this.stock_sum += Number(v.stock)
+							this.sales_sum += Number(v.sales)
+						})
+						this.stock_sum.toFixed()
+						this.sales_sum.toFixed()
+						let color_ids = [...new Set(color_data)]
+						color_ids.map(v => {
+							stocks.push({
+								color_id: v,
+								data: []
+							})
+						})
+						res.map((v) => {
+							stocks.map(v1 => {
+								if (v.color_id == v1.color_id) {
+									v1['name'] = v.color.name
+									v1.data.push(v)
+								}
+							})
+						})
+						this.nav_list[0].data = stocks
+					}else if (this.item_active == 1) {
+						let res = await countDetails({
+							...this.form,
+							start_time: this.start_time,
+							end_time: this.end_time,
+							page: 1,
+							page_size: 20
+						})
+						this.total = res.total;
+						this.money = 0;
+						this.number_sum = 0;
+						res.data.map((v) => {
+							this.money += Number(v.price) * Number(v.quantity)
+							this.number_sum += Number(v.quantity)
+							this.price = Number(v.price)
+						})
+						this.nav_list[1].data = res.data
+					} else if (this.item_active == 2) {
+						let res = await countsDetails({
+							...this.form,
+							start_time: this.start_time,
+							end_time: this.end_time,
+							page: 1,
+							page_size: 20
+						})
+						this.total_2 = res.total;
+						this.out_number = 0;
+						this.in_number = 0;
+						res.data.map((v) => {
+							this.out_number += Number(v.out_quantity)
+							this.in_number += Number(v.in_quantity)
+						})
+						this.nav_list[2].data = res.data
+					}else if (this.item_active == 3) {
+						let res = await counts({
+							...this.form,
+							start_time: this.start_time,
+							end_time: this.end_time,
+							page: 1,
+							page_size: 20
+						})
+						this.total_3 = res.total;
+						this.nav_list[3].data = res.list.data
+					}
+				}else if(index == 2){
+					let date = this.$date.sevenDays()
+					this.start_time = date.start_time
+					this.end_time = date.end_time
+					if(this.item_active==0){
+						let res = await getStock(this.form);
+						let color_data = []
+						let stocks = []
+						res.map(v => {
+							color_data.push(v.color_id);
+							this.stock_sum += Number(v.stock)
+							this.sales_sum += Number(v.sales)
+						})
+						this.stock_sum.toFixed()
+						this.sales_sum.toFixed()
+						let color_ids = [...new Set(color_data)]
+						color_ids.map(v => {
+							stocks.push({
+								color_id: v,
+								data: []
+							})
+						})
+						res.map((v) => {
+							stocks.map(v1 => {
+								if (v.color_id == v1.color_id) {
+									v1['name'] = v.color.name
+									v1.data.push(v)
+								}
+							})
+						})
+						this.nav_list[0].data = stocks
+					}else if (this.item_active == 1) {
+						let res = await countDetails({
+							...this.form,
+							start_time: this.start_time,
+							end_time: this.end_time,
+							page: 1,
+							page_size: 20
+						})
+						this.total = res.total;
+						this.money = 0;
+						this.number_sum = 0;
+						res.data.map((v) => {
+							this.money += Number(v.price) * Number(v.quantity)
+							this.number_sum += Number(v.quantity)
+							this.price = Number(v.price)
+						})
+						this.nav_list[1].data = res.data
+					} else if (this.item_active == 2) {
+						let res = await countsDetails({
+							...this.form,
+							start_time: this.start_time,
+							end_time: this.end_time,
+							page: 1,
+							page_size: 20
+						})
+						this.total_2 = res.total;
+						this.out_number = 0;
+						this.in_number = 0;
+						res.data.map((v) => {
+							this.out_number += Number(v.out_quantity)
+							this.in_number += Number(v.in_quantity)
+						})
+						this.nav_list[2].data = res.data
+					}else if (this.item_active == 3) {
+						let res = await counts({
+							...this.form,
+							start_time: this.start_time,
+							end_time: this.end_time,
+							page: 1,
+							page_size: 20
+						})
+						this.total_3 = res.total;
+						this.nav_list[3].data = res.list.data
+					}
+				}else if(index == 3){
+					let date = this.$date.thirtyDays()
+					this.start_time = date.start_time
+					this.end_time = date.end_time
+					if(this.item_active==0){
+						let res = await getStock(this.form);
+						let color_data = []
+						let stocks = []
+						res.map(v => {
+							color_data.push(v.color_id);
+							this.stock_sum += Number(v.stock)
+							this.sales_sum += Number(v.sales)
+						})
+						this.stock_sum.toFixed()
+						this.sales_sum.toFixed()
+						let color_ids = [...new Set(color_data)]
+						color_ids.map(v => {
+							stocks.push({
+								color_id: v,
+								data: []
+							})
+						})
+						res.map((v) => {
+							stocks.map(v1 => {
+								if (v.color_id == v1.color_id) {
+									v1['name'] = v.color.name
+									v1.data.push(v)
+								}
+							})
+						})
+						this.nav_list[0].data = stocks
+					}else if (this.item_active == 1) {
+						let res = await countDetails({
+							...this.form,
+							start_time: this.start_time,
+							end_time: this.end_time,
+							page: 1,
+							page_size: 20
+						})
+						this.total = res.total;
+						this.money = 0;
+						this.number_sum = 0;
+						res.data.map((v) => {
+							this.money += Number(v.price) * Number(v.quantity)
+							this.number_sum += Number(v.quantity)
+							this.price = Number(v.price)
+						})
+						this.nav_list[1].data = res.data
+					} else if (this.item_active == 2) {
+						let res = await countsDetails({
+							...this.form,
+							start_time: this.start_time,
+							end_time: this.end_time,
+							page: 1,
+							page_size: 20
+						})
+						this.total_2 = res.total;
+						this.out_number = 0;
+						this.in_number = 0;
+						res.data.map((v) => {
+							this.out_number += Number(v.out_quantity)
+							this.in_number += Number(v.in_quantity)
+						})
+						this.nav_list[2].data = res.data
+					}else if (this.item_active == 3) {
+						let res = await counts({
+							...this.form,
+							start_time: this.start_time,
+							end_time: this.end_time,
+							page: 1,
+							page_size: 20
+						})
+						this.total_3 = res.total;
+						this.nav_list[3].data = res.list.data
+					}
+				}else if(index == 4){
+					this.showtime = true;
+				}
+			},
+			/// 开始时间
+			confirmTime(v) {
+				this.start_time = `${v.year}-${v.month}-${v.day}`;
+				this.showtime1 = true;
+			},
+			// 结束时间
+			async confirmTime1(v) {
+				this.end_time = `${v.year}-${v.month}-${v.day}`;
+				if(this.item_active==0){
+					let res = await getStock(this.form);
+					let color_data = []
+					let stocks = []
+					res.map(v => {
+						color_data.push(v.color_id);
+						this.stock_sum += Number(v.stock)
+						this.sales_sum += Number(v.sales)
+					})
+					this.stock_sum.toFixed()
+					this.sales_sum.toFixed()
+					let color_ids = [...new Set(color_data)]
+					color_ids.map(v => {
+						stocks.push({
+							color_id: v,
+							data: []
+						})
+					})
+					res.map((v) => {
+						stocks.map(v1 => {
+							if (v.color_id == v1.color_id) {
+								v1['name'] = v.color.name
+								v1.data.push(v)
+							}
+						})
+					})
+					this.nav_list[0].data = stocks
+				}else if (this.item_active == 1) {
+					let res = await countDetails({
+						...this.form,
+						start_time: this.start_time,
+						end_time: this.end_time,
+						page: 1,
+						page_size: 20
+					})
+					this.total = res.total;
+					this.money = 0;
+					this.number_sum = 0;
+					res.data.map((v) => {
+						this.money += Number(v.price) * Number(v.quantity)
+						this.number_sum += Number(v.quantity)
+						this.price = Number(v.price)
+					})
+					this.nav_list[1].data = res.data
+				} else if (this.item_active == 2) {
+					let res = await countsDetails({
+						...this.form,
+						start_time: this.start_time,
+						end_time: this.end_time,
+						page: 1,
+						page_size: 20
+					})
+					this.total_2 = res.total;
+					this.out_number = 0;
+					this.in_number = 0;
+					res.data.map((v) => {
+						this.out_number += Number(v.out_quantity)
+						this.in_number += Number(v.in_quantity)
+					})
+					this.nav_list[2].data = res.data
+				}else if (this.item_active == 3) {
+					let res = await counts({
+						...this.form,
+						start_time: this.start_time,
+						end_time: this.end_time,
+						page: 1,
+						page_size: 20
+					})
+					this.total_3 = res.total;
+					this.nav_list[3].data = res.list.data
+				}
 			},
 			// 滑动
 			scroll(e) {
@@ -443,11 +840,83 @@
 				// console.log(this.strots);
 			},
 			// 选择店铺
-			strotsItem(item) {
+			async strotsItem(item) {
 				this.title_name = item.label;
 				this.form.store_id = item.value;
+				if(this.item_active==0){
+					let res = await getStock(this.form);
+					let color_data = []
+					let stocks = []
+					res.map(v => {
+						color_data.push(v.color_id);
+						this.stock_sum += Number(v.stock)
+						this.sales_sum += Number(v.sales)
+					})
+					this.stock_sum.toFixed()
+					this.sales_sum.toFixed()
+					let color_ids = [...new Set(color_data)]
+					color_ids.map(v => {
+						stocks.push({
+							color_id: v,
+							data: []
+						})
+					})
+					res.map((v) => {
+						stocks.map(v1 => {
+							if (v.color_id == v1.color_id) {
+								v1['name'] = v.color.name
+								v1.data.push(v)
+							}
+						})
+					})
+					this.nav_list[0].data = stocks
+				}else if (this.item_active == 1) {
+					let res = await countDetails({
+						...this.form,
+						start_time: this.start_time,
+						end_time: this.end_time,
+						page: 1,
+						page_size: 20
+					})
+					this.total = res.total;
+					this.money = 0;
+					this.number_sum = 0;
+					res.data.map((v) => {
+						this.money += Number(v.price) * Number(v.quantity)
+						this.number_sum += Number(v.quantity)
+						this.price = Number(v.price)
+					})
+					this.nav_list[1].data = res.data
+				} else if (this.item_active == 2) {
+					let res = await countsDetails({
+						...this.form,
+						start_time: this.start_time,
+						end_time: this.end_time,
+						page: 1,
+						page_size: 20
+					})
+					this.total_2 = res.total;
+					this.out_number = 0;
+					this.in_number = 0;
+					res.data.map((v) => {
+						this.out_number += Number(v.out_quantity)
+						this.in_number += Number(v.in_quantity)
+					})
+					this.nav_list[2].data = res.data
+				}else if (this.item_active == 3) {
+					let res = await counts({
+						...this.form,
+						start_time: this.start_time,
+						end_time: this.end_time,
+						page: 1,
+						page_size: 20
+					})
+					this.total_3 = res.total;
+					this.nav_list[3].data = res.list.data
+				}
 				this.show = false;
 			},
+			// 库存
 			async stockInit() {
 				let res = await getStock(this.form);
 				let color_data = []
@@ -608,7 +1077,7 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
-
+						background-color: #FFFFFF;
 						.title_hd {
 							display: flex;
 							flex-direction: row;

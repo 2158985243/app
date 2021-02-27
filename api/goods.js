@@ -88,3 +88,30 @@ export const getInfoUsed = (data) => {
 		return error;
 	});
 };
+//商品详情-进销比
+export const getRadio = (data) => {
+	return $http.get("/goods/get_radio", data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 商品详情-关联款
+export const getRelatedGoods = (data) => {
+	return $http.get("/goods/get_related_goods", data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 商品详情-销售情况
+export const getSalesStatus = (data) => {
+	return $http.get("/goods/get_sales_status", data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

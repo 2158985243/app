@@ -224,6 +224,7 @@
 				this.page[this.current] = 1;
 				if (result) {
 					this.refer_data = result
+					this.list[this.current] = []
 					this.init()
 				}
 			});
