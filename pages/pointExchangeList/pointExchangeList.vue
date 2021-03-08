@@ -13,7 +13,7 @@
 					</view>
 				</view>
 				<view class="nav-money">
-					<text>支出金额</text>
+					<text>积分合计</text>
 					<text>{{sumMoney}}</text>
 				</view>
 				<view class="nav-money">
@@ -25,18 +25,40 @@
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
 			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list">
-					积分兑换未做，无数据
-					<view class="li" v-for="(item,index) in list" :key="index" @click="expenseCancellation(item)">
-						<view class="left">
-							<text>{{item.expend_item.name}}</text>
-							<view class="li-date">
-								{{item.time}} | {{item.account.name}}
+					<view class="li" v-for="(item,index) in list" :key="index">
+						<view class="li-nav">
+							<text>{{item.date}}</text>
+							<text>合计:{{item.point}}积分</text>
+						</view>
+						<view class="li-list" v-for="(item_gd,index_gd) in item.list" :key="index_gd" @click="toStoredDetails(item_gd)">
+							<view class="left">
+								<view class="left-it">
+									<text class="item-name">{{item_gd.customer.name}}</text>
+									<view class="item-time">
+										<text class="lan">{{item_gd.time}}</text>
+										<!-- <text>x{{item_gd.quantity}}</text> -->
+									</view>
+								</view>
+							</view>
+							<view class="right">
+								<view class="rg-item">
+				
+									<text :class="item_gd.money>0? 'lan':'red'">{{item_gd.point}}积分</text>
+									<text class="right-name">{{item_gd.goods_name}}x{{item_gd.quantity}}</text>
+								</view>
+								<u-icon name="arrow-right"color="#cccccc"  size="30"></u-icon>
 							</view>
 						</view>
-						<view class="right">
-							<text class="fonts">{{item.money}}</text>
-							<u-icon name="arrow-right" color="#ccc" size="34"></u-icon>
-						</view>
+						<!-- <view class="left">
+									<text>{{item.expend_item.name}}</text>
+									<view class="li-date">
+										{{item.time}} | {{item.account.name}}
+									</view>
+								</view>
+								<view class="right">
+									<text class="fonts">{{item.money}}</text>
+									<u-icon name="arrow-right" color="#ccc" size="34"></u-icon>
+								</view> -->
 					</view>
 				</view>
 				<!-- 数据列表 -->
@@ -138,11 +160,33 @@
 					page: this.page,
 					page_size: this.page_size
 				})
-				console.log(res);
-				// this.list.push(...res.data);
-				// this.total = res.total;
-				// this.sumMoney = res.total_money
-				// this.last_page = res.last_page
+				this.total = res.total_num;
+				this.sumMoney = res.total_point
+				if (this.list.length > 0) {
+					res.list.data.map((v) => {
+						if (this.list[this.list.length - 1].business_time == v.business_time) {
+							this.list[this.list.length - 1].list.push(...v.list)
+						} else {
+							this.list.push(v)
+						}
+					})
+				} else {
+					this.list.push(...res.list.data);
+				}
+				this.last_page = res.list.last_page
+				this.list.map((v2) => {
+					v2.list.map((v) => {
+						v['quantity'] = 0
+						v['goods_name'] = ''
+						let arr = [];
+						v.goods.map(v1=>{
+							arr.push(v1.goods.name)
+							v.quantity += Number(v1.quantity)
+						})
+						v.goods_name = arr.join(',')
+						
+					})
+				})
 			},
 
 			// 前往项目详情
@@ -151,6 +195,12 @@
 				uni.navigateTo({
 					url: `/pages/expenseCancellation/expenseCancellation?id=${item.id}`
 				})
+			},
+			toStoredDetails(item){
+				uni.navigateTo({
+					url: `/pages/pointDetails/pointDetails?id=${item.id}`
+				})
+				
 			},
 			// 选择时间
 			selectTime() {
@@ -231,7 +281,7 @@
 		//日期选择
 		.dates-time {
 			width: 100%;
-			height: calc(100% - 200rpx - var(--status-bar-height));
+			height: calc(100% - var(--status-bar-height));
 			background-color: rgba($color: #000000, $alpha: 0.3);
 			position: absolute;
 			top: 140rpx;
@@ -297,39 +347,97 @@
 			width: 100%;
 			display: flex;
 			flex-direction: column;
-
+		
 			.li {
 				width: 100%;
 				display: flex;
-				justify-content: space-between;
-				padding: 20rpx;
-				border-bottom: 0.01rem solid #E5E5E5;
+				flex-direction: column;
 				background-color: #FFFFFF;
-
-				.left {
+		
+				.li-nav {
+					width: 100%;
 					display: flex;
-					flex-direction: column;
-
-					.li-date {
-						margin-top: 10rpx;
-						padding: 6rpx;
-						background-color: #007AFF;
-						border-radius: 6rpx;
-						font-size: 20rpx;
-						color: #FFFFFF;
-					}
+					justify-content: space-between;
+					padding: 10rpx;
+					background-color: #E6E4E5;
 				}
-
-				.right {
+		
+				.li-list {
+					width: 100%;
 					display: flex;
 					flex-direction: row;
-					justify-content: center;
-					align-items: center;
-
-					.fonts {
-						color: #007AFF;
+					justify-content: space-between;
+					border-bottom: 0.01rem solid #E5E5E5;
+					padding: 20rpx;
+					background-color: #FFFFFF;
+		
+					.left {
+						display: flex;
+						flex-direction: row;
+		
+						.left-it {
+							display: flex;
+							flex-direction: column;
+							padding-left: 10rpx;
+		
+							.item-name {
+								padding-bottom: 20rpx;
+								// font-weight: 600;
+								color: #151515;
+							}
+		
+							.item-time {
+								display: flex;
+								flex-direction: row;
+		
+								.lan {
+									background-color: #007AFF;
+									color: #FFFFFF;
+									font-size: 20rpx;
+									border-radius: 10rpx;
+									padding: 5rpx;
+									margin-right: 10rpx;
+								}
+							}
+						}
+					}
+		
+					.right {
+						display: flex;
+						flex-direction: row;
+		
+						.rg-item {
+							display: flex;
+							flex-direction: column;
+							position: relative;
+						}
+		
+						text {
+							text-align: right;
+						}
+		
+						.lan {
+							color: #007AFF;
+		
+						}
+		
+						.red {
+							color: #FF5A5F;
+						}
+		
+						.right-name {
+							position: absolute;
+							bottom: 0;
+							right: 0;
+							width: 200rpx;
+							font-size: 20rpx;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+						}
 					}
 				}
+		
 			}
 		}
 	}

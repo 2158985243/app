@@ -47,7 +47,7 @@
 					</view>
 					<view class="add-right">
 						<text>共{{sum_number}}件商品</text>
-						<text>合计&yen;{{sum_money}}</text>
+						<text>合计&yen;{{sum_money.toFixed(2)}}</text>
 					</view>
 				</view>
 			</view>
@@ -372,7 +372,8 @@
 				} else {
 					money = Number(this.sum_money) - Number(this.form.discount_money)
 				}
-				this.form.money = money;
+				// this.form.money = money;
+				// this.$forceUpdate()
 				return money.toFixed(2)
 			}
 		},
@@ -415,7 +416,6 @@
 						}
 					})
 				})
-				this.sum_money = this.sum_money.toFixed(2)
 				this.form.money = this.toMoney
 			},
 			hiddenTime() {
@@ -534,7 +534,7 @@
 						}
 					})
 				})
-				this.sum_money = this.sum_money.toFixed(2)
+				// this.sum_money = this.sum_money.toFixed(2)
 				this.form.money = (this.sum_money - this.form.discount_money).toFixed(2)
 			},
 			// 初始化折扣
@@ -761,6 +761,7 @@
 		onLoad(query) {
 			this.pointGetDe()
 			this.accountd()
+			this.init();
 			let date = new Date();
 			this.form.business_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
 			// 选择销售员
@@ -805,6 +806,7 @@
 			// 编辑商品
 			uni.$on("editItems", (res) => {
 				if (res) {
+					console.log(res);
 					this.list[res.index].data[res.indexGoods].quantity = 0
 					this.list[res.index].data[res.index_later].quantity = res.item.quantity;
 					this.list[res.index].data[res.index_later].discount = res.item.discount;
@@ -814,6 +816,8 @@
 						this.list[res.index].quantity += v.quantity;
 					})
 					// 初始化商品数量和合计
+					this.sum_number = 0
+					this.sum_money = 0
 					this.list.map((v, i) => {
 						this.sum_number += Number(v.quantity)
 						v.data.map((v1, i1) => {
@@ -821,17 +825,23 @@
 								if (!v1.discount) {
 									v1['discount'] = 1;
 								}
-								v1['retail_price'] = (Number(v1.retail_price) * Number(v1.discount))
+								// v1['retail_price'] = (Number(v1.retail_price) * Number(v1.discount))
 								this.sum_money += Number(v1.quantity) * Number(v1.retail_price)
 							}
 						})
 					})
+					
 					this.form.money = this.toMoney
 				}
 			});
+			// 增加 减少商品
+			uni.$on('editGood',(res)=>{
+				if(res){
+					this.init();
+				}
+			})
 		},
 		onShow() {
-			this.init();
 			this.discountFn()
 		}
 	}

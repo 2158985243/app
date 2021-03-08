@@ -127,6 +127,10 @@
 					this.$store.commit('storeFn', {
 						store: this.storedata
 					});
+					this.$store.commit('authorityFn', {
+						authority: res.authority
+					});
+					
 					uni.setStorageSync('userLoginInfo', datas);
 					uni.setStorageSync('userMessage', res);
 					uni.switchTab({
@@ -145,7 +149,9 @@
 				console.log(res);
 				if (res.code == 2) {
 					this.stores = res.data.store;
-					this.value = ''
+					this.form.store_id = res.data.store[0].store_id;
+					this.is_valid = res.data.store[0].is_valid;
+					this.value = res.data.store[0].name
 					this.showedit = true;
 				}
 			},
@@ -161,7 +167,6 @@
 						this.checked = userLoginInfo.checked;
 						if (this.checked) {
 							this.form = userLoginInfo;
-
 						}
 					}
 				} catch (e) {
@@ -172,6 +177,7 @@
 		onReady() {},
 		onLoad() {
 			this.init();
+			this.register()
 		}
 	}
 </script>

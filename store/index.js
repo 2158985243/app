@@ -18,6 +18,7 @@ export default new Vuex.Store({
 		tademark:[],//选择的品牌权限
 		purview:[],//权限数组
 		referDate:{},//查询数据
+		authority:[],//权限数组
 	},
 	getters: {
 
@@ -72,7 +73,11 @@ export default new Vuex.Store({
 		// 查询
 		referFn(state,context){
 			state.referDate = context.referDate
-		}
+		},
+		// 权限
+		authorityFn(state,context){
+			state.authority = context.authority
+		},
 	},
 	actions: {
 

@@ -5,7 +5,8 @@
 			<view class="header-data">
 				<text class="borad">{{form.item.goodsOf.name}}</text>
 				<text class="huise">{{form.item.goodsOf.number}}</text>
-				<text class="red">&yen;{{form.item.goodsOf.retail_price}}</text>
+				<text class="red" v-if="!bl">&yen;{{form.item.goodsOf.retail_price}}</text>
+				<text class="red" v-else>{{form.item.goodsOf.retail_price}}积分</text>
 			</view>
 		</view>
 		<view class="box">
@@ -26,11 +27,17 @@
 			</view>
 		</view>
 		<view class="box">
-			<view class="list-item">
+			<view class="list-item" v-if="!bl">
 				<view class="label-name">
 					本次售价
 				</view>
 				<u-input v-model="item.retail_price" @input="inputPrice" :clearable="false" height="50" placeholder='' type="number" />
+			</view>
+			<view class="list-item" v-else>
+				<view class="label-name">
+					本次积分
+				</view>
+				<u-input v-model="item.retail_price" :clearable="false" height="50" placeholder='' type="number" />
 			</view>
 			<view class="list-item">
 				<view class="label-name">
@@ -84,7 +91,8 @@
 				show: false,
 				value: '',
 				index_before: 0,
-				index_later: 0
+				index_later: 0,
+				bl:false
 			}
 		},
 		methods: {
@@ -109,7 +117,22 @@
 						this.item.size.name = JSON.parse(JSON.stringify(this.form.item.data[this.form.indexGoods].size.name));
 					}
 				})
-				if (bl) {
+				console.log(this.item.retail_price);
+				if(this.item.retail_price == ''){
+					this.$refs.uToast.show({
+						title: '售价不为空',
+						type: 'default',
+						position: 'bottom'
+					})
+					bl = false;
+				}else if(this.item.discount == ''){
+					this.$refs.uToast.show({
+						title: '打折不为空',
+						type: 'default',
+						position: 'bottom'
+					})
+					bl = false;
+				}else if (bl) {
 					let obj = {
 						item: this.item,
 						index: this.form.index,
@@ -133,6 +156,7 @@
 		},
 		onLoad(option) {
 			this.form = JSON.parse(decodeURIComponent(option.obj));
+			this.bl = this.form.bl
 			this.item = JSON.parse(JSON.stringify(this.form.item.data[this.form.indexGoods]));
 			this.value = this.item.size.name;
 			this.index_later = this.form.indexGoods;

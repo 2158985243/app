@@ -10,16 +10,21 @@
 				<u-icon name="scan" color="#ffffff" @tap='handelScan' size="50"></u-icon>
 			</view>
 			<view class="sale">
+				<view class="bg">
+				</view>
+				<view class="cont">
+					
 				<view class="day">
-					<view @tap="changne(0)" class="today" :class="active==0? 'active':''">
+					<view @tap="changne(0)" class="today" :class="active==0? '':'active'">
 						今日
 					</view>
-					<view @tap="changne(1)" class="thismonth" :class="active==1? 'active':''">
+					<view @tap="changne(1)" class="thismonth" :class="active==1? '':'active'">
 						本月
 					</view>
 				</view>
-				<text class="num">￥{{salesMoney_total[active]}}</text>
+				<text class="num">&yen;{{salesMoney_total[active]}}</text>
 				<text>销售额</text>
+				</view>
 			</view>
 			<view class="nav">
 				<view class="user" @click="toNewCustomer">
@@ -38,7 +43,6 @@
 		</view>
 		<view class="fot">
 			<view class="aa">
-
 				<view class="account" @click="toMemberManagement">
 					<uni-icons type="contact-filled" color="#0055ff" size="50"></uni-icons>
 					<text>会员管理</text>
@@ -80,13 +84,61 @@
 			}
 		},
 		methods: {
-			changne(v) {
+			async changne(v) {
 				this.active = v;
+				if(v==0){
+					if(this.$store.state.authority.join(",").indexOf('sales_inquire') != -1){
+						let todays = this.$date.today();
+						let res2 = await getSalesMoney({
+							...todays,
+							store_id:store.state.store.store_id,
+							page: this.page,
+							page_size: this.page_size
+						})
+						this.salesMoney_total[0] = res2.money;
+					}else{
+						this.salesMoney_total[0] = '***';
+						uni.showToast({
+						    title: '您还没有该权限!',
+						    duration: 1000,
+							icon:"none",
+							position:"bottom"
+						});
+					}
+				}else{
+					if(this.$store.state.authority.join(",").indexOf('sales_inquire') != -1){
+						let dated = this.$date.thisMonth();
+						let res2 = await getSalesMoney({
+							...dated,
+							store_id:store.state.store.store_id,
+							page: this.page,
+							page_size: this.page_size
+						})
+						this.salesMoney_total[1] = res2.money;
+					}else{
+						this.salesMoney_total[1] = '***';
+						uni.showToast({
+						    title: '您还没有该权限!',
+						    duration: 1000,
+							icon:"none",
+							position:"bottom"
+						});
+					}
+				}
 			},
 			toAddMembership() {
-				uni.navigateTo({
-					url: `/pages/addMembership/addMembership?`
-				});
+				if(this.$store.state.authority.join(",").indexOf('customer_management') != -1){
+					uni.navigateTo({
+						url: `/pages/addMembership/addMembership?`
+					});
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			handelScan() {
 				// 允许从相机和相册扫码
@@ -109,46 +161,99 @@
 			},
 			// 库存总数
 			toStockQuantity(){
-				uni.navigateTo({
-					url: `/pages/stockQuantity/stockQuantity`
-				});
+				if(this.$store.state.authority.join(",").indexOf('stock_inquire') != -1){
+					uni.navigateTo({
+						url: `/pages/stockQuantity/stockQuantity`
+					});
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 会员管理
 			toMemberManagement(){
-				uni.navigateTo({
-					url: `/pages/memberManagement/memberManagement`
-				});
+				if(this.$store.state.authority.join(",").indexOf('customer_management') != -1){
+					uni.navigateTo({
+						url: `/pages/memberManagement/memberManagement`
+					});
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 账户
 			toAccountManagement(){
-				uni.navigateTo({
-					url: `/pages/accountManagement/accountManagement`
-				});
+				if(this.$store.state.authority.join(",").indexOf('account_management') != -1){
+					uni.navigateTo({
+						url: `/pages/accountManagement/accountManagement`
+					});
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 本月新增会员
 			toNewCustomer(){
-				uni.navigateTo({
-					url: `/pages/newCustomer/newCustomer`
-				});
+				if(this.$store.state.authority.join(",").indexOf('customer_management') != -1){
+					uni.navigateTo({
+						url: `/pages/newCustomer/newCustomer`
+					});
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 零售收银
 			toResaleCashier(){
-				this.$store.commit('commercialSpecification',{
-					specificationOfGoods:[]
-				})
-				this.$store.commit('stateGoodFn',{
-					stateGood:false
-				})
-				uni.navigateTo({
-					url: `/pages/resaleCashier/resaleCashier`
-				});
+				if(this.$store.state.authority.join(",").indexOf('retial_cashier') != -1){
+					this.$store.commit('commercialSpecification',{
+						specificationOfGoods:[]
+					})
+					this.$store.commit('stateGoodFn',{
+						stateGood:false
+					})
+					uni.navigateTo({
+						url: `/pages/resaleCashier/resaleCashier`
+					});
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 销售查询
 			toSalesInquiry(){
-				
-				uni.navigateTo({
-					url: `/pages/salesInquiry/salesInquiry`
-				});
+				if(this.$store.state.authority.join(",").indexOf('sales_inquire') != -1){
+					uni.navigateTo({
+						url: `/pages/salesInquiry/salesInquiry`
+					});
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			
 			async init(v){
@@ -158,20 +263,25 @@
 					page_size: this.page_size
 				})
 				this.curtormer_total = res.total;
-				let res1 = await getSalesMoney({
-					...v,
-					page: this.page,
-					page_size: this.page_size
-				})
+				
 				let todays = this.$date.today();
-				let res2 = await getSalesMoney({
-					...todays,
-					store_id:store.state.store.store_id,
-					page: this.page,
-					page_size: this.page_size
-				})
-				this.salesMoney_total[0] = res2.money;
-				this.salesMoney_total[1] = res1. money;
+				if(this.$store.state.authority.join(",").indexOf('sales_inquire') != -1){
+					let res2 = await getSalesMoney({
+						...todays,
+						store_id:store.state.store.store_id,
+						page: this.page,
+						page_size: this.page_size
+					})
+					this.salesMoney_total[0] = res2.money;
+				}else{
+					this.salesMoney_total[0] = '***';
+					// uni.showToast({
+					//     title: '您还没有该权限!',
+					//     duration: 1000,
+					// 	icon:"none",
+					// 	position:"bottom"
+					// });
+				}
 				this.$forceUpdate()
 			},
 			// 商品总数
@@ -186,6 +296,7 @@
 			let dated = this.$date.thisMonth();
 			this.init(dated)
 			this.getGoodNumer()
+			
 		}
 	}
 </script>
@@ -202,7 +313,7 @@
 		// align-items: center;
 		.main {
 			width: 100%;
-			height: 50%;
+			height: 52%;
 			background-color: #2979ff;
 			display: flex;
 			flex-direction: column;
@@ -216,13 +327,39 @@
 
 			.sale {
 				width: 100%;
-				height: 70%;
+				height: 75%;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				flex-direction: column;
 				color: #FFFFFF;
-
+				position: relative;
+				.bg{
+					position: absolute;
+					top: 0;
+					left: 0;
+					bottom: 0;
+					right: 0;
+					margin:auto;
+					width: 520rpx;
+					height: 520rpx;
+					background: url(../../static/image/logo.png) no-repeat center center;
+					background-size:100% 100%;
+				}
+				.cont{
+					width: 100%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					flex-direction: column;
+					position: absolute;
+					top: 0;
+					left: 0;
+					bottom: 0;
+					right: 0;
+					margin:auto;
+				}
+				
 				.num {
 					// display: block;
 					padding: 40rpx 0;
@@ -233,7 +370,7 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
-					width: 200rpx;
+					width: 180rpx;
 					height: 50rpx;
 					line-height: 50rpx;
 					background-color: #FFFFFF;
@@ -308,9 +445,9 @@
 
 		.fot {
 			width: 100%;
-			height: 50%;
+			height: 48%;
 			background-color: #FFFFFF;
-			margin-bottom: 4rpx;
+			margin-bottom: 2rpx;
 
 			// display: flex;
 			// justify-content: center;

@@ -9,6 +9,7 @@ Vue.prototype.$store = store;
 Vue.prototype.$http = $http; 
 Vue.prototype.$cfg = config; 
 Vue.prototype.$date = date; 
+// Vue.prototype.$authority = store.state.authority; 
 Vue.use(uView)
 Vue.config.productionTip = false
 

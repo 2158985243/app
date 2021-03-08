@@ -115,3 +115,12 @@ export const getSalesStatus = (data) => {
 		return error;
 	});
 };
+// 商品积分兑换列表
+export const pointExchangeList = (data) => {
+	return $http.get("/goods/point_exchange_list", data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

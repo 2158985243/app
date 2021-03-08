@@ -1215,7 +1215,7 @@
 			align-items: center;
 			padding: 20rpx;
 			position: fixed;
-			top: calc(88rpx + var(--status-bar-height));
+			top: calc(84rpx + var(--status-bar-height));
 			z-index: 99;
 
 			.select-left {
@@ -1266,7 +1266,7 @@
 			.nav-header {
 				width: 100%;
 				position: sticky;
-				top: calc(208rpx + var(--status-bar-height));
+				top: calc(204rpx + var(--status-bar-height));
 				display: flex;
 				flex-direction: column;
 				z-index: 99;

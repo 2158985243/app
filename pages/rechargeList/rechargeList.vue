@@ -146,7 +146,7 @@
 				keys: 0,
 				total_reward_money: 0,
 				total_recharge_money: 0,
-
+				pull:false
 			}
 		},
 		methods: {
@@ -165,22 +165,25 @@
 			// 下拉刷新
 			handlePullDown(stopLoad) {
 				this.page = 1;
-				this.list = []
-				this.init()
+				this.list = [];
+				this.pull = false;
+				this.init();
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
-				if (this.page >= this.last_page) {
-					this.$refs.uToast.show({
-						title: '加载到底了',
-						type: 'default',
-						position: 'bottom'
-					})
-
-				} else {
-					this.page++;
-					this.init()
+				if(!this.pull){
+					if (this.page >= this.last_page) {
+						this.$refs.uToast.show({
+							title: '加载到底了',
+							type: 'default',
+							position: 'bottom'
+						})
+						this.pull = true;
+					} else {
+						this.page++;
+						this.init()
+					}
 				}
 			},
 

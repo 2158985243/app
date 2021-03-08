@@ -90,8 +90,8 @@
 					<u-icon name="account-fill" color="#ff551d" size="40"></u-icon>
 					<text>注册统计</text>
 				</view>
-				<view class="li">
-					<u-icon name="account-fill" color="#ff551d" size="40"></u-icon>
+				<view class="li" @click="tokk">
+					<u-icon name="account-fill"  color="#ff551d" size="40"></u-icon>
 					<text>调整统计</text>
 				</view>
 				<view class="li last" @click="toStaffAchievement">
@@ -114,94 +114,244 @@
 		methods: {
 			// 前往支出分析
 			toStatics() {
-				uni.navigateTo({
-					url: `/pages/statics/statics`
-				})
+				if(this.$store.state.authority.join(",").indexOf('expend_analysis') != -1){
+					uni.navigateTo({
+						url: `/pages/statics/statics`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往注册统计
 			toMemberRegistrationStatistics() {
-				uni.navigateTo({
-					url: `/pages/memberRegistrationStatistics/memberRegistrationStatistics`
-				})
+				if(this.$store.state.authority.join(",").indexOf('register_statistics') != -1){
+					uni.navigateTo({
+						url: `/pages/memberRegistrationStatistics/memberRegistrationStatistics`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
+			},
+			// 前往调整统计
+			tokk() {
+				if(this.$store.state.authority.join(",").indexOf('adjust_statistics') != -1){
+					// uni.navigateTo({
+					// 	url: `/pages/memberRegistrationStatistics/memberRegistrationStatistics`
+					// })
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往业绩统计
 			toStaffAchievement() {
-				uni.navigateTo({
-					url: `/pages/staffAchievement/staffAchievement`
-				})
+				if(this.$store.state.authority.join(",").indexOf('achievement_statistics') != -1){
+					uni.navigateTo({
+						url: `/pages/staffAchievement/staffAchievement`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往销售分析
 			toAnalyse() {
-				uni.navigateTo({
-					url: `/pages/analyse/analyse`
-				})
+				if(this.$store.state.authority.join(",").indexOf('sales_analysis') != -1){
+					uni.navigateTo({
+						url: `/pages/analyse/analyse`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往销售分析
 			toGoodsAnalyse() {
-				uni.navigateTo({
-					url: `/pages/goodsAnalyse/goodsAnalyse`
-				})
+				if(this.$store.state.authority.join(",").indexOf('goods_analysis') != -1){
+					uni.navigateTo({
+						url: `/pages/goodsAnalyse/goodsAnalyse`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往会员分析
 			toMemberAnalysis() {
-				uni.navigateTo({
-					url: `/pages/memberAnalysis/memberAnalysis`
-				})
+				if(this.$store.state.authority.join(",").indexOf('customer_analysis') != -1){
+					uni.navigateTo({
+						url: `/pages/memberAnalysis/memberAnalysis`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往采购统计
 			toProcurementStatistics() {
-				uni.navigateTo({
-					url: `/pages/procurementStatistics/procurementStatistics`
-				})
+				if(this.$store.state.authority.join(",").indexOf('purchase_statistics') != -1){
+					uni.navigateTo({
+						url: `/pages/procurementStatistics/procurementStatistics`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			
 			// 前往销售统计
 			toSalesStatistics() {
-				uni.navigateTo({
-					url: `/pages/salesStatistics/salesStatistics`
-				})
+				if(this.$store.state.authority.join(",").indexOf('sales_statistics') != -1){
+					uni.navigateTo({
+						url: `/pages/salesStatistics/salesStatistics`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往调拨统计
 			toAllotStatistics() {
-				uni.navigateTo({
-					url: `/pages/allotStatistics/allotStatistics`
-				})
+				if(this.$store.state.authority.join(",").indexOf('allocate_statistics') != -1){
+					uni.navigateTo({
+						url: `/pages/allotStatistics/allotStatistics`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往盘点统计
 			toCheckStatistics() {
-				uni.navigateTo({
-					url: `/pages/checkStatistics/checkStatistics`
-				})
+				if(this.$store.state.authority.join(",").indexOf('check_statistics') != -1){
+					uni.navigateTo({
+						url: `/pages/checkStatistics/checkStatistics`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往余额查询
 			toBalanceEnquiry() {
-				uni.navigateTo({
-					url: `/pages/balanceEnquiry/balanceEnquiry`
-				})
+				if(this.$store.state.authority.join(",").indexOf('balance_inquire') != -1){
+					uni.navigateTo({
+						url: `/pages/balanceEnquiry/balanceEnquiry`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往营业概况
 			toBusinessOverview() {
-				uni.navigateTo({
-					url: `/pages/businessOverview/businessOverview`
-				})
+				if(this.$store.state.authority.join(",").indexOf('business_status') != -1){
+					uni.navigateTo({
+						url: `/pages/businessOverview/businessOverview`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往收银对账概况
 			toCashierCheck() {
-				uni.navigateTo({
-					url: `/pages/cashierCheck/cashierCheck`
-				})
+				if(this.$store.state.authority.join(",").indexOf('cashier_balance') != -1){
+					uni.navigateTo({
+						url: `/pages/cashierCheck/cashierCheck`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往收支结余
 			toCashierBalance() {
-				uni.navigateTo({
-					url: `/pages/cashierBalance/cashierBalance`
-				})
+				if(this.$store.state.authority.join(",").indexOf('cashier_balance') != -1){
+					uni.navigateTo({
+						url: `/pages/cashierBalance/cashierBalance`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 前往供应商对账
 			toReconciliation() {
-				uni.navigateTo({
-					url: `/pages/reconciliation/reconciliation`
-				})
+				if(this.$store.state.authority.join(",").indexOf('supplier_reconciliation') != -1){
+					uni.navigateTo({
+						url: `/pages/reconciliation/reconciliation`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 
 		},

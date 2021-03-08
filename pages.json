@@ -1731,16 +1731,98 @@
 				}
 			}
 
+		}, {
+			"path": "pages/addCommodity/goodsStock/goodsStock",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/customer/consumeLog/consumeLog",
+			"style": {
+				"navigationBarTitleText": "消费记录",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/customer/pointExchange/pointExchange",
+			"style": {
+				"navigationBarTitleText": "积分兑换",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/customer/determineCash/determineCash",
+			"style": {
+				"navigationBarTitleText": "确认兑换",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
 		}
 	    ,{
-            "path" : "pages/addCommodity/goodsStock/goodsStock",
+            "path" : "pages/customer/forSuccessful/forSuccessful",
             "style" :                                                                                    
             {
-              "navigationStyle": "custom", // 隐藏系统导航栏
+             "navigationStyle": "custom", // 隐藏系统导航栏
+             "navigationBarTextStyle": "white",
+             "app-plus": {
+             	"scrollIndicator": "none"
+             }
+            }
+            
+        }
+        ,{
+            "path" : "pages/pointDetails/pointDetails",
+            "style" :                                                                                    
+            {
+              "navigationBarTitleText": "积分兑换详情",
+              "navigationBarBackgroundColor": "#2979ff",
               "navigationBarTextStyle": "white",
               "app-plus": {
               	"scrollIndicator": "none"
               }
+            }
+            
+        }
+        ,{
+            "path" : "pages/customerBan/customerBan",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "会员挂失",
+                "navigationBarBackgroundColor": "#2979ff",
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
+        ,{
+            "path" : "pages/customer/passwordSetup/passwordSetup",
+            "style" :                                                                                    
+            {
+             "navigationBarTitleText": "密码设置",
+             "navigationBarBackgroundColor": "#2979ff",
+             "navigationBarTextStyle": "white",
+             "app-plus": {
+             	"scrollIndicator": "none"
+             }
             }
             
         }

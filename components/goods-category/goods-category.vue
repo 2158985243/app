@@ -23,8 +23,8 @@
 							<view class="cont">
 								<text>{{item1.name}}</text>
 								<text class="number">{{item1.number}}</text>
-								<text class="retail" v-if="!condition">&yen;{{item1.retail_price}}</text>
-								<text class="retail" v-else >&yen;{{item1.purchase_price}}</text>
+								<text class="retail" v-if="!condition">{{item1.retail_price? `&yen;${item1.retail_price}`:`${item1.exchange_value}积分`}}</text>
+								<text class="retail" v-else >{{item1.purchase_price?`&yen;${item1.purchase_price}`:`${item1.exchange_value}积分`}}</text>
 							</view>
 							<text class="numberops" v-if="goodsQuantity[item1.id]">{{goodsQuantity[item1.id].quantity}}</text>
 						</view>

@@ -55,11 +55,11 @@
 				<u-icon name="rmb-circle-fill" color="#55aaff" size="60"></u-icon>
 				<text>积分调整</text>
 			</view>
-			<view class="dole">
+			<view class="dole" @click="toPointExchange">
 				<u-icon name="rmb-circle-fill" color="#55aaff" size="60"></u-icon>
 				<text>积分兑换</text>
 			</view>
-			<view class="dole">
+			<view class="dole" @click="toCustomerBan">
 				<u-icon name="rmb-circle-fill" color="#55aaff" size="60"></u-icon>
 				<text>会员挂失</text>
 			</view>
@@ -73,7 +73,7 @@
 					<u-icon name="arrow-right" color="#cccccc" size="34"></u-icon>
 				</view>
 			</view>
-			<view class="box-item">
+			<view class="box-item" @click="toConsumeLog">
 				<text class="box-left hui">总消费</text>
 				<view class="box-right">
 					<text>{{form.resume}}</text>
@@ -83,7 +83,7 @@
 
 		</view>
 		<view class="box">
-			<view class="box-item">
+			<view class="box-item" @click="toPasswordSetup">
 				<view class="box-left">
 					<text class="sett">消费密码</text>
 					<text class="hui">(未开启)</text>
@@ -146,6 +146,12 @@
 					url: '/pages/recharge/recharge?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
+			// 前往密码设置
+			toPasswordSetup() {
+				uni.navigateTo({
+					url: `/pages/customer/passwordSetup/passwordSetup?id=${this.id}&password=${this.form.password}`
+				})
+			},
 			// 前往余额调整
 			toBalanceAdjust() {
 				uni.navigateTo({
@@ -158,16 +164,38 @@
 					url: '/pages/pointAdjust/pointAdjust?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
+			// 前往积分兑换
+			toPointExchange() {
+				this.$store.commit('commercialSpecification', {
+					specificationOfGoods: []
+				})
+				uni.navigateTo({
+					url: '/pages/customer/pointExchange/pointExchange?obj=' + encodeURIComponent(JSON.stringify(this.form))
+				})
+			},
 			// 前往积分
 			toPointLog() {
 				uni.navigateTo({
 					url: '/pages/pointLog/pointLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
+			// 前往会员挂失
+			toCustomerBan() {
+				uni.navigateTo({
+					url: '/pages/customerBan/customerBan?obj=' + encodeURIComponent(JSON.stringify(this.form))
+				})
+			},
 			// 前往欠款记录
 			toDebtLog() {
 				uni.navigateTo({
 					url: '/pages/repayment/repayment?obj=' + encodeURIComponent(JSON.stringify(this.form))
+				})
+				
+			},
+			// 前往消费记录
+			toConsumeLog() {
+				uni.navigateTo({
+					url: '/pages/customer/consumeLog/consumeLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 				
 			},
@@ -299,6 +327,11 @@
 
 					.lan {
 						color: #007AFF;
+						width: 100%;
+						white-space:nowrap;
+						overflow:hidden;
+						text-overflow:ellipsis;
+						text-align: center;
 					}
 				}
 

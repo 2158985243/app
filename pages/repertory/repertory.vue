@@ -84,133 +84,268 @@
 		methods: {
 			// 增加商品
 			toAddCommodity(){
-				this.$store.commit('colorDaAction', {
-					colorDa: []
-				});
-				this.$store.commit('sizerDaAction', {
-					sizerDa: []
-				});
-				uni.navigateTo({
-					url: `/pages/addCommodity/addCommodity`
-				})
+				if(this.$store.state.authority.join(",").indexOf('goods_management') != -1){
+					this.$store.commit('colorDaAction', {
+						colorDa: []
+					});
+					this.$store.commit('sizerDaAction', {
+						sizerDa: []
+					});
+					uni.navigateTo({
+						url: `/pages/addCommodity/addCommodity`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 商品分类
 			toCommodityManagement(){
-				uni.navigateTo({
-					url: `/pages/commodityManagement/commodityManagement`
-				})
+				if(this.$store.state.authority.join(",").indexOf('goods_management') != -1){
+					uni.navigateTo({
+						url: `/pages/commodityManagement/commodityManagement`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 供应商管理
 			toSupplier(){
-				uni.navigateTo({
-					url: `/pages/supplier/supplier`
-				})
+				if(this.$store.state.authority.join(",").indexOf('supplier_management') != -1){
+					uni.navigateTo({
+						url: `/pages/supplier/supplier`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 增加供应商
 			toAddSupplier(){
-				uni.navigateTo({
-					url: `/pages/addSupplier/addSupplier`
-				})
+				if(this.$store.state.authority.join(",").indexOf('supplier_management') != -1){
+					uni.navigateTo({
+						url: `/pages/addSupplier/addSupplier`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 增加入库单
 			toPurchaseStorage(){
-				this.$store.commit('commercialSpecification',{
-					specificationOfGoods:[]
-				})
-				this.$store.commit('stateGoodFn',{
-					stateGood:false
-				})
-				uni.navigateTo({
-					url: `/pages/purchaseStorage/purchaseStorage`
-				})
+				if(this.$store.state.authority.join(",").indexOf('purchase_storage') != -1){
+					this.$store.commit('commercialSpecification',{
+						specificationOfGoods:[]
+					})
+					this.$store.commit('stateGoodFn',{
+						stateGood:false
+					})
+					uni.navigateTo({
+						url: `/pages/purchaseStorage/purchaseStorage`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 入库历史
 			toLibraryHistory(){
-				let obj = {}
-				this.$store.commit('referFn', {
-					referDate: obj
-				})
-				uni.navigateTo({
-					url: `/pages/libraryHistory/libraryHistory`
-				})
+				if(this.$store.state.authority.join(",").indexOf('purchase_storage') != -1){
+					let obj = {}
+					this.$store.commit('referFn', {
+						referDate: obj
+					})
+					uni.navigateTo({
+						url: `/pages/libraryHistory/libraryHistory`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 采购退货
 			toSalesReturnHistory(){
-				let obj = {}
-				this.$store.commit('referFn', {
-					referDate: obj
-				})
-				uni.navigateTo({
-					url: `/pages/salesReturnHistory/salesReturnHistory`
-				})
+				if(this.$store.state.authority.join(",").indexOf('purchase_storage') != -1){
+					let obj = {}
+					this.$store.commit('referFn', {
+						referDate: obj
+					})
+					uni.navigateTo({
+						url: `/pages/salesReturnHistory/salesReturnHistory`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 增加退货单
 			toAddReturn(){
-				this.$store.commit('commercialSpecification',{
-					specificationOfGoods:[]
-				})
-				this.$store.commit('stateGoodFn',{
-					stateGood:false
-				})
-				uni.navigateTo({
-					url: `/pages/addReturn/addReturn`
-				})
+				if(this.$store.state.authority.join(",").indexOf('purchase_storage') != -1){
+					this.$store.commit('commercialSpecification',{
+						specificationOfGoods:[]
+					})
+					this.$store.commit('stateGoodFn',{
+						stateGood:false
+					})
+					uni.navigateTo({
+						url: `/pages/addReturn/addReturn`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 增加调拨单
 			toAddAllocate(){
-				this.$store.commit('commercialSpecification',{
-					specificationOfGoods:[]
-				})
-				this.$store.commit('stateGoodFn',{
-					stateGood:false
-				})
-				uni.navigateTo({
-					url: `/pages/addAllocate/addAllocate`
-				})
+				if(this.$store.state.authority.join(",").indexOf('stock_allocate') != -1){
+					this.$store.commit('commercialSpecification',{
+						specificationOfGoods:[]
+					})
+					this.$store.commit('stateGoodFn',{
+						stateGood:false
+					})
+					uni.navigateTo({
+						url: `/pages/addAllocate/addAllocate`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 调拔
 			toAllocate(){
-				let obj = {}
-				this.$store.commit('referFn', {
-					referDate: obj
-				})
-				uni.navigateTo({
-					url: `/pages/allocate/allocate`
-				})
+				if(this.$store.state.authority.join(",").indexOf('stock_allocate') != -1){
+					let obj = {}
+					this.$store.commit('referFn', {
+						referDate: obj
+					})
+					uni.navigateTo({
+						url: `/pages/allocate/allocate`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 增加盘点单
 			toAddCheck(){
-				uni.navigateTo({
-					url: `/pages/addCheck/addCheck`
-				})
+				if(this.$store.state.authority.join(",").indexOf('stock_check') != -1){
+					uni.navigateTo({
+						url: `/pages/addCheck/addCheck`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
-			// 
+			// 盘点
 			toStockTaking(){
-				let obj = {}
-				this.$store.commit('referFn', {
-					referDate: obj
-				})
-				uni.navigateTo({
-					url: `/pages/stockTaking/stockTaking`
-				})
+				if(this.$store.state.authority.join(",").indexOf('stock_check') != -1){
+					let obj = {}
+					this.$store.commit('referFn', {
+						referDate: obj
+					})
+					uni.navigateTo({
+						url: `/pages/stockTaking/stockTaking`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 
 			toExpense(){
-				uni.navigateTo({
-					url: `/pages/expense/expense`
-				})
+				if(this.$store.state.authority.join(",").indexOf('expend_management') != -1){
+					uni.navigateTo({
+						url: `/pages/expense/expense`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 支出管理
 			toExpenseBook(){
-				uni.navigateTo({
-					url: `/pages/expenseBook/expenseBook`
-				})
+				if(this.$store.state.authority.join(",").indexOf('expend_management') != -1){
+					uni.navigateTo({
+						url: `/pages/expenseBook/expenseBook`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			},
 			// 库存查询
 			toStockQuantity(){
-				uni.navigateTo({
-					url: `/pages/stockQuantity/stockQuantity`
-				})
+				if(this.$store.state.authority.join(",").indexOf('stock_inquire') != -1){
+					uni.navigateTo({
+						url: `/pages/stockQuantity/stockQuantity`
+					})
+				}else{
+					uni.showToast({
+					    title: '您还没有该权限!',
+					    duration: 1000,
+						icon:"none",
+						position:"bottom"
+					});
+				}
 			}
 		}
 	}

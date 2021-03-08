@@ -144,7 +144,6 @@
 			},
 			async paySure() {
 				let res = await repayment(this.form)
-				console.log(res);
 				if(!res.code){
 					uni.navigateBack()
 				}

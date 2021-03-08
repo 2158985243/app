@@ -53,3 +53,21 @@ export const user = (id) => {
 		return error;
 	});
 };
+// 用户详情
+export const getInfo = () => {
+	return $http.get("/member/get_info").then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 更新账户信息
+export const editUser = (data) => {
+	return $http.post("/member/edit",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

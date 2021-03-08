@@ -557,6 +557,7 @@
 				let res = await goodsList({
 					page: this.page,
 					page_size: this.page_size,
+					status:1,
 					keyword: this.keyword
 				});
 				this.last_page = res.last_page
@@ -586,6 +587,7 @@
 						let res = await goodsList({
 							page: this.page,
 							page_size: this.page_size,
+							status:1,
 							goods_category_id: e.id,
 							keyword: this.keyword
 						});
@@ -604,6 +606,7 @@
 				let res = await goodsList({
 					page: this.page,
 					page_size: this.page_size,
+					status:1,
 					goods_category_id: this.mored.id,
 					keyword: this.keyword
 				});

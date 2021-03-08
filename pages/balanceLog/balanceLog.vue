@@ -18,10 +18,11 @@
 					<view class="left">
 						<text class="max_se">{{item.name}}</text>
 						<text class="hui_se do">{{item.remarks}}</text>
-						<text class="hui_se">{{item.created_at}}</text>
+						<text class="hui_se">{{item.c_time}}</text>
 					</view>
 					<view class="right">
-						<text :class="item.money>0?'red':'green'">{{item.money}}</text>
+						<text v-if="item.type !=2" :class="item.type !=2&&item.money>0? 'red':'green'">{{ item.money}}</text>
+						<text v-else :class="item.type ==2&&Number(item.money)<0? 'red':'green'">{{-item.money}}</text>
 						<text class="tb">余额：{{item.balance}}</text>
 					</view>
 				</view>
@@ -30,7 +31,6 @@
 		<u-toast ref="uToast" />
 	</view>
 </template>
-
 <script>
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import {
@@ -76,6 +76,7 @@
 					} else if (v.type == 2) {
 						v['name'] = "消费结账"
 					}
+					v['c_time'] = this.$u.timeFormat(v.created_at, 'yyyy-mm-dd');
 				})
 				this.list.push(...res.data)
 				this.last_page = res.last_page
@@ -84,7 +85,7 @@
 			},
 			// 下拉刷新
 			handlePullDown(stopLoad) {
-				this.page = 1;
+				this.form.page = 1;
 				this.list = [];
 				this.pull = false
 				this.init()
@@ -93,7 +94,7 @@
 			// 上拉加载
 			handleLoadMore(stopLoad) {
 				if (!this.pull) {
-					if (this.page >= this.last_page) {
+					if (this.form.page >= this.last_page) {
 						this.$refs.uToast.show({
 							title: '加载到底了',
 							type: 'default',
@@ -102,7 +103,7 @@
 						this.pull = true
 
 					} else {
-						this.page++;
+						this.form.page++;
 						this.init()
 					}
 				}

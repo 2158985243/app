@@ -22,7 +22,8 @@
 					</view>
 					<view class="right">
 						<text :class="item.point>0?'red':'green'">{{item.point}}</text>
-						<text class="tb">增加后：{{item.after_point}}</text>
+						<text class="tb" v-if="item.type != 3">增加后：{{item.after_point}}</text>
+						<text class="tb" v-else>减少后：{{item.after_point}}</text>
 					</view>
 				</view>
 			</k-scroll-view>
@@ -86,7 +87,7 @@
 			},
 			// 下拉刷新
 			handlePullDown(stopLoad) {
-				this.page = 1;
+				this.form.page = 1;
 				this.list = [];
 				this.pull = false
 				this.init()
@@ -95,7 +96,7 @@
 			// 上拉加载
 			handleLoadMore(stopLoad) {
 				if (!this.pull) {
-					if (this.page >= this.last_page) {
+					if (this.form.page >= this.last_page) {
 						this.$refs.uToast.show({
 							title: '加载到底了',
 							type: 'default',
@@ -104,7 +105,7 @@
 						this.pull = true
 
 					} else {
-						this.page++;
+						this.form.page++;
 						this.init()
 					}
 				}

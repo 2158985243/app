@@ -52,6 +52,10 @@
 </template>
 
 <script>
+	import {
+		getInfo,
+		editUser
+	} from '../../api/user.js'
 	import url from '../../api/configuration.js'
 	import {logout} from '../../api/mine.js'
 	export default {
@@ -130,25 +134,17 @@
 					url: `/pages/changePassPword/changePassPword`
 				})
 			},
-			init: function() {
-				try {
-					const userLoginInfo = uni.getStorageSync('userLoginInfo');
-					const userMessage = uni.getStorageSync('userMessage');
-					if (userLoginInfo) {
-
-					}
-					if (userMessage) {
-						this.src = userMessage.member_headimg
-						this.member_name = userMessage.member_name
-						this.store_name = userMessage.store_name
-					}
-					console.log(this.src);
-				} catch (e) {
-					// error
-				}
+			async init() {
+				let res = await getInfo()
+				this.src = res.headimg
+				this.member_name = res.name
+				const userMessage = uni.getStorageSync('userMessage');
+				this.store_name = userMessage.store_name
 			}
 		},
 		onLoad() {
+		},
+		onShow() {
 			this.init()
 		}
 	}

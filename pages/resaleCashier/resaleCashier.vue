@@ -549,6 +549,7 @@
 				let res = await goodsList({
 					page: this.page,
 					page_size: this.page_size,
+					status:1,
 					keyword: this.keyword
 				});
 				this.dataList = [];
@@ -579,6 +580,7 @@
 						let res = await goodsList({
 							page: this.page,
 							page_size: this.page_size,
+							status:1,
 							goods_category_id: e.id,
 							keyword: this.keyword
 						});
@@ -598,6 +600,7 @@
 					page: this.page,
 					page_size: this.page_size,
 					goods_category_id: this.mored.id,
+					status:1,
 					keyword: this.keyword
 				});
 				this.dataList[index].arr.push(...res.data);
@@ -784,7 +787,6 @@
 			},
 			// 选完跳转
 			selectedFn() {
-				console.log(this.saveData);
 				if (this.saveData.length > 0) {
 					this.$store.commit('stateGoodFn', {
 						stateGood: true
@@ -794,6 +796,7 @@
 							url: `/pages/settleAccounts/settleAccounts`
 						})
 					} else {
+						uni.$emit('editGood',true)
 						uni.navigateBack()
 					}
 				} else {

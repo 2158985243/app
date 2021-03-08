@@ -1,7 +1,7 @@
 import $http from '@/js_sdk/app-request/requestConfig';
 // 会员列表
 export const customerList = (data) => {
-	return $http.get("/customer/list", data).then((res) => {
+	return $http.post("/customer/list", data).then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
@@ -246,6 +246,15 @@ export const rechargeDetails = (id) => {
 		return error;
 	});
 };
+// 会员挂失
+export const customerBan = (id,data) => {
+	return $http.post("/customer/ban/"+id,data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
 // 积分调整列表
 export const pointAdjustList = (data) => {
 	return $http.post("/customer/point_adjust_list",data).then((res) => {
@@ -258,6 +267,15 @@ export const pointAdjustList = (data) => {
 // 余额调整列表
 export const balanceAdjustList = (data) => {
 	return $http.post("/customer/balance_adjust_list",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 获取标签
+export const getTag = () => {
+	return $http.get("/customer/get_tag").then((res) => {
 		return res;
 	}).catch(function(error) {
 		//这里只会在接口是失败状态返回，不需要去处理错误提示
