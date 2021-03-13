@@ -126,7 +126,7 @@
 										<view class="gd-size" v-for="(itemSize,indexSize) in itemColor.data" :key='indexSize'>
 											<text class="gd-l" v-if="indexSize==0">{{itemColor.name}}(小计:{{itemColor.quantity}})</text>
 											<text v-else></text>
-											<text class="gd-center">{{itemSize.name||itemSize.color.name}}</text>
+											<text class="gd-center">{{itemSize.name||itemSize.size.name}}</text>
 											<text class="gd-r">{{itemSize.quantity}}</text>
 										</view>
 									</view>
@@ -641,7 +641,7 @@
 				}
 				this.nav_list[1].data[1].map(v => {
 					Column.categories.push(v.business_time)
-					Column.series[0].data.push(v.quantity)
+					Column.series[0].data.push(Number(v.quantity).toFixed())
 				})
 				if(Column.categories.length==0){
 					Column.categories.push(this.start_time)

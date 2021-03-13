@@ -70,6 +70,7 @@
 	import {
 		getTotal
 	} from '../../api/goods.js'
+	
 	import store from '@/store'
 	export default {
 		data() {
@@ -228,6 +229,9 @@
 					this.$store.commit('stateGoodFn',{
 						stateGood:false
 					})
+					this.$store.commit('customerFn', {
+						customerObj: {name:''}
+					})
 					uni.navigateTo({
 						url: `/pages/resaleCashier/resaleCashier`
 					});
@@ -296,7 +300,6 @@
 			let dated = this.$date.thisMonth();
 			this.init(dated)
 			this.getGoodNumer()
-			
 		}
 	}
 </script>

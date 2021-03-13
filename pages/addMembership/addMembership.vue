@@ -95,6 +95,12 @@
 	import {
 		customerAdd
 	} from '../../api/customer.js'
+	import {
+		generateCustomerNumber
+	} from '../../api/goods.js'
+	import {
+		configList
+	} from '../../api/member.js'
 	import urls from '../../api/configuration.js'
 	export default {
 		data() {
@@ -217,13 +223,25 @@
 					}
 				}
 
+			},
+			async customerNumber(){
+				let res = await generateCustomerNumber()
+				let res1 = await configList()
+				console.log(res);
+				console.log(res1);
+				if(!res.code){
+					if(res1.auto_generate_customer_number.value==1){
+						this.form.number = res.number
+					}
+				}
+				
 			}
 
 		},
 		onLoad() {
 			const userMessage = uni.getStorageSync('userMessage');
 			this.header.token = "Bearer " + userMessage.token
-
+			this.customerNumber()
 			this.action = urls.baseURL;
 			uni.$on('customerLevel', (res) => {
 				if (res) {

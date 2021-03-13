@@ -1,6 +1,7 @@
 import request from "./request";
 import app_url from '@/api/configuration.js'
 import store from '@/store' 
+import md5Libs from "uview-ui/libs/function/md5";
 // 全局配置的请求域名
 let baseUrl = app_url.baseURL;
 //可以new多个request来支持多个域名请求
@@ -25,6 +26,36 @@ let $http = new request({
 		isFactory: true
 	}
 });
+// 
+
+function sort_ASCII(obj,method){
+  var arr = new Array();
+  var num = 0;
+  for (var i in obj) {
+    arr[num] = i;
+    num++;
+  }
+  var sortArr = arr.sort();
+  var sortObj = {};
+  for (var i in sortArr) {
+	  if(sortArr[i]!="signature"){
+		  if(typeof(obj[sortArr[i]])=='number'){
+			sortObj[sortArr[i]] = String(obj[sortArr[i]]);
+		  }else if(JSON.stringify(obj[sortArr[i]]) == "{}"){
+			  sortObj[sortArr[i]] = []
+		  }else if(obj[sortArr[i]] == undefined){
+			  if(method=='GET'){
+				  sortObj[sortArr[i]] = ""
+			  }
+		  }else{
+			  sortObj[sortArr[i]] = obj[sortArr[i]];
+		  }
+	  }
+  }
+  console.log(JSON.stringify(sortObj)+'shesho_20210101');
+  return JSON.stringify(sortObj)+'shesho_20210101';
+}
+
 
 // 添加获取七牛云token的方法
 $http.getQnToken = function(callback) {
@@ -84,8 +115,10 @@ $http.requestStart = function(options) {
 	// }
 	// 测试阶段用的token
 	const userMessage = uni.getStorageSync('userMessage');
-	// console.log(userMessage.token);
 	options.header['Authorization'] = 'Bearer '+ userMessage.token;
+	options.data['timestamp'] = Date.now()
+	console.log(options.method);
+	options.data['signature'] = md5Libs.md5(sort_ASCII(options.data,options.method))
 	return options;
 }
 //请求结束

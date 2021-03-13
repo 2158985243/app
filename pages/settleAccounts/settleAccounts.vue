@@ -28,7 +28,8 @@
 								<view class="item-left">
 									<text class="hei">{{item.goodsOf.name}} <text class="hui">{{item.goodsOf.number}}</text></text>
 									<text class="zc">{{item.name}}-{{itemGoods.size.name}}</text>
-									<text class="lan">&yen;{{itemGoods.retail_price}} <text class="underline" v-if="itemGoods.discount != 1">&yen;{{item.goodsOf.retail_price}}</text><text
+									<text class="lan" v-if="itemGoods.discount == 1&&discount == 1">&yen;{{itemGoods.customer_price}}</text>
+									<text class="lan" v-else>&yen;{{itemGoods.retail_price}} <text class="underline" v-if="itemGoods.discount != 1">&yen;{{item.goodsOf.retail_price}}</text><text
 										 v-if="itemGoods.discount !=1">(会员折扣{{(itemGoods.discount*10).toFixed(2)}}折)</text>
 									</text>
 								</view>
@@ -39,7 +40,7 @@
 						</view>
 					</view>
 				</view>
-				
+
 				<view class="add-goods">
 					<view class="add-left" @click="toResale">
 						<u-icon name="plus-circle-fill" color="#2979ff" size="30"></u-icon>
@@ -95,7 +96,7 @@
 						<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
 					</view>
 				</view>
-				<view class="item-li" @tap="hiddenTime">
+				<view class="item-li" @tap="hiddenTime" v-if="message_list.sales_can_choose_date.value==1">
 					<view class="box-left">
 						<text>销售日期</text>
 					</view>
@@ -195,7 +196,8 @@
 					请输入会员密码
 				</view>
 				<view class="input">
-					<u-input v-model="password" :clearable="false" placeholder="请输入六位数字密码" input-align="center" type="password" :border="true" />
+					<u-input v-model="password" :clearable="false" placeholder="请输入六位数字密码" input-align="center" type="password"
+					 :border="true" />
 				</view>
 				<view class="discounted-footer">
 					<view class="qx" @click="abrogated">
@@ -207,8 +209,8 @@
 				</view>
 			</view>
 		</u-popup>
-		
-		
+
+
 		<!-- 编辑收款 -->
 		<u-popup mode="center" v-model="show_edit" border-radius="20" width="70%" height="340rpx">
 			<view class="discounted">
@@ -228,10 +230,46 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 积分抵现 -->
+		<u-popup mode="center" v-model="user_point" border-radius="20" width="80%" height="360rpx">
+			<view class="discounted">
+				<view class="discounted-title">
+					总积分:{{members.point}}
+				</view>
+				<view class="input">
+					<text>使用积分</text>
+					<u-input v-model="used_point" @input='inputChange' :clearable="false" placeholder="请输入本次使用积分" height='50' type="number"
+					 :border="true" />
+				</view>
+				<view class="input">
+					<text>抵扣现金</text>
+					<u-input v-model="point_used_as_money" :clearable="false" placeholder="可抵扣现金" :disabled='true' height='50' type="number"
+					 :border="true" />
+				</view>
+				<view class="discounted-footer">
+					<view class="qx" @click="user_point = false">
+						取消
+					</view>
+					<view class="qd" @click="enpoint">
+						确定
+					</view>
+				</view>
+			</view>
+		</u-popup>
 
 		<!-- 支付列表 -->
-		<u-popup mode="bottom" v-model="showPayment" z-index="99" @open="open" height="440rpx">
-			<view class="content">
+		<u-popup mode="bottom" v-model="showPayment" z-index="99" @open="open">
+			<!-- -->
+			<view class="used-point" v-if="form.customer_id>0 && message_list.point_exchange_money_switch.value==1">
+				<text class="left-point">可使用{{form.used_point}}积分抵{{form.point_used_as_money}}元</text>
+				<view class="right-point">
+					<text>-&yen;{{form.point_used_as_money}}</text>
+					<u-checkbox-group>
+						<u-checkbox @change="checkboxChange" v-model="checked"></u-checkbox>
+					</u-checkbox-group>
+				</view>
+			</view>
+			<view class="contents">
 				<view class="fot">
 					<view class="left-content">
 						<text>收款：</text>
@@ -264,8 +302,16 @@
 
 		<view class="footer">
 			<view class="footer-left">
-				<text>收款</text>
-				<text class="lan-se">&yen;{{form.money}}</text>
+				<view class="sk">
+					<view class="max">
+						<text>收款</text>
+						<text class="lan-se">&yen;{{form.money}}</text>
+					</view>
+					<view class="min" v-if="form.erasure_money!=0">
+						<text>已抹零</text>
+						<text>&yen;{{form.erasure_money}}</text>
+					</view>
+				</view>
 				<u-icon name="edit-pen-fill" @click="showEditMoney" color="#ff557f" size="40"></u-icon>
 			</view>
 			<view class="footer-right">
@@ -282,6 +328,9 @@
 </template>
 
 <script>
+	import {
+		configList
+	} from '../../api/member.js'
 	import store from '@/store'
 	import {
 		accountList
@@ -300,10 +349,18 @@
 	export default {
 		data() {
 			return {
+				point_used_as_money: '',
+				used_point: '',
+				user_point: false,
+				checked: false,
 				rebate: 0,
 				list: [],
 				sum_number: 0,
 				sum_money: 0,
+				message_list: {
+					sales_can_choose_date: {},
+					sales_staff_required: {},
+				},
 				form: {
 					customer_id: 0,
 					discount_money: '',
@@ -311,8 +368,11 @@
 					money: 0,
 					reward_point: 0,
 					pay_type: 0,
+					point_used_as_money: 0,
+					used_point: 0,
 					payment: [],
 					status: 0,
+					erasure_money: 0,
 					goods: [],
 					remarks: '',
 
@@ -342,9 +402,9 @@
 				integral: 1,
 				placeholder: '',
 				test: '',
-				members: {
-					name: ''
-				},
+				// members: {
+				// 	name: ''
+				// },
 				discount: 0,
 				discount_list: [],
 				value: '',
@@ -355,12 +415,33 @@
 				payItem: {}, //支付方式
 				show_edit: false, //启动修改金额
 				money_edit: '', //修改金额
-				show_psd:false,
-				password:''
+				show_psd: false,
+				password: '',
+				members_data: {
+					name: ''
+				}
 			}
 		},
+		onBackPress(options) {
+			if (options.from === 'navigateBack') {
+				return false;
+			}
+			this.quit()
+			return true;
+		},
 		computed: {
-
+			members() {
+				let obj = {}
+				if (store.state.customerObj.name != "") {
+					obj = store.state.customerObj
+					this.members_data = obj
+					this.discount = Number(obj.customer_level.discount)
+					this.$forceUpdate()
+				} else {
+					obj = this.members_data
+				}
+				return obj
+			},
 			goods() {
 				return store.state.specificationOfGoods;
 			},
@@ -372,17 +453,63 @@
 				} else {
 					money = Number(this.sum_money) - Number(this.form.discount_money)
 				}
-				// this.form.money = money;
-				// this.$forceUpdate()
+
 				return money.toFixed(2)
 			}
 		},
 		methods: {
-
+			// 点击了返回键
+			quit() {
+				this.$store.commit('customerFn', {
+					customerObj: this.members_data
+				})
+				uni.navigateBack()
+			},
+			inputChange() {
+				if (this.used_point > this.members.point) {
+					this.used_point = this.members.point
+					this.point_used_as_money = (this.used_point / this.message_list.point_exchange_money.value).toFixed(2)
+					this.$refs.uToast.show({
+						title: `最多可以兑换${this.members.point}抵现${this.point_used_as_money}元`,
+						type: 'default',
+						position: 'bottom'
+					})
+				} else {
+					this.point_used_as_money = (this.used_point / this.message_list.point_exchange_money.value).toFixed(2)
+				}
+			},
+			// 确定积分抵现
+			enpoint() {
+				this.user_point = false
+				this.form.used_point = this.$u.deepClone(this.used_point)
+				this.form.point_used_as_money = this.$u.deepClone(this.point_used_as_money)
+			},
+			// 打开积分抵现
+			checkboxChange(e) {
+				console.log(e);
+				if (e.value) {
+					this.user_point = true;
+				}
+			},
 			// 优惠金额
 			inputValue(v) {
-				this.form.discount_money = v
-				this.form.money = Number(this.sum_money) - Number(this.form.discount_money)
+				// this.form.discount_money = v
+				let er_money = this.$u.deepClone(Number(this.sum_money) - Number(this.form.discount_money))
+				this.form.erasure_money = this.form.money - er_money
+				console.log(this.message_list.sales_not_count_small_change.value);
+				if (this.message_list.sales_not_count_small_change.value == 1) {
+					this.form.money = Math.floor(er_money)
+				} else if (this.message_list.sales_not_count_small_change.value == 2) {
+					this.form.money = Math.floor(er_money * 10) / 10
+				} else if (this.message_list.sales_not_count_small_change.value == 3) {
+					this.form.money = Math.round(er_money)
+				} else if (this.message_list.sales_not_count_small_change.value == 4) {
+					this.form.money = Math.round(er_money * 10) / 10
+				} else {
+					this.form.money = er_money
+				}
+				this.form.erasure_money = this.form.erasure_money.toFixed(2)
+
 				if (this.form.customer_id > 0) {
 					this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
 				}
@@ -390,6 +517,7 @@
 			},
 			// 初始化
 			init() {
+				// this.$
 				this.list = [];
 				this.sum_number = 0;
 				this.sum_money = 0;
@@ -397,6 +525,7 @@
 					v.goodsData.map((v1, i1) => {
 						v1.data.map((v2, i2) => {
 							v2['retail_price'] = Number(v1.goodsOf.retail_price)
+							v2['customer_price'] = Number(v1.goodsOf.customer_price)
 						})
 						if (v1.quantity > 0) {
 							this.list.push(v1)
@@ -409,14 +538,33 @@
 					v.data.map((v1, i1) => {
 						if (v1.quantity > 0) {
 							if (!v1.discount) {
-								v1['discount'] = 1;
+								if (this.discount != 0) {
+									v1['discount'] = this.discount;
+								} else {
+									v1['discount'] = 1;
+								}
 							}
+
 							v1['retail_price'] = (Number(v1.retail_price) * Number(v1.discount)).toFixed(2)
 							this.sum_money += Number(v1.quantity) * Number(v1.retail_price)
 						}
 					})
 				})
 				this.form.money = this.toMoney
+				if (this.message_list.sales_not_count_small_change.value == 1) {
+					this.form.money = Math.floor(this.form.money)
+					this.form.erasure_money = this.toMoney - this.form.money
+				} else if (this.message_list.sales_not_count_small_change.value == 2) {
+					this.form.money = Math.floor(this.form.money * 10) / 10
+					this.form.erasure_money = this.toMoney - this.form.money
+				} else if (this.message_list.sales_not_count_small_change.value == 3) {
+					this.form.money = Math.round(this.form.money)
+					this.form.erasure_money = this.toMoney - this.form.money
+				} else if (this.message_list.sales_not_count_small_change.value == 4) {
+					this.form.money = Math.round(this.form.money * 10) / 10
+					this.form.erasure_money = this.toMoney - this.form.money
+				}
+				this.form.erasure_money = this.form.erasure_money.toFixed(2)
 			},
 			hiddenTime() {
 				this.showtime = true;
@@ -467,9 +615,16 @@
 				})
 			},
 			// 挂单或者收款
-			async sure(v) {
-				if (this.list.length > 0) {
+			async sure(e) {
+				if (this.message_list.sales_staff_required.value == 1 && this.form.staff_id == 0) {
+					this.$refs.uToast.show({
+						title: '请选择销售员',
+						type: 'default',
+						position: 'bottom'
+					})
+				} else if (this.list.length > 0) {
 					let arr = []
+					let bl = false
 					this.list.map((v) => {
 						v.data.map((v1) => {
 							if (v1.quantity != 0) {
@@ -480,33 +635,45 @@
 									price: v.goodsOf.retail_price,
 									quantity: v1.quantity,
 									discount: Number(v1.discount),
-									real_price: v1.retail_price
+									real_price: this.discount == 1 && v.discount == 1 ? v1.customer_price : v1.retail_price
 								})
+								if (v1.goods_spec_info.stock < 0&&this.message_list.minus_stock_can_sales.value==0) {
+									bl = true
+								}
+
 							}
 						})
 					})
-					if (this.form.discount_money == "") {
-						this.form.discount_money = 0;
-					}
-					this.form.goods = arr
-					if (!v) {
-						this.form.status = 0;
-						delete this.form.payment
-						let res = await salesOrderAdd(this.form)
-						// console.log(res);
-						this.$store.commit('commercialSpecification', {
-							specificationOfGoods: []
-						})
-						if (!res.code) {
-							uni.navigateTo({
-								url: `/pages/resaleCashier/resaleCashier`
+					if (!bl) {
+						if (this.form.discount_money == "") {
+							this.form.discount_money = 0;
+						}
+						this.form.goods = arr
+						if (!e) {
+							this.form.status = 0;
+							delete this.form.payment
+							let res = await salesOrderAdd(this.form)
+							// console.log(res);
+							this.$store.commit('commercialSpecification', {
+								specificationOfGoods: []
 							})
+							if (!res.code) {
+								uni.navigateTo({
+									url: `/pages/resaleCashier/resaleCashier`
+								})
+							}
+						} else {
+							this.form.status = 1;
+							this.activePay = 9999;
+							this.showPayment = true;
+							this.payItem = {};
 						}
 					} else {
-						this.form.status = 1;
-						this.activePay = 9999;
-						this.showPayment = true;
-						this.payItem = {};
+						this.$refs.uToast.show({
+							title: '库存不足不允许出货！',
+							type: 'default',
+							position: 'bottom'
+						})
 					}
 				} else {
 					this.$refs.uToast.show({
@@ -519,12 +686,15 @@
 			// 清空会员
 			clear() {
 				this.sum_money = 0;
-				this.members = {
+				this.members_data = {
 					name: ''
 				}
+				this.$store.commit('customerFn', {
+					customerObj: this.members_data
+				})
 				this.form.customer_id = 0
 				this.form.reward_point = 0
-
+				// 取消商品会员折扣
 				this.list.map(v => {
 					v.data.map(v1 => {
 						if (v1.quantity > 0) {
@@ -534,6 +704,13 @@
 						}
 					})
 				})
+				// 取消两个会员支付方式
+				this.paymentList.map((v) => {
+					if (v.name == '欠款' || v.name == "余额支付") {
+						v.checked = false;
+					}
+				})
+				this.discount = 0
 				// this.sum_money = this.sum_money.toFixed(2)
 				this.form.money = (this.sum_money - this.form.discount_money).toFixed(2)
 			},
@@ -601,6 +778,21 @@
 					this.discounts = this.rebate;
 					// 待继续
 					this.form.money = this.toMoney;
+					if (this.message_list.sales_not_count_small_change.value == 0) {} else if (this.message_list.sales_not_count_small_change
+						.value == 1) {
+						this.form.money = Math.floor(this.form.money)
+						this.form.erasure_money = this.toMoney - this.form.money
+					} else if (this.message_list.sales_not_count_small_change.value == 2) {
+						this.form.money = Math.floor(this.form.money * 10) / 10
+						this.form.erasure_money = this.toMoney - this.form.money
+					} else if (this.message_list.sales_not_count_small_change.value == 3) {
+						this.form.money = Math.round(this.form.money)
+						this.form.erasure_money = this.toMoney - this.form.money
+					} else if (this.message_list.sales_not_count_small_change.value == 4) {
+						this.form.money = Math.round(this.form.money * 10) / 10
+						this.form.erasure_money = this.toMoney - this.form.money
+					}
+					this.form.erasure_money = this.form.erasure_money.toFixed(2)
 					if (this.form.customer_id > 0) {
 
 						this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
@@ -717,7 +909,7 @@
 				let obj = {
 					form: this.form,
 					paymentList: this.paymentList,
-					has_password:this.members.has_password
+					has_password: this.members.has_password
 				}
 				uni.navigateTo({
 					url: '/pages/combination/combination?obj=' + encodeURIComponent(JSON.stringify(obj))
@@ -735,17 +927,17 @@
 
 					this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
 				}
-				this.form.discount_money = this.sum_money - this.form.money
+				this.form.discount_money = (this.sum_money - this.form.money).toFixed(2)
 				this.show_edit = false;
 			},
 			// 取消输入密码
-			abrogated(){
+			abrogated() {
 				this.password = ''
 				this.show_psd = false;
-				
+
 			},
 			// 确定输入密码
-			async ensured(){
+			async ensured() {
 				this.form.password = this.password;
 				let res = await salesOrderAdd(this.form)
 				if (!res.code) {
@@ -755,15 +947,24 @@
 						url: `/pages/paymentSuccess/paymentSuccess?payItem=${this.payItem.name}&money=${this.form.money}`
 					})
 				}
+			},
+			async config() {
+				let res = await configList()
+				if (!res.code) {
+					this.message_list = res
+					if (this.message_list.sales_can_choose_date.value == 1) {
+						let date = new Date();
+						this.form.business_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+					}
+					this.init();
+				}
 			}
 
 		},
 		onLoad(query) {
 			this.pointGetDe()
 			this.accountd()
-			this.init();
-			let date = new Date();
-			this.form.business_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+			this.config()
 			// 选择销售员
 			uni.$on("selecSalesperson", (res) => {
 				if (res) {
@@ -776,19 +977,42 @@
 			uni.$on("memberSelect", (res) => {
 				if (res) {
 					// console.log(res);
-					this.members = res
+					this.sum_money = 0
+					this.members_data = res
 					this.form.customer_id = res.id;
 					this.discount = Number(res.customer_level.discount)
 					this.list.map((v) => {
 						v.data.map((v1) => {
 							v1['discount'] = res.customer_level.discount;
+							if (this.discount == 1) {
+								this.sum_money += Number(v1.quantity) * Number(v1.customer_price)
+							} else {
+								v1.retail_price = (Number(v.goodsOf.retail_price) * Number(v1.discount)).toFixed(2)
+								this.sum_money += Number(v1.quantity) * Number(v1.retail_price)
+							}
 						})
+
 					})
 					this.paymentList.map((v) => {
 						if (v.name == '欠款' || v.name == "余额支付") {
 							v.checked = true;
 						}
 					})
+					this.form.money = this.toMoney
+					if (this.message_list.sales_not_count_small_change.value == 1) {
+						this.form.money = Math.floor(this.form.money)
+						this.form.erasure_money = this.toMoney - this.form.money
+					} else if (this.message_list.sales_not_count_small_change.value == 2) {
+						this.form.money = Math.floor(this.form.money * 10) / 10
+						this.form.erasure_money = this.toMoney - this.form.money
+					} else if (this.message_list.sales_not_count_small_change.value == 3) {
+						this.form.money = Math.round(this.form.money)
+						this.form.erasure_money = this.toMoney - this.form.money
+					} else if (this.message_list.sales_not_count_small_change.value == 4) {
+						this.form.money = Math.round(this.form.money * 10) / 10
+						this.form.erasure_money = this.toMoney - this.form.money
+					}
+					this.form.erasure_money = this.form.erasure_money.toFixed(2)
 					this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
 				}
 			});
@@ -806,7 +1030,6 @@
 			// 编辑商品
 			uni.$on("editItems", (res) => {
 				if (res) {
-					console.log(res);
 					this.list[res.index].data[res.indexGoods].quantity = 0
 					this.list[res.index].data[res.index_later].quantity = res.item.quantity;
 					this.list[res.index].data[res.index_later].discount = res.item.discount;
@@ -826,17 +1049,35 @@
 									v1['discount'] = 1;
 								}
 								// v1['retail_price'] = (Number(v1.retail_price) * Number(v1.discount))
-								this.sum_money += Number(v1.quantity) * Number(v1.retail_price)
+								if (v1.discount == 1 && this.discount == 1) {
+									this.sum_money += Number(v1.quantity) * Number(v1.customer_price)
+								} else {
+									this.sum_money += Number(v1.quantity) * Number(v1.retail_price)
+								}
 							}
 						})
 					})
-					
+
 					this.form.money = this.toMoney
+					if (this.message_list.sales_not_count_small_change.value == 1) {
+						this.form.money = Math.floor(this.form.money)
+						this.form.erasure_money = (this.toMoney - this.form.money).toFixed(2)
+					} else if (this.message_list.sales_not_count_small_change.value == 2) {
+						this.form.money = Math.floor(this.form.money * 10) / 10
+						this.form.erasure_money = (this.toMoney - this.form.money).toFixed(2)
+					} else if (this.message_list.sales_not_count_small_change.value == 3) {
+						this.form.money = Math.round(this.form.money)
+						this.form.erasure_money = (this.toMoney - this.form.money).toFixed(2)
+					} else if (this.message_list.sales_not_count_small_change.value == 4) {
+						this.form.money = Math.round(this.form.money * 10) / 10
+						this.form.erasure_money = (this.toMoney - this.form.money).toFixed(2)
+					}
+
 				}
 			});
 			// 增加 减少商品
-			uni.$on('editGood',(res)=>{
-				if(res){
+			uni.$on('editGood', (res) => {
+				if (res) {
 					this.init();
 				}
 			})
@@ -888,6 +1129,7 @@
 					justify-content: center;
 					align-items: center;
 					padding-left: 20rpx;
+
 					text {
 						color: #FFFFFF;
 						margin: 0 20rpx;
@@ -930,6 +1172,13 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				flex-direction: row;
+				margin-bottom: 20rpx;
+
+				text {
+					font-weight: 600;
+					padding: 10rpx;
+				}
 			}
 
 			.discounted-footer {
@@ -939,6 +1188,7 @@
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
+				margin-top: 20rpx;
 
 				.qx {
 					width: 180rpx;
@@ -966,10 +1216,33 @@
 		}
 
 		// 折扣列表
-		.content {
+		.used-point {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			height: 80rpx;
+			align-items: center;
+			background-color: #E5E5E5;
+			padding: 0 20rpx;
+
+			.right-point {
+				display: flex;
+				flex-direction: row;
+
+				.u-checkbox-group {
+					margin-left: 10rpx;
+					width: 38rpx;
+					display: flex;
+					flex-direction: row;
+				}
+			}
+		}
+
+		.contents {
 			display: flex;
 			flex-direction: column;
 			position: relative;
+			height: 440rpx;
 
 			.fot {
 				display: flex;
@@ -977,6 +1250,7 @@
 				height: 80rpx;
 				align-items: center;
 				border-bottom: 0.01rem solid #C8C7CC;
+				padding: 0 20rpx;
 
 				.left-content {
 					display: flex;
@@ -1268,6 +1542,17 @@
 				display: flex;
 				flex-direction: row;
 				align-items: center;
+
+				.sk {
+					display: flex;
+					flex-direction: column;
+					margin-right: 10rpx;
+
+					.min {
+						font-size: 22rpx;
+						color: #cccccc;
+					}
+				}
 
 				text {
 					padding: 0 10rpx;

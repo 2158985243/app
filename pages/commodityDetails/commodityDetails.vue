@@ -174,7 +174,7 @@
 								<view class="left">
 									<text>单号：<text class='gray'>{{item.number}}</text></text>
 									<text class="min-size">数量：<text class='gray'>{{item.out_quantity}}</text></text>
-									<text class="min-size">{{item.updated_at}}</text>
+			 						<text class="min-size">{{item.updated_at}}</text>
 								</view>
 								<view class="right">
 									<view class="rg-data">

@@ -143,6 +143,7 @@
 			}
 		},
 		onLoad() {
+			
 		},
 		onShow() {
 			this.init()

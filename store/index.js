@@ -19,6 +19,7 @@ export default new Vuex.Store({
 		purview:[],//权限数组
 		referDate:{},//查询数据
 		authority:[],//权限数组
+		customerObj:{name:''},//销售选择的会员
 	},
 	getters: {
 
@@ -77,6 +78,10 @@ export default new Vuex.Store({
 		// 权限
 		authorityFn(state,context){
 			state.authority = context.authority
+		},
+		// 销售选择的会员
+		customerFn(state,context){
+			state.customerObj = context.customerObj
 		},
 	},
 	actions: {

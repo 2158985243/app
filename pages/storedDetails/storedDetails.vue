@@ -1,10 +1,10 @@
 <template>
 	<view class="storedDetails">
 		<u-navbar back-icon-color='#ffffff' :title="title_name" :background="background" title-color="#ffffff">
-			
+
 		</u-navbar>
 		<view class="hearder">
-			<view class="hdr_item" >
+			<view class="hdr_item">
 				<view class="left">
 					<text>支付金额</text>
 				</view>
@@ -12,7 +12,7 @@
 					<text>&yen;{{(Number(form.money)-Number(form.reward_money)).toFixed(2)}}</text>
 				</view>
 			</view>
-			<view class="hdr_item" >
+			<view class="hdr_item">
 				<view class="left">
 					<text>赠送金额</text>
 				</view>
@@ -20,7 +20,7 @@
 					<text>&yen;{{form.reward_money}}</text>
 				</view>
 			</view>
-			<view class="hdr_item" >
+			<view class="hdr_item">
 				<view class="left">
 					<text>合计金额</text>
 				</view>
@@ -28,7 +28,7 @@
 					<text>&yen;{{form.money}}</text>
 				</view>
 			</view>
-			
+
 		</view>
 		<view class="box">
 			<view class="nav">
@@ -90,6 +90,9 @@
 		rechargeDetails,
 		rechargeCancel
 	} from '../../api/customer.js'
+	import {
+		configList
+	} from '../../api/member.js'
 	export default {
 		data() {
 			return {
@@ -117,7 +120,7 @@
 				sum_money: 0,
 				show: false,
 				active: false,
-				title_name:'储值详情'
+				title_name: '储值详情'
 			}
 		},
 		methods: {
@@ -155,28 +158,38 @@
 				console.log(res);
 				this.form = res;
 				let arr = [];
-			
+
 			},
 			// 作废
 			async del() {
 				if (!this.active) {
-
-					let _this = this
-					uni.showModal({
-						title: '提示',
-						content: '是否作废该单据？',
-						success: async function(res) {
-							if (res.confirm) {
-								let res = await rechargeCancel(_this.id);
-								if (!res.code) {
-									_this.active = true;
-									uni.navigateBack()
+					let bl = await configList()
+					let e_time = this.$date.Ndays(Number(bl.can_cancel_bill_max_day.value)).start_time
+					// console.log();
+					if (Date.now(e_time) >= Date.now(this.form.business_time)) {
+						this.$refs.uToast.show({
+							title: `只能作废${bl.can_cancel_bill_max_day.value}内的单据!`,
+							type: 'default',
+							position: 'bottom'
+						})
+					} else {
+						let _this = this
+						uni.showModal({
+							title: '提示',
+							content: '是否作废该单据？',
+							success: async function(res) {
+								if (res.confirm) {
+									let res = await rechargeCancel(_this.id);
+									if (!res.code) {
+										_this.active = true;
+										uni.navigateBack()
+									}
+								} else if (res.cancel) {
+									return true;
 								}
-							} else if (res.cancel) {
-								return true;
 							}
-						}
-					});
+						});
+					}
 				} else {
 					this.$refs.uToast.show({
 						title: '消费单号已不存在或作废',
@@ -189,7 +202,7 @@
 		},
 		onLoad(query) {
 			this.id = query.id;
-			if(query.title_name){
+			if (query.title_name) {
 				this.title_name = query.title_name
 			}
 			this.init(query.id);

@@ -90,6 +90,7 @@
 		salesOrder,
 		salesOrderCancel
 	} from '../../api/salesOrder.js'
+	import {configList} from '../../api/member.js'
 	export default {
 		data() {
 			return {
@@ -169,26 +170,37 @@
 				})
 				this.sum_money = this.sum_money.toFixed(2)
 				this.sales_payment = arr.join(',')
+				
 			},
 			// 作废
 			async del() {
 				if (!this.active) {
-
-					let _this = this
-					uni.showModal({
-						title: '提示',
-						content: '是否作废该单据？',
-						success: async function(res) {
-							if (res.confirm) {
-								let res = await salesOrderCancel(_this.id);
-								if (!res.code) {
-									_this.active = true
+					let bl = await configList()
+					let e_time = this.$date.Ndays(Number(bl.can_cancel_bill_max_day.value)).start_time
+					// console.log();
+					if(Date.now(e_time) >= Date.now(this.form.business_time)){
+						this.$refs.uToast.show({
+							title: `只能作废${bl.can_cancel_bill_max_day.value}内的单据!`,
+							type: 'default',
+							position: 'bottom'
+						})
+					}else{
+						let _this = this
+						uni.showModal({
+							title: '提示',
+							content: '是否作废该单据？',
+							success: async function(res) {
+								if (res.confirm) {
+									let res = await salesOrderCancel(_this.id);
+									if (!res.code) {
+										_this.active = true
+									}
+								} else if (res.cancel) {
+									return true;
 								}
-							} else if (res.cancel) {
-								return true;
 							}
-						}
-					});
+						});
+					}
 				} else {
 					this.$refs.uToast.show({
 						title: '消费单号已不存在或作废',

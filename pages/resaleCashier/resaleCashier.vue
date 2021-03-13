@@ -482,7 +482,8 @@
 
 			},
 			// 点击确定
-			determine() {
+			async determine() {
+				this.show = false;
 				this.CategoryList.map((v, i) => {
 					if (v.checked) {
 						this.options.goods_category_id.push(v.id)
@@ -498,8 +499,22 @@
 						this.options.price.push(v.id)
 					}
 				})
-				this.show = false;
 				// console.log(this.options);
+				let res = await goodsList({
+					page: this.page,
+					page_size: this.page_size,
+					status:1,
+					goods_category_id: this.mored.id,
+					options: this.options,
+					keyword: this.keyword
+				});
+				if(!res.code){
+					if (this.mored.index == undefined) {
+						this.dataList[0].arr = res.data;
+					} else {
+						this.dataList[this.mored.index].arr = res.data;
+					}
+				}
 			},
 			// 点击品牌
 			clickBrand(item, index) {
@@ -635,6 +650,7 @@
 								name: res.name,
 								number: res.number,
 								retail_price: res.retail_price,
+								customer_price:res.customer_price,
 								main_image: res.main_image,
 								images: res.images
 							};

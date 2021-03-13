@@ -212,9 +212,9 @@
 			// 参数设置
 			toParamSetting(){
 				if(this.$store.state.authority.join(",").indexOf('param_setting') != -1){
-					// uni.navigateTo({
-					// 	url: `/pages/pointList/pointList`
-					// })
+					uni.navigateTo({
+						url: `/pages/businessSetUp/config/config`
+					})
 				}else{
 					uni.showToast({
 					    title: '您还没有该权限!',

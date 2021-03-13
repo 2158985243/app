@@ -386,9 +386,11 @@
 				this.end_time = `${v.year}-${v.month}-${v.day}`;
 				this.init(this.start_time, this.end_time);
 			},
-			// 前往支出详情
+			// 前往会员分析详情
 			spendingDetails(val) {
-				
+				uni.navigateTo({
+					url:`/pages/memberAnalysis/analyseDetails/analyseDetails?id=${val.customer_id}`
+				})
 			}
 		},
 		onLoad(query) {

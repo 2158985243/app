@@ -382,11 +382,11 @@
 		},
 		onLoad(query) {
 			this.strored()
-			if (query.timeStar) {
-				this.start_time = query.timeStar;
-				this.end_time = query.timeEnd;
-				this.dateAll.today5['statrTime'] = query.timeStar;
-				this.dateAll.today5['endTime'] = query.timeEnd;
+			if (query.start_time) {
+				this.start_time = query.start_time;
+				this.end_time = query.end_time;
+				this.dateAll.today5['statrTime'] = query.start_time;
+				this.dateAll.today5['endTime'] = query.end_time;
 			} else {
 				let date = new Date();
 				this.start_time = this.$u.timeFormat(date, 'yyyy-mm-dd');

@@ -124,3 +124,21 @@ export const pointExchangeList = (data) => {
 		return error;
 	});
 };
+// 获取商品货号
+export const generateGoodsMumber = () => {
+	return $http.get("/goods/generate_goods_number").then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+// 获取会员卡号
+export const generateCustomerNumber = () => {
+	return $http.get("/customer/generate_customer_number").then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

@@ -281,6 +281,7 @@
 			},
 			// 点击确定
 			async determine() {
+				this.show = false;
 				this.options = {
 					goods_category_id: [], //类别
 					status: [], //状态
@@ -302,8 +303,6 @@
 						this.options.price.push(v.id)
 					}
 				})
-				this.show = false;
-				console.log(this.options);
 				let res = await goodsList({
 					page: this.page,
 					page_size: this.page_size,
@@ -311,7 +310,6 @@
 					options: this.options,
 					keyword: this.keyword
 				});
-				console.log(res);
 				if (this.mored.index == undefined) {
 					this.dataList[0].arr = res.data;
 				} else {

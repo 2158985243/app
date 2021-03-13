@@ -203,7 +203,6 @@
 			// 初始化
 			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id) {
 				// 当天
-
 				let currentdate = this.$date.today();
 				let res = await pointAdjustList({
 					start_time: timeStar || currentdate.start_time,

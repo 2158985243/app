@@ -1826,6 +1826,32 @@
             }
             
         }
+        ,{
+            "path" : "pages/memberAnalysis/analyseDetails/analyseDetails",
+            "style" :                                                                                    
+            {
+               "navigationBarTitleText": "会员分析详情",
+               "navigationBarBackgroundColor": "#2979ff",
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
+        ,{
+            "path" : "pages/businessSetUp/config/config",
+            "style" :                                                                                    
+            {
+               "navigationBarTitleText": "参数设置",
+               "navigationBarBackgroundColor": "#2979ff",
+               "navigationBarTextStyle": "white",
+               "app-plus": {
+               	"scrollIndicator": "none"
+               }
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -99,6 +99,9 @@
 			this.combina = query.combina;
 			this.page = Number(query.page);
 			this.recharge = query.recharge;
+			this.$store.commit('customerFn', {
+				customerObj: {name:''}
+			})
 		}
 	}
 </script>

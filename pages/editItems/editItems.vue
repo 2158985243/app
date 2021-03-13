@@ -31,7 +31,7 @@
 				<view class="label-name">
 					本次售价
 				</view>
-				<u-input v-model="item.retail_price" @input="inputPrice" :clearable="false" height="50" placeholder='' type="number" />
+				<u-input v-model="item.retail_price" @input="inputPrice" :maxlength='maxlength' :clearable="false" height="50" placeholder='' type="number" />
 			</view>
 			<view class="list-item" v-else>
 				<view class="label-name">
@@ -43,7 +43,7 @@
 				<view class="label-name">
 					本次打折
 				</view>
-				<u-input v-model="item.discount" @input="inputDiscount" :clearable="false" height="50" placeholder='' type="number" />
+				<u-input v-model="item.discount" @input="inputDiscount"  :maxlength='maxlength1'  :clearable="false" height="50" placeholder='' type="number" />
 			</view>
 			<view class="number-box">
 				<view class="label-name">
@@ -87,22 +87,36 @@
 		data() {
 			return {
 				form: {},
-				item: {},
+				item: {retail_price:0},
 				show: false,
 				value: '',
 				index_before: 0,
 				index_later: 0,
-				bl:false
+				bl:false,
+				maxlength:140,
+				maxlength1:140,
 			}
 		},
 		methods: {
 			// 销售价
 			inputPrice(v){
-				this.item.discount = (Number(v)/Number(this.form.item.goodsOf.retail_price)).toFixed(2)
+				if(/^\d+(\.\d{1})?$/.test(v)){
+					this.item.discount = (Number(this.item.retail_price)/Number(this.form.item.goodsOf.retail_price)).toFixed(2)
+					this.maxlength = 140
+				}else{
+					this.maxlength = this.item.retail_price.length
+					this.item.discount = (Number(this.item.retail_price)/Number(this.form.item.goodsOf.retail_price)).toFixed(2)
+				}
 			},
 			// 打折
 			inputDiscount(v){
+				if(/^\d+(\.\d{1})?$/.test(v)){
+					this.maxlength1 = 140
+				}else{
+					this.maxlength1 =v.length
+				}
 				this.item.retail_price = (Number(this.form.item.goodsOf.retail_price)*Number(v)).toFixed(2)
+				
 			},
 			itemClick() {
 				let bl = true;
@@ -158,6 +172,13 @@
 			this.form = JSON.parse(decodeURIComponent(option.obj));
 			this.bl = this.form.bl
 			this.item = JSON.parse(JSON.stringify(this.form.item.data[this.form.indexGoods]));
+			if(/^\d+(\.\d{1,2})?$/.test(this.item.retail_price)){
+				this.maxlength = this.item.retail_price.length
+			}
+			if(/^\d+(\.\d{1,2})?$/.test(this.item.discount)){
+				this.maxlength1= this.item.discount.length
+			}
+			
 			this.value = this.item.size.name;
 			this.index_later = this.form.indexGoods;
 		}

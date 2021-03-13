@@ -181,6 +181,8 @@
 </template>
 
 <script>
+	import {generateGoodsMumber} from '../../api/goods.js'
+	import {configList} from '../../api/member.js'
 	import urls from '../../api/configuration.js'
 	import store from '@/store'
 	import {
@@ -555,10 +557,20 @@
 						type: 'defaul'
 					})
 				}
+			},
+			async config(){
+				let res = await generateGoodsMumber()
+				let res1 = await configList()
+				if(!res.code){
+					if(res1.auto_generate_goods_number.value==1){
+						this.form.number = res.number
+					}
+				}
 			}
 		},
 		onLoad() {
 			this.init();
+			this.config()
 			uni.$on("produtName", (res) => {
 				if (res) {
 					this.form.name = res;
@@ -744,7 +756,6 @@
 			});
 			uni.$on("categoryDatum", (res) => {
 				if (res) {
-					console.log(res);
 					// let str = [];
 					// res.map((v, i) => {
 					this.form.goods_category_id = res.id;

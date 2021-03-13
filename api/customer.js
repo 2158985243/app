@@ -282,3 +282,23 @@ export const getTag = () => {
 		return error;
 	});
 };
+
+// 获取标签
+export const getInfo2 = (data) => {
+	return $http.get("/member/get_info2",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+
+// 获取标签
+export const curAnalyseDetails = (data) => {
+	return $http.get("/customer/analyse_details",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
