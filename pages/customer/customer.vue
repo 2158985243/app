@@ -10,8 +10,7 @@
 				<view class="header-img">
 					<view class="left">
 						<view class="img">
-							<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+form.image">
-							</u-image>
+							<u-image width="100rpx" image-mode='aspectFit' border-radius="10" height="100rpx" :src="form.image|filterImage"></u-image>
 						</view>
 						<view class="name">
 							<text>{{form.name}}</text>
@@ -86,7 +85,8 @@
 			<view class="box-item" @click="toPasswordSetup">
 				<view class="box-left">
 					<text class="sett">消费密码</text>
-					<text class="hui">(未开启)</text>
+					<text class="hui" v-if='form.password == "" '>(未开启)</text>
+					<text class="hui" v-else>(已开启)</text>
 				</view>
 				<view class="box-right">
 					<text class="lan">设置</text>
@@ -111,6 +111,7 @@
 </template>
 
 <script>
+	import url from '../../api/configuration.js'
 	import {
 		customer
 	} from '../../api/customer.js'
@@ -124,6 +125,17 @@
 				background: {
 					backgroundColor: '#2979ff'
 				},
+			}
+		},
+		filters: {
+			filterImage(v) {
+				if (!v) {
+					return v;
+				}
+				if (!/^http/.test((v))) {
+					return url.domain + v;
+				}
+				return v;
 			}
 		},
 		methods: {
@@ -254,7 +266,7 @@
 					display: flex;
 					justify-content: space-between;
 					padding-bottom: 20rpx;
-
+					
 					.left {
 						display: flex;
 						flex-direction: row;

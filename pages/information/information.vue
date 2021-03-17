@@ -3,13 +3,13 @@
 		<view class="status_bar">
 		</view>
 		<view class="box">
-			<view class="box-item">
+			<view class="box-item" @click="headerImg">
 				<view class="left">
 					<text>商家头像</text>
 				</view>
 				<view class="right">
-				<!-- $cfg.domain + -->
-					<u-image width="80rpx" height="80rpx" :src="form.headimg|filterImage"></u-image>
+					<!-- $cfg.domain + -->
+					<u-image width="80rpx" image-mode='aspectFit' height="80rpx" :src="form.headimg|filterImage"></u-image>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
@@ -152,8 +152,31 @@
 				show: false,
 				title_name: '',
 				value: '',
-				index_a: 0
+				index_a: 0,
+				userMessage:{}
 			}
+		},
+		created() {
+			// 监听从裁剪页发布的事件，获得裁剪结果
+			uni.$on('uAvatarCropper', path => {
+				// this.avatar = path;
+				// 可以在此上传到服务端
+				uni.uploadFile({
+					url: url.baseURL + '/api/upload', //仅为示例，非真实的接口地址
+					filePath: path,
+					name: 'user',
+					header: {
+						token: "Bearer " + this.userMessage.token
+					},
+					formData: {
+						type: 'user',
+						path: 'user'
+					},
+					success: (uploadFileRes) => {
+						this.form.headimg = JSON.parse(uploadFileRes.data).data.url
+					}
+				});
+			})
 		},
 		filters: {
 			filterImage(v) {
@@ -203,27 +226,20 @@
 				}
 			},
 			headerImg() {
-				const userMessage = uni.getStorageSync('userMessage');
-				uni.chooseImage({
-					success: (chooseImageRes) => {
-						const tempFilePaths = chooseImageRes.tempFilePaths;
-						uni.uploadFile({
-							url: url.baseURL + '/api/upload', //仅为示例，非真实的接口地址
-							filePath: tempFilePaths[0],
-							name: 'user',
-							header: {
-								token: "Bearer " + userMessage.token
-							},
-							formData: {
-								type: 'user',
-								path: 'user'
-							},
-							success: (uploadFileRes) => {
-								this.form.headimg = JSON.parse(uploadFileRes.data).data.url
-							}
-						});
+				
+				this.$u.route({
+					// 关于此路径，请见下方"注意事项"
+					url: '/pages/avatar/u-avatar-cropper',
+					// 内部已设置以下默认参数值，可不传这些参数
+					params: {
+						// 输出图片宽度，高等于宽，单位px
+						destWidth: 300,
+						// 裁剪框宽度，高等于宽，单位px
+						rectWidth: 300,
+						// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
+						fileType: 'jpg',
 					}
-				});
+				})
 			},
 			async init() {
 				let res = await getInfo()
@@ -256,15 +272,15 @@
 					contact_mobile: this.form.contact_mobile,
 					address: this.form.address
 				})
-				if(!res.code){
+				if (!res.code) {
 					uni.navigateBack()
 				}
 			}
 		},
 		onLoad() {
 			this.init()
-			const userMessage = uni.getStorageSync('userMessage');
-			this.store_name = userMessage.store_name
+			 this.userMessage = uni.getStorageSync('userMessage');
+			this.store_name = this.userMessage.store_name
 		}
 	}
 </script>

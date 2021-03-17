@@ -8,7 +8,7 @@
 						<view class="t_item">
 							<text class="borad">{{item.goods.name}}</text>
 							<text>{{item.goods.number}}-{{item.color.name}}-{{item.size.name}}</text>
-							<text><text class="red">&yen;{{item.real_price}}</text><text class="dels">&yen;{{item.price}}</text>({{Number(item.discount)*10}})折</text>
+							<text><text class="red">&yen;{{item.real_price}}</text><text class="dels">&yen;{{item.price}}</text>({{(Number(item.discount)*10).toFixed(2)}})折</text>
 						</view>
 					</view>
 					<view class="right">

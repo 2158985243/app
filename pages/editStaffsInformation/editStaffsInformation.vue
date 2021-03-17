@@ -64,11 +64,12 @@
 		<view class="box1">
 			<view class="form_item1">
 				<text>上传图片</text>
-				<u-upload width="120" height='120' upload-text='' image-mode='aspectFit' :limitType='limit' :action="action+'/api/upload'"
-				 :header="header" :name="formData.type" :form-data="formData" @on-success="onSuccess" :file-list="fileList"
-				 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="1" :show-progress="false" @on-error='onError'
-				 del-bg-color='#000000'>
-				</u-upload>
+				<view class="img" @click="uploadImg">
+					<view class="plus" v-if="form.images==''">
+						<u-icon name="plus" color="#606266" size="36"></u-icon>
+					</view>
+					<u-image v-else width="120rpx" image-mode='aspectFit' height="120rpx" :src="form.images|filterImage"></u-image>
+				</view>
 			</view>
 		</view>
 		<view class="btn">
@@ -79,7 +80,7 @@
 </template>
 
 <script>
-	import urls from '../../api/configuration.js'
+	import url from '../../api/configuration.js'
 	import {
 		staff,
 		staffEdit,
@@ -127,10 +128,60 @@
 					path: 'staff'
 				},
 				storeName: '',
-				id:0
+				id:0,
+				userMessage:{}
 			}
 		},
+		filters: {
+			filterImage(v) {
+				if (!v) {
+					return v;
+				}
+				if (!/^http/.test((v))) {
+					return url.domain + v;
+				}
+				return v;
+			}
+		},
+		created() {
+			// 监听从裁剪页发布的事件，获得裁剪结果
+			uni.$on('uAvatarCropper', path => {
+				// this.avatar = path;
+				// 可以在此上传到服务端
+				uni.uploadFile({
+					url: url.baseURL + '/api/upload', //仅为示例，非真实的接口地址
+					filePath: path,
+					name: 'user',
+					header: {
+						token: "Bearer " + this.userMessage.token
+					},
+					formData: {
+						type: 'user',
+						path: 'user'
+					},
+					success: (uploadFileRes) => {
+						this.form.images = JSON.parse(uploadFileRes.data).data.url
+					}
+				});
+			})
+		},
 		methods: {
+			// 裁剪
+			uploadImg(){
+				this.$u.route({
+					// 关于此路径，请见下方"注意事项"
+					url: '/pages/avatar/u-avatar-cropper',
+					// 内部已设置以下默认参数值，可不传这些参数
+					params: {
+						// 输出图片宽度，高等于宽，单位px
+						destWidth: 300,
+						// 裁剪框宽度，高等于宽，单位px
+						rectWidth: 300,
+						// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
+						fileType: 'jpg',
+					}
+				})
+			},
 			// 删除
 			async del(){
 				uni.showModal({
@@ -194,17 +245,13 @@
 				let res = await staff(id)
 				this.form = res;
 				this.storeName = res.store.name;
-				this.fileList.push({
-					url: urls.domain + res.images
-				})
+				
 			}
 		},
 		onLoad(query) {
-			const userMessage = uni.getStorageSync('userMessage');
-			this.action = urls.baseURL;
-			this.header.token = "Bearer " + userMessage.token
-			this.formData.type = "store";
-			this.formData.path = "store";
+			this.userMessage = uni.getStorageSync('userMessage');
+			this.header.token = "Bearer " + this.userMessage.token
+			this.action = url.baseURL;
 			this.init(query.id);
 			this.id = query.id;
 			uni.$on("gloEvent", (res) => {

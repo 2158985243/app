@@ -28,7 +28,7 @@
 								<view class="item-left">
 									<text class="hei">{{item.goodsOf.name}} <text class="hui">{{item.goodsOf.number}}</text></text>
 									<text class="zc">{{item.name}}-{{itemGoods.size.name}}</text>
-									<text class="lan" v-if="itemGoods.discount == 1&&discount == 1">&yen;{{itemGoods.customer_price}}</text>
+									<text class="lan" v-if="itemGoods.discount == 1&&discount == 1">&yen;{{itemGoods.retail_price}}<text class="underline">&yen;{{item.goodsOf.retail_price}}</text></text>
 									<text class="lan" v-else>&yen;{{itemGoods.retail_price}} <text class="underline" v-if="itemGoods.discount != 1">&yen;{{item.goodsOf.retail_price}}</text><text
 										 v-if="itemGoods.discount !=1">(会员折扣{{(itemGoods.discount*10).toFixed(2)}}折)</text>
 									</text>
@@ -134,19 +134,23 @@
 			</view>
 			<!-- 折扣列表 -->
 			<u-popup mode="bottom" v-model="show" z-index="99" @open="open" height="600rpx">
-				<view class="content">
+				<view class="contents">
 					<view class="fot">
-						<view class="edt" @click="edt">
-							<text v-if="!set_del">编辑</text>
-							<text v-else>完成</text>
-
+						<view class="left-content">
+							<view class="edt" @click="edt">
+								<text v-if="!set_del">编辑</text>
+								<text v-else>完成</text>
+							</view>
 						</view>
+
 						<view class="title">
 							整单折扣
 						</view>
 						<view class="qx" @click="abolish">
 							取消
 						</view>
+
+
 					</view>
 					<scroll-view scroll-y="true" style="height: 440rpx;">
 						<view class="bods">
@@ -279,7 +283,7 @@
 						组合支付
 					</view>
 				</view>
-				<scroll-view scroll-y="true" style="height: 280rpx;">
+				<scroll-view scroll-y="true" style="height: 300rpx;">
 					<view class="bods">
 						<block v-for="(item,index) in paymentList" :key="index">
 							<view class="pay" v-if="item.checked" @click="paymentItem(item,index)">
@@ -493,23 +497,24 @@
 			},
 			// 优惠金额
 			inputValue(v) {
-				// this.form.discount_money = v
+				this.form.discount_money = v
 				let er_money = this.$u.deepClone(Number(this.sum_money) - Number(this.form.discount_money))
-				this.form.erasure_money = this.form.money - er_money
-				console.log(this.message_list.sales_not_count_small_change.value);
 				if (this.message_list.sales_not_count_small_change.value == 1) {
 					this.form.money = Math.floor(er_money)
+					this.form.erasure_money = er_money - Math.floor(er_money)
 				} else if (this.message_list.sales_not_count_small_change.value == 2) {
 					this.form.money = Math.floor(er_money * 10) / 10
+					this.form.erasure_money = er_money - Math.floor(er_money * 10) / 10
 				} else if (this.message_list.sales_not_count_small_change.value == 3) {
 					this.form.money = Math.round(er_money)
+					this.form.erasure_money = er_money - Math.round(er_money)
 				} else if (this.message_list.sales_not_count_small_change.value == 4) {
 					this.form.money = Math.round(er_money * 10) / 10
+					this.form.erasure_money = er_money - Math.round(er_money * 10) / 10
 				} else {
 					this.form.money = er_money
 				}
 				this.form.erasure_money = this.form.erasure_money.toFixed(2)
-
 				if (this.form.customer_id > 0) {
 					this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
 				}
@@ -537,6 +542,7 @@
 					this.sum_number += Number(v.quantity)
 					v.data.map((v1, i1) => {
 						if (v1.quantity > 0) {
+							// 没折扣的商品进入打折
 							if (!v1.discount) {
 								if (this.discount != 0) {
 									v1['discount'] = this.discount;
@@ -544,7 +550,7 @@
 									v1['discount'] = 1;
 								}
 							}
-
+							// 重新赋值
 							v1['retail_price'] = (Number(v1.retail_price) * Number(v1.discount)).toFixed(2)
 							this.sum_money += Number(v1.quantity) * Number(v1.retail_price)
 						}
@@ -635,9 +641,9 @@
 									price: v.goodsOf.retail_price,
 									quantity: v1.quantity,
 									discount: Number(v1.discount),
-									real_price: this.discount == 1 && v.discount == 1 ? v1.customer_price : v1.retail_price
+									real_price: v1.retail_price
 								})
-								if (v1.goods_spec_info.stock < 0&&this.message_list.minus_stock_can_sales.value==0) {
+								if (v1.goods_spec_info.stock < 0 && this.message_list.minus_stock_can_sales.value == 0) {
 									bl = true
 								}
 
@@ -857,6 +863,7 @@
 				let obj = {
 					item: item,
 					index: index,
+
 					indexGoods: indexGoods
 				}
 				uni.navigateTo({
@@ -985,6 +992,8 @@
 						v.data.map((v1) => {
 							v1['discount'] = res.customer_level.discount;
 							if (this.discount == 1) {
+								v1.discount = (Number(v1.customer_price) / Number(v.goodsOf.retail_price)).toFixed(2)
+								v1.retail_price = Number(v1.customer_price).toFixed(2)
 								this.sum_money += Number(v1.quantity) * Number(v1.customer_price)
 							} else {
 								v1.retail_price = (Number(v.goodsOf.retail_price) * Number(v1.discount)).toFixed(2)
@@ -1242,12 +1251,12 @@
 			display: flex;
 			flex-direction: column;
 			position: relative;
-			height: 440rpx;
+			height: 490rpx;
 
 			.fot {
 				display: flex;
 				justify-content: space-between;
-				height: 80rpx;
+				height: 80rpx !important;
 				align-items: center;
 				border-bottom: 0.01rem solid #C8C7CC;
 				padding: 0 20rpx;
@@ -1341,11 +1350,11 @@
 			.confrim-btn {
 				width: 100%;
 				display: flex;
-				height: 80rpx;
+				height: 60rpx;
 				justify-content: center;
 				align-items: center;
 				position: fixed;
-				bottom: 0;
+				bottom: 10rpx;
 
 				.btn {
 					width: 80%;

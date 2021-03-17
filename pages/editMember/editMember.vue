@@ -66,12 +66,11 @@
 				</view>
 				<view class="form_images">
 					<text>上传图片</text>
-					<view class="img">
-						<u-upload width="120" height='120' upload-text='' :limitType='limit' image-mode='aspectFit' :action="action+'/api/upload'"
-						 :header="header" :name="formData.type" :form-data="formData" @on-success="onSuccess" :file-list="fileList"
-						 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="1" :show-progress="false" @on-error='onError'
-						 del-bg-color='#000000'>
-						</u-upload>
+					<view class="img" @click="uploadImg">
+						<view class="plus" v-if="form.image==''">
+							<u-icon name="plus" color="#606266" size="36"></u-icon>
+						</view>
+						<u-image v-else width="120rpx" image-mode='aspectFit' height="120rpx" :src="form.image|filterImage"></u-image>
 					</view>
 				</view>
 			</view>
@@ -96,7 +95,7 @@
 		customerEdit,
 		customerDel
 	} from '../../api/customer.js'
-	import urls from '../../api/configuration.js'
+	import url from '../../api/configuration.js'
 	export default {
 		data() {
 			return {
@@ -148,9 +147,59 @@
 				show: false,
 				showtime: false,
 				showtime1: false,
+				userMessage:{}
 			}
 		},
+		filters: {
+			filterImage(v) {
+				if (!v) {
+					return v;
+				}
+				if (!/^http/.test((v))) {
+					return url.domain + v;
+				}
+				return v;
+			}
+		},
+		created() {
+			// 监听从裁剪页发布的事件，获得裁剪结果
+			uni.$on('uAvatarCropper', path => {
+				// this.avatar = path;
+				// 可以在此上传到服务端
+				uni.uploadFile({
+					url: url.baseURL + '/api/upload', //仅为示例，非真实的接口地址
+					filePath: path,
+					name: 'user',
+					header: {
+						token: "Bearer " + this.userMessage.token
+					},
+					formData: {
+						type: 'user',
+						path: 'user'
+					},
+					success: (uploadFileRes) => {
+						this.form.image = JSON.parse(uploadFileRes.data).data.url
+					}
+				});
+			})
+		},
 		methods: {
+			// 裁剪
+			uploadImg(){
+				this.$u.route({
+					// 关于此路径，请见下方"注意事项"
+					url: '/pages/avatar/u-avatar-cropper',
+					// 内部已设置以下默认参数值，可不传这些参数
+					params: {
+						// 输出图片宽度，高等于宽，单位px
+						destWidth: 300,
+						// 裁剪框宽度，高等于宽，单位px
+						rectWidth: 300,
+						// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
+						fileType: 'jpg',
+					}
+				})
+			},
 			async init(id) {
 				let res = await customer(id);
 				this.form = res;
@@ -231,7 +280,24 @@
 						})
 					}
 				} else {
-					let res = await customerEdit(this.id, this.form)
+					let obj = {
+						name:this.form.name,
+						mobile:this.form.mobile,
+						number:this.form.number,
+						customer_level_id:this.form.customer_level_id,
+						birthday:this.form.birthday,
+						gender:this.form.gender,
+						password:this.form.password,
+						remarks:this.form.remarks,
+						expired_at:this.form.expired_at,
+						image:this.form.image,
+						tag:this.form.tag,
+						address:this.form.address
+					}
+					if(this.form.expired_at == null){
+						delete obj.expired_at
+					}
+					let res = await customerEdit(this.id, obj)
 					if (!res.code) {
 						uni.navigateBack()
 					}
@@ -258,10 +324,10 @@
 		},
 		onLoad(query) {
 			this.id = query.id;
-			const userMessage = uni.getStorageSync('userMessage');
-			this.header.token = "Bearer " + userMessage.token
+			this.userMessage = uni.getStorageSync('userMessage');
+			this.header.token = "Bearer " + this.userMessage.token
+			this.action = url.baseURL;
 			this.init(query.id)
-			this.action = urls.baseURL;
 			uni.$on('customerLevel', (res) => {
 				if (res) {
 					this.customer = res.name;
@@ -358,6 +424,7 @@
 				.form_images {
 					padding-right: 20rpx;
 					display: flex;
+					height: 140rpx;
 					flex-direction: row;
 					align-items: center;
 
@@ -369,8 +436,19 @@
 					}
 
 					.img {
+						width: 120rpx;
+						height: 120rpx;
 						display: flex;
+						justify-content: center;
 						align-items: center;
+						background-color: #f4f5f6;
+						.plus{
+							width: 100%;
+							height: 100%;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
 					}
 				}
 

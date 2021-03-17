@@ -1774,85 +1774,80 @@
 				}
 			}
 
+		}, {
+			"path": "pages/customer/forSuccessful/forSuccessful",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/pointDetails/pointDetails",
+			"style": {
+				"navigationBarTitleText": "积分兑换详情",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/customerBan/customerBan",
+			"style": {
+				"navigationBarTitleText": "会员挂失",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/customer/passwordSetup/passwordSetup",
+			"style": {
+				"navigationBarTitleText": "密码设置",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/memberAnalysis/analyseDetails/analyseDetails",
+			"style": {
+				"navigationBarTitleText": "会员分析详情",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/businessSetUp/config/config",
+			"style": {
+				"navigationBarTitleText": "参数设置",
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/avatar/u-avatar-cropper",
+			"style": {
+				"navigationBarTitleText": "头像裁剪",
+				"navigationBarBackgroundColor": "#000000"
+			}
+
 		}
-	    ,{
-            "path" : "pages/customer/forSuccessful/forSuccessful",
-            "style" :                                                                                    
-            {
-             "navigationStyle": "custom", // 隐藏系统导航栏
-             "navigationBarTextStyle": "white",
-             "app-plus": {
-             	"scrollIndicator": "none"
-             }
-            }
-            
-        }
-        ,{
-            "path" : "pages/pointDetails/pointDetails",
-            "style" :                                                                                    
-            {
-              "navigationBarTitleText": "积分兑换详情",
-              "navigationBarBackgroundColor": "#2979ff",
-              "navigationBarTextStyle": "white",
-              "app-plus": {
-              	"scrollIndicator": "none"
-              }
-            }
-            
-        }
-        ,{
-            "path" : "pages/customerBan/customerBan",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "会员挂失",
-                "navigationBarBackgroundColor": "#2979ff",
-                "navigationBarTextStyle": "white",
-                "app-plus": {
-                	"scrollIndicator": "none"
-                }
-            }
-            
-        }
-        ,{
-            "path" : "pages/customer/passwordSetup/passwordSetup",
-            "style" :                                                                                    
-            {
-             "navigationBarTitleText": "密码设置",
-             "navigationBarBackgroundColor": "#2979ff",
-             "navigationBarTextStyle": "white",
-             "app-plus": {
-             	"scrollIndicator": "none"
-             }
-            }
-            
-        }
-        ,{
-            "path" : "pages/memberAnalysis/analyseDetails/analyseDetails",
-            "style" :                                                                                    
-            {
-               "navigationBarTitleText": "会员分析详情",
-               "navigationBarBackgroundColor": "#2979ff",
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
-            }
-            
-        }
-        ,{
-            "path" : "pages/businessSetUp/config/config",
-            "style" :                                                                                    
-            {
-               "navigationBarTitleText": "参数设置",
-               "navigationBarBackgroundColor": "#2979ff",
-               "navigationBarTextStyle": "white",
-               "app-plus": {
-               	"scrollIndicator": "none"
-               }
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

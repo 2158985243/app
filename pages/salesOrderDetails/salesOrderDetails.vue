@@ -21,7 +21,7 @@
 			</view>
 			<view class="money">
 				<text class="money-sum">&yen;{{sum_money}}</text>
-				<text v-if="form.discount_money>0">满减优惠 <text class="red">&yen;{{0}}</text>,优惠金额<text class="red">&yen;{{form.discount_money}}</text>,优惠券金额<text
+				<text class="money-list" v-if="form.discount_money>0">满减优惠 <text class="red">&yen;{{0}}</text>,优惠金额<text class="red">&yen;{{(Number(form.discount_money)+Number(form.erasure_money)).toFixed(2)}}</text>,优惠券金额<text
 					 class="red">&yen;{{0}}</text>,实收金额<text class="red">&yen;{{form.money}}</text></text>
 			</view>
 		</view>
@@ -270,6 +270,9 @@
 					padding: 20rpx 0;
 					font-size: 30rpx;
 					font-weight: 600;
+				}
+				.money-list{
+					font-size: 26rpx;
 				}
 
 			}

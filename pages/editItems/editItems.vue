@@ -31,7 +31,7 @@
 				<view class="label-name">
 					本次售价
 				</view>
-				<u-input v-model="item.retail_price" @input="inputPrice" :maxlength='maxlength' :clearable="false" height="50" placeholder='' type="number" />
+				<u-input v-model="item.retail_price" @input="inputPrice" :maxlength='maxLength' :clearable="false" height="50" placeholder='' type="number" />
 			</view>
 			<view class="list-item" v-else>
 				<view class="label-name">
@@ -93,28 +93,43 @@
 				index_before: 0,
 				index_later: 0,
 				bl:false,
-				maxlength:140,
-				maxlength1:140,
+				maxlength1:15,
+				maxLength:15,
 			}
 		},
+		watch:{
+			'item.retail_price'(newV,oldV){
+				console.log(newV,oldV);
+				var bool = /^-?\d+(\.\d{1,2})?$/.test(newV);
+				
+				if (!bool || (!newV && oldV.length > 0)) {
+					this.$nextTick(()=>{
+						this.item.retail_price = oldV
+					})
+				}
+			}
+		},
+
 		methods: {
 			// 销售价
 			inputPrice(v){
-				if(/^\d+(\.\d{1})?$/.test(v)){
-					this.item.discount = (Number(this.item.retail_price)/Number(this.form.item.goodsOf.retail_price)).toFixed(2)
-					this.maxlength = 140
-				}else{
-					this.maxlength = this.item.retail_price.length
-					this.item.discount = (Number(this.item.retail_price)/Number(this.form.item.goodsOf.retail_price)).toFixed(2)
-				}
+				// var bool = /^-?\d+(\.\d{1,2})?$/.test(v);
+				
+				// if (!bool ) {
+				// 	this.$nextTick(()=>{
+				// 		this.item.retail_price = v.slice(0, v.indexOf('.')+3)
+				// 	})
+				// }
+				this.item.discount = (Number(this.item.retail_price)/Number(this.form.item.goodsOf.retail_price)).toFixed(2)
 			},
 			// 打折
 			inputDiscount(v){
-				if(/^\d+(\.\d{1})?$/.test(v)){
-					this.maxlength1 = 140
-				}else{
-					this.maxlength1 =v.length
-				}
+				
+				// if (!/^\d+(\.\d{1,2})?$/.test(v)) {
+				// 	this.$nextTick(()=>{
+				// 		this.item.discount = v.slice(0, v.indexOf('.')+3)
+				// 	})
+				// }
 				this.item.retail_price = (Number(this.form.item.goodsOf.retail_price)*Number(v)).toFixed(2)
 				
 			},
@@ -169,15 +184,17 @@
 			}
 		},
 		onLoad(option) {
+			
 			this.form = JSON.parse(decodeURIComponent(option.obj));
 			this.bl = this.form.bl
 			this.item = JSON.parse(JSON.stringify(this.form.item.data[this.form.indexGoods]));
-			if(/^\d+(\.\d{1,2})?$/.test(this.item.retail_price)){
-				this.maxlength = this.item.retail_price.length
-			}
-			if(/^\d+(\.\d{1,2})?$/.test(this.item.discount)){
-				this.maxlength1= this.item.discount.length
-			}
+			// if(/^\d+(\.\d{1,2})?$/.test(this.item.retail_price)){
+			// 	this.maxlength = this.item.retail_price.length
+			// }
+			// if(/^\d+(\.\d{1,2})?$/.test(this.item.discount)){
+			// 	this.maxlength1= this.item.discount.length
+			// }
+
 			
 			this.value = this.item.size.name;
 			this.index_later = this.form.indexGoods;

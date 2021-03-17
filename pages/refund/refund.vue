@@ -17,7 +17,8 @@
 				</view>
 			</block>
 			<view class="money">
-				&yen;{{sum_money}}
+				<text>&yen;{{sum_money}}</text>
+				<text class="ml" v-if="obj.erasure_money!=0">已抹零&yen;{{obj.erasure_money}}</text>
 			</view>
 		</view>
 		<view class="box">
@@ -56,10 +57,13 @@
 	import {
 		refund
 	} from '../../api/salesOrder.js'
+	import {
+		configList
+	} from '../../api/member.js'
 	export default {
 		data() {
 			return {
-				form: {},			
+				form: {},
 				account_name: '',
 				obj: {
 					customer_id: 0,
@@ -74,33 +78,56 @@
 					}],
 					goods: [],
 					refund_reason: '',
+					erasure_money: 0,
 					remarks: ''
+				},
+				message_list:{
+					sales_not_count_small_change:{}
 				}
 			}
 		},
-		computed:{
-			sum_money(){
+		computed: {
+			sum_money() {
 				let money = 0;
+				this.obj.reward_point = 0
 				this.form.sales_goods.map((v) => {
 					if (v.quantity > 0) {
 						money += Number(v.real_price) * Number(v.quantity)
+						this.obj.reward_point += Number(v.point)* Number(v.quantity)
 					}
 				})
-				return money.toFixed(2)
+				this.obj.reward_point = this.obj.reward_point.toFixed()
+				if(this.message_list.sales_not_count_small_change){
+					this.obj.money = money;
+					if (this.message_list.sales_not_count_small_change.value == 1) {
+						this.obj.money = Math.floor(this.obj.money)
+						this.obj.erasure_money = (money - this.obj.money).toFixed(2)
+					} else if (this.message_list.sales_not_count_small_change.value == 2) {
+						this.obj.money = Math.floor(this.obj.money * 10) / 10
+						this.obj.erasure_money = (money - this.obj.money).toFixed(2)
+					} else if (this.message_list.sales_not_count_small_change.value == 3) {
+						this.obj.money = Math.round(this.obj.money)
+						this.obj.erasure_money = (money - this.obj.money).toFixed(2)
+					} else if (this.message_list.sales_not_count_small_change.value == 4) {
+						this.obj.money = Math.round(this.obj.money * 10) / 10
+						this.obj.erasure_money = (money- this.obj.money).toFixed(2)
+					}
+				}
+				return this.obj.money
 			}
 		},
 		methods: {
 			toPatternOfPayment() {
-				if(this.form.customer_id==0){
+				if (this.form.customer_id == 0) {
 					uni.navigateTo({
 						url: `/pages/patternOfPayment/patternOfPayment?iq=1&ip=1`
 					})
-				}else{
+				} else {
 					uni.navigateTo({
 						url: `/pages/patternOfPayment/patternOfPayment?iq=1`
 					})
 				}
-				
+
 			},
 			// 确认退货
 			async sure() {
@@ -124,22 +151,53 @@
 						})
 					})
 					this.obj.money = -this.sum_money;
+					// if (this.message_list.sales_not_count_small_change.value == 1) {
+					// 	this.obj.money = Math.floor(this.obj.money)
+					// 	this.obj.erasure_money = (this.sum_money - this.obj.money).toFixed(2)
+					// } else if (this.message_list.sales_not_count_small_change.value == 2) {
+					// 	this.obj.money = Math.floor(this.obj.money * 10) / 10
+					// 	this.obj.erasure_money = (this.sum_money - this.obj.money).toFixed(2)
+					// } else if (this.message_list.sales_not_count_small_change.value == 3) {
+					// 	this.obj.money = Math.round(this.obj.money)
+					// 	this.obj.erasure_money = (this.sum_money - this.obj.money).toFixed(2)
+					// } else if (this.message_list.sales_not_count_small_change.value == 4) {
+					// 	this.obj.money = Math.round(this.obj.money * 10) / 10
+					// 	this.obj.erasure_money = (this.sum_money - this.obj.money).toFixed(2)
+					// }
+					// this.obj.money = -this.obj.money
 					this.obj.reward_point = -this.obj.reward_point
 					let res = await refund(this.obj);
-					if(!res.code){
+					if (!res.code) {
 						uni.navigateBack({
 							delta: 2
 						})
 					}
 				}
+			},
+			async config() {
+				let res = await configList()
+				if (!res.code) {
+					this.message_list = res
+					if (this.message_list.sales_can_choose_date.value == 1) {
+						let date = new Date();
+						this.form.business_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+					}
+					// this.init();
+				}
 			}
 		},
 		onLoad(option) {
+			this.config()
 			this.form = JSON.parse(decodeURIComponent(option.sales_goods));
 			console.log(this.form);
+			let m_money = 0
+			m_money = (Number(this.form.erasure_money) + Number(this.form.discount_money)).toFixed(2)
 			if (this.form.sales_goods.length > 0) {
 				this.form.sales_goods.map((v) => {
 					v['max'] = this.$u.deepClone(v.quantity);
+					let radio = (Number(v.real_price) * Number(v.quantity) / (Number(this.form.money) + m_money)).toFixed(2)
+					v.real_price = (Number(v.real_price) - radio).toFixed(2)
+					v['point'] = (Number(v.real_price) /Number(this.form.money)*Number(this.form.reward_point)).toFixed()
 				})
 				this.obj.customer_id = this.form.customer_id;
 				this.obj.staff_id = this.form.staff_id;
@@ -150,6 +208,16 @@
 				if (res) {
 					this.obj.payment[0].account_id = res.account_id;
 					this.obj.payment[0].money = -this.sum_money;
+					// if (this.message_list.sales_not_count_small_change.value == 1) {
+					// 	this.obj.payment[0].money = Math.floor(this.obj.payment[0].money)
+					// } else if (this.message_list.sales_not_count_small_change.value == 2) {
+					// 	this.obj.payment[0].money = Math.floor(this.obj.payment[0].money * 10) / 10
+					// } else if (this.message_list.sales_not_count_small_change.value == 3) {
+					// 	this.obj.payment[0].money = Math.round(this.obj.payment[0].money)
+					// } else if (this.message_list.sales_not_count_small_change.value == 4) {
+					// 	this.obj.payment[0].money = Math.round(this.obj.payment[0].money * 10) / 10
+					// }
+					// this.obj.payment[0].money = -this.obj.payment[0].money
 					this.account_name = res.name
 				}
 			})
@@ -181,6 +249,13 @@
 				padding: 20rpx 0;
 				font-size: 30rpx;
 				font-weight: 600;
+				display: flex;
+				flex-direction: column;
+
+				.ml {
+					font-size: 24rpx;
+					font-weight: 500;
+				}
 			}
 
 			.hdr_item {

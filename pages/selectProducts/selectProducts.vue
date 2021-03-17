@@ -630,23 +630,23 @@
 				}
 				// 新选的商品
 				if (num) {
-					let res = await goods(e.id)
-					if (!res.code) {
+					// let res = await goods(e.id)
+					// if (!res.code) {
 						this.value = 0;
-						this.goodsOf = res;
+						this.goodsOf = e;
 						this.$forceUpdate()
-						this.spec = res.color;
+						this.spec = e.color;
 						this.spec.map((v1, i1) => {
 							v1['goodsOf'] = {
-								id: res.id,
-								name: res.name,
-								number: res.number,
-								retail_price: res.retail_price,
-								purchase_price: res.purchase_price,
-								main_image: res.main_image,
-								images: res.images
+								id: e.id,
+								name: e.name,
+								number: e.number,
+								retail_price: e.retail_price,
+								purchase_price: e.purchase_price,
+								main_image: e.main_image,
+								images: e.images
 							};
-							v1['goods_category_id'] = res.goods_category_id;
+							v1['goods_category_id'] = e.goods_category_id;
 							v1['goods_id'] = e.id;
 							v1['data'] = [];
 							v1['quantity'] = 0;
@@ -654,7 +654,7 @@
 							v1['valNew'] = 0;
 							v1['check'] = false;
 							// this.valAll.push(0);
-							res.goods_spec.map((v, i) => {
+							e.goods_spec.map((v, i) => {
 								if (v.color_id == v1.id) {
 									v1.data.push({
 										size: v.size,
@@ -666,7 +666,7 @@
 							})
 							this.$set(this.spec, i1, this.spec[i1]);
 						})
-					}
+					// }
 				}
 				// this.$forceUpdate()
 
