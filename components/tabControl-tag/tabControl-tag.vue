@@ -124,7 +124,8 @@
 		},
 		methods: {
 			_onClick(item,index) {
-				if (this.currentIndex !== index) {
+				// console.log(this.currentIndex , index);
+				// if (this.currentIndex !== index) {
 					this.currentIndex = index
 					this.$emit('clickItem', {
 						currentIndex: index,
@@ -134,7 +135,7 @@
 					if (this.scrollFlag) {
 						this.tabListScroll(index)
 					}
-				}
+				// }
 			},
 			// 选项移动
 			tabListScroll(index) {

@@ -207,10 +207,10 @@
 					price: [], //价格
 				},
 				page: 1,
-				page_size: 10,
+				page_size: 20,
 				totalVal: {},
 				last_page: 0,
-				mored: {},
+				mored: {id:0,index:0,name:'全部'},
 				pull: false
 			}
 		},
@@ -229,7 +229,7 @@
 			// 向上拉
 			handleLoadMore(stopLoad) {
 				if (!this.pull) {
-					if (this.page >= this.last_page) {
+					if (this.page >= this.dataList[0].last_page) {
 						this.$refs.uToast.show({
 							title: '加载到底了',
 							type: 'default',
@@ -292,7 +292,7 @@
 						this.options.goods_category_id.push(v.id)
 					}
 				})
-				
+
 				this.status.map((v, i) => {
 					if (v.checked) {
 						this.options.status.push(v.id)
@@ -310,6 +310,7 @@
 					options: this.options,
 					keyword: this.keyword
 				});
+				this.dataList[this.mored.index].last_page = res.last_page
 				if (this.mored.index == undefined) {
 					this.dataList[0].arr = res.data;
 				} else {
@@ -380,7 +381,7 @@
 					id: 0,
 					arr: res.data
 				})
-
+				this.dataList[this.mored.index].last_page = res.last_page
 				let res1 = await goodsCategoryList()
 				// console.log(res,res1);
 				res1.map((v, i) => {
@@ -395,12 +396,12 @@
 			// 点击左侧
 			async leftNav(e) {
 				// this.dataList
-				console.log(e);
 				this.mored = e;
 				this.vs = 1;
-				this.page = 1
 				for (let i = 0; i < this.dataList.length; i++) {
 					if (this.dataList[i].arr.length == 0 && e.index == i) {
+						this.page = 1
+						this.pull = false
 						let res = await goodsList({
 							page: this.page,
 							page_size: this.page_size,
@@ -408,23 +409,29 @@
 							keyword: this.keyword
 						});
 						this.dataList[i].arr = res.data;
+						this.dataList[i].last_page = res.last_page
+						this.$set(this.dataList, i, this.dataList[i])
+						// console.log(res.data);
 						break;
 					}
 				}
 			},
 			async loadMore() {
-				let index = 0;
-				if (this.mored.index) {
-					this.index = this.mored.index
-				}
-				let res = await goodsList({
-					page: this.page,
-					page_size: this.page_size,
-					goods_category_id: this.mored.id,
-					keyword: this.keyword
-				});
-				this.dataList[index].arr.push(...res.data);
-				this.$set(this.dataList, index, this.dataList[index])
+				this.$nextTick(async () => {
+					let index = 0;
+					if (this.mored.index) {
+						this.index = this.mored.index
+					}
+					let res = await goodsList({
+						page: this.page,
+						page_size: this.page_size,
+						goods_category_id: this.mored.id,
+						keyword: this.keyword
+					});
+					this.dataList[this.mored.index].last_page = res.last_page
+					this.dataList[this.mored.index].arr.push(...res.data);
+					this.$set(this.dataList, this.mored.index, this.dataList[this.mored.index])
+				})
 			},
 			// 点击右侧
 			rightNav(e) {
@@ -433,8 +440,21 @@
 					url: `/pages/commodityDetails/commodityDetails?id=${e.id}`
 				})
 			},
-			search(v) {
-				this.init()
+			// 输入框输入
+			async search(v) {
+				this.page = 1;
+				this.pull = false;
+				this.dataList[this.mored.index].arr = []
+				let res = await goodsList({
+					page: this.page,
+					page_size: this.page_size,
+					status: 1,
+					goods_category_id: this.mored.id,
+					keyword: this.keyword
+				});
+				this.dataList[this.mored.index].arr = res.data;
+				this.dataList[this.mored.index].last_page = res.last_page
+				this.$set(this.dataList, this.mored.index, this.dataList[this.mored.index])
 				if (!v) {
 					this.vs = 0;
 				} else {
@@ -442,6 +462,7 @@
 				}
 
 			},
+
 			async brand() {
 				let res = await brandList();
 				this.brandList = res;
@@ -478,7 +499,7 @@
 <style lang="scss" scoped>
 	.commodityManagement {
 		width: 100%;
-		// height: 100vh;
+		height: 100vh;
 		background-color: #e3e3e3;
 		// overflow: hidden;
 		display: flex;
@@ -491,9 +512,10 @@
 		// }
 		.list {
 			width: 100%;
-			// max-height: 70%;
+			height: calc(100% - 140rpx);
 			display: flex;
-			flex: auto;
+			// margin: 78rpx 0 0 0;
+			overflow: hidden;
 		}
 
 		.right_icon {

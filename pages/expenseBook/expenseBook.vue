@@ -205,7 +205,7 @@
 				let timeStar = this.$u.timeFormat(Date.parse(monthStartDate) / 1000, 'yyyy-mm-dd'); //s
 				let timeEnd = this.$u.timeFormat(Date.parse(monthEndDate) / 1000, 'yyyy-mm-dd'); //s
 				uni.navigateTo({
-					url: `/pages/statics/statics?timeStar=${timeStar}&timeEnd=${timeEnd}&current=${4}`
+					url: `/pages/statics/statics?start_time=${timeStar}&end_time=${timeEnd}&current=${4}`
 				})
 			},
 			// 选择日期

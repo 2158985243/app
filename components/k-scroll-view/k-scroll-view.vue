@@ -9,8 +9,8 @@
 			<text class=" xuanzhun" style="font-size: 60rpx;height: 120rpx;"></text>
 			{{ refreshText }}
 		</view>
-		<view class="go-to-top-icon" v-if="old.scrollTop > 20" @tap="goTop"><text class="my-icons-custom icon-jiantou-up"
-			 style="color: #4089ff;font-size: 40rpx;"></text></view>
+		<!-- <view class="go-to-top-icon" v-if="old.scrollTop > 20" @tap="goTop"><text class="my-icons-custom icon-jiantou-up"
+			 style="color: #4089ff;font-size: 40rpx;"></text></view> -->
 		<view class="scroll-load-more" v-if="showPullUp">
 			<view class="translate-line" v-if="onPullUpText === loadingTip">
 				<view class="line"></view>
@@ -126,12 +126,14 @@
 		computed: {
 			scrollContainerStyle() {
 				return {
-					height: `${this.height+'%' || this.height_+'rpx'}`
+					// height: `${this.height || this.height_+'rpx'}`
+					height:"100%"
 				};
 			},
 			scrollContentStyle() {
 				return {
-					// height: `${this.height || this.height_}rpx`
+					height: `100%`,
+					// ${this.height_}rpx
 				};
 			}
 		},

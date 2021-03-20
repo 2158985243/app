@@ -1843,7 +1843,11 @@
 			"path": "pages/avatar/u-avatar-cropper",
 			"style": {
 				"navigationBarTitleText": "头像裁剪",
-				"navigationBarBackgroundColor": "#000000"
+				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
 			}
 
 		}
@@ -1857,7 +1861,7 @@
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#2979ff",
-		"borderStyle": "white",
+		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"list": [{
 				"pagePath": "pages/home/home",

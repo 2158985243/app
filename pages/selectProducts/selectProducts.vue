@@ -6,7 +6,7 @@
 			</template>
 		</u-navbar>
 		<view class="box">
-			<u-popup v-model="show" mode="right" width="80%">
+			<u-popup v-model="show" z-index='999' mode="right" width="80%">
 
 				<view class="popup-right">
 					<view class="pop-title">
@@ -154,7 +154,7 @@
 		</view>
 		<u-toast ref="uToast" />
 		<!-- 商品规格表单 -->
-		<u-popup v-model="showGoods" mode="bottom" z-index='996' height="70%">
+		<u-popup v-model="showGoods" mode="bottom" z-index='1001' height="70%">
 			<view class="specification" v-if="goodsOf">
 				<view class="goods-of">
 					<!-- mode='aspectFit'  -->
@@ -204,7 +204,7 @@
 		</u-popup>
 
 		<!-- 购物车表单 -->
-		<u-popup v-model="showShoppingCart" mode="bottom" z-index='996' length="60%">
+		<u-popup v-model="showShoppingCart" mode="bottom" z-index='1001' length="60%">
 			<view class="scart">
 				<view class="del">
 					<u-icon name="close-circle" class='close' @click="showShoppingCart=false" color="#040404" size="40"></u-icon>
@@ -323,7 +323,7 @@
 				valAll: [],
 				// saveData:[]
 				last_page: 0,
-				mored: {},
+				mored: {id:0,index:0,name:'全部'},
 				pull: false,
 				condition: 0,
 			}
@@ -432,14 +432,14 @@
 				if (this.mored.index) {
 					this.index = this.mored.index
 				}
-				this.dataList[index].arr = [];
+				this.dataList[this.mored.index].arr = [];
 				this.loadMore();
 				stopLoad ? stopLoad() : '';
 			},
 			// 向上拉
 			handleLoadMore(stopLoad) {
 				if (!this.pull) {
-					if (this.page >= this.last_page) {
+					if (this.page >= this.dataList[0].last_page) {
 						this.$refs.uToast.show({
 							title: '加载到底了',
 							type: 'default',
@@ -490,7 +490,10 @@
 
 			},
 			// 点击确定
-			determine() {
+			async determine() {
+				this.show = false;
+				this.page = 1
+				this.pull = false
 				this.CategoryList.map((v, i) => {
 					if (v.checked) {
 						this.options.goods_category_id.push(v.id)
@@ -506,7 +509,23 @@
 						this.options.price.push(v.id)
 					}
 				})
-				this.show = false;
+				// console.log(this.options);
+				let res = await goodsList({
+					page: this.page,
+					page_size: this.page_size,
+					status: 1,
+					goods_category_id: this.mored.id,
+					options: this.options,
+					keyword: this.keyword
+				});
+				if (!res.code) {
+					this.dataList[this.mored.index].last_page = res.last_page
+					if (this.mored.index == undefined) {
+						this.dataList[0].arr = res.data;
+					} else {
+						this.dataList[this.mored.index].arr = res.data;
+					}
+				}
 				// console.log(this.options);
 			},
 			// 点击品牌
@@ -560,13 +579,13 @@
 					status:1,
 					keyword: this.keyword
 				});
-				this.last_page = res.last_page
 				this.dataList = [];
 				this.dataList.unshift({
 					name: "全部",
 					id: 0,
 					arr: res.data
 				})
+				this.dataList[this.mored.index].last_page = res.last_page
 				let res1 = await goodsCategoryList()
 				this.CategoryList = res1;
 				// console.log(res,res1);
@@ -578,20 +597,21 @@
 			},
 			// 点击左侧
 			async leftNav(e) {
-				// this.dataList
 				this.mored = e;
-
 				this.vs = 1;
 				for (let i = 0; i < this.dataList.length; i++) {
 					if (this.dataList[i].arr.length == 0 && e.index == i) {
+						this.page = 1
+						this.pull = false
 						let res = await goodsList({
 							page: this.page,
 							page_size: this.page_size,
-							status:1,
+							status: 1,
 							goods_category_id: e.id,
 							keyword: this.keyword
 						});
 						this.dataList[i].arr = res.data;
+						this.dataList[i].last_page = res.last_page
 						this.$set(this.dataList, i, this.dataList[i])
 						// console.log(res.data);
 						break;
@@ -599,19 +619,22 @@
 				}
 			},
 			async loadMore() {
-				let index = 0;
-				if (this.mored.index) {
-					this.index = this.mored.index
-				}
-				let res = await goodsList({
-					page: this.page,
-					page_size: this.page_size,
-					status:1,
-					goods_category_id: this.mored.id,
-					keyword: this.keyword
-				});
-				this.dataList[index].arr.push(...res.data);
-				this.$set(this.dataList, index, this.dataList[index])
+				this.$nextTick(async () => {
+					let index = 0;
+					if (this.mored.index) {
+						this.index = this.mored.index
+					}
+					let res = await goodsList({
+						page: this.page,
+						page_size: this.page_size,
+						status: 1,
+						goods_category_id: this.mored.id,
+						keyword: this.keyword
+					});
+					this.dataList[this.mored.index].last_page = res.last_page
+					this.dataList[this.mored.index].arr.push(...res.data);
+					this.$set(this.dataList, this.mored.index, this.dataList[this.mored.index])
+				})
 			},
 			// 点击右侧
 			async rightNav(e) {
@@ -690,14 +713,27 @@
 				});
 
 			},
-			search(v) {
-				this.init()
+			// 输入框输入
+			async search(v) {
+				this.page = 1;
+				this.pull = false;
+				this.dataList[this.mored.index].arr = []
+				let res = await goodsList({
+					page: this.page,
+					page_size: this.page_size,
+					status: 1,
+					goods_category_id: this.mored.id,
+					keyword: this.keyword
+				});
+				this.dataList[this.mored.index].arr = res.data;
+				this.dataList[this.mored.index].last_page = res.last_page
+				this.$set(this.dataList, this.mored.index, this.dataList[this.mored.index])
 				if (!v) {
 					this.vs = 0;
 				} else {
 					this.vs = 1;
 				}
-
+			
 			},
 			async brand() {
 				let res = await brandList();
@@ -830,7 +866,7 @@
 		background-color: #e3e3e3;
 		display: flex;
 		flex-direction: column;
-
+		height: 100vh;
 		.active {
 			background-color: #3B4144 !important;
 			color: #FFFFFF !important;
@@ -1105,17 +1141,19 @@
 			}
 		}
 
-		// .box{
-		// 	width: 100%;
-		// 	position: fixed;
-		// 	top: 80rpx;
-		// }
+		.box{
+			width: 100%;
+			position: fixed;
+			top: calc(80rpx + var(--status-bar-height)) ;
+			z-index: 1000;
+		}
 		.list {
 			width: 100%;
 			// max-height: 70%;
+			height: calc(100% - 240rpx);
 			display: flex;
-			flex: auto;
-			margin-bottom: 80rpx;
+			margin: 78rpx 0 80rpx 0;
+			overflow: hidden;
 		}
 
 		.shopping-cart {
@@ -1217,7 +1255,7 @@
 				background-color: #FFFFFF;
 				padding: 10rpx 0;
 				border-bottom: 10rpx solid #e2e2e2;
-
+				z-index: 10;
 				.sx {
 					width: 90%;
 					text-align: center;

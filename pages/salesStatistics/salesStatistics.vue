@@ -302,7 +302,7 @@
 					} else if (this.current == 4) {
 						this.dateAll.today5.statrTime = this.start_time
 						this.dateAll.today5.endTime = this.end_time
-						this.init(this.start_time, this.end_time)
+						// this.init(this.start_time, this.end_time)
 
 					}
 

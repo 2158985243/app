@@ -148,7 +148,6 @@
 					page: this.page,
 					page_size: this.page_size
 				})
-				console.log(res);
 				this.list.push(...res.data);
 				this.total = res.total;
 				this.sumMoney = res.total_money
@@ -169,35 +168,42 @@
 			// 点击某一个时间段
 			async clickDate(index) {
 				this.active = index;
-				this.list = []
 				this.page = 1;
 				this.page_size = 10;
 
 				if (index == 0) {
+					this.list = []
+					this.show_time = false;
 					let currentdate = this.$date.today()
 					this.start_time = currentdate.start_time;
 					this.end_time = currentdate.end_time;
 					this.init()
 				} else if (index == 1) {
+					this.list = []
+					this.show_time = false;
 					let currentdate = this.$date.yesterday()
 					this.start_time = currentdate.start_time;
 					this.end_time = currentdate.end_time;
 					this.init()
 				} else if (index == 2) {
+					this.list = []
+					this.show_time = false;
 					let currentdate = this.$date.thisWeek()
 					this.start_time = currentdate.start_time;
 					this.end_time = currentdate.end_time;
 					this.init()
 				} else if (index == 3) {
+					this.list = []
+					this.show_time = false;
 					let currentdate = this.$date.thisMonth()
 					this.start_time = currentdate.start_time;
 					this.end_time = currentdate.end_time;
 					this.init()
 				} else if (index == 4) {
+					this.show_time = false;
 					this.showtime = true;
 				}
 
-				this.show_time = false;
 			},
 			/// 开始时间
 			confirmTime(v) {
@@ -207,6 +213,7 @@
 			// 结束时间
 			async confirmTime1(v) {
 				this.end_time = `${v.year}-${v.month}-${v.day}`;
+				this.show_time = false;
 				this.init();
 			},
 		},

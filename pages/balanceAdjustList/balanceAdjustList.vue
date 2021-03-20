@@ -213,7 +213,6 @@
 						page: this.page[this.current],
 						page_size: this.page_size
 					})
-					console.log(res);
 					if(this.page[this.current]==1){
 						this.list[this.current] = []
 					}
@@ -259,7 +258,7 @@
 						} else if (this.current == 4) {
 							this.dateAll.today5.statrTime = this.start_time
 							this.dateAll.today5.endTime = this.end_time
-							this.init(this.start_time, this.end_time)
+							// this.init(this.start_time, this.end_time)
 	
 						}
 	

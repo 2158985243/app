@@ -16,61 +16,61 @@
 								<view :style="'position: absolute; bottom: 0px;height: ' + 40 + 'px;line-height:' + 40 + 'px;  width: 100%;text-align: center;'">{{tip}}</view>
 							</template>
 							<template slot="content"> -->
-							
-								<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
-								 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-								 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
-								<view class="cen">
-									<view class="list-nav">
-										<view class="nav-item">
-											<text class="red-number">{{count[current] || 0}}</text>
-											<text class="hui-number">采购笔数</text>
-										</view>
-										<view class="nav-item">
-											<text class="red-number">{{sumNumber[current] || 0}}</text>
-											<text class="hui-number">采购数量</text>
-										</view>
-										<view class="nav-item">
-											<text class="red-number">{{sumMoney[current] || 0}}</text>
-											<text class="hui-number">采购金额</text>
-										</view>
 
+						<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
+						 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
+						 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+							<view class="cen">
+								<view class="list-nav">
+									<view class="nav-item">
+										<text class="red-number">{{count[current] || 0}}</text>
+										<text class="hui-number">采购笔数</text>
 									</view>
-									<view class="list" v-for="(item,index) in list[current]" :key="index" @click="toProcurementStatisticsDetails(item)">
-										<view class="left">
-											<view class="img">
-												<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+item.main_image">
-												</u-image>
-											</view>
-											<view class="li-item">
-												<text class="balck">{{item.name}}</text>
-												<text>{{item.number}}</text>
-												<text class="hui-se">单价数量：&yen;{{item.price}}&nbsp;*<text class="li-number"> {{item.quantity}}</text></text>
-											</view>
+									<view class="nav-item">
+										<text class="red-number">{{sumNumber[current] || 0}}</text>
+										<text class="hui-number">采购数量</text>
+									</view>
+									<view class="nav-item">
+										<text class="red-number">{{sumMoney[current] || 0}}</text>
+										<text class="hui-number">采购金额</text>
+									</view>
+
+								</view>
+								<view class="list" v-for="(item,index) in list[current]" :key="index" @click="toProcurementStatisticsDetails(item)">
+									<view class="left">
+										<view class="img">
+											<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+item.main_image">
+											</u-image>
 										</view>
-										<view class="right">
-											<view class="money">
-												<text>金额： </text>
-												<text class="money">&yen;{{Number(item.price)*Number(item.quantity)}} </text>
-											</view>
-											<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+										<view class="li-item">
+											<text class="balck">{{item.name}}</text>
+											<text>{{item.number}}</text>
+											<text class="hui-se">单价数量：&yen;{{item.price}}&nbsp;*<text class="li-number"> {{item.quantity}}</text></text>
 										</view>
+									</view>
+									<view class="right">
+										<view class="money">
+											<text>金额： </text>
+											<text class="money">&yen;{{Number(item.price)*Number(item.quantity)}} </text>
+										</view>
+										<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 									</view>
 								</view>
-						<!-- 	</template>
+							</view>
+							<!-- 	</template>
 							<template slot="bottom">
 								<view>
 								</view>
 							</template>
 						</refresh>
  -->
- </k-scroll-view>
+						</k-scroll-view>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
 		</view>
 
-						<u-toast ref="uToast" />
+		<u-toast ref="uToast" />
 		<!-- 开始时间 -->
 		<u-picker mode="time" v-model="showtime" @confirm="confirmTime" title="开始时间" :params="params"></u-picker>
 		<!-- 结束时间 -->
@@ -175,7 +175,7 @@
 				sumMoney: [0, 0, 0, 0, 0],
 				count: [0, 0, 0, 0, 0],
 				store_id: [],
-				
+
 				refreshType: 'custom',
 				refreshTip: '正在下拉',
 				loadTip: '获取更多数据',
@@ -228,7 +228,7 @@
 				}
 			},
 			// 初始化
-			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id, type,supplier_id) {
+			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id, type, supplier_id) {
 				// 当天
 				let currentdate = this.$date.today()
 				let res = await counts({
@@ -245,24 +245,25 @@
 
 				})
 				console.log(res);
-				if(this.page[this.current]==1){
+				if (this.page[this.current] == 1) {
 					this.list[this.current] = []
 				}
 				if (!res.code) {
 					this.list[this.current].push(...res.data)
 					this.last_page[this.current] = res.last_page
-				
+
 					this.count[this.current] = res.total_num;
 					this.sumNumber[this.current] = res.total_quantity;
 					this.sumMoney[this.current] = res.total_money;
 					this.$forceUpdate()
 				}
-				
+
 
 			},
 			// 点击日期
 			async onClickItem(val) {
 				this.current = val.currentIndex;
+				console.log(this.current);
 				if (this.current == 4) {
 					this.showtime = true;
 				}
@@ -296,7 +297,7 @@
 					} else if (this.current == 4) {
 						this.dateAll.today5.statrTime = this.start_time
 						this.dateAll.today5.endTime = this.end_time
-						this.init(this.start_time, this.end_time)
+						// this.init(this.start_time, this.end_time)
 
 					}
 
@@ -385,7 +386,7 @@
 				this.store_ids = []
 				this.store_ids.push(store.state.store.store_id)
 			}
-			if(query.start_time){
+			if (query.start_time) {
 				this.start_time = query.start_time;
 				this.end_time = query.end_time;
 				this.current = Number(query.current);
@@ -397,7 +398,8 @@
 			uni.$on('stockEnquiries', (res) => {
 				if (res) {
 					this.page[this.current] = 1
-					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id, res.type,res.supplier_id)
+					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id, res.type,
+						res.supplier_id)
 				}
 			})
 		}

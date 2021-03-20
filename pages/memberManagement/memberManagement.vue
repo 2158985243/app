@@ -230,7 +230,7 @@
 				cus_list: ['近30天生日', "优质会员", "余额>0", "欠款会员"],
 				list: [],
 				page: 1,
-				page_size: 10,
+				page_size: 20,
 				keyword: '',
 				refreshType: 'custom',
 				refreshTip: '正在下拉',
@@ -632,7 +632,7 @@
 							flex-direction: row;
 
 							.bg {
-								padding: 2rpx 4rpx;
+								padding: 0 4rpx;
 								border: 1rpx solid #DD524D;
 								color: #DD524D;
 								font-size: 20rpx;
@@ -692,7 +692,7 @@
 			display: flex;
 			flex-direction: column;
 			position: sticky;
-			top: calc(84rpx + var(--status-bar-height));
+			top: calc(80rpx + var(--status-bar-height));
 			z-index: 99;
 
 			.nav-li {

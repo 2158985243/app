@@ -47,13 +47,19 @@
 
 <style lang="scss" scoped>
 	.inventory {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		.right_icon{
+			margin-right: 30rpx;
+		}
 		.slot-wrap {
 			display: flex;
 			align-items: center;
 			width: 90%;
 
 			.search {}
-
+			
 			/* 如果您想让slot内容占满整个导航栏的宽度 */
 			/* flex: 1; */
 			/* 如果您想让slot内容与导航栏左右有空隙 */

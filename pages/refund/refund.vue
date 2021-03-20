@@ -191,19 +191,22 @@
 			this.form = JSON.parse(decodeURIComponent(option.sales_goods));
 			console.log(this.form);
 			let m_money = 0
-			m_money = (Number(this.form.erasure_money) + Number(this.form.discount_money)).toFixed(2)
-			if (this.form.sales_goods.length > 0) {
+			m_money = (Number(this.form.erasure_money) + Number(this.form.discount_money)+ Number(this.form.point_used_as_money)).toFixed(2)
+			// if (this.form.sales_goods.length > 0) {
 				this.form.sales_goods.map((v) => {
 					v['max'] = this.$u.deepClone(v.quantity);
-					let radio = (Number(v.real_price) * Number(v.quantity) / (Number(this.form.money) + m_money)).toFixed(2)
+					let radio = (Number(v.real_price) * Number(v.quantity) / (Number(this.form.money) + Number(m_money))).toFixed(2)
+					
+					console.log(Number(v.real_price) * Number(v.quantity),(Number(this.form.money) + Number(m_money)));
+					
 					v.real_price = (Number(v.real_price) - radio).toFixed(2)
-					v['point'] = (Number(v.real_price) /Number(this.form.money)*Number(this.form.reward_point)).toFixed()
+					v['point'] = (Number(v.real_price)/Number(this.form.money)*Number(this.form.reward_point)).toFixed()
 				})
 				this.obj.customer_id = this.form.customer_id;
 				this.obj.staff_id = this.form.staff_id;
 				this.obj.reward_point = this.form.reward_point;
 
-			}
+			// }
 			uni.$on('patternOfPayment', res => {
 				if (res) {
 					this.obj.payment[0].account_id = res.account_id;

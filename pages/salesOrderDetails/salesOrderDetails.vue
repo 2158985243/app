@@ -21,7 +21,7 @@
 			</view>
 			<view class="money">
 				<text class="money-sum">&yen;{{sum_money}}</text>
-				<text class="money-list" v-if="form.discount_money>0">满减优惠 <text class="red">&yen;{{0}}</text>,优惠金额<text class="red">&yen;{{(Number(form.discount_money)+Number(form.erasure_money)).toFixed(2)}}</text>,优惠券金额<text
+				<text class="money-list" v-if="form.money!=sum_money">满减优惠 <text class="red">&yen;{{0}}</text>,优惠金额<text class="red">&yen;{{(Number(form.discount_money)+Number(form.erasure_money)+Number(form.point_used_as_money)).toFixed(2)}}</text>,优惠券金额<text
 					 class="red">&yen;{{0}}</text>,实收金额<text class="red">&yen;{{form.money}}</text></text>
 			</view>
 		</view>
@@ -123,7 +123,6 @@
 		methods: {
 			// 
 			confirm(v) {
-				console.log(v[0]);
 				let bl = false;
 				this.form.sales_goods.map(v => {
 					if (v.quantity > 0) {

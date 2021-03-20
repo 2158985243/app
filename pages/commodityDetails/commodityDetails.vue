@@ -8,10 +8,11 @@
 		</u-navbar>
 		<view class="matter">
 			<!--  -->
+			<cus-previewImg ref="cusPreviewImg" :circular="true" :duration="400" :list="ImgList" />
 			<view class="imgs">
 				<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll" scroll-left="120">
-					<u-image width="180rpx" height="180rpx" border-radius="20rpx" class="scroll-view-item_H" :src="$cfg.domain+item"
-					 v-for="(item,index) in oracle.images"></u-image>
+					<u-image width="180rpx" height="180rpx" border-radius="20rpx" @click='previewImg($cfg.domain+item)' class="scroll-view-item_H"
+					 :src="$cfg.domain+item" v-for="(item,index) in oracle.images"></u-image>
 				</scroll-view>
 			</view>
 			<!--  -->
@@ -170,11 +171,11 @@
 							</view>
 						</view>
 						<view class="sotck-item">
-							<view class="sotck-purchase"  @click="toHaveToReturn2(item)" v-for="(item,index) in nav_list[2].data" :key="index">
+							<view class="sotck-purchase" @click="toHaveToReturn2(item)" v-for="(item,index) in nav_list[2].data" :key="index">
 								<view class="left">
 									<text>单号：<text class='gray'>{{item.number}}</text></text>
 									<text class="min-size">数量：<text class='gray'>{{item.out_quantity}}</text></text>
-			 						<text class="min-size">{{item.updated_at}}</text>
+									<text class="min-size">{{item.updated_at}}</text>
 								</view>
 								<view class="right">
 									<view class="rg-data">
@@ -237,7 +238,7 @@
 		<u-popup v-model="show" mode="center" width="500rpx" height="560rpx">
 			<view class="pop">
 				<scroll-view scroll-y="true" class="scroll-Y">
-					<view class="pop-item"  v-for="(item,index) in strots" :key="index" @click="strotsItem(item)">
+					<view class="pop-item" v-for="(item,index) in strots" :key="index" @click="strotsItem(item)">
 						<text>{{item.label}}</text>
 					</view>
 				</scroll-view>
@@ -252,6 +253,7 @@
 
 <script>
 	import store from '@/store'
+	import cusPreviewImg from '@/components/cus-previewImg/cus-previewImg.vue'
 	import {
 		goods,
 		getStock
@@ -266,8 +268,12 @@
 		counts
 	} from '../../api/salesOrder.js'
 	export default {
+		components: {
+			cusPreviewImg
+		},
 		data() {
 			return {
+				ImgList: [],
 				showtime: false,
 				showtime1: false,
 				params: {
@@ -342,14 +348,17 @@
 				out_number: '',
 				in_number: '',
 				// 销售
-				total_3:{},
+				total_3: {},
 			}
 		},
 		methods: {
+			previewImg(url) { // 点击预览图片
+				this.$refs.cusPreviewImg.open(url) // 传入当前选中的图片地址
+			},
 			// 点模式
 			async itemClick(index) {
 				this.item_active = index;
-				if (index == 1&&this.nav_list[index].data.length==0) {
+				if (index == 1 && this.nav_list[index].data.length == 0) {
 					let res = await countDetails({
 						...this.form,
 						start_time: this.start_time,
@@ -366,7 +375,7 @@
 						this.price = Number(v.price)
 					})
 					this.nav_list[1].data = res.data
-				} else if (index == 2&&this.nav_list[index].data.length==0) {
+				} else if (index == 2 && this.nav_list[index].data.length == 0) {
 					let res = await countsDetails({
 						...this.form,
 						start_time: this.start_time,
@@ -382,7 +391,7 @@
 						this.in_number += Number(v.in_quantity)
 					})
 					this.nav_list[2].data = res.data
-				}else if (index == 3&&this.nav_list[index].data.length==0) {
+				} else if (index == 3 && this.nav_list[index].data.length == 0) {
 					let res = await counts({
 						...this.form,
 						start_time: this.start_time,
@@ -397,11 +406,11 @@
 			// 点时间
 			async dateClick(index) {
 				this.date_active = index;
-				if(index==0){
+				if (index == 0) {
 					let date = this.$date.today()
 					this.start_time = date.start_time
 					this.end_time = date.end_time
-					if(this.item_active==0){
+					if (this.item_active == 0) {
 						let res = await getStock(this.form);
 						let color_data = []
 						let stocks = []
@@ -428,7 +437,7 @@
 							})
 						})
 						this.nav_list[0].data = stocks
-					}else if (this.item_active == 1) {
+					} else if (this.item_active == 1) {
 						let res = await countDetails({
 							...this.form,
 							start_time: this.start_time,
@@ -461,7 +470,7 @@
 							this.in_number += Number(v.in_quantity)
 						})
 						this.nav_list[2].data = res.data
-					}else if (this.item_active == 3) {
+					} else if (this.item_active == 3) {
 						let res = await counts({
 							...this.form,
 							start_time: this.start_time,
@@ -472,11 +481,11 @@
 						this.total_3 = res.total;
 						this.nav_list[3].data = res.list.data
 					}
-				}else if(index == 1){
+				} else if (index == 1) {
 					let date = this.$date.yesterday()
 					this.start_time = date.start_time
 					this.end_time = date.end_time
-					if(this.item_active==0){
+					if (this.item_active == 0) {
 						let res = await getStock(this.form);
 						let color_data = []
 						let stocks = []
@@ -503,7 +512,7 @@
 							})
 						})
 						this.nav_list[0].data = stocks
-					}else if (this.item_active == 1) {
+					} else if (this.item_active == 1) {
 						let res = await countDetails({
 							...this.form,
 							start_time: this.start_time,
@@ -536,7 +545,7 @@
 							this.in_number += Number(v.in_quantity)
 						})
 						this.nav_list[2].data = res.data
-					}else if (this.item_active == 3) {
+					} else if (this.item_active == 3) {
 						let res = await counts({
 							...this.form,
 							start_time: this.start_time,
@@ -547,11 +556,11 @@
 						this.total_3 = res.total;
 						this.nav_list[3].data = res.list.data
 					}
-				}else if(index == 2){
+				} else if (index == 2) {
 					let date = this.$date.sevenDays()
 					this.start_time = date.start_time
 					this.end_time = date.end_time
-					if(this.item_active==0){
+					if (this.item_active == 0) {
 						let res = await getStock(this.form);
 						let color_data = []
 						let stocks = []
@@ -578,7 +587,7 @@
 							})
 						})
 						this.nav_list[0].data = stocks
-					}else if (this.item_active == 1) {
+					} else if (this.item_active == 1) {
 						let res = await countDetails({
 							...this.form,
 							start_time: this.start_time,
@@ -611,7 +620,7 @@
 							this.in_number += Number(v.in_quantity)
 						})
 						this.nav_list[2].data = res.data
-					}else if (this.item_active == 3) {
+					} else if (this.item_active == 3) {
 						let res = await counts({
 							...this.form,
 							start_time: this.start_time,
@@ -622,11 +631,11 @@
 						this.total_3 = res.total;
 						this.nav_list[3].data = res.list.data
 					}
-				}else if(index == 3){
+				} else if (index == 3) {
 					let date = this.$date.thirtyDays()
 					this.start_time = date.start_time
 					this.end_time = date.end_time
-					if(this.item_active==0){
+					if (this.item_active == 0) {
 						let res = await getStock(this.form);
 						let color_data = []
 						let stocks = []
@@ -653,7 +662,7 @@
 							})
 						})
 						this.nav_list[0].data = stocks
-					}else if (this.item_active == 1) {
+					} else if (this.item_active == 1) {
 						let res = await countDetails({
 							...this.form,
 							start_time: this.start_time,
@@ -686,7 +695,7 @@
 							this.in_number += Number(v.in_quantity)
 						})
 						this.nav_list[2].data = res.data
-					}else if (this.item_active == 3) {
+					} else if (this.item_active == 3) {
 						let res = await counts({
 							...this.form,
 							start_time: this.start_time,
@@ -697,7 +706,7 @@
 						this.total_3 = res.total;
 						this.nav_list[3].data = res.list.data
 					}
-				}else if(index == 4){
+				} else if (index == 4) {
 					this.showtime = true;
 				}
 			},
@@ -709,7 +718,7 @@
 			// 结束时间
 			async confirmTime1(v) {
 				this.end_time = `${v.year}-${v.month}-${v.day}`;
-				if(this.item_active==0){
+				if (this.item_active == 0) {
 					let res = await getStock(this.form);
 					let color_data = []
 					let stocks = []
@@ -736,7 +745,7 @@
 						})
 					})
 					this.nav_list[0].data = stocks
-				}else if (this.item_active == 1) {
+				} else if (this.item_active == 1) {
 					let res = await countDetails({
 						...this.form,
 						start_time: this.start_time,
@@ -769,7 +778,7 @@
 						this.in_number += Number(v.in_quantity)
 					})
 					this.nav_list[2].data = res.data
-				}else if (this.item_active == 3) {
+				} else if (this.item_active == 3) {
 					let res = await counts({
 						...this.form,
 						start_time: this.start_time,
@@ -806,18 +815,24 @@
 			// 初始化
 			async init(v) {
 				let res = await goods(v)
-				this.oracle = res;
-				this.oracle.images.unshift(this.oracle.main_image)
-				let colorArr = [];
-				let sizeArr = [];
-				this.oracle.color.map((v, i) => {
-					colorArr.push(v.name)
-				})
-				this.oracle.size.map((v, i) => {
-					sizeArr.push(v.name)
-				})
-				this.colorName = colorArr.join('/')
-				this.sizeName = sizeArr.join('/')
+				if (!res.code) {
+					this.oracle = res;
+					this.oracle.images.unshift(this.oracle.main_image)
+					let colorArr = [];
+					let sizeArr = [];
+					this.ImgList = []
+					this.oracle.color.map((v, i) => {
+						colorArr.push(v.name)
+					})
+					this.oracle.size.map((v, i) => {
+						sizeArr.push(v.name)
+					})
+					this.oracle.images.map(v => {
+						this.ImgList.push(this.$cfg.domain + v)
+					})
+					this.colorName = colorArr.join('/')
+					this.sizeName = sizeArr.join('/')
+				}
 			},
 			// 店铺数组
 			strored() {
@@ -843,7 +858,7 @@
 			async strotsItem(item) {
 				this.title_name = item.label;
 				this.form.store_id = item.value;
-				if(this.item_active==0){
+				if (this.item_active == 0) {
 					let res = await getStock(this.form);
 					let color_data = []
 					let stocks = []
@@ -870,7 +885,7 @@
 						})
 					})
 					this.nav_list[0].data = stocks
-				}else if (this.item_active == 1) {
+				} else if (this.item_active == 1) {
 					let res = await countDetails({
 						...this.form,
 						start_time: this.start_time,
@@ -903,7 +918,7 @@
 						this.in_number += Number(v.in_quantity)
 					})
 					this.nav_list[2].data = res.data
-				}else if (this.item_active == 3) {
+				} else if (this.item_active == 3) {
 					let res = await counts({
 						...this.form,
 						start_time: this.start_time,
@@ -1078,6 +1093,7 @@
 						justify-content: center;
 						align-items: center;
 						background-color: #FFFFFF;
+
 						.title_hd {
 							display: flex;
 							flex-direction: row;

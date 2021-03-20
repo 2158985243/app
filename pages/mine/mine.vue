@@ -15,7 +15,7 @@
 				</view>
 			</view>
 			<view class="product">
-				<u-swiper height='226' :list="list"></u-swiper>
+				<!-- <u-swiper height='226' :list="list"></u-swiper> -->
 				<view class="presentation">
 					<u-icon name="question-circle" class='icon_q' color="#000000" size="40"></u-icon>
 					<text>产品介绍</text>
@@ -85,7 +85,6 @@
 		},
 		filters: {
 			filterImage(v) {
-				console.log(url.domain +v);
 				if (!v) {
 					return v;
 				}

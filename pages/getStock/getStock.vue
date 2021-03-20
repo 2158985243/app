@@ -182,21 +182,16 @@
 								<text>销量额</text>
 							</view>
 							<!-- nav_list[1].data[0] -->
-							<block  v-for="(item,index) in oracle.color" :key="index">
-								<view class="list"v-for="(itemSize,indexSize) in oracle.size" :key="indexSize">
-										<text v-if="indexSize==0">{{item.name}}</text>
-										<text v-else></text>
-										<text>{{itemSize.name}}</text>
-										<block v-if="nav_list[1].data[0].length>0">
-											<text>{{nav_list[1].data[0][indexSize].quantity!=0?nav_list[1].data[0][indexSize].quantity: 0}}</text>
-											<text>{{nav_list[1].data[0][indexSize].sales_money!=0?nav_list[1].data[0][indexSize].sales_money: 0}}</text>
-										</block>
-										<block v-else>
-											<text>0</text>
-											<text>0</text>
-										</block>
+							<view class="color_list" v-for="(itemSize,indexSize) in goods_list" :key="indexSize">
+								<view class="list" v-for="(item,index) in itemSize.data" :key="index">
+									<text v-if="index==0">{{itemSize.name}}</text>
+									<text v-else></text>
+									<text>{{item.name}}</text>
+									<text>{{item.quantity}}</text>
+									<text>{{item.sales_money}}</text>
+
 								</view>
-							</block>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -306,7 +301,8 @@
 				row_changed: 0,
 				totalQuantity: 0,
 				totalMoney: 0,
-				sum_date: 0
+				sum_date: 0,
+				goods_list: []
 			}
 		},
 		computed: {
@@ -322,7 +318,7 @@
 			dateDiff(date1, date2) {
 				let time1 = Date.parse(date1)
 				let time2 = Date.parse(date2)
-				return ((time2 - time1) / (1000*60 * 60 * 24)+1); //结果是秒
+				return ((time2 - time1) / (1000 * 60 * 60 * 24) + 1); //结果是秒
 			},
 			// 点模式
 			async itemClick(index) {
@@ -334,10 +330,20 @@
 						end_time: this.end_time
 					})
 					this.sum_date = this.dateDiff(this.start_time, this.end_time)
-					
+
 					if (!res.code) {
 						this.nav_list[1].data[0] = res.count
 						this.nav_list[1].data[1] = res.list
+						res.count.map((v, i) => {
+							this.goods_list.map((v1, i1) => {
+								v1.data.map((v2, i2) => {
+									if (v.color_id == v1.id && v.size_id == v2.id) {
+										v2['quantity'] = v.quantity
+										v2['sales_money'] = v.sales_money
+									}
+								})
+							})
+						})
 						this.getServerData()
 						this.totalQuantity = 0
 						this.totalMoney = 0
@@ -365,10 +371,27 @@
 						end_time: this.end_time
 					})
 					this.sum_date = this.dateDiff(this.start_time, this.end_time)
-					
+
 					if (!res.code) {
 						this.nav_list[1].data[0] = res.count
 						this.nav_list[1].data[1] = res.list
+						this.goods_list.map(v => {
+							v.data.map(v1 => {
+								v2['quantity'] =0
+								v2['sales_money'] =0
+							})
+						})
+						res.count.map((v, i) => {
+							this.goods_list.map((v1, i1) => {
+								v1.data.map((v2, i2) => {
+									if (v.color_id == v1.id && v.size_id == v2.id) {
+										v2['quantity'] = v.quantity
+										v2['sales_money'] = v.sales_money
+									}
+								})
+							})
+						})
+						// console.log(res);
 						this.getServerData()
 						this.totalQuantity = 0
 						this.totalMoney = 0
@@ -390,10 +413,26 @@
 						end_time: this.end_time
 					})
 					this.sum_date = this.dateDiff(this.start_time, this.end_time)
-					
+
 					if (!res.code) {
 						this.nav_list[1].data[0] = res.count
 						this.nav_list[1].data[1] = res.list
+						this.goods_list.map(v => {
+							v.data.map(v1 => {
+								v2['quantity'] =0
+								v2['sales_money'] =0
+							})
+						})
+						res.count.map((v, i) => {
+							this.goods_list.map((v1, i1) => {
+								v1.data.map((v2, i2) => {
+									if (v.color_id == v1.id && v.size_id == v2.id) {
+										v2['quantity'] = v.quantity
+										v2['sales_money'] = v.sales_money
+									}
+								})
+							})
+						})
 						this.getServerData()
 						this.totalQuantity = 0
 						this.totalMoney = 0
@@ -415,13 +454,29 @@
 						end_time: this.end_time
 					})
 					this.sum_date = this.dateDiff(this.start_time, this.end_time)
-					
+
 					if (!res.code) {
 						this.nav_list[1].data[0] = res.count
 						this.nav_list[1].data[1] = res.list
 						this.getServerData()
 						this.totalQuantity = 0
 						this.totalMoney = 0
+						this.goods_list.map(v => {
+							v.data.map(v1 => {
+								v2['quantity'] = 0
+								v2['sales_money'] = 0
+							})
+						})
+						res.count.map((v, i) => {
+							this.goods_list.map((v1, i1) => {
+								v1.data.map((v2, i2) => {
+									if (v.color_id == v1.id && v.size_id == v2.id) {
+										v2['quantity'] = v.quantity
+										v2['sales_money'] = v.sales_money
+									}
+								})
+							})
+						})
 						this.nav_list[1].data[0].map((v, i) => {
 							this.totalQuantity += Number(v.quantity)
 							this.totalMoney += Number(v.sales_money)
@@ -440,20 +495,39 @@
 						end_time: this.end_time
 					})
 					this.sum_date = this.dateDiff(this.start_time, this.end_time)
-					
+
 					if (!res.code) {
-						this.nav_list[1].data[0] = res.count
-						this.nav_list[1].data[1] = res.list
-						this.getServerData()
-						this.totalQuantity = 0
-						this.totalMoney = 0
-						this.nav_list[1].data[0].map((v, i) => {
-							this.totalQuantity += Number(v.quantity)
-							this.totalMoney += Number(v.sales_money)
+						console.log(res);
+						this.$nextTick(() => {
+							this.nav_list[1].data[0] = res.count
+							this.nav_list[1].data[1] = res.list
+							this.goods_list.map(v => {
+								v.data.map(v1 => {
+									v2['quantity'] = 0
+									v2['sales_money'] = 0
+								})
+							})
+							res.count.map((v, i) => {
+								this.goods_list.map((v1, i1) => {
+									v1.data.map((v2, i2) => {
+										if (v.color_id == v1.id && v.size_id == v2.id) {
+											v2['quantity'] = v.quantity
+											v2['sales_money'] = v.sales_money
+										}
+									})
+								})
+							})
+							this.getServerData()
+							this.totalQuantity = 0
+							this.totalMoney = 0
+							this.nav_list[1].data[0].map((v, i) => {
+								this.totalQuantity += Number(v.quantity)
+								this.totalMoney += Number(v.sales_money)
+							})
+							this.totalQuantity = this.totalQuantity.toFixed()
+							this.totalMoney = this.totalMoney.toFixed(2)
+							// this.$forceUpdate()
 						})
-						this.totalQuantity = this.totalQuantity.toFixed()
-						this.totalMoney = this.totalMoney.toFixed(2)
-						this.$forceUpdate()
 					}
 				} else if (index == 4) {
 					this.showtime = true
@@ -473,10 +547,26 @@
 					end_time: this.end_time
 				})
 				this.sum_date = this.dateDiff(this.start_time, this.end_time)
-				
+
 				if (!res.code) {
 					this.nav_list[1].data[0] = res.count
 					this.nav_list[1].data[1] = res.list
+					this.goods_list.map(v => {
+						v.data.map(v1 => {
+							v2['quantity'] = 0
+							v2['sales_money'] = 0
+						})
+					})
+					res.count.map((v, i) => {
+						this.goods_list.map((v1, i1) => {
+							v1.data.map((v2, i2) => {
+								if (v.color_id == v1.id && v.size_id == v2.id) {
+									v2['quantity'] = v.quantity
+									v2['sales_money'] = v.sales_money
+								}
+							})
+						})
+					})
 					this.getServerData()
 					this.totalQuantity = 0
 					this.totalMoney = 0
@@ -512,18 +602,30 @@
 				this.oracle.images.unshift(this.oracle.main_image)
 				let colorArr = [];
 				let sizeArr = [];
+				this.goods_list = []
 				this.oracle.color.map((v, i) => {
 					colorArr.push(v.name)
+					this.goods_list.push({ ...v,
+						data: []
+					})
+					this.oracle.size.map((v1 => {
+						this.goods_list[i].data.push({ ...v1,
+							quantity: 0,
+							sales_money: 0
+						})
+					}))
 				})
 				this.oracle.size.map((v, i) => {
 					sizeArr.push(v.name)
 				})
+				// console.log(this.goods_list);
 				this.colorName = colorArr.join('/')
 				this.sizeName = sizeArr.join('/')
 			}, // 店铺数组
 			strored() {
 				let arr = store.state.store.storesArr;
 				this.title_name = store.state.store.name;
+				console.log(store.state.store);
 				this.form.store_id = store.state.store.store_id;
 				this.form.goods_id = this.id
 				if (arr) {
@@ -545,7 +647,7 @@
 				this.show = false
 				this.title_name = item.label;
 				this.form.store_id = item.value;
-				
+
 			},
 			// 库存
 			async stockInit() {
@@ -643,7 +745,7 @@
 					Column.categories.push(v.business_time)
 					Column.series[0].data.push(Number(v.quantity).toFixed())
 				})
-				if(Column.categories.length==0){
+				if (Column.categories.length == 0) {
 					Column.categories.push(this.start_time)
 				}
 				_self.showColumn("canvasColumn", Column);
@@ -667,6 +769,9 @@
 					},
 					yAxis: {
 						//disabled:true
+						format: (val) => {
+							return val.toFixed(0)
+						}
 					},
 					dataLabel: true,
 					width: _self.cWidth * _self.pixelRatio,
@@ -674,7 +779,7 @@
 					extra: {
 						column: {
 							type: 'group',
-							width: _self.cWidth * _self.pixelRatio * 0.45 / chartData.categories.length
+							width: 30
 						}
 					}
 				});
@@ -1216,19 +1321,20 @@
 								display: flex;
 								flex-direction: column;
 								flex: 1;
-								
+
 								text {
 									flex: 1;
 									display: flex;
 									justify-content: center;
 									align-items: center;
-									white-space:nowrap;
-									overflow:hidden;
-									text-overflow:ellipsis;
+									white-space: nowrap;
+									overflow: hidden;
+									text-overflow: ellipsis;
 									font-weight: 600;
 									font-size: 26rpx;
 								}
-								.sales-td{
+
+								.sales-td {
 									font-size: 20rpx;
 									padding-bottom: 10rpx;
 									font-weight: 500;
@@ -1246,6 +1352,12 @@
 								font-size: 30rpx;
 								font-weight: 600;
 								padding: 20rpx;
+							}
+
+							.color_list {
+								display: flex;
+								flex-direction: column;
+								width: 100%;
 							}
 
 							.list {

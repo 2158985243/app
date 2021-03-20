@@ -2,8 +2,8 @@
 	<view class="salesInquiry">
 		<u-navbar back-icon-color='#ffffff' :background="background">
 			<view class="slot-wrap">
-				<u-search class='search' height='60' @change="search" :show-action="false" :scan="true" shape="square"
-				 placeholder="请输入商品信息、会员信息或销售单号" v-model="keyword" @Inventory="handelScan"></u-search>
+				<u-search class='search' height='60' @change="search" :show-action="false" :scan="true" shape="square" placeholder="请输入商品信息、会员信息或销售单号"
+				 v-model="keyword" @Inventory="handelScan"></u-search>
 			</view>
 			<template slot="right">
 				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
@@ -145,6 +145,7 @@
 					'background-color': '#ffffff'
 				},
 				last_page: 0,
+				pull: false
 			}
 		},
 		methods: {
@@ -165,20 +166,24 @@
 				this.page = 1;
 				this.list = []
 				this.init()
+				this.pull = false
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
-				if (this.page >= this.last_page) {
-					this.$refs.uToast.show({
-						title: '加载到底了',
-						type: 'default',
-						position: 'bottom'
-					})
+				if (!this.pull) {
 
-				} else {
-					this.page++;
-					this.init()
+					if (this.page >= this.last_page) {
+						this.$refs.uToast.show({
+							title: '加载到底了',
+							type: 'default',
+							position: 'bottom'
+						})
+						this.pull = true
+					} else {
+						this.page++;
+						this.init()
+					}
 				}
 			},
 
@@ -242,26 +247,37 @@
 			// 点击某一个时间段
 			async clickDate(index) {
 				this.active = index;
-				this.list = []
 				this.page = 1;
 				this.page_size = 10;
 
 				if (index == 0) {
 					let currentdate = this.$date.today()
+					this.list = []
+					this.page = 1;
+					this.pull = false
 					this.form.start_time = currentdate.start_time;
 					this.form.end_time = currentdate.end_time;
 					this.init()
 				} else if (index == 1) {
+					this.list = []
+					this.page = 1;
+					this.pull = false
 					let currentdate = this.$date.yesterday()
 					this.form.start_time = currentdate.start_time;
 					this.form.end_time = currentdate.end_time;
 					this.init()
 				} else if (index == 2) {
+					this.list = []
+					this.page = 1;
+					this.pull = false
 					let currentdate = this.$date.thisWeek()
 					this.form.start_time = currentdate.start_time;
 					this.form.end_time = currentdate.end_time;
 					this.init()
 				} else if (index == 3) {
+					this.list = []
+					this.page = 1;
+					this.pull = false
 					let currentdate = this.$date.thisMonth()
 					this.form.start_time = currentdate.start_time;
 					this.form.end_time = currentdate.end_time;
@@ -280,12 +296,15 @@
 			// 结束时间
 			async confirmTime1(v) {
 				this.form.end_time = `${v.year}-${v.month}-${v.day}`;
+				this.list = []
+				this.page = 1;
+				this.pull = false
 				this.init();
 			},
 			// 搜索
 			showStrore() {
 				uni.navigateTo({
-					url:`/pages/screen/screen`
+					url: `/pages/screen/screen`
 				})
 			}
 		},
@@ -294,18 +313,21 @@
 			this.store_id = query.store_id;
 			this.expend_item_id = query.expend_item_id;
 			this.name = query.name;
-			uni.$on('screen',res =>{
-				if(res){
+			uni.$on('screen', res => {
+				if (res) {
 					console.log(res);
 					this.form = res
 					this.page = 1;
 					this.list = []
+					this.pull = false
 					this.init();
 				}
 			})
 		},
 		onShow() {
 			this.list = []
+			this.page = 1;
+			this.pull = false
 			this.init();
 		}
 	}

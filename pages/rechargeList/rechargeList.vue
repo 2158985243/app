@@ -344,7 +344,7 @@
 			height: calc(100% - 200rpx - var(--status-bar-height));
 			background-color: rgba($color: #000000, $alpha: 0.3);
 			position: absolute;
-			top: calc(230rpx + var(--status-bar-height));
+			top: calc(140rpx + var(--status-bar-height));
 			display: flex;
 			flex-direction: row;
 

@@ -1,148 +1,150 @@
 <template>
 	<view class="resaleCashier">
 		<!-- :custom-back="quit" -->
-		<u-navbar back-icon-color='#ffffff'  title="商品选择" :background="background" title-color="#ffffff">
+		<u-navbar back-icon-color='#ffffff' title="商品选择" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<text class="right_icon" @click="toCancelledList">挂单</text>
 			</template>
 		</u-navbar>
-		<view class="box">
-			<u-popup v-model="show" mode="right" width="80%">
+		<!-- <view class="resaleCashier-main"> -->
+			
+			<view class="box">
+				<u-popup v-model="show" z-index='10077' mode="right" width="80%">
 
-				<view class="popup-right">
-					<view class="pop-title">
-						<u-icon name="arrow-left" color="#000000" @click='show=false' size="40"></u-icon>
-						<view class="sx">筛选</view>
-					</view>
-					<view class="pop-list">
-						<view class="nav-box">
-							<view class="nav-tit">
-								<text class="ht">品牌</text>
+					<view class="popup-right">
+						<view class="pop-title">
+							<u-icon name="arrow-left" color="#000000" @click='show=false' size="40"></u-icon>
+							<view class="sx">筛选</view>
+						</view>
+						<view class="pop-list">
+							<view class="nav-box">
+								<view class="nav-tit">
+									<text class="ht">品牌</text>
 
-							</view>
-							<view class="nav-list">
-								<view class="lak" v-for="(item,index) in brandList" :key="index">
-									<view class="nav-name">
-										<view class="nav-kk" @click.stop="clickBrand(item,index)" :class="item.checked? 'actives':''" v-if="index<5">
-											{{item.name}}
+								</view>
+								<view class="nav-list">
+									<view class="lak" v-for="(item,index) in brandList" :key="index">
+										<view class="nav-name">
+											<view class="nav-kk" @click.stop="clickBrand(item,index)" :class="item.checked? 'actives':''" v-if="index<5">
+												{{item.name}}
+											</view>
 										</view>
-									</view>
-									<view class="nav-name" v-if="index==5">
-										<view class="nav-kk" @click.stop="barndArr">
-											全部品牌
+										<view class="nav-name" v-if="index==5">
+											<view class="nav-kk" @click.stop="barndArr">
+												全部品牌
+											</view>
 										</view>
 									</view>
 								</view>
 							</view>
-						</view>
-						<view class="nav-box">
-							<view class="nav-tit">
-								<text class="ht">类别</text>
+							<view class="nav-box">
+								<view class="nav-tit">
+									<text class="ht">类别</text>
 
-							</view>
-							<view class="nav-list">
-								<view class="lak" v-for="(item,index) in CategoryList" :key="index">
-									<view class="nav-name">
-										<view class="nav-kk" @click.stop="clickCate(item,index)" :class="item.checked? 'actives':''" v-if="index<5">
-											{{item.name}}
+								</view>
+								<view class="nav-list">
+									<view class="lak" v-for="(item,index) in CategoryList" :key="index">
+										<view class="nav-name">
+											<view class="nav-kk" @click.stop="clickCate(item,index)" :class="item.checked? 'actives':''" v-if="index<5">
+												{{item.name}}
+											</view>
 										</view>
-									</view>
-									<view class="nav-name" v-if="index==5">
-										<view class="nav-kk" @click.stop="categoryArr">
-											全部类别
+										<view class="nav-name" v-if="index==5">
+											<view class="nav-kk" @click.stop="categoryArr">
+												全部类别
+											</view>
 										</view>
 									</view>
 								</view>
 							</view>
-						</view>
 
-						<view class="nav-box">
-							<view class="nav-tit">
-								<text class="ht">状态</text>
+							<view class="nav-box">
+								<view class="nav-tit">
+									<text class="ht">状态</text>
 
-							</view>
-							<view class="nav-list">
-								<view class="lak" v-for="(item,index) in status" :key="index">
-									<view class="nav-name">
-										<view class="nav-kk" @click.stop="clickStatus(item,index)" :class="item.checked? 'actives':''">
-											{{item.name}}
+								</view>
+								<view class="nav-list">
+									<view class="lak" v-for="(item,index) in status" :key="index">
+										<view class="nav-name">
+											<view class="nav-kk" @click.stop="clickStatus(item,index)" :class="item.checked? 'actives':''">
+												{{item.name}}
+											</view>
 										</view>
 									</view>
 								</view>
 							</view>
-						</view>
 
-						<view class="nav-box">
-							<view class="nav-tit">
-								<text class="ht">价格</text>
+							<view class="nav-box">
+								<view class="nav-tit">
+									<text class="ht">价格</text>
 
-							</view>
-							<view class="nav-list">
-								<view class="lak" v-for="(item,index) in price" :key="index">
-									<view class="nav-name">
-										<view class="nav-kk" @click.stop="clickPrice(item,index)" :class="item.checked? 'actives':''">
-											{{item.name}}
+								</view>
+								<view class="nav-list">
+									<view class="lak" v-for="(item,index) in price" :key="index">
+										<view class="nav-name">
+											<view class="nav-kk" @click.stop="clickPrice(item,index)" :class="item.checked? 'actives':''">
+												{{item.name}}
+											</view>
 										</view>
 									</view>
 								</view>
 							</view>
+
+
 						</view>
-
-
+						<view class="btn">
+							<u-button class="open" @click='reset'>重置</u-button>
+							<u-button class="open" type="primary" @click='determine'>确定</u-button>
+						</view>
 					</view>
-					<view class="btn">
-						<u-button class="open" @click='reset'>重置</u-button>
-						<u-button class="open" type="primary" @click='determine'>确定</u-button>
+				</u-popup>
+				<u-popup v-model="show1" mode="right" z-index='10077' width="80%">
+					<view class="popup-right">
+						<view class="pop-title">
+							<u-icon name="arrow-left" color="#000000" @click='show1=false' size="40"></u-icon>
+							<view class="sx">品牌</view>
+						</view>
+						<view class="pop-listt">
+							<u-checkbox-group :wrap='true'>
+								<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked" v-for="(item, index) in brandList"
+								 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+							</u-checkbox-group>
+						</view>
 					</view>
-				</view>
-			</u-popup>
-			<u-popup v-model="show1" mode="right" z-index='10077' width="80%">
-				<view class="popup-right">
-					<view class="pop-title">
-						<u-icon name="arrow-left" color="#000000" @click='show1=false' size="40"></u-icon>
-						<view class="sx">品牌</view>
+				</u-popup>
+				<u-popup v-model="show2" mode="right" z-index='10077' width="80%">
+					<view class="popup-right">
+						<view class="pop-title">
+							<u-icon name="arrow-left" color="#000000" @click='show2=false' size="40"></u-icon>
+							<view class="sx">类别</view>
+						</view>
+						<view class="pop-listt">
+							<u-checkbox-group :wrap='true'>
+								<u-checkbox shape="circle" @change="cartesChecked($event,index)" v-model="item.checked" v-for="(item, index) in CategoryList"
+								 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+							</u-checkbox-group>
+						</view>
 					</view>
-					<view class="pop-listt">
-						<u-checkbox-group :wrap='true'>
-							<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked" v-for="(item, index) in brandList"
-							 :key="index" :name="item.id">{{item.name}}</u-checkbox>
-						</u-checkbox-group>
-					</view>
-				</view>
-			</u-popup>
-			<u-popup v-model="show2" mode="right" z-index='10077' width="80%">
-				<view class="popup-right">
-					<view class="pop-title">
-						<u-icon name="arrow-left" color="#000000" @click='show2=false' size="40"></u-icon>
-						<view class="sx">类别</view>
-					</view>
-					<view class="pop-listt">
-						<u-checkbox-group :wrap='true'>
-							<u-checkbox shape="circle" @change="cartesChecked($event,index)" v-model="item.checked" v-for="(item, index) in CategoryList"
-							 :key="index" :name="item.id">{{item.name}}</u-checkbox>
-						</u-checkbox-group>
-					</view>
-				</view>
-			</u-popup>
-			<view class="nav">
-				<view class="slot-wrap">
-					<u-search class='search' height='60' @change="search" margin='0 20rpx' :show-action="false" :scan="true" shape="square"
-					 placeholder="请输入货号/商品名称/条码" v-model="keyword" @Inventory="handelScan"></u-search>
-					<view class="search_add" @click="popup">
-						<text>筛选</text>
-						<u-icon name="arrow-down-fill" color="#ffffff" class="right_icon" size="28"></u-icon>
+				</u-popup>
+				<view class="nav">
+					<view class="slot-wrap">
+						<u-search class='search' height='60' @change="search" margin='0 20rpx' :show-action="false" :scan="true" shape="square"
+						 placeholder="请输入货号/商品名称/条码" v-model="keyword" @Inventory="handelScan"></u-search>
+						<view class="search_add" @click="popup">
+							<text>筛选</text>
+							<u-icon name="arrow-down-fill" color="#ffffff" class="right_icon" size="28"></u-icon>
+						</view>
 					</view>
 				</view>
+				<!-- <view class="titles">
+						共140种商品，库存数265665454，总成本26564546
+					</view> -->
 			</view>
-			<!-- <view class="titles">
-					共140种商品，库存数265665454，总成本26564546
-				</view> -->
-		</view>
-		<view class="list">
-			<goods-category :dataList='dataList' @leftNav="leftNav" :saveData="saveData" :vs='vs' @rightNav="rightNav"
-			 @handlePullDown="handlePullDown" @handleLoadMore="handleLoadMore"></goods-category>
-		</view>
-		<view class="shopping-cart">
+			<view class="list">
+				<goods-category :dataList='dataList' @leftNav="leftNav" :saveData="saveData" :vs='vs' @rightNav="rightNav"
+				 @handlePullDown="handlePullDown" @handleLoadMore="handleLoadMore"></goods-category>
+			</view>
+			<view class="shopping-cart">
 			<view class="goods-quantity">
 				<u-icon class="icon-cart" @click="shoppingCart" name="shopping-cart" color="#ffffff" size="50"></u-icon>
 				<text class="money-cart">{{goodsNumber+'件'}} &yen;{{allMoney}}</text>
@@ -151,9 +153,10 @@
 				选好了
 			</view>
 		</view>
+		<!-- </view> -->
 		<u-toast ref="uToast" />
 		<!-- 商品规格表单 -->
-		<u-popup v-model="showGoods" mode="bottom" z-index='996' height="70%">
+		<u-popup v-model="showGoods" mode="bottom" z-index='1001' height="70%">
 			<view class="specification" v-if="goodsOf">
 				<view class="goods-of">
 					<!-- mode='aspectFit'  -->
@@ -202,7 +205,7 @@
 		</u-popup>
 
 		<!-- 购物车表单 -->
-		<u-popup v-model="showShoppingCart" mode="bottom" z-index='996' length="60%">
+		<u-popup v-model="showShoppingCart" mode="bottom" z-index='1001' length="60%">
 			<view class="scart">
 				<view class="del">
 					<u-icon name="close-circle" class='close' @click="showShoppingCart=false" color="#040404" size="40"></u-icon>
@@ -308,7 +311,7 @@
 					price: [], //价格
 				},
 				page: 1,
-				page_size: 10,
+				page_size: 20,
 				goodsOf: {},
 				active1: 0,
 				active2: 0,
@@ -318,10 +321,9 @@
 				aValue: [], //购物车商品尺码数量组
 				numAll: 0,
 				valAll: [],
-				// saveData: [],
 				account: false,
 				last_page: 0,
-				mored: {},
+				mored: {id:0,index:0,name:'全部'},
 				pull: false
 			}
 		},
@@ -354,42 +356,7 @@
 				return num;
 			},
 		},
-		watch: {
-			// newList(newv, oldv) {
-			// 	console.log(newv, oldv);
-			// 	if (oldv.length !== 0) {
-			// 		console.log(1);
-			// 		this.spec[this.active1].data.map((v, i) => {
-			// 			v.quantity = v.quantity + (newv[this.active1] - oldv[this.active1]);
-			// 		});
-			// 	}
-			// },
-		},
-		// onBackPress(options) {
-		// 	if (options.from === 'navigateBack') {
-		// 		return false;
-		// 	}
-		// 	this.quit()
-		// 	return true;
-		// },
 		methods: {
-			// quit() {
-			// 	let _this = this
-			// 	uni.showModal({
-			// 		title: '提示',
-			// 		content: '商品还未保存，确认要退出？',
-			// 		success: function(res) {
-			// 			if (res.confirm) {
-			// 				_this.$store.commit('commercialSpecification', {
-			// 					specificationOfGoods: []
-			// 				})
-			// 				uni.navigateBack()
-			// 			} else if (res.cancel) {
-			// 				return true;
-			// 			}
-			// 		}
-			// 	});
-			// },
 			// 全部尺码组数组变化
 			valChangeAll(val, item, index) {
 				item.quantity = 0;
@@ -421,24 +388,25 @@
 			handlePullDown(stopLoad) {
 				this.page = 1;
 				let index = 0;
+				this.pull = false
 				if (this.mored.index) {
 					this.index = this.mored.index
 				}
-				this.dataList[index].arr = [];
+				this.dataList[this.mored.index].arr = [];
 				this.loadMore();
 				stopLoad ? stopLoad() : '';
 			},
 			// 向上拉
 			handleLoadMore(stopLoad) {
 				if (!this.pull) {
-					if (this.page >= this.last_page) {
+					if (this.page >= this.dataList[0].last_page) {
 						this.$refs.uToast.show({
 							title: '加载到底了',
 							type: 'default',
 							position: 'bottom'
 						})
 						this.pull = true
-				
+
 					} else {
 						this.page++;
 						this.loadMore()
@@ -481,9 +449,11 @@
 				})
 
 			},
-			// 点击确定
+			// 筛选点击确定
 			async determine() {
 				this.show = false;
+				this.page = 1
+				this.pull = false
 				this.CategoryList.map((v, i) => {
 					if (v.checked) {
 						this.options.goods_category_id.push(v.id)
@@ -503,12 +473,13 @@
 				let res = await goodsList({
 					page: this.page,
 					page_size: this.page_size,
-					status:1,
+					status: 1,
 					goods_category_id: this.mored.id,
 					options: this.options,
 					keyword: this.keyword
 				});
-				if(!res.code){
+				if (!res.code) {
+					this.dataList[this.mored.index].last_page = res.last_page
 					if (this.mored.index == undefined) {
 						this.dataList[0].arr = res.data;
 					} else {
@@ -543,14 +514,14 @@
 			popup() {
 				this.show = true;
 			},
-			
+
 			// 
 			toCancelledList() {
 				uni.navigateTo({
 					url: `/pages/cancelledList/cancelledList`
 				})
 			},
-			
+
 			handelScan: function() {
 				// 允许从相机和相册扫码
 				uni.scanCode({
@@ -564,7 +535,7 @@
 				let res = await goodsList({
 					page: this.page,
 					page_size: this.page_size,
-					status:1,
+					status: 1,
 					keyword: this.keyword
 				});
 				this.dataList = [];
@@ -574,15 +545,16 @@
 					arr: res.data
 				})
 
+				this.dataList[this.mored.index].last_page = res.last_page
 				let res1 = await goodsCategoryList()
 				this.CategoryList = res1;
 				// console.log(res,res1);
 				res1.map((v, i) => {
 					v['arr'] = [];
 					this.dataList.push(v)
-					this.$set(this.dataList,i,this.dataList[i])
+					this.$set(this.dataList, i, this.dataList[i])
 				})
-				
+
 				// console.log(this.dataList);
 			},
 			// 点击左侧
@@ -592,14 +564,17 @@
 				this.vs = 1;
 				for (let i = 0; i < this.dataList.length; i++) {
 					if (this.dataList[i].arr.length == 0 && e.index == i) {
+						this.page = 1
+						this.pull = false
 						let res = await goodsList({
 							page: this.page,
 							page_size: this.page_size,
-							status:1,
+							status: 1,
 							goods_category_id: e.id,
 							keyword: this.keyword
 						});
 						this.dataList[i].arr = res.data;
+						this.dataList[i].last_page = res.last_page
 						this.$set(this.dataList, i, this.dataList[i])
 						// console.log(res.data);
 						break;
@@ -607,19 +582,22 @@
 				}
 			},
 			async loadMore() {
-				let index = 0;
-				if (this.mored.index) {
-					this.index = this.mored.index
-				}
-				let res = await goodsList({
-					page: this.page,
-					page_size: this.page_size,
-					goods_category_id: this.mored.id,
-					status:1,
-					keyword: this.keyword
-				});
-				this.dataList[index].arr.push(...res.data);
-				this.$set(this.dataList, index, this.dataList[index])
+				this.$nextTick(async () => {
+					let index = 0;
+					if (this.mored.index) {
+						this.index = this.mored.index
+					}
+					let res = await goodsList({
+						page: this.page,
+						page_size: this.page_size,
+						goods_category_id: this.mored.id,
+						status: 1,
+						keyword: this.keyword
+					});
+					this.dataList[this.mored.index].last_page = res.last_page
+					this.dataList[this.mored.index].arr.push(...res.data);
+					this.$set(this.dataList, this.mored.index, this.dataList[this.mored.index])
+				})
 			},
 			// 点击右侧
 			async rightNav(e) {
@@ -640,40 +618,40 @@
 				if (num) {
 					// let res = await goods(e.id)
 					// if (!res.code) {
-						this.value = 0;
-						this.goodsOf = e;
-						this.$forceUpdate()
-						this.spec = e.color;
-						this.spec.map((v1, i1) => {
-							v1['goodsOf'] = {
-								id: e.id,
-								name: e.name,
-								number: e.number,
-								retail_price: e.retail_price,
-								customer_price:e.customer_price,
-								main_image: e.main_image,
-								images: e.images
-							};
-							v1['goods_category_id'] = e.goods_category_id;
-							v1['goods_id'] = e.id;
-							v1['data'] = [];
-							v1['quantity'] = 0;
-							v1['valOld'] = 0;
-							v1['valNew'] = 0;
-							v1['check'] = false;
-							// this.valAll.push(0);
-							e.goods_spec.map((v, i) => {
-								if (v.color_id == v1.id) {
-									v1.data.push({
-										size: v.size,
-										goods_spec_info: v.goods_spec_info,
-										quantity: 0,
-										hidden: true
-									})
-								}
-							})
-							this.$set(this.spec, i1, this.spec[i1]);
+					this.value = 0;
+					this.goodsOf = e;
+					this.$forceUpdate()
+					this.spec = e.color;
+					this.spec.map((v1, i1) => {
+						v1['goodsOf'] = {
+							id: e.id,
+							name: e.name,
+							number: e.number,
+							retail_price: e.retail_price,
+							customer_price: e.customer_price,
+							main_image: e.main_image,
+							images: e.images
+						};
+						v1['goods_category_id'] = e.goods_category_id;
+						v1['goods_id'] = e.id;
+						v1['data'] = [];
+						v1['quantity'] = 0;
+						v1['valOld'] = 0;
+						v1['valNew'] = 0;
+						v1['check'] = false;
+						// this.valAll.push(0);
+						e.goods_spec.map((v, i) => {
+							if (v.color_id == v1.id) {
+								v1.data.push({
+									size: v.size,
+									goods_spec_info: v.goods_spec_info,
+									quantity: 0,
+									hidden: true
+								})
+							}
 						})
+						this.$set(this.spec, i1, this.spec[i1]);
+					})
 					// }
 				}
 				// this.$forceUpdate()
@@ -698,8 +676,21 @@
 				});
 
 			},
-			search(v) {
-				this.init()
+			// 输入框输入
+			async search(v) {
+				this.page = 1;
+				this.pull = false;
+				this.dataList[this.mored.index].arr = []
+				let res = await goodsList({
+					page: this.page,
+					page_size: this.page_size,
+					status: 1,
+					goods_category_id: this.mored.id,
+					keyword: this.keyword
+				});
+				this.dataList[this.mored.index].arr = res.data;
+				this.dataList[this.mored.index].last_page = res.last_page
+				this.$set(this.dataList, this.mored.index, this.dataList[this.mored.index])
 				if (!v) {
 					this.vs = 0;
 				} else {
@@ -812,7 +803,7 @@
 							url: `/pages/settleAccounts/settleAccounts`
 						})
 					} else {
-						uni.$emit('editGood',true)
+						uni.$emit('editGood', true)
 						uni.navigateBack()
 					}
 				} else {
@@ -833,7 +824,7 @@
 			this.account = query.account
 		},
 		onShow() {
-			
+
 		}
 	}
 </script>
@@ -841,10 +832,16 @@
 <style scoped lang="scss">
 	.resaleCashier {
 		width: 100%;
+		height: 100vh;
 		background-color: #e3e3e3;
 		display: flex;
 		flex-direction: column;
-
+		.resaleCashier-main{
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+		}
 		.active {
 			background-color: #3B4144 !important;
 			color: #FFFFFF !important;
@@ -1119,17 +1116,20 @@
 			}
 		}
 
-		// .box{
-		// 	width: 100%;
-		// 	position: fixed;
-		// 	top: 80rpx;
-		// }
+		.box {
+			width: 100%;
+			position: fixed;
+			top: calc(80rpx + var(--status-bar-height));
+			z-index: 1000;
+		}
+
 		.list {
 			width: 100%;
 			// max-height: 70%;
+			height: calc(100% - 240rpx);
 			display: flex;
-			flex: auto;
-			margin-bottom: 80rpx;
+			margin: 78rpx 0 80rpx 0;
+			overflow: hidden;
 		}
 
 		.shopping-cart {
@@ -1141,7 +1141,8 @@
 			width: 100%;
 			height: 80rpx;
 			background: #4d4d4d;
-			z-index: 10;
+			z-index: 9;
+
 			.goods-quantity {
 				width: 67%;
 				display: flex;
@@ -1231,6 +1232,7 @@
 				background-color: #FFFFFF;
 				padding: 10rpx 0;
 				border-bottom: 10rpx solid #e2e2e2;
+				z-index: 10;
 
 				.sx {
 					width: 90%;

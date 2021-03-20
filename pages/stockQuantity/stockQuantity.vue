@@ -186,6 +186,7 @@
 				this.page = 1;
 				this.list = []
 				this.init()
+				this.pull = false
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
@@ -252,6 +253,7 @@
 					this.form = res.form;
 					this.title_name = res.shop;
 					this.page = 1;
+					this.pull = false
 					this.init()
 				}
 			})

@@ -312,8 +312,9 @@
 						// console.log(yearEnd, monthEnd, todayEnd);
 						this.init(currentdate.start_time, currentdate.end_time)
 					} else if (this.current == 4) {
-
-						this.init(this.start_time, this.end_time)
+						this.dateAll.today5.statrTime = this.start_time
+						this.dateAll.today5.endTime = this.end_time
+						// this.init(this.start_time, this.end_time)
 
 					}
 
@@ -407,7 +408,10 @@
 				this.start_time = query.start_time;
 				this.end_time = query.end_time;
 				this.current = Number(query.current);
-				this.store_id = query.store_id
+				if (query.store_id) {
+					this.store_id = query.store_id
+
+				}
 			}
 			this.init(this.start_time, this.end_time);
 		},

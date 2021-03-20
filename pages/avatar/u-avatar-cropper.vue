@@ -52,7 +52,7 @@ export default {
 					mask: 'rgba(0, 0, 0, 0.35)'
 				};
 			}
-		}
+		},
 		// // 裁剪框宽度，单位rpx
 		// rectWidth: {
 		// 	type: [String, Number],
@@ -235,6 +235,7 @@ export default {
 .content {
 	// width: 100vw;
 	background: rgba(255, 255, 255, 1);
+	margin: 0;
 }
 
 .cropper {

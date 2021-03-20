@@ -50,12 +50,19 @@
 			</view>
 			<view class="box1">
 				<view class="form_item1">
-					<text>上传图片</text>
-					<u-upload width="100" height='100' upload-text='' image-mode='aspectFit' :limitType='limit' :action="action+'/api/upload'"
-					 :header="header" :name="formData.type" :form-data="formData" @on-remove="onRemove" @on-success="onSuccess"
-					 :file-list="fileList" :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="6" :show-progress="false"
-					 @on-error='onError' @long-tap="longtap" :is_main="true" @on-uploaded="onUploaded" del-bg-color='#000000'>
-					</u-upload>
+					<text class="upload">上传图片</text>
+					<view class="img">
+						<view class="list-img" v-for="(item,index) in list_img" :key="index" @longtap='longtap(index)'>
+							<text class="main-img" v-if="index==0">主</text>
+							<u-icon class="icon" @click="del(index)" name="close-circle-fill" color="#000000" size="32"></u-icon>
+							<u-image v-if="list_img.length>0"  @click='previewImg($cfg.domain+item)' width="100rpx"
+							 border-radius="14" image-mode='aspectFit' height="100rpx" :src="item|filterImage"></u-image>
+						</view>
+						<view class="plus" @click="uploadImg" v-if="list_img.length<6">
+							<u-icon name="plus" color="#606266" size="36"></u-icon>
+						</view>
+
+					</view>
 				</view>
 			</view>
 		</view>
@@ -178,11 +185,13 @@
 			<u-button class="stbn" @tap="delgoods">删除</u-button>
 			<u-button type="primary" class="stbn" @tap="save">保存</u-button>
 		</view>
+		<cus-previewImg ref="cusPreviewImg" :circular="true" :duration="400" :list="ImgList" />
 	</view>
 </template>
 
 <script>
-	import urls from '../../api/configuration.js'
+	import url from '../../api/configuration.js'
+	import cusPreviewImg from '@/components/cus-previewImg/cus-previewImg.vue'
 	import store from '@/store'
 	import {
 		goodsEdit,
@@ -190,6 +199,9 @@
 		goodsDel
 	} from '../../api/goods.js'
 	export default {
+		components: {
+			cusPreviewImg
+		},
 		data() {
 			return {
 				form: {
@@ -281,7 +293,8 @@
 				},
 				exit: false,
 				id: 0,
-
+				list_img: [],
+				ImgList: [],
 			}
 		},
 		onBackPress(options) {
@@ -291,7 +304,80 @@
 			this.quit()
 			return true;
 		},
+		filters: {
+			filterImage(v) {
+				if (!v) {
+					return v;
+				}
+				if (!/^http/.test((v))) {
+					return url.domain + v;
+				}
+				return v;
+			}
+		},
+		created() {
+			// 监听从裁剪页发布的事件，获得裁剪结果
+			uni.$on('uAvatarCropper', path => {
+				// this.avatar = path;
+				// 可以在此上传到服务端
+				uni.uploadFile({
+					url: url.baseURL + '/api/upload', //仅为示例，非真实的接口地址
+					filePath: path,
+					name: 'user',
+					header: {
+						token: "Bearer " + this.userMessage.token
+					},
+					formData: {
+						type: 'user',
+						path: 'user'
+					},
+					success: (uploadFileRes) => {
+						this.ImgList.push(url.domain + JSON.parse(uploadFileRes.data).data.url);
+						this.list_img.push(JSON.parse(uploadFileRes.data).data.url);
+
+					}
+				});
+			})
+		},
 		methods: {
+			previewImg(url) { // 点击预览图片
+				console.log(url);
+				this.$refs.cusPreviewImg.open(url) // 传入当前选中的图片地址
+			},
+			// 删除图片
+			del(index) {
+				// console.log(1);
+				let _this = this
+				uni.showModal({
+					title: '提示',
+					content: '是否删除该图片？',
+					success: function(res) {
+						if (res.confirm) {
+							_this.ImgList.splice(index, 1);
+							_this.list_img.splice(index, 1);
+
+						} else if (res.cancel) {
+							return true;
+						}
+					}
+				});
+			},
+			// 裁剪
+			uploadImg() {
+				this.$u.route({
+					// 关于此路径，请见下方"注意事项"
+					url: '/pages/avatar/u-avatar-cropper',
+					// 内部已设置以下默认参数值，可不传这些参数
+					params: {
+						// 输出图片宽度，高等于宽，单位px
+						destWidth: 300,
+						// 裁剪框宽度，高等于宽，单位px
+						rectWidth: 300,
+						// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
+						fileType: 'jpg',
+					}
+				})
+			},
 			quit() {
 				uni.showModal({
 					title: '提示',
@@ -307,26 +393,23 @@
 			},
 			// 
 			onUploaded(lists, name) {},
-			longtap(lists, index) {
-				this.form.images = []
-				lists.map((v, i) => {
-					if (i == 0) {
-						if (v.response) {
-							this.form.main_image = v.response.data.url;
-						} else {
-							let url = v.url.substr(this.$cfg.domain.length)
-							this.form.main_image = url;
+			longtap(index) {
+				let _this = this
+				if(index!=0){
+					uni.showModal({
+						title: '提示',
+						content: '是否将当前图片设置为主图？',
+						success: async (res) => {
+							if (res.confirm) {
+								_this.ImgList.splice(0, 1, ..._this.ImgList.splice(index, 1, _this.ImgList[0]));
+								_this.list_img.splice(0, 1, ..._this.list_img.splice(index, 1, _this.list_img[0]));
+								_this.$forceUpdate()
+							} else {
+								// 如果不存在before-remove钩子，
+							}
 						}
-					} else {
-						if (v.response) {
-							this.form.images.push(v.response.data.url)
-						} else {
-							let url = v.url.substr(this.$cfg.domain.length)
-							this.form.images.push(url)
-
-						}
-					}
-				})
+					});
+				}
 			},
 			// 时间返回fn
 			confirmTime(v) {
@@ -349,6 +432,15 @@
 			},
 			// 保存
 			async save() {
+				if (this.list_img.length > 0) {
+					this.form.images = []
+					this.form.main_image = this.list_img[0]
+					this.list_img.map((v, i) => {
+						if (i > 0) {
+							this.form.images.push(v)
+						}
+					})
+				}
 				if (!store.state.barcodeDa.barcode_array) {
 					this.form.barcode_array = []
 					this.form.color_id.map((v, i) => {
@@ -399,56 +491,6 @@
 				let res = await goodsEdit(this.id, obj);
 				if (!res.code) {
 					uni.navigateBack()
-				}
-			},
-			// 上传图片成功fnc
-			onSuccess(data, index, lists, name) {
-				this.form.images = []
-				lists.map((v, i) => {
-					if (i == 0) {
-						if (v.response) {
-							this.form.main_image = v.response.data.url;
-						} else {
-							let url = v.url.substr(this.$cfg.domain.length)
-							this.form.main_image = url;
-						}
-					} else {
-						if (v.response) {
-							this.form.images.push(v.response.data.url)
-						} else {
-							let url = v.url.substr(this.$cfg.domain.length)
-							this.form.images.push(url)
-						}
-					}
-				})
-			},
-			// 上传图片失败fnc
-			onError(res, index, lists, name) {
-				console.log('上传失败');
-			},
-			// 移除照片
-			onRemove(index, lists, name) {
-				this.fileList.splice(index, 1)
-				if (this.fileList.length > 0) {
-					if (this.fileList[0].url.valueOf(this.$cfg.domain) != -1) {
-						let url = this.fileList[0].url.substr(this.$cfg.domain.length)
-						this.form.main_image = url
-					} else {
-						this.form.main_image = this.fileList[0].url
-					}
-				}
-				if (this.fileList.length > 1) {
-					this.form.images = []
-					this.fileList.map((v, i) => {
-						if (i != 0) {
-							if (v.url.valueOf(this.$cfg.domain) != -1) {
-								let url = v.url.substr(this.$cfg.domain.length)
-								this.form.images.push(url)
-							} else {
-								this.form.images.push(v.url)
-							}
-						}
-					})
 				}
 			},
 			// 商品启用状态开关
@@ -571,15 +613,14 @@
 					arrSize.push(v.name)
 				})
 				this.size_name = arrSize.join(',')
-
-				this.fileList.push({
-					url: this.$cfg.domain + res.main_image
-				})
+				if(res.main_image){
+					this.ImgList.push(this.$cfg.domain + res.main_image)
+					this.list_img.push(res.main_image)
+				}
 				if (res.images) {
 					res.images.map((v) => {
-						this.fileList.push({
-							url: this.$cfg.domain + v
-						})
+						this.ImgList.push(this.$cfg.domain + v)
+						this.list_img.push(v)
 					})
 				}
 				this.barcodeDa.colorDa = res.color;
@@ -599,11 +640,9 @@
 				});
 			},
 			init() {
-				const userMessage = uni.getStorageSync('userMessage');
-				this.action = urls.baseURL;
-				this.header.token = "Bearer " + userMessage.token
-				this.formData.type = "goods";
-				this.formData.path = "goods";
+				this.userMessage = uni.getStorageSync('userMessage');
+				this.action = url.baseURL;
+				this.header.token = "Bearer " + this.userMessage.token
 			},
 			// 设置单品条码
 			toBarcodes() {
@@ -887,7 +926,7 @@
 		width: 100%;
 		// height: 100%;
 		background-color: #F8F8F8;
-
+		
 		.btn {
 			width: 100%;
 			position: fixed;
@@ -995,21 +1034,21 @@
 				margin-bottom: 20rpx;
 
 				.form_item1 {
-					padding-right: 20rpx;
+					padding: 20rpx;
 					display: flex;
-					align-items: center;
+					flex-direction: column;
+					// align-items: center;
 					background-color: #FFFFFF;
 					margin-bottom: 2rpx;
-					height: 280rpx;
 
 					/deep/.u-add-tips {
 						margin-top: 0;
 					}
 
-					text {
-						width: 180rpx;
+					.upload {
+						width: 100%;
+						padding: 10rpx 0;
 						// text-align: left;
-						padding-left: 20rpx;
 					}
 
 					/deep/.u-delete-icon {
@@ -1017,6 +1056,46 @@
 						right: 0;
 						width: 28rpx;
 						height: 28rpx;
+					}
+
+					.img {
+						width: 100%;
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+
+						.list-img {
+							margin-right: 20rpx;
+							position: relative;
+
+							.main-img {
+								position: absolute;
+								left: 0;
+								top: 0;
+								background-color: #007AFF;
+								color: #FFFFFF;
+								font-size: 20rpx;
+								transform: scale(0.85);
+								padding: 4rpx;
+								z-index: 99;
+							}
+
+							.icon {
+								position: absolute;
+								right: 0;
+								top: -6rpx;
+								z-index: 99;
+							}
+						}
+
+						.plus {
+							background-color: #f4f5f6;
+							width: 100rpx;
+							height: 100rpx;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
 					}
 				}
 			}

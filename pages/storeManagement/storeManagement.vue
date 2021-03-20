@@ -57,7 +57,8 @@
 				list: [],
 				last_page: 0,
 				iq: '',
-				url:url.domain
+				url:url.domain,
+				pull:false
 			}
 		},
 		methods: {
@@ -66,7 +67,6 @@
 					page: this.page,
 					page_size: this.page_size
 				})
-				console.log(res); 
 				this.list.push(...res.data)
 				this.last_page = res.last_page
 			},
@@ -74,21 +74,25 @@
 			handlePullDown(stopLoad) {
 				this.page = 1;
 				this.list = []
+				this.pull = false
 				this.init()
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
+				if(!this.pull){
+					
 				if (this.page >= this.last_page) {
 					this.$refs.uToast.show({
 						title: '加载到底了',
 						type: 'default',
 						position: 'bottom'
 					})
-
+				this.pull = true
 				} else {
 					this.page++;
 					this.init()
+				}
 				}
 			},
 			handleGoTop() {
@@ -122,6 +126,8 @@
 		},
 		onShow() {
 			this.list = []
+			this.pull = false
+			this.page = 1
 			this.init();
 		}
 	}

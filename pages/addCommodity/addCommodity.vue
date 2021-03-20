@@ -50,15 +50,23 @@
 			</view>
 			<view class="box1">
 				<view class="form_item1">
-					<text>上传图片</text>
-					<u-upload width="100" height='100' upload-text='' image-mode='aspectFit' :limitType='limit' :action="action+'/api/upload'"
-					 :header="header" :name="formData.type" :form-data="formData" @on-success="onSuccess" :file-list="fileList"
-					 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="6" :show-progress="false" @on-error='onError' :is_main="true"
-					 @long-tap="longtap" del-bg-color='#000000'>
-					</u-upload>
+					<text class="upload">上传图片</text>
+					<view class="img">
+						<view class="list-img" v-for="(item,index) in list_img" :key="index" @longtap='longtap(index)'>
+							<text class="main-img" v-if="index==0">主</text>
+							<u-icon class="icon" @click="del(index)" name="close-circle-fill" color="#000000" size="32"></u-icon>
+							<u-image v-if="list_img.length>0"  @tap='previewImg($cfg.domain+item)' width="100rpx"
+							 border-radius="14" image-mode='aspectFit' height="100rpx" :src="item|filterImage"></u-image>
+						</view>
+						<view class="plus" @click="uploadImg" v-if="list_img.length<6">
+							<u-icon name="plus" color="#606266" size="36"></u-icon>
+						</view>
+
+					</view>
 				</view>
 			</view>
 		</view>
+
 
 		<view class="box">
 			<view class="form_item">
@@ -177,20 +185,30 @@
 		<view class="btn">
 			<u-button type="primary" class="btn" @tap="save">保存</u-button>
 		</view>
+		<cus-previewImg ref="cusPreviewImg" :circular="true" :duration="400" :list="ImgList" />
 	</view>
 </template>
 
 <script>
-	import {generateGoodsMumber} from '../../api/goods.js'
-	import {configList} from '../../api/member.js'
-	import urls from '../../api/configuration.js'
+	import cusPreviewImg from '@/components/cus-previewImg/cus-previewImg.vue'
+	import {
+		generateGoodsMumber
+	} from '../../api/goods.js'
+	import {
+		configList
+	} from '../../api/member.js'
+	import url from '../../api/configuration.js'
 	import store from '@/store'
 	import {
 		goodsAdd
 	} from '../../api/goods.js'
 	export default {
+		components: {
+			cusPreviewImg
+		},
 		data() {
 			return {
+				list_img: [],
 				form: {
 					name: '',
 					number: '',
@@ -222,7 +240,7 @@
 					origin: '',
 					standard: '',
 					security: '',
-					goods_stock:[]
+					goods_stock: []
 				},
 				showSeason: false,
 				showtime: false,
@@ -279,7 +297,9 @@
 					colorDa: [],
 					sizerDa: []
 				},
-				exit: false
+				exit: false,
+				userMessage: {},
+				ImgList: [],
 			}
 		},
 		onBackPress(options) {
@@ -289,7 +309,79 @@
 			this.quit()
 			return true;
 		},
+		filters: {
+			filterImage(v) {
+				if (!v) {
+					return v;
+				}
+				if (!/^http/.test((v))) {
+					return url.domain + v;
+				}
+				return v;
+			}
+		},
+		created() {
+			// 监听从裁剪页发布的事件，获得裁剪结果
+			uni.$on('uAvatarCropper', path => {
+				// this.avatar = path;
+				// 可以在此上传到服务端
+				uni.uploadFile({
+					url: url.baseURL + '/api/upload', //仅为示例，非真实的接口地址
+					filePath: path,
+					name: 'user',
+					header: {
+						token: "Bearer " + this.userMessage.token
+					},
+					formData: {
+						type: 'user',
+						path: 'user'
+					},
+					success: (uploadFileRes) => {
+						this.ImgList.push(url.domain + JSON.parse(uploadFileRes.data).data.url);
+						this.list_img.push(JSON.parse(uploadFileRes.data).data.url);
+
+					}
+				});
+			})
+		},
 		methods: {
+			previewImg(url) { // 点击预览图片
+				this.$refs.cusPreviewImg.open(url) // 传入当前选中的图片地址
+			},
+			// 删除图片
+			del(index) {
+				// console.log(1);
+				let _this = this
+				uni.showModal({
+					title: '提示',
+					content: '是否删除该图片？',
+					success: function(res) {
+						if (res.confirm) {
+							_this.ImgList.splice(index, 1);
+							_this.list_img.splice(index, 1);
+
+						} else if (res.cancel) {
+							return true;
+						}
+					}
+				});
+			},
+			// 裁剪
+			uploadImg() {
+				this.$u.route({
+					// 关于此路径，请见下方"注意事项"
+					url: '/pages/avatar/u-avatar-cropper',
+					// 内部已设置以下默认参数值，可不传这些参数
+					params: {
+						// 输出图片宽度，高等于宽，单位px
+						destWidth: 300,
+						// 裁剪框宽度，高等于宽，单位px
+						rectWidth: 300,
+						// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
+						fileType: 'jpg',
+					}
+				})
+			},
 			quit() {
 				uni.showModal({
 					title: '提示',
@@ -304,27 +396,26 @@
 				});
 			},
 			// 
-			longtap(lists, index) {
+			longtap(index) {
 				// console.log();
-				this.form.images = []
-				lists.map((v, i) => {
-					if (i == 0) {
-						if (v.response) {
-							this.form.main_image = v.response.data.url;
-						} else {
-							let url = v.url.substr(this.$cfg.domain.length)
-							this.form.main_image = url;
+				// this.form.images = []
+				if(index!=0){
+					let _this = this
+					uni.showModal({
+						title: '提示',
+						content: '是否将当前图片设置为主图？',
+						success: async (res) => {
+							if (res.confirm) {
+								_this.ImgList.splice(0, 1, ..._this.ImgList.splice(index, 1, _this.ImgList[0]));
+								_this.list_img.splice(0, 1, ..._this.list_img.splice(index, 1, _this.list_img[0]));
+								_this.$forceUpdate()
+							} else {
+								// 如果不存在before-remove钩子，
+							}
 						}
-					} else {
-						if (v.response) {
-							this.form.images.push(v.response.data.url)
-						} else {
-							let url = v.url.substr(this.$cfg.domain.length)
-							this.form.images.push(url)
+					});
+				}
 
-						}
-					}
-				})
 			},
 			// 时间返回fn
 			confirmTime(v) {
@@ -349,6 +440,14 @@
 			},
 			// 保存
 			async save() {
+				if (this.list_img.length > 0) {
+					this.form.main_image = this.list_img[0]
+					this.list_img.map((v, i) => {
+						if (i > 0) {
+							this.form.images.push(v)
+						}
+					})
+				}
 				if (!store.state.barcodeDa.barcode_array) {
 					this.form.barcode_array = []
 					this.form.color_id.map((v, i) => {
@@ -366,18 +465,15 @@
 				} else {
 					this.form.barcode_array = store.state.barcodeDa.barcode_array;
 				}
-				console.log(store.state.goodsStockDa.length );
-				if (store.state.goodsStockDa.length >0) {
+				if (store.state.goodsStockDa.length > 0) {
 					this.form['goods_stock'] = store.state.goodsStockDa;
 				}
-				console.log(this.form);
 				let obj = {}
 				for (let key in this.form) {
 					if (this.form[key] || this.form[key] === 0) {
 						obj[key] = this.form[key];
 					}
 				}
-				console.log(this.form);
 				this.$store.commit('colorDaAction', {
 					colorDa: ''
 				});
@@ -479,12 +575,9 @@
 				});
 			},
 			init() {
-				const userMessage = uni.getStorageSync('userMessage');
-				this.action = urls.baseURL;
-				this.header.token = "Bearer " + userMessage.token
-				this.formData.type = "goods";
-				this.formData.path = "goods";
-
+				this.userMessage = uni.getStorageSync('userMessage');
+				this.action = url.baseURL;
+				this.header.token = "Bearer " + this.userMessage.token
 			},
 			// 设置单品条码
 			toBarcodes() {
@@ -558,11 +651,11 @@
 					})
 				}
 			},
-			async config(){
+			async config() {
 				let res = await generateGoodsMumber()
 				let res1 = await configList()
-				if(!res.code){
-					if(res1.auto_generate_goods_number.value==1){
+				if (!res.code) {
+					if (res1.auto_generate_goods_number.value == 1) {
 						this.form.number = res.number
 					}
 				}
@@ -907,21 +1000,21 @@
 				margin-bottom: 20rpx;
 
 				.form_item1 {
-					padding-right: 20rpx;
+					padding: 20rpx;
 					display: flex;
-					align-items: center;
+					flex-direction: column;
+					// align-items: center;
 					background-color: #FFFFFF;
 					margin-bottom: 2rpx;
-					height: 280rpx;
 
 					/deep/.u-add-tips {
 						margin-top: 0;
 					}
 
-					text {
-						width: 180rpx;
+					.upload {
+						width: 100%;
+						padding: 10rpx 0;
 						// text-align: left;
-						padding-left: 20rpx;
 					}
 
 					/deep/.u-delete-icon {
@@ -930,7 +1023,48 @@
 						width: 28rpx;
 						height: 28rpx;
 					}
+
+					.img {
+						width: 100%;
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+
+						.list-img {
+							margin-right: 20rpx;
+							position: relative;
+
+							.main-img {
+								position: absolute;
+								left: 0;
+								top: 0;
+								background-color: #007AFF;
+								color: #FFFFFF;
+								font-size: 20rpx;
+								transform: scale(0.85);
+								padding: 4rpx;
+								z-index: 99;
+							}
+
+							.icon {
+								position: absolute;
+								right: 0;
+								top: -6rpx;
+								z-index: 99;
+							}
+						}
+
+						.plus {
+							background-color: #f4f5f6;
+							width: 100rpx;
+							height: 100rpx;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+					}
 				}
+			
 			}
 		}
 	}

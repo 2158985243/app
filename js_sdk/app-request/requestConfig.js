@@ -47,9 +47,10 @@ function sort_ASCII(obj, method) {
 				if (method == 'GET') {
 					sortObj[sortArr[i]] = ""
 				}
-				if (obj[sortArr[i]] == null) {
-					sortObj[sortArr[i]] = ""
-				}
+				// console.log(obj[sortArr[i]]);
+				// if (obj[sortArr[i]] == null) {
+				// 	sortObj[sortArr[i]] = ""
+				// }
 			} else {
 				sortObj[sortArr[i]] = obj[sortArr[i]];
 			}

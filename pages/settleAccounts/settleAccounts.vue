@@ -485,8 +485,13 @@
 			// 确定积分抵现
 			enpoint() {
 				this.user_point = false
-				this.form.used_point = this.$u.deepClone(this.used_point)
-				this.form.point_used_as_money = this.$u.deepClone(this.point_used_as_money)
+				if (this.checked) {
+					this.form.used_point = this.$u.deepClone(this.used_point)
+					this.form.point_used_as_money = this.$u.deepClone(this.point_used_as_money)
+					this.form.money = (this.form.money - Number(this.form.point_used_as_money)).toFixed(2)
+					this.used_point = ''
+					this.point_used_as_money = ''
+				}
 			},
 			// 打开积分抵现
 			checkboxChange(e) {
@@ -494,6 +499,9 @@
 				if (e.value) {
 					this.user_point = true;
 				}
+				this.form.money = Number(this.form.money) + Number(this.form.point_used_as_money)
+				this.form.used_point = 0
+				this.form.point_used_as_money = 0
 			},
 			// 优惠金额
 			inputValue(v) {
@@ -698,8 +706,10 @@
 				this.$store.commit('customerFn', {
 					customerObj: this.members_data
 				})
+				this.form.money = Number(this.form.money) + Number(this.form.point_used_as_money)
 				this.form.customer_id = 0
 				this.form.reward_point = 0
+				this.checked = false
 				// 取消商品会员折扣
 				this.list.map(v => {
 					v.data.map(v1 => {
@@ -899,7 +909,13 @@
 					account_id: this.payItem.account_id,
 					money: this.form.money
 				})
-				if (this.payItem.account_id == 0 && this.members.has_password == 1) {
+				if (this.payItem.account_id == undefined) {
+					this.$refs.uToast.show({
+						title: '请选择支付方式',
+						type: 'default',
+						position: 'bottom'
+					})
+				} else if (this.payItem.account_id == 0 && this.members.has_password == 1) {
 					this.show_psd = true;
 				} else {
 					let res = await salesOrderAdd(this.form)
