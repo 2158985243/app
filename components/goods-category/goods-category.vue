@@ -14,7 +14,7 @@
 		<view class="right">
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" :inBottom='inBottom' @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list-arr" v-for="(item,index) in dataList" :key='index'>
 					<view class="list-arr-name" v-show="acitve==index">
 						<!-- :style="{height:hig+'rpx'}" -->
@@ -65,6 +65,10 @@
 			condition: {
 				type: Number,
 				default: 0
+			},
+			inBottom:{
+				type: Boolean,
+				default: false
 			}
 
 		},
@@ -159,6 +163,7 @@
 				stopLoad ? stopLoad() : '';
 			},
 			handleLoadMore(stopLoad) {
+				// console.log(this.inBottom);
 				this.$emit('handleLoadMore', stopLoad)
 			},
 

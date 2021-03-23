@@ -1,8 +1,8 @@
 <template>
-	<view class="k-scroll-view" ref="k-scroll-view" :style="[scrollContainerStyle]" @touchstart="touchstart" @touchmove="touchmove"
-	 @touchend="touchend" @touchcancel="touchcancel">
-		<view v-if="refreshType === 'native' && showPullDown" class="native-refresh-icon" :style="[{ top: `${moveY}px` }]"
-		 :class="[{ xuanzhun: doRefreshing }]">
+	<view class="k-scroll-view" ref="k-scroll-view" :style="[scrollContainerStyle]" @touchstart="touchstart"
+		@touchmove="touchmove" @touchend="touchend" @touchcancel="touchcancel">
+		<view v-if="refreshType === 'native' && showPullDown" class="native-refresh-icon"
+			:style="[{ top: `${moveY}px` }]" :class="[{ xuanzhun: doRefreshing }]">
 			<text class="my-icons-custom icon-jiantou-refresh" style="color: #4089ff;font-size: 60rpx;"></text>
 		</view>
 		<view class="scroll-load-refresh" v-if="refreshType === 'custom' && showPullDown">
@@ -23,8 +23,8 @@
 			{{ onPullUpText }}
 		</view>
 
-		<scroll-view class="scroll-Y" scroll-y="true" :style="[scrollContentStyle]" :scroll-top="scrollTop" :lower-threshold="bottom"
-		 @scrolltoupper="upper" @scrolltolower="lower" @scroll="scroll">
+		<scroll-view class="scroll-Y" scroll-y="true" :style="[scrollContentStyle]" :scroll-top="scrollTop"
+			:lower-threshold="bottom" @scrolltoupper="upper" @scrolltolower="lower" @scroll="scroll">
 			<view class="scroll-content">
 				<slot></slot>
 				<view class="empty-tips" v-if="showEmpty">{{ emptyTip }}</view>
@@ -81,6 +81,11 @@
 				// 禁用下拉
 				type: [String, Boolean],
 				default: true
+			},
+			inBottom: {
+				// 禁用下拉
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -127,7 +132,7 @@
 			scrollContainerStyle() {
 				return {
 					// height: `${this.height || this.height_+'rpx'}`
-					height:"100%"
+					height: "100%"
 				};
 			},
 			scrollContentStyle() {
@@ -172,6 +177,9 @@
 			},
 			lower: function(e) {
 				// console.log("到达底部")
+				// if(this.showEmpty){
+				// 	this.isInBottom = false;
+				// }else{}
 				this.isInBottom = true;
 				this.isInTop = false;
 
@@ -265,7 +273,8 @@
 				// 上拉 并且 在底部
 				if (hk.touch_direction === 'top' && hk.isInBottom) {
 					// console.log("我在底部上拉")
-					hk.showPullUp = true; // 显示上拉加载
+					
+					hk.showPullUp = !this.inBottom; // 显示上拉加载
 					hk.onPullUpText = hk.loadTip;
 
 					if (hk.moveY > hk.touchHeight) {
@@ -343,19 +352,25 @@
 				// 隐藏刷新文字提示
 				hk.clearTimer = setTimeout(function() {
 					hk.stopTips();
-				}, 2000);
+				}, 1000);
 			},
 			onPullUp: function() {
 				// 加载更多
 				const hk = this;
+				// if(this.inBottom){
 
+				// }
 				// console.log('上拉加载');
+				// console.log(this.inBottom);
 				hk.$emit('onPullUp', hk.stopTips);
-
+				this.showPullUp = !this.inBottom
 				// 隐藏上拉提示
-				hk.clearTimer = setTimeout(function() {
-					hk.stopTips();
-				}, 2000);
+				if (!this.inBottom) {
+
+					hk.clearTimer = setTimeout(function() {
+						hk.stopTips();
+					}, 1000);
+				}
 			},
 			stopTips(config) {
 				config = config || {};

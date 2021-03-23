@@ -18,6 +18,8 @@ export default new Vuex.Store({
 		tademark:[],//选择的品牌权限
 		purview:[],//权限数组
 		referDate:{},//查询数据
+		screenDate:{},//零售查询数据
+		stockDate:{},//库存查询数据
 		authority:[],//权限数组
 		customerObj:{name:''},//销售选择的会员
 	},
@@ -74,6 +76,14 @@ export default new Vuex.Store({
 		// 查询
 		referFn(state,context){
 			state.referDate = context.referDate
+		},
+		// 零售查询
+		screenFn(state,context){
+			state.screenDate = context.screenDate
+		},
+		// 库存查询
+		stockFn(state,context){
+			state.stockDate = context.stockDate
 		},
 		// 权限
 		authorityFn(state,context){

@@ -164,13 +164,13 @@
 				if (!this.load) {
 					this.page++;
 					this.init()
-					console.log('触底加载更多1');
+					// console.log('触底加载更多1');
 				} else {
 					this.page++;
 					this.init({
 						date: this.start_time
 					})
-					console.log('触底加载更多2');
+					// console.log('触底加载更多2');
 				}
 
 			},

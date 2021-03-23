@@ -141,7 +141,7 @@
 		</view>
 		<view class="list">
 			<goods-category :dataList='dataList' @leftNav="leftNav" :saveData="saveData" :vs='vs' @rightNav="rightNav"
-			 :condition="condition" @handlePullDown="handlePullDown" @handleLoadMore="handleLoadMore"></goods-category>
+			 :condition="condition" :inBottom="pull" @handlePullDown="handlePullDown" @handleLoadMore="handleLoadMore"></goods-category>
 		</view>
 		<view class="shopping-cart">
 			<view class="goods-quantity">
@@ -1145,7 +1145,7 @@
 			width: 100%;
 			position: fixed;
 			top: calc(80rpx + var(--status-bar-height)) ;
-			z-index: 1000;
+			z-index: 999;
 		}
 		.list {
 			width: 100%;

@@ -81,6 +81,11 @@
 
 			}
 		},
+		onLoad() {
+			this.$store.commit('referFn', {
+				referDate: {}
+			})
+		},
 		methods: {
 			// 增加商品
 			toAddCommodity(){

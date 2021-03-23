@@ -639,7 +639,7 @@
 									this.getSystems()
 								}, 100)
 							} else {
-								this.height_mains = data.height * 2
+								this.height_mains = data.height*2
 							}
 						}).exec();
 					}

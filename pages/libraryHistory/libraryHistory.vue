@@ -15,7 +15,7 @@
 						<view class="list">
 							<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 							 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-							 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+							 :autoPullUp="autoPullUp" :inBottom="pull[current]" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 								<view class="list-box" v-for="(itemList,indexList) in item" @click="toPurchase(itemList)">
 									<view class="left">
 										<text class="supplier-name">{{itemList.supplier.name}}</text>
@@ -80,7 +80,7 @@
 				loadingTip: '正在加载中...',
 				emptyTip: '--到底了--',
 				touchHeight: 50,
-				height: 0,
+				height: 100,
 				bottom: 0,
 				autoPullUp: true,
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
@@ -102,7 +102,7 @@
 							...this.refer_data
 						});
 						this.list[this.current].push(...res.data)
-						this.last_page[this.curren] = res.last_page
+						this.last_page[this.current] = res.last_page
 					} else if (this.current == 1) {
 						let res = await purchaseStorageList({
 							status: 0,
@@ -112,7 +112,7 @@
 
 						});
 						this.list[this.current].push(...res.data)
-						this.last_page[this.curren] = res.last_page
+						this.last_page[this.current] = res.last_page
 					} else {
 						let res = await purchaseStorageList({
 							status: 2,
@@ -121,7 +121,7 @@
 							...this.refer_data
 						});
 						this.list[this.current].push(...res.data)
-						this.last_page[this.curren] = res.last_page
+						this.last_page[this.current] = res.last_page
 					}
 				}
 			},
@@ -181,7 +181,7 @@
 			},
 			// 下拉刷新
 			handlePullDown(stopLoad) {
-				this.page[this.curren] = 1;
+				this.page[this.current] = 1;
 				this.list[this.current] = []
 				this.pull[this.current] = false;
 				this.init()
@@ -190,7 +190,8 @@
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
 				if (!this.pull[this.current]) {
-					if (this.page[this.curren] >= this.last_page[this.curren]) {
+					// console.log(this.pull[this.current]);
+					if (this.page[this.current] >= this.last_page[this.current]) {
 						this.$refs.uToast.show({
 							title: '加载到底了',
 							type: 'default',
@@ -199,7 +200,7 @@
 						this.pull[this.current] = true
 
 					} else {
-						this.page[this.curren]++;
+						this.page[this.current]++;
 						this.init()
 					}
 				}
@@ -216,10 +217,18 @@
 			this.refer_data.start_time = date.start_time
 			this.refer_data.end_time = date.end_time
 			this.init()
-			uni.$on("refer", async (result) => {
-				this.page[this.current] = 1;
-				if (result) {
-					this.refer_data = result
+			uni.$on("refer", async (res) => {
+				if (res) {
+					this.page[this.current] = 1;
+					if(res.start_time == "" || res.start_time == undefined){
+						delete res.start_time
+						delete res.end_time
+						for(let key in res){
+							this.refer_data[key] = res[key]
+						}
+					}else{
+						this.refer_data = res
+					}
 					this.list[this.current] = []
 					this.init()
 				}

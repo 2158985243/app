@@ -118,6 +118,7 @@
 				sum_money: 0,
 				show: false,
 				active: false,
+				config:{}
 			}
 		},
 		methods: {
@@ -172,14 +173,14 @@
 				
 			},
 			// 作废
-			async del() {
+			 del() {
 				if (!this.active) {
-					let bl = await configList()
-					let e_time = this.$date.Ndays(Number(bl.can_cancel_bill_max_day.value)).start_time
-					// console.log();
-					if(Date.now(e_time) >= Date.now(this.form.business_time)){
+					let num = Number(this.config.can_cancel_bill_max_day.value)
+					let e_time = this.$date.today()
+					let now = (new Date(e_time.start_time).getTime() - new Date(this.form.business_time).getTime())/1000/86400
+					if(now >= num){
 						this.$refs.uToast.show({
-							title: `只能作废${bl.can_cancel_bill_max_day.value}内的单据!`,
+							title: `只能作废${this.config.can_cancel_bill_max_day.value}内的单据!`,
 							type: 'default',
 							position: 'bottom'
 						})
@@ -208,11 +209,15 @@
 					})
 				}
 
+			},
+			async configFn(){
+				this.config = await configList()
 			}
 		},
 		onLoad(query) {
 			this.id = query.id;
 			this.init(query.id);
+			this.configFn()
 		}
 	}
 </script>

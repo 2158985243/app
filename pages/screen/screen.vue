@@ -126,7 +126,16 @@
 			},
 			sure() {
 				// console.log(this.form);
-				uni.$emit('screen', this.form)
+				
+				let obj = {
+					status_name:this.status_name,
+					account_name:this.account_name,
+					form:this.form
+				}
+				this.$store.commit('screenFn', {
+					screenDate: obj
+				})
+				uni.$emit('screened', this.form)
 				uni.navigateBack()
 			},
 			handelScan() {
@@ -157,10 +166,10 @@
 			},
 			// 单据类型
 			confirm(v){
-				console.log(v);
 				this.form.status = v[0].value;
 				this.status_name = v[0].label;
 			},
+			// 选择支付类型
 			toPatternOfPayment(){
 				uni.navigateTo({
 					url:`/pages/patternOfPayment/patternOfPayment?iq=1`
@@ -168,9 +177,24 @@
 			}
 		},
 		onLoad() {
-			let date = this.$date.thirtyDays()
-			this.form.start_time = date.start_time;
-			this.form.end_time = date.end_time;
+			let bl = false
+			for(let key in store.state.screenDate){
+				bl = true
+			}
+			if(bl){
+				this.status_name = store.state.screenDate.status_name;
+				this.account_name =store.state.screenDate.account_name;
+				this.form = store.state.screenDate.form
+				if(this.form.start_time == undefined){
+					let date = this.$date.thirtyDays()
+					this.form.start_time = date.start_time;
+					this.form.end_time = date.end_time;
+				}
+			}else{
+				let date = this.$date.thirtyDays()
+				this.form.start_time = date.start_time;
+				this.form.end_time = date.end_time;
+			}
 			uni.$on('patternOfPayment',res=>{
 				if(res){
 					this.form.account_id = res.account_id;

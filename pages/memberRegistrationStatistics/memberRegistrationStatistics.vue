@@ -120,6 +120,7 @@
 <style scoped lang="scss">
 	.memberRegistrationStatistics {
 		width: 100%;
+		min-height: 100%;
 		display: flex;
 		flex-direction: column;
 		background-color: #f3f2f4;

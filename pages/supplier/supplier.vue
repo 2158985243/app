@@ -12,7 +12,7 @@
 		<view class="management_list">
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+			 :autoPullUp="autoPullUp" :inBottom="pull" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list" v-for="(item,index) in list" :key="index" @click="toSupplierDetails(item.id)">
 					<view>
 						{{item.name}}
@@ -48,7 +48,7 @@
 				loadingTip: '正在加载中...',
 				emptyTip: '--到底了--',
 				touchHeight: 50,
-				height: 0,
+				height: 100,
 				bottom: 0,
 				autoPullUp: true,
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
@@ -135,7 +135,7 @@
 <style lang="scss" scoped>
 	.supplier {
 		width: 100%;
-		min-height: 100%;
+		height: 100vh;
 		display: flex;
 		flex-direction: column;
 		background-color: #e7e7e7;
@@ -144,10 +144,15 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			// height: 80rpx;
+			height: 80rpx;
 			background-color: #e7e7e7;
 		}
-
+		.management_list{
+			width: 100%;
+			height: calc(100vh - 168rpx);
+			display: flex;
+			flex-direction: column;
+		}
 		/deep/.u-content {
 			background-color: #FFFFFF !important;
 		}

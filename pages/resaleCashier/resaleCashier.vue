@@ -7,144 +7,151 @@
 			</template>
 		</u-navbar>
 		<!-- <view class="resaleCashier-main"> -->
-			
-			<view class="box">
-				<u-popup v-model="show" z-index='10077' mode="right" width="80%">
 
-					<view class="popup-right">
-						<view class="pop-title">
-							<u-icon name="arrow-left" color="#000000" @click='show=false' size="40"></u-icon>
-							<view class="sx">筛选</view>
-						</view>
-						<view class="pop-list">
-							<view class="nav-box">
-								<view class="nav-tit">
-									<text class="ht">品牌</text>
+		<view class="box">
+			<u-popup v-model="show" z-index='10077' mode="right" width="80%">
 
-								</view>
-								<view class="nav-list">
-									<view class="lak" v-for="(item,index) in brandList" :key="index">
-										<view class="nav-name">
-											<view class="nav-kk" @click.stop="clickBrand(item,index)" :class="item.checked? 'actives':''" v-if="index<5">
-												{{item.name}}
-											</view>
-										</view>
-										<view class="nav-name" v-if="index==5">
-											<view class="nav-kk" @click.stop="barndArr">
-												全部品牌
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-							<view class="nav-box">
-								<view class="nav-tit">
-									<text class="ht">类别</text>
-
-								</view>
-								<view class="nav-list">
-									<view class="lak" v-for="(item,index) in CategoryList" :key="index">
-										<view class="nav-name">
-											<view class="nav-kk" @click.stop="clickCate(item,index)" :class="item.checked? 'actives':''" v-if="index<5">
-												{{item.name}}
-											</view>
-										</view>
-										<view class="nav-name" v-if="index==5">
-											<view class="nav-kk" @click.stop="categoryArr">
-												全部类别
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-
-							<view class="nav-box">
-								<view class="nav-tit">
-									<text class="ht">状态</text>
-
-								</view>
-								<view class="nav-list">
-									<view class="lak" v-for="(item,index) in status" :key="index">
-										<view class="nav-name">
-											<view class="nav-kk" @click.stop="clickStatus(item,index)" :class="item.checked? 'actives':''">
-												{{item.name}}
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-
-							<view class="nav-box">
-								<view class="nav-tit">
-									<text class="ht">价格</text>
-
-								</view>
-								<view class="nav-list">
-									<view class="lak" v-for="(item,index) in price" :key="index">
-										<view class="nav-name">
-											<view class="nav-kk" @click.stop="clickPrice(item,index)" :class="item.checked? 'actives':''">
-												{{item.name}}
-											</view>
-										</view>
-									</view>
-								</view>
-							</view>
-
-
-						</view>
-						<view class="btn">
-							<u-button class="open" @click='reset'>重置</u-button>
-							<u-button class="open" type="primary" @click='determine'>确定</u-button>
-						</view>
+				<view class="popup-right">
+					<view class="pop-title">
+						<u-icon name="arrow-left" color="#000000" @click='show=false' size="40"></u-icon>
+						<view class="sx">筛选</view>
 					</view>
-				</u-popup>
-				<u-popup v-model="show1" mode="right" z-index='10077' width="80%">
-					<view class="popup-right">
-						<view class="pop-title">
-							<u-icon name="arrow-left" color="#000000" @click='show1=false' size="40"></u-icon>
-							<view class="sx">品牌</view>
+					<view class="pop-list">
+						<view class="nav-box">
+							<view class="nav-tit">
+								<text class="ht">品牌</text>
+
+							</view>
+							<view class="nav-list">
+								<view class="lak" v-for="(item,index) in brandList" :key="index">
+									<view class="nav-name">
+										<view class="nav-kk" @click.stop="clickBrand(item,index)"
+											:class="item.checked? 'actives':''" v-if="index<5">
+											{{item.name}}
+										</view>
+									</view>
+									<view class="nav-name" v-if="index==5">
+										<view class="nav-kk" @click.stop="barndArr">
+											全部品牌
+										</view>
+									</view>
+								</view>
+							</view>
 						</view>
-						<view class="pop-listt">
-							<u-checkbox-group :wrap='true'>
-								<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked" v-for="(item, index) in brandList"
-								 :key="index" :name="item.id">{{item.name}}</u-checkbox>
-							</u-checkbox-group>
+						<view class="nav-box">
+							<view class="nav-tit">
+								<text class="ht">类别</text>
+
+							</view>
+							<view class="nav-list">
+								<view class="lak" v-for="(item,index) in CategoryList" :key="index">
+									<view class="nav-name">
+										<view class="nav-kk" @click.stop="clickCate(item,index)"
+											:class="item.checked? 'actives':''" v-if="index<5">
+											{{item.name}}
+										</view>
+									</view>
+									<view class="nav-name" v-if="index==5">
+										<view class="nav-kk" @click.stop="categoryArr">
+											全部类别
+										</view>
+									</view>
+								</view>
+							</view>
 						</view>
+
+						<view class="nav-box">
+							<view class="nav-tit">
+								<text class="ht">状态</text>
+
+							</view>
+							<view class="nav-list">
+								<view class="lak" v-for="(item,index) in status" :key="index">
+									<view class="nav-name">
+										<view class="nav-kk" @click.stop="clickStatus(item,index)"
+											:class="item.checked? 'actives':''">
+											{{item.name}}
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+
+						<view class="nav-box">
+							<view class="nav-tit">
+								<text class="ht">价格</text>
+
+							</view>
+							<view class="nav-list">
+								<view class="lak" v-for="(item,index) in price" :key="index">
+									<view class="nav-name">
+										<view class="nav-kk" @click.stop="clickPrice(item,index)"
+											:class="item.checked? 'actives':''">
+											{{item.name}}
+										</view>
+									</view>
+								</view>
+							</view>
+						</view>
+
+
 					</view>
-				</u-popup>
-				<u-popup v-model="show2" mode="right" z-index='10077' width="80%">
-					<view class="popup-right">
-						<view class="pop-title">
-							<u-icon name="arrow-left" color="#000000" @click='show2=false' size="40"></u-icon>
-							<view class="sx">类别</view>
-						</view>
-						<view class="pop-listt">
-							<u-checkbox-group :wrap='true'>
-								<u-checkbox shape="circle" @change="cartesChecked($event,index)" v-model="item.checked" v-for="(item, index) in CategoryList"
-								 :key="index" :name="item.id">{{item.name}}</u-checkbox>
-							</u-checkbox-group>
-						</view>
-					</view>
-				</u-popup>
-				<view class="nav">
-					<view class="slot-wrap">
-						<u-search class='search' height='60' @change="search" margin='0 20rpx' :show-action="false" :scan="true" shape="square"
-						 placeholder="请输入货号/商品名称/条码" v-model="keyword" @Inventory="handelScan"></u-search>
-						<view class="search_add" @click="popup">
-							<text>筛选</text>
-							<u-icon name="arrow-down-fill" color="#ffffff" class="right_icon" size="28"></u-icon>
-						</view>
+					<view class="btn">
+						<u-button class="open" @click='reset'>重置</u-button>
+						<u-button class="open" type="primary" @click='determine'>确定</u-button>
 					</view>
 				</view>
-				<!-- <view class="titles">
+			</u-popup>
+			<u-popup v-model="show1" mode="right" z-index='10077' width="80%">
+				<view class="popup-right">
+					<view class="pop-title">
+						<u-icon name="arrow-left" color="#000000" @click='show1=false' size="40"></u-icon>
+						<view class="sx">品牌</view>
+					</view>
+					<view class="pop-listt">
+						<u-checkbox-group :wrap='true'>
+							<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked"
+								v-for="(item, index) in brandList" :key="index" :name="item.id">{{item.name}}
+							</u-checkbox>
+						</u-checkbox-group>
+					</view>
+				</view>
+			</u-popup>
+			<u-popup v-model="show2" mode="right" z-index='10077' width="80%">
+				<view class="popup-right">
+					<view class="pop-title">
+						<u-icon name="arrow-left" color="#000000" @click='show2=false' size="40"></u-icon>
+						<view class="sx">类别</view>
+					</view>
+					<view class="pop-listt">
+						<u-checkbox-group :wrap='true'>
+							<u-checkbox shape="circle" @change="cartesChecked($event,index)" v-model="item.checked"
+								v-for="(item, index) in CategoryList" :key="index" :name="item.id">{{item.name}}
+							</u-checkbox>
+						</u-checkbox-group>
+					</view>
+				</view>
+			</u-popup>
+			<view class="nav">
+				<view class="slot-wrap">
+					<u-search class='search' height='60' @change="search" margin='0 20rpx' :show-action="false"
+						:scan="true" shape="square" placeholder="请输入货号/商品名称/条码" v-model="keyword"
+						@Inventory="handelScan"></u-search>
+					<view class="search_add" @click="popup">
+						<text>筛选</text>
+						<u-icon name="arrow-down-fill" color="#ffffff" class="right_icon" size="28"></u-icon>
+					</view>
+				</view>
+			</view>
+			<!-- <view class="titles">
 						共140种商品，库存数265665454，总成本26564546
 					</view> -->
-			</view>
-			<view class="list">
-				<goods-category :dataList='dataList' @leftNav="leftNav" :saveData="saveData" :vs='vs' @rightNav="rightNav"
-				 @handlePullDown="handlePullDown" @handleLoadMore="handleLoadMore"></goods-category>
-			</view>
-			<view class="shopping-cart">
+		</view>
+		<view class="list">
+			<goods-category :dataList='dataList' @leftNav="leftNav" :saveData="saveData" :vs='vs' @rightNav="rightNav"
+				@handlePullDown="handlePullDown" :inBottom="pull" @handleLoadMore="handleLoadMore"></goods-category>
+		</view>
+		<view class="shopping-cart">
 			<view class="goods-quantity">
 				<u-icon class="icon-cart" @click="shoppingCart" name="shopping-cart" color="#ffffff" size="50"></u-icon>
 				<text class="money-cart">{{goodsNumber+'件'}} &yen;{{allMoney}}</text>
@@ -160,7 +167,8 @@
 			<view class="specification" v-if="goodsOf">
 				<view class="goods-of">
 					<!-- mode='aspectFit'  -->
-					<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+goodsOf.main_image"></u-image>
+					<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+goodsOf.main_image">
+					</u-image>
 					<view class="goodsNews">
 						<text class="goods-name">{{goodsOf.name}}</text>
 						<text class="goods-number">{{goodsOf.number}}</text>
@@ -172,7 +180,8 @@
 				<view class="goods-color">
 					<text>颜色</text>
 					<view class="colors">
-						<view class="colorMo" v-for="(item,index) in spec" :key="index" @click="clickColor(item,index)" :class="active1==index? 'active':''">
+						<view class="colorMo" v-for="(item,index) in spec" :key="index" @click="clickColor(item,index)"
+							:class="active1==index? 'active':''">
 							<text>{{item.name}}</text>
 							<text class="pos" v-if="item.quantity>0">{{item.quantity}}</text>
 						</view>
@@ -185,14 +194,16 @@
 							<view class="size-box-list once">
 								<text class="listed">尺码</text>
 								<text class="listed">当前库存</text>
-								<u-number-box class="listed" v-model="item.valNew" size="24" input-width="60" input-height="40" :min="0" @minus="minusAll"
-								 @plus="plusAll" @change="valChangeAll($event,item,index)"></u-number-box>
+								<u-number-box class="listed" v-model="item.valNew" size="24" input-width="60"
+									input-height="40" :min="0" @minus="minusAll" @plus="plusAll"
+									@change="valChangeAll($event,item,index)"></u-number-box>
 							</view>
-							<view class="size-box-list" v-for="(item1,index1) in item.data" :key="index1" @click="clickSize(item1,index1)">
+							<view class="size-box-list" v-for="(item1,index1) in item.data" :key="index1"
+								@click="clickSize(item1,index1)">
 								<text class="listed">{{item1.size.name}}</text>
 								<text class="listed" v-if="item1.goods_spec_info">{{item1.goods_spec_info.stock}}</text>
-								<u-number-box class="listed" v-model="item1.quantity" size="24" input-width="60" input-height="40" :min="0"
-								 @change="valChange"></u-number-box>
+								<u-number-box class="listed" v-model="item1.quantity" size="24" input-width="60"
+									input-height="40" :min="0" @change="valChange"></u-number-box>
 							</view>
 						</view>
 					</view>
@@ -208,13 +219,16 @@
 		<u-popup v-model="showShoppingCart" mode="bottom" z-index='1001' length="60%">
 			<view class="scart">
 				<view class="del">
-					<u-icon name="close-circle" class='close' @click="showShoppingCart=false" color="#040404" size="40"></u-icon>
+					<u-icon name="close-circle" class='close' @click="showShoppingCart=false" color="#040404" size="40">
+					</u-icon>
 				</view>
 				<view class="lists-cart">
 					<view class="specification" v-for="(item,index) in saveData" :key="index">
-						<u-icon name="trash" class='close' @click="hiddengoods(index)" color="#a8a8a8" size="40"></u-icon>
+						<u-icon name="trash" class='close' @click="hiddengoods(index)" color="#a8a8a8" size="40">
+						</u-icon>
 						<view class="goods-of" v-if="item.goodsData[0]">
-							<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+item.goodsData[0].goodsOf.main_image"></u-image>
+							<u-image width="140rpx" height="140rpx" border-radius='20'
+								:src="$cfg.domain+item.goodsData[0].goodsOf.main_image"></u-image>
 							<view class="goodsNews">
 								<text class="goods-name">{{item.goodsData[0].goodsOf.name}}</text>
 								<text class="goods-number">{{item.goodsData[0].goodsOf.number}}</text>
@@ -229,10 +243,12 @@
 											<view class="size-medium" v-if="itemSize.hidden">
 												<text class="size-nav">{{itemColor.name}}</text>
 												<text class="size-nav">{{itemSize.size.name}}</text>
-												<u-number-box class="size-nav" v-model="itemSize.quantity" size="24" @change="sizeChange($event,index,index1,indexSize,itemSize)"
-												 input-width="100" :min="0"></u-number-box>
+												<u-number-box class="size-nav" v-model="itemSize.quantity" size="24"
+													@change="sizeChange($event,index,index1,indexSize,itemSize)"
+													input-width="100" :min="0"></u-number-box>
 												<view class='size-nav'>
-													<u-icon name="trash" color="#a8a8a8" size="40" @click="delSize(index,index1,indexSize)"></u-icon>
+													<u-icon name="trash" color="#a8a8a8" size="40"
+														@click="delSize(index,index1,indexSize)"></u-icon>
 												</view>
 											</view>
 										</view>
@@ -323,7 +339,11 @@
 				valAll: [],
 				account: false,
 				last_page: 0,
-				mored: {id:0,index:0,name:'全部'},
+				mored: {
+					id: 0,
+					index: 0,
+					name: '全部'
+				},
 				pull: false
 			}
 		},
@@ -479,12 +499,12 @@
 					keyword: this.keyword
 				});
 				if (!res.code) {
-					this.dataList[this.mored.index].last_page = res.last_page
-					if (this.mored.index == undefined) {
-						this.dataList[0].arr = res.data;
-					} else {
+					this.$nextTick(() => {
+						this.dataList[this.mored.index].last_page = res.last_page
 						this.dataList[this.mored.index].arr = res.data;
-					}
+						this.$set(this.dataList,this.mored.index,this.dataList[this.mored.index])
+						// this.$forceUpdate()
+					})
 				}
 			},
 			// 点击品牌
@@ -775,7 +795,8 @@
 			// 删除某一个尺码
 			delSize(index, index1, indexSize) {
 				this.saveData[index].goodsData[index1].data[indexSize].hidden = false;
-				this.saveData[index].goodsData[index1].quantity -= this.saveData[index].goodsData[index1].data[indexSize].quantity;
+				this.saveData[index].goodsData[index1].quantity -= this.saveData[index].goodsData[index1].data[indexSize]
+					.quantity;
 				this.saveData[index].goodsData[index1].data[indexSize].quantity = 0;
 
 				this.$set(this.saveData, index, this.saveData[index])
@@ -836,12 +857,14 @@
 		background-color: #e3e3e3;
 		display: flex;
 		flex-direction: column;
-		.resaleCashier-main{
+
+		.resaleCashier-main {
 			width: 100%;
 			height: 100%;
 			display: flex;
 			flex-direction: column;
 		}
+
 		.active {
 			background-color: #3B4144 !important;
 			color: #FFFFFF !important;

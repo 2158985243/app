@@ -37,7 +37,7 @@
 			</view>
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+			 :autoPullUp="autoPullUp" :inBottom="pull" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list">
 					<view class="li" v-for="(item,index) in list" :key="index">
 						<view class="li-nav">
@@ -313,10 +313,21 @@
 			this.store_id = query.store_id;
 			this.expend_item_id = query.expend_item_id;
 			this.name = query.name;
-			uni.$on('screen', res => {
+			this.list = []
+			this.page = 1;
+			this.pull = false
+			this.init();
+			uni.$on('screened', res => {
 				if (res) {
-					console.log(res);
-					this.form = res
+					if(res.start_time == ""|| res.start_time == undefined){
+						delete res.start_time
+						delete res.end_time
+						for(let key in res){
+							this.form[key] = res[key]
+						}
+					}else{
+						this.form = res
+					}
 					this.page = 1;
 					this.list = []
 					this.pull = false
@@ -324,11 +335,11 @@
 				}
 			})
 		},
+		onUnload() {
+			uni.$off('screened')
+		},
 		onShow() {
-			this.list = []
-			this.page = 1;
-			this.pull = false
-			this.init();
+			
 		}
 	}
 </script>

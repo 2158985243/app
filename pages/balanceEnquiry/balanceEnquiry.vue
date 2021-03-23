@@ -12,7 +12,7 @@
 		<view class="mains">
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+			 :autoPullUp="autoPullUp" :inBottom="pull" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list" v-for="(item,index) in list" :key="index" @click="cilckItem(item.id)">
 					<view class="left">
 						<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" :src="$cfg.domain+item.image"></u-image>
@@ -167,6 +167,7 @@
 			align-items: center;
 			background-color: #2979ff;
 			position: fixed;
+			z-index: 9999;
 			top: calc(var(--status-bar-height) + 80rpx);
 		}
 
@@ -223,7 +224,7 @@
 			bottom: 0;
 			font-size: 26rpx;
 			color: #FFFFFF;
-
+			z-index: 9999;
 			text {
 				text-indent: 0.5em;
 			}

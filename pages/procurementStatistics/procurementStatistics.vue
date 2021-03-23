@@ -19,7 +19,7 @@
 
 						<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 						 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-						 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+						 :autoPullUp="autoPullUp" :inBottom="pull[current]" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 							<view class="cen">
 								<view class="list-nav">
 									<view class="nav-item">
@@ -186,8 +186,8 @@
 				bottom: 0,
 				autoPullUp: true,
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
-				last_page: [0, 0, 0, 0],
-				pull: [false, false, false, false]
+				last_page: [0, 0, 0, 0,0],
+				pull: [false, false, false, false,false]
 			}
 		},
 		computed: {
@@ -244,7 +244,6 @@
 					page_size: this.page_size
 
 				})
-				console.log(res);
 				if (this.page[this.current] == 1) {
 					this.list[this.current] = []
 				}
@@ -263,7 +262,7 @@
 			// 点击日期
 			async onClickItem(val) {
 				this.current = val.currentIndex;
-				console.log(this.current);
+				// console.log(this.current);
 				if (this.current == 4) {
 					this.showtime = true;
 				}

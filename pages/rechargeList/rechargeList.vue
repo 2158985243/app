@@ -29,7 +29,7 @@
 			</view>
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+			 :autoPullUp="autoPullUp" :inBottom="pull" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list">
 					<view class="li" v-for="(item,index) in list" :key="index">
 						<view class="li-nav">
@@ -189,13 +189,11 @@
 
 			async init() {
 				delete this.form.current
-				console.log(this.form);
 				let res = await rechargeList({
 					...this.form,
 					page: this.page,
 					page_size: this.page_size
 				})
-				console.log(res);
 				if (this.list.length > 0) {
 					res.list.data.map((v) => {
 						if (this.list[this.list.length - 1].business_time == v.business_time) {
@@ -268,12 +266,6 @@
 				this.form.end_time = `${v.year}-${v.month}-${v.day}`;
 				this.init();
 			},
-			// 搜索
-			showStrore() {
-				uni.navigateTo({
-					url: `/pages/screen/screen`
-				})
-			},
 			// 详情
 			toStoredDetails(item){
 				uni.navigateTo({
@@ -289,19 +281,12 @@
 			}
 			this.list = []
 			this.init();
-			uni.$on('screen', res => {
-				if (res) {
-					console.log(res);
-					this.form = res
-					this.page = 1;
-					this.list = []
-					this.init();
-				}
-			})
+			
 		},
 		onShow() {
 
-		}
+		},
+		
 	}
 </script>
 
@@ -341,7 +326,7 @@
 		//日期选择
 		.dates-time {
 			width: 100%;
-			height: calc(100% - 200rpx - var(--status-bar-height));
+			height: calc(100% - 140rpx - var(--status-bar-height));
 			background-color: rgba($color: #000000, $alpha: 0.3);
 			position: absolute;
 			top: calc(140rpx + var(--status-bar-height));

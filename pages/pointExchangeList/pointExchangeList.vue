@@ -23,7 +23,7 @@
 			</view>
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+			 :autoPullUp="autoPullUp" :inBottom="pull" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list">
 					<view class="li" v-for="(item,index) in list" :key="index">
 						<view class="li-nav">
@@ -127,6 +127,7 @@
 					'background-color': '#ffffff'
 				},
 				last_page: 0,
+				pull:false
 			}
 		},
 		methods: {
@@ -135,20 +136,24 @@
 				this.page = 1;
 				this.list = []
 				this.init()
+				this.pull = false
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
+				if(!this.pull){
+					
 				if (this.page >= this.last_page) {
 					this.$refs.uToast.show({
 						title: '加载到底了',
 						type: 'default',
 						position: 'bottom'
 					})
-
+					this.pull = true
 				} else {
 					this.page++;
 					this.init()
+				}
 				}
 			},
 

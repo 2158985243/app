@@ -304,6 +304,14 @@
 			let dated = this.$date.thisMonth();
 			this.init(dated)
 			this.getGoodNumer()
+		},
+		onLoad() {
+			this.$store.commit('screenFn', {
+				screenDate: {}
+			})
+			this.$store.commit('stockFn', {
+				stockDate: {}
+			})
 		}
 	}
 </script>

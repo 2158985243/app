@@ -12,7 +12,7 @@
 		<view class="management_list">
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+			 :autoPullUp="autoPullUp" :inBottom="pull"  :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list"  v-for="(item,index) in list" :key="index" @click="toShopInformation(item)">
 					<view class="left">
 						<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" src="@/static/image/hd.jpg"></u-image>

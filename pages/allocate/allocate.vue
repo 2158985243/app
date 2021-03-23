@@ -15,7 +15,7 @@
 						<view class="list">
 							<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 							 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-							 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+							 :autoPullUp="autoPullUp" :inBottom="pull[current]" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 								<view class="list-box" v-for="(itemList,indexList) in item" @click="toPurchase(itemList)">
 									<view class="left">
 										<text class="supplier-name">{{itemList.from_store.name}}→{{itemList.to_store.name}}</text>
@@ -84,7 +84,7 @@
 				loadingTip: '正在加载中...',
 				emptyTip: '--到底了--',
 				touchHeight: 50,
-				height: 0,
+				height: 100,
 				bottom: 0,
 				autoPullUp: true,
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
@@ -105,7 +105,7 @@
 							...this.refer_data
 						});
 						this.list[this.current].push(...res.data)
-						this.last_page[this.curren] = res.last_page
+						this.last_page[this.current] = res.last_page
 					} else if (this.current == 1) {
 						let res = await allocateList({
 							status:2,
@@ -115,7 +115,7 @@
 				
 						});
 						this.list[this.current].push(...res.data)
-						this.last_page[this.curren] = res.last_page
+						this.last_page[this.current] = res.last_page
 					}else if (this.current == 2) {
 						let res = await allocateList({
 							status:0,
@@ -125,7 +125,7 @@
 				
 						});
 						this.list[this.current].push(...res.data)
-						this.last_page[this.curren] = res.last_page
+						this.last_page[this.current] = res.last_page
 					} else {
 						let res = await allocateList({
 							status: 3,
@@ -134,8 +134,9 @@
 							...this.refer_data
 						});
 						this.list[this.current].push(...res.data)
-						this.last_page[this.curren] = res.last_page
+						this.last_page[this.current] = res.last_page
 					}
+					this.$forceUpdate()
 				}
 			},
 			// 增加调拨单
@@ -215,15 +216,22 @@
 
 		},
 		onLoad() {
-			// this.init()
 			let date = this.$date.thirtyDays()
 			this.refer_data.start_time = date.start_time
 			this.refer_data.end_time = date.end_time
 			this.init()
-			uni.$on("refer", async (result) => {
-				this.page[this.current] = 1;
-				if (result) {
-					this.refer_data = result
+			uni.$on("refer", async (res) => {
+				if (res) {
+					if(res.start_time == "" || res.start_time == undefined){
+						delete res.start_time
+						delete res.end_time
+						for(let key in res){
+							this.refer_data[key] = res[key]
+						}
+					}else{
+						this.refer_data = res
+					}
+					this.page[this.current] = 1;
 					this.list[this.current] = []
 					this.init()
 				}

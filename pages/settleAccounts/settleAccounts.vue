@@ -945,13 +945,21 @@
 			},
 			// 确定修改金额
 			ensureEdit() {
-				this.form.money = this.money_edit;
-				if (this.form.customer_id > 0) {
+				if(this.money_edit != ""){
+					this.form.money = this.money_edit;
+					if (this.form.customer_id > 0) {
 
-					this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
+						this.form.reward_point = Math.floor((this.integral / Number(this.unit)) * this.toMoney);
+					}
+					this.form.discount_money = (this.sum_money - this.form.money).toFixed(2)
+					this.show_edit = false;
+				}else{
+					this.$refs.uToast.show({
+						title: '请输入修改金额',
+						type: 'default',
+						position: 'bottom'
+					})
 				}
-				this.form.discount_money = (this.sum_money - this.form.money).toFixed(2)
-				this.show_edit = false;
 			},
 			// 取消输入密码
 			abrogated() {

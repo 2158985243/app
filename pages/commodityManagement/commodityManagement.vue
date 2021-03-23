@@ -140,7 +140,7 @@
 			</view>
 		</view>
 		<view class="list">
-			<goods-category :dataList='dataList' @leftNav="leftNav" :vs='vs' @rightNav="rightNav" @handlePullDown="handlePullDown"
+			<goods-category :dataList='dataList' :inBottom="pull" @leftNav="leftNav" :vs='vs' @rightNav="rightNav" @handlePullDown="handlePullDown"
 			 @handleLoadMore="handleLoadMore"></goods-category>
 		</view>
 		<u-toast ref="uToast" />
@@ -222,7 +222,7 @@
 				if (this.mored.index) {
 					this.index = this.mored.index
 				}
-				this.dataList[index].arr = [];
+				this.dataList[this.mored.index].arr = [];
 				this.loadMore();
 				stopLoad ? stopLoad() : '';
 			},

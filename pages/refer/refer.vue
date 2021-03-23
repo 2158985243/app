@@ -131,6 +131,11 @@
 				this.supplier = store.state.referDate.supplier;
 				this.shop =store.state.referDate.shop;
 				this.form = store.state.referDate.form
+				if(this.form.start_time == undefined){
+					let date = this.$date.thirtyDays()
+					this.form.start_time = date.start_time;
+					this.form.end_time = date.end_time;
+				}
 			}else{
 				let date = this.$date.thirtyDays()
 				this.form.start_time = date.start_time

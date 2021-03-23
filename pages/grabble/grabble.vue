@@ -47,7 +47,7 @@
 				<u-switch v-model="checked1" @change="warning" active-value="1" inactive-value="0"></u-switch>
 			</view>
 			<view class="form_item">
-				<text>显示零库存</text>
+				<text>显示停用商品</text>
 				<u-switch v-model="checked2" @change="warning1" active-value="1" inactive-value="0"></u-switch>
 			</view>
 		</view>
@@ -171,8 +171,8 @@
 					zero_stock: 0,
 					show_ban_goods: 0,
 				}
-				this.supplier = ''
 				this.shop = ''
+				this.supplier = ''
 				this.trademark_name = ''
 				this.category = ''
 				this.checked1 = false
@@ -182,8 +182,14 @@
 			sure(){
 				let obj = {
 					form:this.form,
-					shop:this.shop
+					shop:this.shop,
+					supplier:this.supplier,
+					trademark_name:this.trademark_name ,
+					category:this.category 
 				}
+				this.$store.commit('stockFn', {
+					stockDate: obj
+				})
 				uni.$emit('grabble',obj)
 				uni.navigateBack()
 			}
@@ -193,6 +199,28 @@
 				this.form.store_is = store.state.store.store_id;
 				this.shop = store.state.store.name
 			}
+			let bl = false
+			for(let key in store.state.stockDate){
+				if(key == 'form' && store.state.stockDate[key] != undefined){
+					bl = true
+				}
+			}
+			if(bl){
+				this.$nextTick(function(){
+				this.trademark_name = store.state.stockDate.trademark_name;
+				this.category = store.state.stockDate.category;
+				this.supplier = store.state.stockDate.supplier;
+				this.shop =store.state.stockDate.shop;
+				this.form = store.state.stockDate.form;
+				if(this.form.zero_stock == 1){
+					this.checked1 = true
+				}
+				if(this.form.show_ban_goods == 1){
+					this.checked2 = true
+				}
+				})
+			}
+			
 			// 店铺
 			uni.$on("gloEvent", (res) => {
 				if (res) {
