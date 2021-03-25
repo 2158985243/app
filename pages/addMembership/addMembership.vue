@@ -275,8 +275,8 @@
 			async customerNumber(){
 				let res = await generateCustomerNumber()
 				let res1 = await configList()
-				console.log(res);
-				console.log(res1);
+				// console.log(res);
+				// console.log(res1);
 				if(!res.code){
 					if(res1.auto_generate_customer_number.value==1){
 						this.form.number = res.number
@@ -298,7 +298,10 @@
 					// console.log(res);
 				}
 			})
-		}
+		},
+		onUnload() {
+			uni.$off()
+		},
 	}
 </script>
 

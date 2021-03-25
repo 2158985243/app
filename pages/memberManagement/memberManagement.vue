@@ -531,7 +531,7 @@
 			this.init();
 		},
 		onLoad(option) {
-			console.log(option)
+			// console.log(option)
 			this.keyword = option.val;
 			this.tags()
 			this.leves()

@@ -380,6 +380,9 @@
 				}
 			},
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(query) {
 			// 获取店铺id
 			this.strored()

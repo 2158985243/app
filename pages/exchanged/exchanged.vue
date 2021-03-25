@@ -809,6 +809,9 @@
 			}
 
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(query) {
 			this.pointGetDe()
 			this.accountd()

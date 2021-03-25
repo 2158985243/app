@@ -308,6 +308,9 @@
 				})
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(query) {
 			this.monthDate();
 			this.store_id = query.store_id;
@@ -336,7 +339,7 @@
 			})
 		},
 		onUnload() {
-			uni.$off('screened')
+			uni.$off()
 		},
 		onShow() {
 			

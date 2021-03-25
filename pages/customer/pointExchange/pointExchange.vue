@@ -1,12 +1,14 @@
 <template>
 	<view class="pointExchange">
-
+		<u-navbar back-icon-color='#ffffff' title="积分兑换" :background="background" title-color="#ffffff">
+			
+		</u-navbar>
 		<view class="box">
 			<u-popup v-model="show" mode="right" width="80%">
 
 				<view class="popup-right">
 					<view class="pop-title">
-						
+
 						<u-icon name="arrow-left" color="#000000" @click='show=false' size="40"></u-icon>
 						<view class="sx">筛选</view>
 					</view>
@@ -19,7 +21,8 @@
 							<view class="nav-list">
 								<view class="lak" v-for="(item,index) in brandList" :key="index">
 									<view class="nav-name">
-										<view class="nav-kk" @click.stop="clickBrand(item,index)" :class="item.checked? 'actives':''" v-if="index<5">
+										<view class="nav-kk" @click.stop="clickBrand(item,index)"
+											:class="item.checked? 'actives':''" v-if="index<5">
 											{{item.name}}
 										</view>
 									</view>
@@ -39,7 +42,8 @@
 							<view class="nav-list">
 								<view class="lak" v-for="(item,index) in CategoryList" :key="index">
 									<view class="nav-name">
-										<view class="nav-kk" @click.stop="clickCate(item,index)" :class="item.checked? 'actives':''" v-if="index<5">
+										<view class="nav-kk" @click.stop="clickCate(item,index)"
+											:class="item.checked? 'actives':''" v-if="index<5">
 											{{item.name}}
 										</view>
 									</view>
@@ -60,7 +64,8 @@
 							<view class="nav-list">
 								<view class="lak" v-for="(item,index) in status" :key="index">
 									<view class="nav-name">
-										<view class="nav-kk" @click.stop="clickStatus(item,index)" :class="item.checked? 'actives':''">
+										<view class="nav-kk" @click.stop="clickStatus(item,index)"
+											:class="item.checked? 'actives':''">
 											{{item.name}}
 										</view>
 									</view>
@@ -76,7 +81,8 @@
 							<view class="nav-list">
 								<view class="lak" v-for="(item,index) in price" :key="index">
 									<view class="nav-name">
-										<view class="nav-kk" @click.stop="clickPrice(item,index)" :class="item.checked? 'actives':''">
+										<view class="nav-kk" @click.stop="clickPrice(item,index)"
+											:class="item.checked? 'actives':''">
 											{{item.name}}
 										</view>
 									</view>
@@ -100,8 +106,9 @@
 					</view>
 					<view class="pop-listt">
 						<u-checkbox-group :wrap='true'>
-							<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked" v-for="(item, index) in brandList"
-							 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+							<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked"
+								v-for="(item, index) in brandList" :key="index" :name="item.id">{{item.name}}
+							</u-checkbox>
 						</u-checkbox-group>
 					</view>
 				</view>
@@ -114,16 +121,18 @@
 					</view>
 					<view class="pop-listt">
 						<u-checkbox-group :wrap='true'>
-							<u-checkbox shape="circle" @change="cartesChecked($event,index)" v-model="item.checked" v-for="(item, index) in CategoryList"
-							 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+							<u-checkbox shape="circle" @change="cartesChecked($event,index)" v-model="item.checked"
+								v-for="(item, index) in CategoryList" :key="index" :name="item.id">{{item.name}}
+							</u-checkbox>
 						</u-checkbox-group>
 					</view>
 				</view>
 			</u-popup>
 			<view class="nav">
 				<view class="slot-wrap">
-					<u-search class='search' height='60' @change="search" margin='0 20rpx' :show-action="false" :scan="true" shape="square"
-					 placeholder="请输入货号/商品名称/条码" v-model="keyword" @Inventory="handelScan"></u-search>
+					<u-search class='search' height='60' @change="search" margin='0 20rpx' :show-action="false"
+						:scan="true" shape="square" placeholder="请输入货号/商品名称/条码" v-model="keyword"
+						@Inventory="handelScan"></u-search>
 					<view class="search_add" @click="popup">
 						扫码收银
 						<!-- <text>筛选</text>
@@ -137,7 +146,7 @@
 		</view>
 		<view class="list">
 			<goods-category :dataList='dataList' @leftNav="leftNav" :saveData="saveData" :vs='vs' @rightNav="rightNav"
-			 @handlePullDown="handlePullDown" @handleLoadMore="handleLoadMore"></goods-category>
+				@handlePullDown="handlePullDown" :inBottom="pull" @handleLoadMore="handleLoadMore"></goods-category>
 		</view>
 		<view class="shopping-cart">
 			<view class="goods-quantity">
@@ -154,7 +163,8 @@
 			<view class="specification" v-if="goodsOf">
 				<view class="goods-of">
 					<!-- mode='aspectFit'  -->
-					<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+goodsOf.main_image"></u-image>
+					<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+goodsOf.main_image">
+					</u-image>
 					<view class="goodsNews">
 						<text class="goods-name">{{goodsOf.name}}</text>
 						<text class="goods-number">{{goodsOf.number}}</text>
@@ -166,7 +176,8 @@
 				<view class="goods-color">
 					<text>颜色</text>
 					<view class="colors">
-						<view class="colorMo" v-for="(item,index) in spec" :key="index" @click="clickColor(item,index)" :class="active1==index? 'active':''">
+						<view class="colorMo" v-for="(item,index) in spec" :key="index" @click="clickColor(item,index)"
+							:class="active1==index? 'active':''">
 							<text>{{item.name}}</text>
 							<text class="pos" v-if="item.quantity>0">{{item.quantity}}</text>
 						</view>
@@ -179,14 +190,16 @@
 							<view class="size-box-list once">
 								<text class="listed">尺码</text>
 								<text class="listed">当前库存</text>
-								<u-number-box class="listed" v-model="item.valNew" size="24" input-width="60" input-height="40" :min="0" @minus="minusAll"
-								 @plus="plusAll" @change="valChangeAll($event,item,index)"></u-number-box>
+								<u-number-box class="listed" v-model="item.valNew" size="24" input-width="60"
+									input-height="40" :min="0" @minus="minusAll" @plus="plusAll"
+									@change="valChangeAll($event,item,index)"></u-number-box>
 							</view>
-							<view class="size-box-list" v-for="(item1,index1) in item.data" :key="index1" @click="clickSize(item1,index1)">
+							<view class="size-box-list" v-for="(item1,index1) in item.data" :key="index1"
+								@click="clickSize(item1,index1)">
 								<text class="listed">{{item1.size.name}}</text>
 								<text class="listed" v-if="item1.goods_spec_info">{{item1.goods_spec_info.stock}}</text>
-								<u-number-box class="listed" v-model="item1.quantity" size="24" input-width="60" input-height="40" :min="0"
-								 @change="valChange"></u-number-box>
+								<u-number-box class="listed" v-model="item1.quantity" size="24" input-width="60"
+									input-height="40" :min="0" @change="valChange"></u-number-box>
 							</view>
 						</view>
 					</view>
@@ -202,13 +215,16 @@
 		<u-popup v-model="showShoppingCart" mode="bottom" z-index='996' length="60%">
 			<view class="scart">
 				<view class="del">
-					<u-icon name="close-circle" class='close' @click="showShoppingCart=false" color="#040404" size="40"></u-icon>
+					<u-icon name="close-circle" class='close' @click="showShoppingCart=false" color="#040404" size="40">
+					</u-icon>
 				</view>
 				<view class="lists-cart">
 					<view class="specification" v-for="(item,index) in saveData" :key="index">
-						<u-icon name="trash" class='close' @click="hiddengoods(index)" color="#a8a8a8" size="40"></u-icon>
+						<u-icon name="trash" class='close' @click="hiddengoods(index)" color="#a8a8a8" size="40">
+						</u-icon>
 						<view class="goods-of" v-if="item.goodsData[0]">
-							<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+item.goodsData[0].goodsOf.main_image"></u-image>
+							<u-image width="140rpx" height="140rpx" border-radius='20'
+								:src="$cfg.domain+item.goodsData[0].goodsOf.main_image"></u-image>
 							<view class="goodsNews">
 								<text class="goods-name">{{item.goodsData[0].goodsOf.name}}</text>
 								<text class="goods-number">{{item.goodsData[0].goodsOf.number}}</text>
@@ -223,10 +239,12 @@
 											<view class="size-medium" v-if="itemSize.hidden">
 												<text class="size-nav">{{itemColor.name}}</text>
 												<text class="size-nav">{{itemSize.size.name}}</text>
-												<u-number-box class="size-nav" v-model="itemSize.quantity" size="24" @change="sizeChange($event,index,index1,indexSize,itemSize)"
-												 input-width="100" :min="0"></u-number-box>
+												<u-number-box class="size-nav" v-model="itemSize.quantity" size="24"
+													@change="sizeChange($event,index,index1,indexSize,itemSize)"
+													input-width="100" :min="0"></u-number-box>
 												<view class='size-nav'>
-													<u-icon name="trash" color="#a8a8a8" size="40" @click="delSize(index,index1,indexSize)"></u-icon>
+													<u-icon name="trash" color="#a8a8a8" size="40"
+														@click="delSize(index,index1,indexSize)"></u-icon>
 												</view>
 											</view>
 										</view>
@@ -320,7 +338,7 @@
 				last_page: 0,
 				mored: {},
 				pull: false,
-				option_data:{}
+				option_data: {}
 			}
 		},
 
@@ -765,7 +783,8 @@
 			// 删除某一个尺码
 			delSize(index, index1, indexSize) {
 				this.saveData[index].goodsData[index1].data[indexSize].hidden = false;
-				this.saveData[index].goodsData[index1].quantity -= this.saveData[index].goodsData[index1].data[indexSize].quantity;
+				this.saveData[index].goodsData[index1].quantity -= this.saveData[index].goodsData[index1].data[indexSize]
+					.quantity;
 				this.saveData[index].goodsData[index1].data[indexSize].quantity = 0;
 
 				this.$set(this.saveData, index, this.saveData[index])
@@ -790,7 +809,8 @@
 					});
 					if (!this.account) {
 						uni.navigateTo({
-							url: '/pages/customer/determineCash/determineCash?obj=' + encodeURIComponent(JSON.stringify(this.option_data))
+							url: '/pages/customer/determineCash/determineCash?obj=' + encodeURIComponent(JSON
+								.stringify(this.option_data))
 						})
 					} else {
 						uni.navigateBack()
@@ -822,9 +842,17 @@
 <style scoped lang="scss">
 	.pointExchange {
 		width: 100%;
+		height: 100vh;
 		background-color: #e3e3e3;
 		display: flex;
 		flex-direction: column;
+
+		.resaleCashier-main {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+		}
 
 		.active {
 			background-color: #3B4144 !important;
@@ -1100,17 +1128,20 @@
 			}
 		}
 
-		// .box{
-		// 	width: 100%;
-		// 	position: fixed;
-		// 	top: 80rpx;
-		// }
+		.box {
+			width: 100%;
+			position: fixed;
+			top: calc(80rpx + var(--status-bar-height));
+			z-index: 1000;
+		}
+
 		.list {
 			width: 100%;
 			// max-height: 70%;
+			height: calc(100vh - 240rpx);
 			display: flex;
-			flex: auto;
-			margin-bottom: 80rpx;
+			margin: 78rpx 0 80rpx 0;
+			overflow: hidden;
 		}
 
 		.shopping-cart {
@@ -1122,7 +1153,7 @@
 			width: 100%;
 			height: 80rpx;
 			background: #4d4d4d;
-			z-index: 10;
+			z-index: 9;
 
 			.goods-quantity {
 				width: 67%;
@@ -1168,7 +1199,7 @@
 
 		.nav {
 			width: 100%;
-			background-color: #E5E5E5;
+			background-color: rgb(41, 121, 255);
 			height: 80rpx;
 
 			.slot-wrap {
@@ -1182,13 +1213,8 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
-					color: #007AFF;
-					background-color: #FFFFFF;
-					width: 19%;
-					font-size: 24rpx;
-					margin-right: 6rpx;
-					padding: 10rpx;
-					border-radius: 14rpx;
+					color: #FFFFFF;
+					width: 18%;
 				}
 			}
 		}
@@ -1218,6 +1244,7 @@
 				background-color: #FFFFFF;
 				padding: 10rpx 0;
 				border-bottom: 10rpx solid #e2e2e2;
+				z-index: 10;
 
 				.sx {
 					width: 90%;

@@ -25,7 +25,7 @@
 			}
 		},
 		onLoad(option) {
-			console.log(option)
+			// console.log(option)
 			this.keyword = option.val; 
 		},
 		methods: {

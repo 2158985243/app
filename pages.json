@@ -1755,8 +1755,7 @@
 		}, {
 			"path": "pages/customer/pointExchange/pointExchange",
 			"style": {
-				"navigationBarTitleText": "积分兑换",
-				"navigationBarBackgroundColor": "#2979ff",
+				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
 					"scrollIndicator": "none"
@@ -1844,6 +1843,26 @@
 			"style": {
 				"navigationBarTitleText": "头像裁剪",
 				"navigationBarBackgroundColor": "#2979ff",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/getStock/inventoryRunningWater/inventoryRunningWater",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+
+		}, {
+			"path": "pages/getStock/inventoryRunningWaterList/inventoryRunningWaterList",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
 					"scrollIndicator": "none"

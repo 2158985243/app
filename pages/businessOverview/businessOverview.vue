@@ -149,7 +149,6 @@
 
 <script>
 	import tabControl from '@/components/tabControl-tag/tabControl-tag.vue';
-
 	import store from '@/store'
 	import {
 		businessOverview

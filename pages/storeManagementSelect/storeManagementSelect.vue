@@ -152,7 +152,7 @@
 <style lang="scss" scoped>
 	.storeManagementSelect {
 		width: 100vw;
-		height: 100%;
+		height: 100vh;
 
 		.header_image {
 			margin-right: 20rpx;
@@ -209,10 +209,11 @@
 		}
 
 		.management_list {
+			margin-bottom: 120rpx;
 			width: 100%;
 			display: flex;
 			flex-direction: column;
-			margin-bottom: 120rpx;
+			height: calc(100vh - 200rpx);
 		}
 	}
 </style>

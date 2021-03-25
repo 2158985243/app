@@ -50,9 +50,9 @@
 		<!-- 结束时间 -->
 		<u-picker mode="time" v-model="showtime1" @confirm="confirmTime1" title="结束时间" :params="params"></u-picker>
 		<u-toast ref="uToast" />
-		<view class="footers">
+		<!-- <view class="footers">
 			发短信
-		</view>
+		</view> -->
 	</view>
 </template>
 

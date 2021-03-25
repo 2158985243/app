@@ -211,6 +211,9 @@
 
 
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad() {
 			
 			let date = this.$date.thirtyDays()

@@ -129,7 +129,7 @@
 		onLoad(query) {
 			const editItem = JSON.parse(decodeURIComponent(query.obj));
 			this.id = query.id
-			console.log(editItem);
+			// console.log(editItem);
 			this.ids = editItem.check_list_ids;
 			this.form = editItem;
 			this.init()

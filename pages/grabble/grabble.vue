@@ -194,6 +194,9 @@
 				uni.navigateBack()
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad() {
 			if (store.state.store.store_id > 0) {
 				this.form.store_is = store.state.store.store_id;

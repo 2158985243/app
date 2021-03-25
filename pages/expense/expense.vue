@@ -235,6 +235,9 @@
 				})
 			},
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad() {
 			const userMessage = uni.getStorageSync('userMessage');
 			this.header.token = "Bearer " + userMessage.token

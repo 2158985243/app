@@ -168,6 +168,7 @@
 						this.checked = userLoginInfo.checked;
 						if (this.checked) {
 							this.form = userLoginInfo;
+							this.register()
 						}
 					}
 				} catch (e) {
@@ -178,7 +179,6 @@
 		onReady() {},
 		onLoad() {
 			this.init();
-			this.register()
 		}
 	}
 </script>

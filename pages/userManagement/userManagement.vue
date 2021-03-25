@@ -160,19 +160,26 @@
 <style lang="scss" scoped>
 	.userManagement {
 		width: 100%;
+		height: 100vh;
 		display: flex;
 		flex-direction: column;
 		.search {
+			width: 100%;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			// height: 80rpx;
+			height: 100rpx;
 			background-color: #e7e7e7;
+			position: fixed;
+			top:calc(80rpx + var(--status-bar-height)) ;
+			z-index: 9;
 		}
 		.management_list{
 			width: 100%;
 			display: flex;
 			flex-direction: column;
+			margin-top: 90rpx;
+			height: calc(100vh - 180rpx);
 			.list{
 				width: 100%;
 				display: flex;

@@ -265,6 +265,9 @@
 
 			},
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(query) {
 			this.option_data = JSON.parse(decodeURIComponent(query.obj));
 			this.members = this.option_data

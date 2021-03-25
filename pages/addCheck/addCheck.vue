@@ -194,6 +194,9 @@
 				})
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad() {
 			this.init()
 			uni.$on("gloEvent", (res) => {

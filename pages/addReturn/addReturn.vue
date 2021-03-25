@@ -472,6 +472,9 @@
 				}
 			},
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad() {
 			let date = new Date();
 			this.form.business_time = this.$u.timeFormat(date, 'yyyy-mm-dd');

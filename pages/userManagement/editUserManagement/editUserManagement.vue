@@ -46,9 +46,9 @@
 				<text class="item-warning">账号是否启用</text>
 				<u-switch v-model="checked" @change="warning" :disabled='is_admin == 1? true:false' active-value="1" inactive-value="0"></u-switch>
 			</view>
-			<view class="kb">
+			<!-- <view class="kb">
 
-			</view>
+			</view> -->
 		</view>
 		<u-popup v-model="show" mode="center" width="500rpx">
 			<view class="pop">
@@ -290,6 +290,9 @@
 				}
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(query) {
 			this.is_admin = query.is_admin;
 			this.id = query.id;
@@ -356,9 +359,9 @@
 		width: 100%;
 		display: flex;
 		background-color: #f0f0f0;
-		height: 100%;
+		height: 100vh;
 		flex-direction: column;
-
+		overflow: hidden;
 		.box {
 			width: 100%;
 			display: flex;
@@ -408,7 +411,7 @@
 
 			.kb {
 				width: 100%;
-				height: calc(100vh - 820rpx);
+				height: calc(100vh - 760rpx);
 				background-color: #FFFFFF;
 			}
 		}

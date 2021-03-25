@@ -186,10 +186,13 @@
 				}
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(option) {
 			this.config()
 			this.form = JSON.parse(decodeURIComponent(option.sales_goods));
-			console.log(this.form);
+			// console.log(this.form);
 			let m_money = 0
 			m_money = (Number(this.form.erasure_money) + Number(this.form.discount_money)+ Number(this.form.point_used_as_money)).toFixed(2)
 			// if (this.form.sales_goods.length > 0) {

@@ -122,6 +122,9 @@
 				this.shop = '';
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(option) {
 			let bl = false 
 			for(let key in store.state.referDate){

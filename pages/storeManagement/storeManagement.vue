@@ -136,12 +136,18 @@
 <style lang="scss" scoped>
 	.storeManagement {
 		width: 100vw;
-		height: 100%;
-
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
 		.header_image {
 			margin-right: 20rpx;
 		}
-
+		.management_list{
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			height: calc(100vh - 80rpx);
+		}
 		/deep/.u-image__image {
 			border-radius: 18rpx !important;
 

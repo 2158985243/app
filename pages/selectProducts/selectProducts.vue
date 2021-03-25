@@ -326,6 +326,7 @@
 				mored: {id:0,index:0,name:'全部'},
 				pull: false,
 				condition: 0,
+				stockLog:0
 			}
 		},
 
@@ -638,62 +639,72 @@
 			},
 			// 点击右侧
 			async rightNav(e) {
-				this.active1 = 0;
-				let arr = this.saveData;
-				let num = 1;
-				// 修改选过的商品
-				for (let i = 0; i < arr.length; i++) {
-					if (arr[i].goodsData[0].goods_id == e.id) {
-						this.goodsOf = arr[i].goodsData[0].goodsOf;
-						this.spec = arr[i].goodsData;
-						num = 0;
-						this.$forceUpdate()
-						break;
+				if(this.stockLog == 0){
+					this.active1 = 0;
+					let arr = this.saveData;
+					let num = 1;
+					// 修改选过的商品
+					for (let i = 0; i < arr.length; i++) {
+						if (arr[i].goodsData[0].goods_id == e.id) {
+							this.goodsOf = arr[i].goodsData[0].goodsOf;
+							this.spec = arr[i].goodsData;
+							num = 0;
+							this.$forceUpdate()
+							break;
+						}
 					}
-				}
-				// 新选的商品
-				if (num) {
-					// let res = await goods(e.id)
-					// if (!res.code) {
-						this.value = 0;
-						this.goodsOf = e;
-						this.$forceUpdate()
-						this.spec = e.color;
-						this.spec.map((v1, i1) => {
-							v1['goodsOf'] = {
-								id: e.id,
-								name: e.name,
-								number: e.number,
-								retail_price: e.retail_price,
-								purchase_price: e.purchase_price,
-								main_image: e.main_image,
-								images: e.images
-							};
-							v1['goods_category_id'] = e.goods_category_id;
-							v1['goods_id'] = e.id;
-							v1['data'] = [];
-							v1['quantity'] = 0;
-							v1['valOld'] = 0;
-							v1['valNew'] = 0;
-							v1['check'] = false;
-							// this.valAll.push(0);
-							e.goods_spec.map((v, i) => {
-								if (v.color_id == v1.id) {
-									v1.data.push({
-										size: v.size,
-										goods_spec_info: v.goods_spec_info,
-										quantity: 0,
-										hidden: true
-									})
-								}
+					// 新选的商品
+					if (num) {
+						// let res = await goods(e.id)
+						// if (!res.code) {
+							this.value = 0;
+							this.goodsOf = e;
+							this.$forceUpdate()
+							this.spec = e.color;
+							this.spec.map((v1, i1) => {
+								v1['goodsOf'] = {
+									id: e.id,
+									name: e.name,
+									number: e.number,
+									retail_price: e.retail_price,
+									purchase_price: e.purchase_price,
+									main_image: e.main_image,
+									images: e.images
+								};
+								v1['goods_category_id'] = e.goods_category_id;
+								v1['goods_id'] = e.id;
+								v1['data'] = [];
+								v1['quantity'] = 0;
+								v1['valOld'] = 0;
+								v1['valNew'] = 0;
+								v1['check'] = false;
+								// this.valAll.push(0);
+								e.goods_spec.map((v, i) => {
+									if (v.color_id == v1.id) {
+										v1.data.push({
+											size: v.size,
+											goods_spec_info: v.goods_spec_info,
+											quantity: 0,
+											hidden: true
+										})
+									}
+								})
+								this.$set(this.spec, i1, this.spec[i1]);
 							})
-							this.$set(this.spec, i1, this.spec[i1]);
-						})
-					// }
-				}
-				// this.$forceUpdate()
+						// }
+					}
+					// this.$forceUpdate()
 
-				this.showGoods = true;
+					this.showGoods = true;
+				}else{
+					let obj = {
+						name:e.name,
+						number:e.number,
+						goods_id:e.id
+					}
+					uni.$emit('stockLog',obj)
+					uni.navigateBack()
+				}
 			},
 			hiddengoods(index) {
 				let _this = this
@@ -855,6 +866,9 @@
 			this.brand();
 			if (query.condition) {
 				this.condition = Number(query.condition);
+			}
+			if (query.stockLog) {
+				this.stockLog = Number(query.stockLog);
 			}
 		}
 	}

@@ -7,10 +7,11 @@
 		</u-navbar>
 		<view class="matter">
 			<!--  -->
+			<cus-previewImg ref="cusPreviewImg" :circular="true" :duration="400" :list="ImgList" />
 			<view class="imgs">
 				<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll" scroll-left="120">
-					<u-image width="180rpx" height="180rpx" border-radius="20rpx" class="scroll-view-item_H" :src="$cfg.domain+item"
-					 v-for="(item,index) in oracle.images"></u-image>
+					<u-image width="180rpx" height="180rpx" border-radius="20rpx" @click='previewImg($cfg.domain+item)' class="scroll-view-item_H"
+					 :src="$cfg.domain+item" v-for="(item,index) in oracle.images"></u-image>
 				</scroll-view>
 			</view>
 			<!--  -->
@@ -116,7 +117,7 @@
 									<view class="left">
 										<text>{{item.name}}(合计: <text>{{item.quantity}}</text> )</text>
 									</view>
-									<view class="right">
+									<view class="right" @click="toGetStockLog">
 										<text>库存流水</text>
 										<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 									</view>
@@ -216,6 +217,7 @@
 
 <script>
 	import uCharts from '@/js_sdk/u-charts/u-charts/u-charts.js';
+	import cusPreviewImg from '@/components/cus-previewImg/cus-previewImg.vue'
 	import store from '@/store'
 	var _self;
 	var canvaColumn = null;
@@ -225,8 +227,12 @@
 		getSalesStatus
 	} from '../../api/goods.js'
 	export default {
+		components: {
+			cusPreviewImg
+		},
 		data() {
 			return {
+				ImgList: [],
 				cWidth: '',
 				cHeight: '',
 				pixelRatio: 1,
@@ -309,6 +315,9 @@
 
 		},
 		methods: {
+			previewImg(url) { // 点击预览图片
+				this.$refs.cusPreviewImg.open(url) // 传入当前选中的图片地址
+			},
 			change1(v) {
 				this.sum_number = v
 			},
@@ -603,6 +612,7 @@
 				let colorArr = [];
 				let sizeArr = [];
 				this.goods_list = []
+				this.ImgList = []
 				this.oracle.color.map((v, i) => {
 					colorArr.push(v.name)
 					this.goods_list.push({ ...v,
@@ -617,6 +627,9 @@
 				})
 				this.oracle.size.map((v, i) => {
 					sizeArr.push(v.name)
+				})
+				this.oracle.images.map(v => {
+					this.ImgList.push(this.$cfg.domain + v)
 				})
 				// console.log(this.goods_list);
 				this.colorName = colorArr.join('/')
@@ -695,6 +708,7 @@
 							unincorporated.push({
 								name: v.store.name,
 								quantity: 0,
+								id:v.store.id,
 								data: []
 							})
 							stocks.map((v1, i1) => {
@@ -727,6 +741,7 @@
 					this.nav_list[0].data[1].push({
 						name: '总库存',
 						quantity: this.sum,
+						id:0,
 						data: stocks
 					})
 					this.nav_list[0].name = `总库存(${this.sum})`
@@ -796,6 +811,21 @@
 					}
 				});
 			},
+			toGetStockLog(){
+				let obj = {
+					main_image:this.oracle.main_image,
+					name: this.oracle.name,
+					number: this.oracle.number,
+					store_name:this.title_name ,
+					goods_id:this.id,
+					store_id:this.form.store_id,
+					colors:this.oracle.color,
+					sizes:this.oracle.size
+				}
+				uni.navigateTo({
+					url:`/pages/getStock/inventoryRunningWater/inventoryRunningWater?item=`+ encodeURIComponent(JSON.stringify(obj))
+				})
+			}
 		},
 		onLoad(query) {
 			// console.log(query);

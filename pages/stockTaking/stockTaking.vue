@@ -194,6 +194,9 @@
 			},
 
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad() {
 			let date = this.$date.thirtyDays()
 			this.refer_data.start_time = date.start_time

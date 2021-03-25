@@ -45,9 +45,9 @@
 				<text class="item-warning">账号是否启用</text>
 				<u-switch v-model="checked" @change="warning" active-value="1" inactive-value="0"></u-switch>
 			</view>
-			<view class="kb">
+			<!-- <view class="kb">
 
-			</view>
+			</view> -->
 		</view>
 		<u-toast ref="uToast" />
 		<view class="btn" @click="sure">
@@ -145,6 +145,9 @@
 					}
 				}
 			}
+		},
+		onUnload() {
+			uni.$off()
 		},
 		onLoad() {
 			// 员工

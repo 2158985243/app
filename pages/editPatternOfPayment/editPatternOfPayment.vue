@@ -51,7 +51,7 @@
 			},
 		},
 		onLoad(query) {
-			console.log(query);
+			// console.log(query);
 			this.id = query.id;
 			this.name = query.name
 

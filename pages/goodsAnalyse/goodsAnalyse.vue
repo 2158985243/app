@@ -1413,7 +1413,7 @@
 					.right-day {
 						width: 50%;
 						display: flex;
-						font-size: 20rpx;
+						font-size: 24rpx;
 						align-items: center;
 						justify-content: center;
 						color: #007AFF;
@@ -1422,7 +1422,7 @@
 					.right-item {
 						width: 50%;
 						display: flex;
-						font-size: 20rpx;
+						font-size: 24rpx;
 						flex-direction: column;
 						align-items: center;
 

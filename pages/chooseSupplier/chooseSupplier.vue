@@ -116,11 +116,14 @@
 			}
 		},
 		onLoad(query) {
-			this.init();
+			
 			// this.kda = query.val;
 			
 
 		},
+		onShow() {
+			this.init();
+		}
 		
 	}
 </script>

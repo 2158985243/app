@@ -78,6 +78,9 @@
 				this.form.user_id = 0;
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad() {
 
 			uni.$on("addArticleDatum", (res) => {

@@ -316,6 +316,9 @@
 				})
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(query) {
 			this.form = query;
 			this.name = query.name;

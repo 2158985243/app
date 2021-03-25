@@ -225,6 +225,9 @@
 				this.form.store_id = res.data[0].id;
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(query) {
 			this.userMessage = uni.getStorageSync('userMessage');
 			this.header.token = "Bearer " + this.userMessage.token

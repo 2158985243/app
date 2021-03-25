@@ -905,6 +905,9 @@
 			}
 
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(query) {
 			this.id = query.id;
 			this.DetailsFn()

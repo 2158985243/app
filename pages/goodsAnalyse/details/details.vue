@@ -3,10 +3,11 @@
 
 		<view class="matter">
 			<!--  -->
+			<cus-previewImg ref="cusPreviewImg" :circular="true" :duration="400" :list="ImgList" />
 			<view class="imgs">
 				<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll" scroll-left="120">
-					<u-image width="180rpx" height="180rpx" border-radius="20rpx" class="scroll-view-item_H" :src="$cfg.domain+item"
-					 v-for="(item,index) in oracle.images"></u-image>
+					<u-image width="180rpx" height="180rpx" border-radius="20rpx" @click='previewImg($cfg.domain+item)' class="scroll-view-item_H"
+					 :src="$cfg.domain+item" v-for="(item,index) in oracle.images"></u-image>
 				</scroll-view>
 			</view>
 			<!--  -->
@@ -179,6 +180,7 @@
 </template>
 
 <script>
+	import cusPreviewImg from '@/components/cus-previewImg/cus-previewImg.vue'
 	import {
 		goods,
 		getStock,
@@ -194,8 +196,12 @@
 	} from '../../../api/salesOrder.js'
 	import store from '@/store'
 	export default {
+		components: {
+			cusPreviewImg
+		},
 		data() {
 			return {
+				ImgList: [],
 				background: {
 					backgroundColor: '#2979ff'
 				},
@@ -268,6 +274,9 @@
 			}
 		},
 		methods: {
+			previewImg(url) { // 点击预览图片
+				this.$refs.cusPreviewImg.open(url) // 传入当前选中的图片地址
+			},
 			// 点模式
 			async itemClick(index) {
 				this.item_active = index;
@@ -483,11 +492,15 @@
 				this.oracle.images.unshift(this.oracle.main_image)
 				let colorArr = [];
 				let sizeArr = [];
+				this.ImgList = []
 				this.oracle.color.map((v, i) => {
 					colorArr.push(v.name)
 				})
 				this.oracle.size.map((v, i) => {
 					sizeArr.push(v.name)
+				})
+				this.oracle.images.map(v => {
+					this.ImgList.push(this.$cfg.domain + v)
 				})
 				this.colorName = colorArr.join('/')
 				this.sizeName = sizeArr.join('/')
@@ -603,6 +616,7 @@
 						data: []
 					})
 				})
+				
 				res.map((v) => {
 					stocks.map(v1 => {
 						if (v.color_id == v1.color_id) {

@@ -244,6 +244,9 @@
 				})
 			},
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad() {
 			this.init()
 			this.strored()

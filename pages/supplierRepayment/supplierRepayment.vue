@@ -117,6 +117,9 @@
 			}
 
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(query) {
 			this.supplier_id = query.supplier_id;
 			this.balance = query.balance;

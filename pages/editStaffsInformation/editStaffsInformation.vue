@@ -248,6 +248,9 @@
 				
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(query) {
 			this.userMessage = uni.getStorageSync('userMessage');
 			this.header.token = "Bearer " + this.userMessage.token

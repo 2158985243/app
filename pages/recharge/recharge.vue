@@ -188,6 +188,9 @@
 				}
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(option) {
 			this.accountd()
 			this.obj = JSON.parse(decodeURIComponent(option.obj));

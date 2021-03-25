@@ -224,6 +224,9 @@
 				})
 			},
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad() {
 			uni.$on("projectQuery", (res) => {
 				if (res) {

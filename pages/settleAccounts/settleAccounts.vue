@@ -565,20 +565,7 @@
 					})
 				})
 				this.form.money = this.toMoney
-				if (this.message_list.sales_not_count_small_change.value == 1) {
-					this.form.money = Math.floor(this.form.money)
-					this.form.erasure_money = this.toMoney - this.form.money
-				} else if (this.message_list.sales_not_count_small_change.value == 2) {
-					this.form.money = Math.floor(this.form.money * 10) / 10
-					this.form.erasure_money = this.toMoney - this.form.money
-				} else if (this.message_list.sales_not_count_small_change.value == 3) {
-					this.form.money = Math.round(this.form.money)
-					this.form.erasure_money = this.toMoney - this.form.money
-				} else if (this.message_list.sales_not_count_small_change.value == 4) {
-					this.form.money = Math.round(this.form.money * 10) / 10
-					this.form.erasure_money = this.toMoney - this.form.money
-				}
-				this.form.erasure_money = this.form.erasure_money.toFixed(2)
+
 			},
 			hiddenTime() {
 				this.showtime = true;
@@ -986,16 +973,34 @@
 					if (this.message_list.sales_can_choose_date.value == 1) {
 						let date = new Date();
 						this.form.business_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
+						
+						if (this.message_list.sales_not_count_small_change.value == 1) {
+							this.form.money = Math.floor(this.form.money)
+							this.form.erasure_money = this.toMoney - this.form.money
+						} else if (this.message_list.sales_not_count_small_change.value == 2) {
+							this.form.money = Math.floor(this.form.money * 10) / 10
+							this.form.erasure_money = this.toMoney - this.form.money
+						} else if (this.message_list.sales_not_count_small_change.value == 3) {
+							this.form.money = Math.round(this.form.money)
+							this.form.erasure_money = this.toMoney - this.form.money
+						} else if (this.message_list.sales_not_count_small_change.value == 4) {
+							this.form.money = Math.round(this.form.money * 10) / 10
+							this.form.erasure_money = this.toMoney - this.form.money
+						}
+						this.form.erasure_money = this.form.erasure_money.toFixed(2)
 					}
-					this.init();
 				}
 			}
 
+		},
+		onUnload() {
+			uni.$off()
 		},
 		onLoad(query) {
 			this.pointGetDe()
 			this.accountd()
 			this.config()
+			this.init();
 			// 选择销售员
 			uni.$on("selecSalesperson", (res) => {
 				if (res) {

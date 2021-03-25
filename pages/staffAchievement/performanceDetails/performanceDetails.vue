@@ -272,28 +272,26 @@
 			async confirmTime1(v) {
 				this.form.end_time = `${v.year}-${v.month}-${v.day}`;
 				this.init();
-			},
-			// 搜索
-			showStrore() {
-				uni.navigateTo({
-					url: `/pages/screen/screen`
-				})
 			}
+			
+		},
+		onUnload() {
+			uni.$off()
 		},
 		onLoad(query) {
 			this.monthDate();
 			this.store_id = query.store_id;
 			this.expend_item_id = query.expend_item_id;
 			this.name = query.name;
-			uni.$on('screen', res => {
-				if (res) {
-					console.log(res);
-					this.form = res
-					this.page = 1;
-					this.list = []
-					this.init();
-				}
-			})
+			// uni.$on('screened', res => {
+			// 	if (res) {
+			// 		console.log(res);
+			// 		this.form = res
+			// 		this.page = 1;
+			// 		this.list = []
+			// 		this.init();
+			// 	}
+			// })
 		},
 		onShow() {
 			this.list = []

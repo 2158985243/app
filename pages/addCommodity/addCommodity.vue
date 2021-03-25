@@ -1,102 +1,104 @@
 <template>
 	<view class="addCommodity">
-		<view class="box">
-			<view class="form_item">
-				<text>名称</text>
-				<u-input placeholder='请输入商品名称' v-model="form.name" type="text" />
-				<u-icon name="arrow-right" class="man_r" @tap="toProductName" color="#cccccc" size="28"></u-icon>
+		<view class="main">
+			
+			<view class="box">
+				<view class="form_item">
+					<text>名称</text>
+					<u-input placeholder='请输入商品名称' v-model="form.name" type="text" />
+					<u-icon name="arrow-right" class="man_r" @tap="toProductName" color="#cccccc" size="28"></u-icon>
+				</view>
+				<view class="form_item">
+					<text>货号</text>
+					<u-input placeholder='请输入商品货号' v-model="form.number" type="text" />
+				</view>
+				<view class="form_item">
+					<text>颜色</text>
+					<u-input placeholder='请选择颜色' @tap="toColors" :disabled='true' type='text' v-model="colors_name" />
+					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+				</view>
+				<view class="form_item">
+					<text>尺码</text>
+					<u-input placeholder='请选择尺码' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
+					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+				</view>
 			</view>
-			<view class="form_item">
-				<text>货号</text>
-				<u-input placeholder='请输入商品货号' v-model="form.number" type="text" />
-			</view>
-			<view class="form_item">
-				<text>颜色</text>
-				<u-input placeholder='请选择颜色' @tap="toColors" :disabled='true' type='text' v-model="colors_name" />
-				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
-			</view>
-			<view class="form_item">
-				<text>尺码</text>
-				<u-input placeholder='请选择尺码' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
-				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
-			</view>
-		</view>
 
-		<view class="box">
-			<view class="form_item">
-				<text>采购价</text>
-				<u-input placeholder='0.00' v-model="form.purchase_price" type="number" />
+			<view class="box">
+				<view class="form_item">
+					<text>采购价</text>
+					<u-input placeholder='0.00' v-model="form.purchase_price" type="number" />
+				</view>
+				<view class="form_item">
+					<text>零售价</text>
+					<u-input placeholder='0.00' v-model="form.retail_price" type="number" />
+				</view>
+				<view class="form_item">
+					<text>会员价</text>
+					<u-input placeholder='0.00' v-model="form.customer_price" type='number' />
+				</view>
 			</view>
-			<view class="form_item">
-				<text>零售价</text>
-				<u-input placeholder='0.00' v-model="form.retail_price" type="number" />
-			</view>
-			<view class="form_item">
-				<text>会员价</text>
-				<u-input placeholder='0.00' v-model="form.customer_price" type='number' />
-			</view>
-		</view>
 
-		<view class="box">
-			<view class="form_item">
-				<text>分类</text>
-				<u-input placeholder='请选择商品分类' @tap="toCategory" :disabled='true' v-model="category" type="text" />
-				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
-			</view>
-			<view class="form_item">
-				<text>供应商</text>
-				<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier" type="text" />
-				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
-			</view>
-			<view class="box1">
-				<view class="form_item1">
-					<text class="upload">上传图片</text>
-					<view class="img">
-						<view class="list-img" v-for="(item,index) in list_img" :key="index" @longtap='longtap(index)'>
-							<text class="main-img" v-if="index==0">主</text>
-							<u-icon class="icon" @click="del(index)" name="close-circle-fill" color="#000000" size="32"></u-icon>
-							<u-image v-if="list_img.length>0"  @tap='previewImg($cfg.domain+item)' width="100rpx"
-							 border-radius="14" image-mode='aspectFit' height="100rpx" :src="item|filterImage"></u-image>
+			<view class="box">
+				<view class="form_item">
+					<text>分类</text>
+					<u-input placeholder='请选择商品分类' @tap="toCategory" :disabled='true' v-model="category" type="text" />
+					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+				</view>
+				<view class="form_item">
+					<text>供应商</text>
+					<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier" type="text" />
+					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+				</view>
+				<view class="box1">
+					<view class="form_item1">
+						<text class="upload">上传图片</text>
+						<view class="img">
+							<view class="list-img" v-for="(item,index) in list_img" :key="index" @longtap='longtap(index)'>
+								<text class="main-img" v-if="index==0">主</text>
+								<u-icon class="icon" @click="del(index)" name="close-circle-fill" color="#000000" size="32"></u-icon>
+								<u-image v-if="list_img.length>0"  @tap='previewImg($cfg.domain+item)' width="100rpx"
+								 border-radius="14" image-mode='aspectFit' height="100rpx" :src="item|filterImage"></u-image>
+							</view>
+							<view class="plus" @click="uploadImg" v-if="list_img.length<6">
+								<u-icon name="plus" color="#606266" size="36"></u-icon>
+							</view>
+
 						</view>
-						<view class="plus" @click="uploadImg" v-if="list_img.length<6">
-							<u-icon name="plus" color="#606266" size="36"></u-icon>
-						</view>
-
 					</view>
 				</view>
 			</view>
-		</view>
 
 
-		<view class="box">
-			<view class="form_item">
-				<text>商品条码</text>
-				<u-input placeholder='扫条形码获取商品信息' v-model="form.barcode" type="text" />
-				<u-icon name="scan" color="#2979ff" @tap="toBarcode" size="50"></u-icon>
+			<view class="box">
+				<view class="form_item">
+					<text>商品条码</text>
+					<u-input placeholder='扫条形码获取商品信息' v-model="form.barcode" type="text" />
+					<u-icon name="scan" color="#2979ff" @tap="toBarcode" size="50"></u-icon>
+				</view>
+				<view class="form_item">
+					<text>单品条码</text>
+					<u-input placeholder='' v-model="barcode_tit" :disabled='true' type="text" />
+					<text class="set" @click="toBarcodes">设置</text>
+					<u-toast ref="uToast" />
+				</view>
 			</view>
-			<view class="form_item">
-				<text>单品条码</text>
-				<u-input placeholder='' v-model="barcode_tit" :disabled='true' type="text" />
-				<text class="set" @click="toBarcodes">设置</text>
-				<u-toast ref="uToast" />
+			<view class="box">
+				<view class="form_item">
+					<text>初始库存</text>
+					<u-input placeholder='' :disabled='true' v-model="form.remarks" type="text" />
+					<text class="set" @click="toGoodsStock">设置</text>
+				</view>
+				<view class="form_item">
+					<text>库存预警</text>
+					<u-switch v-model="checked1" @change="warning" active-value="1" inactive-value="0"></u-switch>
+					<text v-if="checked1" class="bounds">上限:</text>
+					<u-input v-if="checked1" placeholder='0' class="bounded" v-model="form.warning_max" type="number" />
+					<text v-if="checked1" class="bounds">下限:</text>
+					<u-input v-if="checked1" placeholder='0' class="bounded" v-model="form.warning_min" type="number" />
+				</view>
 			</view>
-		</view>
-		<view class="box">
-			<view class="form_item">
-				<text>初始库存</text>
-				<u-input placeholder='' :disabled='true' v-model="form.remarks" type="text" />
-				<text class="set" @click="toGoodsStock">设置</text>
-			</view>
-			<view class="form_item">
-				<text>库存预警</text>
-				<u-switch v-model="checked1" @change="warning" active-value="1" inactive-value="0"></u-switch>
-				<text v-if="checked1" class="bounds">上限:</text>
-				<u-input v-if="checked1" placeholder='0' class="bounded" v-model="form.warning_max" type="number" />
-				<text v-if="checked1" class="bounds">下限:</text>
-				<u-input v-if="checked1" placeholder='0' class="bounded" v-model="form.warning_min" type="number" />
-			</view>
-		</view>
-		<view class="box">
+			<view class="box">
 			<view class="form_item">
 				<text>显示顺序</text>
 				<u-input placeholder='' v-model="form.sort" type="number" />
@@ -181,7 +183,7 @@
 				</view>
 			</view>
 		</view>
-
+		</view>
 		<view class="btn">
 			<u-button type="primary" class="btn" @tap="save">保存</u-button>
 		</view>
@@ -661,6 +663,9 @@
 				}
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad() {
 			this.init();
 			this.config()
@@ -913,7 +918,12 @@
 			border-radius: 0 !important;
 
 		}
-
+		.main{
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 80rpx;
+		}
 		.box {
 			margin-bottom: 20rpx;
 

@@ -83,6 +83,9 @@
 				}
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad() {
 			uni.$on("selectAccount", (res) => {
 				if (res) {

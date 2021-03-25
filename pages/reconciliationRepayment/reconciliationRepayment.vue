@@ -126,6 +126,9 @@
 			},
 
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(query) {
 			this.name = query.name;
 			let date = this.$date.today()

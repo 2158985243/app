@@ -79,7 +79,7 @@
 		},
 		onLoad(option) {
 			this.form = JSON.parse(decodeURIComponent(option.sales_goods));
-			console.log(this.form);
+			// console.log(this.form);
 			if (this.form.sales_goods.length > 0) {
 				// this.sum_money = 0
 				this.form.sales_goods.map((v) => {

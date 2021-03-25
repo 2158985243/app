@@ -426,6 +426,9 @@
 			});
 
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onShow() {
 			this.selecGooded();
 		}

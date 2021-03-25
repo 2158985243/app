@@ -1,5 +1,8 @@
 <template>
 	<view class="editCommodity">
+		<view class="main">
+			
+		
 		<view class="box">
 			<view class="form_item">
 				<text>名称</text>
@@ -180,7 +183,7 @@
 				</view>
 			</view>
 		</view>
-
+</view>
 		<view class="btn">
 			<u-button class="stbn" @tap="delgoods">删除</u-button>
 			<u-button type="primary" class="stbn" @tap="save">保存</u-button>
@@ -705,6 +708,9 @@
 
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad(query) {
 			this.id = query.id
 			this.init();
@@ -946,7 +952,12 @@
 
 		}
 
-
+		.main{
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 80rpx;
+		}
 		.box {
 			margin-bottom: 20rpx;
 

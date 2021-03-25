@@ -80,7 +80,7 @@
 		onLoad(option) {
 			let item = JSON.parse(decodeURIComponent(option.item));
 			this.form = item;
-			console.log(item);
+			// console.log(item);
 		}
 	}
 </script>

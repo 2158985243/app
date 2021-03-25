@@ -142,3 +142,12 @@ export const generateCustomerNumber = () => {
 		return error;
 	});
 };
+// 库存流水记录
+export const getStockLog = (data) => {
+	return $http.post("/goods/get_stock_log",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};

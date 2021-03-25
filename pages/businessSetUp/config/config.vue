@@ -381,6 +381,9 @@
 				}
 			}
 		},
+		onUnload() {
+			uni.$off()
+		},
 		onLoad() {
 			this.init()
 			// 选择积分

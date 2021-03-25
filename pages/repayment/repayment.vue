@@ -152,7 +152,7 @@
 		},
 		onLoad(option) {
 			this.obj = JSON.parse(decodeURIComponent(option.obj));
-			console.log(this.obj);
+			// console.log(this.obj);
 			this.form.customer_id = this.obj.id;
 			// this.init()
 			this.accountd()
