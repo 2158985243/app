@@ -9,7 +9,7 @@
 				</view>
 				<view class="right">
 					<!-- $cfg.domain + -->
-					<u-image width="80rpx" image-mode='aspectFit' height="80rpx" :src="form.headimg|filterImage"></u-image>
+					<u-image width="80rpx" image-mode='aspectFit' height="80rpx" :src="$imgFn(form.headimg)"></u-image>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
@@ -177,17 +177,6 @@
 					}
 				});
 			})
-		},
-		filters: {
-			filterImage(v) {
-				if (!v) {
-					return v;
-				}
-				if (!/^http/.test((v))) {
-					return url.domain + v;
-				}
-				return v;
-			}
 		},
 		methods: {
 			clickItem(index) {

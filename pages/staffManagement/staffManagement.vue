@@ -17,7 +17,7 @@
 					<uni-list-item :title="item.name" class="listit" v-for="(item,index) in list" :key="index" @click="toShopInformation(item.id)"
 					 :note="item.mobile" :showArrow='true' :rightText='item.job' :clickable='true'>
 						<template slot="header">
-							<u-image width="100rpx" mode='aspectFit' class="header_image" height="100rpx" :src="url+item.images"></u-image>
+							<u-image width="100rpx" mode='aspectFit' class="header_image" height="100rpx" :src="$imgFn(item.images)"></u-image>
 						</template>
 					</uni-list-item>
 				</uni-list>

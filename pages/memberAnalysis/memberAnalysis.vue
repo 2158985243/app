@@ -61,7 +61,7 @@
 			<view class="list">
 				<view class="li" v-for="(item,index) in list[current]" :key="index" @click="spendingDetails(item)">
 					<view class="left">
-						<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$cfg.domain+item.customer_image"></u-image>
+						<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="imgFn(item.customer_image)"></u-image>
 						<view class="item-li">
 							<text>{{item.customer_name}}</text>
 							<text>{{item.mobile}}</text>

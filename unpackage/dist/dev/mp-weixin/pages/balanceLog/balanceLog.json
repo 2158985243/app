@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "会员余额",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "k-scroll-view": "/components/k-scroll-view/k-scroll-view",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast"
+  }
+}

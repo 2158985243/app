@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "新增店铺信息",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-picker": "/node-modules/uview-ui/components/u-picker/u-picker",
+    "u-switch": "/node-modules/uview-ui/components/u-switch/u-switch",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button"
+  }
+}

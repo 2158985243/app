@@ -18,7 +18,7 @@
 				<view class="li" v-for="(item,index) in list" :key="index" @click="customerOf(item)">
 					<view class="left">
 						<view class="img">
-							<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+item.image">
+							<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$imgFn(item.image)">
 							</u-image>
 						</view>
 						<view class="name">

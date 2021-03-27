@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "商品详情",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "cus-preview-img": "/components/cus-previewImg/cus-previewImg",
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-popup": "/node-modules/uview-ui/components/u-popup/u-popup",
+    "u-picker": "/node-modules/uview-ui/components/u-picker/u-picker"
+  }
+}

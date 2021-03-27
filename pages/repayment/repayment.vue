@@ -8,7 +8,7 @@
 		</u-navbar>
 		<view class="membered">
 			<view class="left">
-				<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$cfg.domain+obj.image"></u-image>
+				<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$imgFn(obj.image)"></u-image>
 				<text>{{obj.name}}</text>
 			</view>
 			<view class="right">

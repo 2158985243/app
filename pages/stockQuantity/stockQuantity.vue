@@ -14,7 +14,7 @@
 			</template>
 		</u-navbar>
 		<view class="hearder-search">
-			<u-search class='search' margin="15rpx" bg-color="#ffffff" height='60' @change="search" :show-action="false" :focus='false'
+			<u-search class='search'  bg-color="#ffffff" height='50' @change="search" :show-action="false" :focus='false'
 			 :scan="true" shape="square" placeholder="请输入商品名称/编码" v-model="form.keyword" @Inventory="handelScan"></u-search>
 			<view class="arr" @click="goodsCateShow = !goodsCateShow">
 				全部类别
@@ -48,7 +48,7 @@
 				</view>
 				<view class="list" v-for="(item,index) in list" @click="itemClick(item)">
 					<view class="left">
-						<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" :src="$cfg.domain+item.main_image"></u-image>
+						<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" :src="$imgFn(item.main_image)"></u-image>
 						<view class="t_item">
 							<text class="borad">{{item.name}}<text class="hui">{{item.number}}</text> </text>
 							<text class="bdk">库存:{{item.stock}}</text>
@@ -93,6 +93,7 @@
 		goodsCategoryList
 	} from '../../api/goods_category.js'
 	import store from '@/store'
+	import url from '../../api/configuration.js'
 	export default {
 		components: {
 			kScrollView
@@ -131,6 +132,7 @@
 				store_ids: []
 			}
 		},
+	
 		methods: {
 			// 选择类型
 			goodsCa(item){
@@ -417,15 +419,21 @@
 			width: 100%;
 			height: 80rpx;
 			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
 			position: fixed;
-			top: calc(84rpx + var(--status-bar-height));
+			top: calc(80rpx + var(--status-bar-height));
 			background-color: #F4F6F4;
 			z-index: 99;
-
+			.search{
+				padding: 20rpx;
+			}
 			.arr {
 				color: #007AFF;
 				background-color: #FFFFFF;
-				padding: 20rpx;
+				padding: 0 20rpx;
+				height: 60rpx;
 				margin: 15rpx;
 				display: flex;
 				justify-content: center;

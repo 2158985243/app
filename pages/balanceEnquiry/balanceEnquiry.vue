@@ -15,7 +15,7 @@
 			 :autoPullUp="autoPullUp" :inBottom="pull" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list" v-for="(item,index) in list" :key="index" @click="cilckItem(item.id)">
 					<view class="left">
-						<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" :src="$cfg.domain+item.image"></u-image>
+						<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" :src="$imgFn(item.image)"></u-image>
 						<view class="item-li">
 							<text>{{item.name}}</text>
 							<text class="bottom">余额：<text class="lan">&yen;{{item.balance}}</text></text>

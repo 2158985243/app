@@ -2,8 +2,8 @@
 	<view class="memberManagement">
 		<u-navbar back-icon-color='#ffffff' :background="background">
 			<view class="slot-wrap">
-				<u-search class='search' height='60' @change="search" :show-action="false" :scan="true" shape="square" placeholder="请输入会员卡号、手机号或姓名"
-				 v-model="keyword" @Inventory="handelScan"></u-search>
+				<u-search class='search' height='60' @change="search" :show-action="false" :scan="true" shape="square"
+					placeholder="请输入会员卡号、手机号或姓名" v-model="keyword" @Inventory="handelScan"></u-search>
 			</view>
 			<template slot="right">
 				<u-icon name="plus" @click="toAddMember" color="#ffffff" class="right_icon" size="34"></u-icon>
@@ -29,8 +29,10 @@
 					<view class="select-right" @click="sortChanged">
 						<text>排序</text>
 						<view class="sort">
-							<u-icon name="arrow-up-fill" :color="sort_checked==true? '#ffffff':'#cccccc'" size="20"></u-icon>
-							<u-icon name="arrow-down-fill" :color="sort_checked==false? '#ffffff':'#cccccc'" size="20"></u-icon>
+							<u-icon name="arrow-up-fill" :color="sort_checked==true? '#ffffff':'#cccccc'" size="20">
+							</u-icon>
+							<u-icon name="arrow-down-fill" :color="sort_checked==false? '#ffffff':'#cccccc'" size="20">
+							</u-icon>
 						</view>
 					</view>
 					<view class="select-sx" @click="screen_checked = !screen_checked">
@@ -45,7 +47,8 @@
 						选择日期
 					</view>
 					<view class="right">
-						<view class="date-list" v-for="(item,index) in date_list" :key="index" @click="clickDate(index)">
+						<view class="date-list" v-for="(item,index) in date_list" :key="index"
+							@click="clickDate(index)">
 							<text :class="active_date==index? 'active_date':''">{{item}}</text>
 						</view>
 					</view>
@@ -56,13 +59,14 @@
 						选择日期
 					</view>
 					<view class="right">
-						<view class="date-list" v-for="(item,index) in birthday_list" :key="index" @click="clickBirthday(index)">
+						<view class="date-list" v-for="(item,index) in birthday_list" :key="index"
+							@click="clickBirthday(index)">
 							<text :class="birthday_list_date==index? 'active_date':''">{{item}}</text>
 						</view>
 					</view>
 				</view>
 
-				<view class="nav-title"  v-if="!screen_checked">
+				<view class="nav-title" v-if="!screen_checked">
 					<view class="sum-number">
 						会员总数{{total}}位，共筛选{{list.length}}，已选{{selected}}
 					</view>
@@ -77,7 +81,8 @@
 					<view class="screen-item">
 						<text class="tit">会员等级</text>
 						<view class="screen-box">
-							<view class="screen-list" :class="item.checked? 'lan':''" v-for="(item,index) in leve_list" :key="index" @click="leveItem(item)">
+							<view class="screen-list" :class="item.checked? 'lan':''" v-for="(item,index) in leve_list"
+								:key="index" @click="leveItem(item)">
 								<text>{{item.name}}</text>
 							</view>
 						</view>
@@ -85,14 +90,15 @@
 					<view class="screen-item">
 						<text class="tit">标签</text>
 						<view class="screen-box">
-							<view class="screen-list" :class="item.checked? 'lan':''" v-for="(item,index) in tag_list" :key="index"  @click="tagItem(item)">
+							<view class="screen-list" :class="item.checked? 'lan':''" v-for="(item,index) in tag_list"
+								:key="index" @click="tagItem(item)">
 								<text>{{item.tag}}</text>
 							</view>
 						</view>
 					</view>
 					<view class="screen-btn">
 						<view class="left">
-							<view class="qk"  @click="clear">
+							<view class="qk" @click="clear">
 								清空
 							</view>
 						</view>
@@ -110,16 +116,18 @@
 					<view class="screen-item">
 						<text class="tit">会员等级</text>
 						<view class="screen-box">
-							<view class="screen-list" :class="item.checked? 'lan':''" v-for="(item,index) in leve_list" :key="index" @click="leveItem(item)">
-								<text >{{item.name}}</text>
+							<view class="screen-list" :class="item.checked? 'lan':''" v-for="(item,index) in leve_list"
+								:key="index" @click="leveItem(item)">
+								<text>{{item.name}}</text>
 							</view>
 						</view>
-						
+
 					</view>
 					<view class="screen-item">
 						<text class="tit">标签</text>
 						<view class="screen-box">
-							<view class="screen-list" :class="item.checked? 'lan':''" v-for="(item,index) in tag_list" :key="index" @click="tagItem(item)">
+							<view class="screen-list" :class="item.checked? 'lan':''" v-for="(item,index) in tag_list"
+								:key="index" @click="tagItem(item)">
 								<text>{{item.tag}}</text>
 							</view>
 						</view>
@@ -131,10 +139,10 @@
 							</view>
 						</view>
 						<view class="right">
-							<view class="qx"  @click="screen_checked = false">
+							<view class="qx" @click="screen_checked = false">
 								取消
 							</view>
-							<view class="qd"  @click="sure">
+							<view class="qd" @click="sure">
 								确定
 							</view>
 						</view>
@@ -143,13 +151,15 @@
 			</view>
 			<view class="list">
 
-				<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
-				 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-				 :autoPullUp="autoPullUp" :inBottom="pull" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+				<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip"
+					:loadTip="loadTip" :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight"
+					:height="height" :bottom="bottom" :autoPullUp="autoPullUp" :inBottom="pull"
+					:stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 					<view class="li" v-for="(item,index) in list" :key="index" @click="customerOf(item)">
 						<view class="left">
 							<view class="img">
-								<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+item.image">
+								<u-image width="100" border-radius='18' height="100" mode='aspectFit'
+									:src="$imgFn(item.image)">
 								</u-image>
 							</view>
 							<view class="name">
@@ -178,19 +188,26 @@
 							<view class="date">
 								<text class="t2" v-if="form.type==0||form.type==1||form.type==2">{{item.c_time}}</text>
 								<text class="t2" v-if="form.type==3">欠款金额</text>
-								<text class="t2" v-if="form.type==4">累计消费: <text class="red">{{item.resume}}</text></text>
-								<text class="t2" v-if="form.type==6">当前余额: <text class="red">{{item.balance}}</text></text>
-								<text class="t2" v-if="form.type==7">当前积分: <text class="red">{{item.point}}</text></text>
+								<text class="t2" v-if="form.type==4">累计消费: <text
+										class="red">{{item.resume}}</text></text>
+								<text class="t2" v-if="form.type==6">当前余额: <text
+										class="red">{{item.balance}}</text></text>
+								<text class="t2" v-if="form.type==7">当前积分: <text
+										class="red">{{item.point}}</text></text>
 								<text class="t1 red" v-if="form.type==3">{{item.debt}}</text>
 								<text class="t2 red" v-if="form.type==8">{{item.briDate}}</text>
-								<text class="t2" v-if="form.type==5">累计次数:<text class="red">{{item.resume_times}}</text></text>
-								<text class="t1" v-if="form.type==4">消费次数:<text class="red">{{item.resume_times}}</text></text>
+								<text class="t2" v-if="form.type==5">累计次数:<text
+										class="red">{{item.resume_times}}</text></text>
+								<text class="t1" v-if="form.type==4">消费次数:<text
+										class="red">{{item.resume_times}}</text></text>
 								<text class="t1" v-if="form.type==0">已注册{{item.days}}天</text>
 								<text class="t1" v-if="form.type==6">累计充值:{{item.recharge}}</text>
 								<text class="t1" v-if="form.type==7">累计积分:{{item.cumulative_point}}</text>
 								<text class="t1" v-if="form.type==8">距今{{item.oldTime}}天</text>
-								<text class="t1" v-if="(form.type==1||form.type==2||form.type==5)&&item.resume_times==0">从未消费</text>
-								<text class="t1" v-if="(form.type==1||form.type==2||form.type==5)&&item.resume_times>0">{{item.time_resume}}天未消费</text>
+								<text class="t1"
+									v-if="(form.type==1||form.type==2||form.type==5)&&item.resume_times==0">从未消费</text>
+								<text class="t1"
+									v-if="(form.type==1||form.type==2||form.type==5)&&item.resume_times>0">{{item.time_resume}}天未消费</text>
 
 							</view>
 
@@ -308,10 +325,9 @@
 				birthday_list_date: 0,
 				tag_list: [],
 				leve_list: [],
-				screen_checked:false,
+				screen_checked: false,
 			}
 		},
-
 		computed: {
 			selected() {
 				let sum = 0
@@ -325,42 +341,42 @@
 		},
 		methods: {
 			// 确定
-			sure(){
+			sure() {
 				this.screen_checked = false
 				this.form.customer_level_ids = []
 				this.form.tags = []
-				this.leve_list.map(v=>{
-					if(v.checked){
+				this.leve_list.map(v => {
+					if (v.checked) {
 						// console.log(v);
 						this.form.customer_level_ids.push(v.id)
 					}
 				})
-				this.tag_list.map(v=>{
-					if(v.checked){
+				this.tag_list.map(v => {
+					if (v.checked) {
 						// console.log(v);
 						this.form.tags.push(v.tag)
 					}
 				})
 				// if(this.form.customer_level_ids.length>0||this.form.tags.length>0){
-					this.init()
+				this.init()
 				// }
 			},
 			// 清空
-			clear(){
-				this.tag_list.map(v=>{
+			clear() {
+				this.tag_list.map(v => {
 					v.checked = false
 				})
-				this.leve_list.map(v=>{
+				this.leve_list.map(v => {
 					v.checked = false
 				})
 			},
 			// 会员等级
-			leveItem(item){
+			leveItem(item) {
 				item.checked = !item.checked
 				this.$forceUpdate()
 			},
 			// 标签
-			tagItem(item){
+			tagItem(item) {
 				item.checked = !item.checked
 				this.$forceUpdate()
 			},
@@ -368,17 +384,17 @@
 				let res = await getTag()
 				console.log(res);
 				if (!res.code) {
-					res.map(v=>{
+					res.map(v => {
 						v['checked'] = false
 						this.tag_list.push(v)
 					})
-					
+
 				}
 			},
 			async leves() {
 				let res = await customerLevelList()
 				if (!res.code) {
-					res.map(v=>{
+					res.map(v => {
 						v['checked'] = false
 						this.leve_list.push(v)
 					})
@@ -444,7 +460,8 @@
 					v['checked'] = false;
 					v.mobile = v.mobile.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
 					v.c_time = this.$u.timeFormat(v.created_at, 'yyyy-mm-dd');
-					v['oldTime'] = Math.abs(Math.floor((today - new Date(v.birthday).getTime() / 1000) / (3600 * 24)))
+					v['oldTime'] = Math.abs(Math.floor((today - new Date(v.birthday).getTime() / 1000) / (
+						3600 * 24)))
 					v['briDate'] = `${v.birthday.slice(5,7)}月${v.birthday.slice(8,10)}日`;
 					let time_last = today - Number(v.last_resume_at)
 					e_time = today - Number(v.created_at)
@@ -692,7 +709,7 @@
 			display: flex;
 			flex-direction: column;
 			position: sticky;
-			top: calc(80rpx + var(--status-bar-height));
+			top: calc(78rpx + var(--status-bar-height));
 			z-index: 99;
 
 			.nav-li {
@@ -793,13 +810,22 @@
 				justify-content: space-between;
 				// padding: 20rpx;
 				height: 50rpx;
-				padding-left: 20rpx;
+				// padding-left: 20rpx;
+				text-indent: 1em;
 				align-items: center;
 				background-color: #edecf1;
 
 				.nav-radio {
+					display: flex;
+					flex-direction: row;
+					justify-content: flex-end;
+
 					text {
 						margin-right: 10rpx;
+					}
+
+					/deep/.u-checkbox {
+						width: 40rpx !important;
 					}
 				}
 			}
@@ -811,6 +837,7 @@
 				display: flex;
 				flex-direction: column;
 				position: relative;
+
 				.screen-item {
 					width: 100%;
 					display: flex;
@@ -841,13 +868,15 @@
 							font-size: 24rpx;
 
 						}
-						.lan{
+
+						.lan {
 							background-color: #007AFF;
 							color: #FFFFFF;
 						}
 					}
 				}
-				.screen-btn{
+
+				.screen-btn {
 					width: 100%;
 					display: flex;
 					flex-direction: row;
@@ -855,11 +884,13 @@
 					position: absolute;
 					bottom: 0;
 					padding: 10rpx 20rpx;
-					.left{
+
+					.left {
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						.qk{
+
+						.qk {
 							width: 140rpx;
 							height: 60rpx;
 							background-color: #C8C7CC;
@@ -870,12 +901,14 @@
 							align-items: center;
 						}
 					}
-					.right{
+
+					.right {
 						display: flex;
 						justify-content: center;
 						align-items: center;
 						flex-direction: row;
-						.qx{
+
+						.qx {
 							width: 140rpx;
 							height: 60rpx;
 							background-color: #C8C7CC;
@@ -886,7 +919,8 @@
 							align-items: center;
 							margin-right: 20rpx;
 						}
-						.qd{
+
+						.qd {
 							width: 140rpx;
 							height: 60rpx;
 							background-color: #4988EF;
@@ -907,6 +941,7 @@
 				display: flex;
 				flex-direction: column;
 				position: relative;
+
 				.screen-item {
 					width: 100%;
 					display: flex;
@@ -937,15 +972,17 @@
 							font-size: 24rpx;
 
 						}
-						.lan{
+
+						.lan {
 							background-color: #007AFF;
 							color: #FFFFFF;
 						}
 					}
-					
-					
+
+
 				}
-				.screen-btn{
+
+				.screen-btn {
 					width: 100%;
 					display: flex;
 					flex-direction: row;
@@ -953,11 +990,13 @@
 					position: absolute;
 					bottom: 0;
 					padding: 10rpx 20rpx;
-					.left{
+
+					.left {
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						.qk{
+
+						.qk {
 							width: 140rpx;
 							height: 60rpx;
 							background-color: #C8C7CC;
@@ -968,12 +1007,14 @@
 							align-items: center;
 						}
 					}
-					.right{
+
+					.right {
 						display: flex;
 						justify-content: center;
 						align-items: center;
 						flex-direction: row;
-						.qx{
+
+						.qx {
 							width: 140rpx;
 							height: 60rpx;
 							background-color: #C8C7CC;
@@ -984,7 +1025,8 @@
 							align-items: center;
 							margin-right: 20rpx;
 						}
-						.qd{
+
+						.qd {
 							width: 140rpx;
 							height: 60rpx;
 							background-color: #4988EF;

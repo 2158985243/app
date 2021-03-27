@@ -5,7 +5,7 @@
 				<view class="header-img">
 					<view class="left">
 						<view class="img">
-							<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+form.image">
+							<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$imgFn(form.image)">
 							</u-image>
 						</view>
 						<view class="name">
@@ -72,6 +72,7 @@
 				}
 			}
 		},
+		
 		onLoad(query) {
 			this.form = JSON.parse(decodeURIComponent(query.obj));
 		}

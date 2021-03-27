@@ -8,7 +8,7 @@
 		<view class="hearder">
 			<view class="hdr_item" v-for="(item,index) in form.sales_goods" :key="index">
 				<view class="left">
-					<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" :src="$cfg.domain+item.goods.main_image"></u-image>
+					<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" :src="$imgFn(item.goods.main_image)"></u-image>
 					<view class="t_item">
 						<text class="borad">{{item.goods.name}}</text>
 						<text>{{item.goods.number}}-{{item.color.name}}-{{item.size.name}}</text>

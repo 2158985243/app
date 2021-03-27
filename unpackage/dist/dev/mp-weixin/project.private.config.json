@@ -1,0 +1,36 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/stockQuantity/stockQuantity",
+          "pathName": "pages/stockQuantity/stockQuantity",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/addMembership/addMembership",
+          "pathName": "pages/addMembership/addMembership",
+          "query": "id=12",
+          "scene": null
+        },
+        {
+          "name": "pages/grabble/grabble",
+          "pathName": "pages/grabble/grabble",
+          "query": "id=12",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "确认兑换",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast"
+  }
+}

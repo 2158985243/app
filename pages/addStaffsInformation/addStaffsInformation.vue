@@ -68,7 +68,7 @@
 					<view class="plus" v-if="form.images==''">
 						<u-icon name="plus" color="#606266" size="36"></u-icon>
 					</view>
-					<u-image v-else width="120rpx" image-mode='aspectFit' height="120rpx" :src="form.images|filterImage"></u-image>
+					<u-image v-else width="120rpx" image-mode='aspectFit' height="120rpx" :src="$imgFn(form.images)"></u-image>
 				</view>
 			</view>
 		</view>
@@ -123,17 +123,6 @@
 				},
 				storeName: '',
 				userMessage:{}
-			}
-		},
-		filters: {
-			filterImage(v) {
-				if (!v) {
-					return v;
-				}
-				if (!/^http/.test((v))) {
-					return url.domain + v;
-				}
-				return v;
 			}
 		},
 		created() {

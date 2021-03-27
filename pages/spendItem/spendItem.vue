@@ -7,7 +7,7 @@
 				</view>
 			</view>
 			<view class="right">
-				<u-image width="120" error-icon="plus" height="120" mode='aspectFit' :src="$cfg.domain+form.image">
+				<u-image width="120" error-icon="plus" height="120" mode='aspectFit' :src="$imgFn(form.image)">
 				</u-image>
 			</view>
 		</view>

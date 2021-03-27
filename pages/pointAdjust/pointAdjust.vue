@@ -2,7 +2,7 @@
 	<view class="pointAdjust">
 		<view class="membered">
 			<view class="left">
-				<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$cfg.domain+obj.image"></u-image>
+				<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$imgFn(obj.image)"></u-image>
 				<text>{{obj.name}}</text>
 			</view>
 			<view class="right">
@@ -66,6 +66,7 @@
 				return Number(this.obj.point) + Number(this.form.point)
 			}
 		},
+	
 		methods: {
 			checkboxChange(v){
 				if(v.value){
@@ -171,7 +172,7 @@
 				width: 100%;
 				display: flex;
 				height: 80rpx;
-				padding: 20rpx 0;
+				padding: 20rpx;
 				background-color: #fff;
 
 				.rod {

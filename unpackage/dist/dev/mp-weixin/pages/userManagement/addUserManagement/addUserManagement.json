@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "新增用户",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-switch": "/node-modules/uview-ui/components/u-switch/u-switch",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast"
+  }
+}

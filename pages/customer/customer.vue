@@ -10,7 +10,7 @@
 				<view class="header-img">
 					<view class="left">
 						<view class="img">
-							<u-image width="100rpx" image-mode='aspectFit' border-radius="10" height="100rpx" :src="form.image|filterImage"></u-image>
+							<u-image width="100rpx" image-mode='aspectFit' border-radius="10" height="100rpx" :src="$imgFn(form.image)"></u-image>
 						</view>
 						<view class="name">
 							<text>{{form.name}}</text>
@@ -125,17 +125,6 @@
 				background: {
 					backgroundColor: '#2979ff'
 				},
-			}
-		},
-		filters: {
-			filterImage(v) {
-				if (!v) {
-					return v;
-				}
-				if (!/^http/.test((v))) {
-					return url.domain + v;
-				}
-				return v;
 			}
 		},
 		methods: {

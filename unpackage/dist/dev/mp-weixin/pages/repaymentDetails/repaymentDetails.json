@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "还款详情",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast",
+    "u-select": "/node-modules/uview-ui/components/u-select/u-select"
+  }
+}

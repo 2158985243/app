@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "库存盘点",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-action-sheet": "/node-modules/uview-ui/components/u-action-sheet/u-action-sheet"
+  }
+}

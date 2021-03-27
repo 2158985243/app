@@ -38,23 +38,23 @@
 										</view>
 
 									</view>
-									<view class="list" v-for="(item,index) in list[current]" :key="index" @click="toProcurementStatisticsDetails(item)">
+									<view class="list" v-for="(itemList,indexList) in list[current]" :key="indexList" @click="toProcurementStatisticsDetails(itemList)">
 										<view class="left">
 											<view class="img">
-												<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+item.main_image">
+												<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$imgFn(itemList.main_image)">
 												</u-image>
 											</view>
 											<view class="li-item">
-												<text class="balck">{{item.name}}</text>
-												<text class="hui-se">盘点数量：{{item.quantity}}</text>
-												<text class="hui-se ">盈亏数量：<text class="red">{{item.gain_quantity}}</text> </text>
+												<text class="balck">{{itemList.name}}</text>
+												<text class="hui-se">盘点数量：{{itemList.quantity}}</text>
+												<text class="hui-se ">盈亏数量：<text class="red">{{itemList.gain_quantity}}</text> </text>
 											</view>
 										</view>
 										<view class="right">
 											<view class="money">
-												<text>{{item.number}}</text>
-												<text>进货价：<text class="">&yen;{{item.purchase_price}}</text> </text>
-												<text>盈亏金额：<text class="">&yen;{{Number(item.purchase_price)*Number(item.gain_quantity)}}</text> </text>
+												<text>{{itemList.number}}</text>
+												<text>进货价：<text class="">&yen;{{itemList.purchase_price}}</text> </text>
+												<text>盈亏金额：<text class="">&yen;{{Number(itemList.purchase_price)*Number(itemList.gain_quantity)}}</text> </text>
 											</view>
 											<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 										</view>

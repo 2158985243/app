@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "营业设置",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "uni-list": "/components/uni-list/uni-list",
+    "uni-list-item": "/components/uni-list-item/uni-list-item"
+  }
+}

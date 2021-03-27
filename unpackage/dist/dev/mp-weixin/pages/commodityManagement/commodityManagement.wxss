@@ -1,0 +1,218 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.commodityManagement.data-v-08112d28 {
+  width: 100%;
+  height: 100vh;
+  background-color: #e3e3e3;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.commodityManagement .list.data-v-08112d28 {
+  width: 100%;
+  height: calc(100% - 140rpx);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  overflow: hidden;
+}
+.commodityManagement .right_icon.data-v-08112d28 {
+  margin-right: 20rpx;
+}
+.commodityManagement.data-v-08112d28 .u-border-bottom:after {
+  border-bottom-width: 0rpx;
+}
+.commodityManagement .nav.data-v-08112d28 {
+  width: 100%;
+  background-color: #2979ff;
+  height: 80rpx;
+}
+.commodityManagement .nav .slot-wrap.data-v-08112d28 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  width: 100%;
+  height: 80rpx;
+}
+.commodityManagement .nav .slot-wrap .search_add.data-v-08112d28 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  color: #FFFFFF;
+  width: 15%;
+}
+.commodityManagement .titles.data-v-08112d28 {
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-indent: 1em;
+  background-color: #e3e3e3;
+}
+.commodityManagement .actives.data-v-08112d28 {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+.commodityManagement .popup-right.data-v-08112d28 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.commodityManagement .popup-right .pop-title.data-v-08112d28 {
+  position: fixed;
+  top: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  width: 100%;
+  background-color: #FFFFFF;
+  padding: 10rpx 0;
+  border-bottom: 10rpx solid #e2e2e2;
+}
+.commodityManagement .popup-right .pop-title .sx.data-v-08112d28 {
+  width: 90%;
+  text-align: center;
+}
+.commodityManagement .popup-right .pop-title .logs.data-v-08112d28 {
+  width: 80%;
+  text-align: center;
+}
+.commodityManagement .popup-right .pop-title .userd.data-v-08112d28 {
+  text-align: center;
+  color: #007AFF;
+}
+.commodityManagement .popup-right .pop-listt.data-v-08112d28 {
+  margin-top: 60rpx;
+  padding: 20rpx;
+}
+.commodityManagement .popup-right .pop-listt .u-checkbox.data-v-08112d28 {
+  height: 80rpx;
+}
+.commodityManagement .popup-right .btn.data-v-08112d28 {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+}
+.commodityManagement .popup-right .btn .open.data-v-08112d28 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  border-radius: 0;
+}
+.commodityManagement .popup-right.data-v-08112d28 uni-button:after {
+  border-radius: 0;
+}
+.commodityManagement .popup-right .pop-list.data-v-08112d28 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  padding: 20rpx 10rpx;
+  margin-top: 60rpx;
+}
+.commodityManagement .popup-right .pop-list .nav-box.data-v-08112d28 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.commodityManagement .popup-right .pop-list .nav-box .nav-tit.data-v-08112d28 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.commodityManagement .popup-right .pop-list .nav-box .nav-tit .ht.data-v-08112d28 {
+  font-size: 28rpx;
+  color: #000000;
+  font-weight: 600;
+  padding: 10rpx;
+}
+.commodityManagement .popup-right .pop-list .nav-box .nav-list.data-v-08112d28 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.commodityManagement .popup-right .pop-list .nav-box .nav-list .lak.data-v-08112d28 {
+  width: 33.3%;
+}
+.commodityManagement .popup-right .pop-list .nav-box .nav-list .nav-name.data-v-08112d28 {
+  width: 100%;
+  text-align: center;
+  margin: 10rpx 0;
+}
+.commodityManagement .popup-right .pop-list .nav-box .nav-list .nav-name .nav-kk.data-v-08112d28 {
+  width: 90%;
+  padding: 6rpx 10rpx;
+  border-radius: 35rpx;
+  background-color: #f0f0f0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+

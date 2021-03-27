@@ -1,7 +1,7 @@
 <template>
 	<view class="editItems">
 		<view class="header">
-			<u-image width="100rpx" mode='aspectFit' border-radius="10" class="header_image" height="100rpx" :src="$cfg.domain+form.item.goodsOf.main_image"></u-image>
+			<u-image width="100rpx" mode='aspectFit' border-radius="10" class="header_image" height="100rpx" :src="$imgFn(form.item.goodsOf.main_image)"></u-image>
 			<view class="header-data">
 				<text class="borad">{{form.item.goodsOf.name}}</text>
 				<text class="huise">{{form.item.goodsOf.number}}</text>

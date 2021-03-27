@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "参数设置",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-switch": "/node-modules/uview-ui/components/u-switch/u-switch",
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-select": "/node-modules/uview-ui/components/u-select/u-select"
+  }
+}

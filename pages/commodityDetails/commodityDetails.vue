@@ -12,7 +12,7 @@
 			<view class="imgs">
 				<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll" scroll-left="120">
 					<u-image width="180rpx" height="180rpx" border-radius="20rpx" @click='previewImg($cfg.domain+item)' class="scroll-view-item_H"
-					 :src="$cfg.domain+item" v-for="(item,index) in oracle.images"></u-image>
+					 :src="$imgFN(item)" v-for="(item,index) in oracle.images"></u-image>
 				</scroll-view>
 			</view>
 			<!--  -->

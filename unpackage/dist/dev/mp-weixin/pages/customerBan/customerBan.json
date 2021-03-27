@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "会员挂失",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input"
+  }
+}

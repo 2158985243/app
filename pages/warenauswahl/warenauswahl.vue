@@ -157,7 +157,7 @@
 			<view class="specification" v-if="goodsOf">
 				<view class="goods-of">
 					<!-- mode='aspectFit'  -->
-					<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+goodsOf.main_image"></u-image>
+					<u-image width="140rpx" height="140rpx" border-radius='20' :src="$imgFn(goodsOf.main_image)"></u-image>
 					<view class="goodsNews">
 						<text class="goods-name">{{goodsOf.name}}</text>
 						<text class="goods-number">{{goodsOf.number}}</text>
@@ -211,7 +211,7 @@
 					<view class="specification" v-for="(item,index) in saveData" :key="index">
 						<u-icon name="trash" class='close' @click="hiddengoods(index)" color="#a8a8a8" size="40"></u-icon>
 						<view class="goods-of" v-if="item.goodsData[0]">
-							<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+item.goodsData[0].goodsOf.main_image"></u-image>
+							<u-image width="140rpx" height="140rpx" border-radius='20' :src="$imgFn(item.goodsData[0].goodsOf.main_image)"></u-image>
 							<view class="goodsNews">
 								<text class="goods-name">{{item.goodsData[0].goodsOf.name}}</text>
 								<text class="goods-number">{{item.goodsData[0].goodsOf.number}}</text>

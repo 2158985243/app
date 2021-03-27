@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "积分兑换详情",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast",
+    "u-select": "/node-modules/uview-ui/components/u-select/u-select"
+  }
+}

@@ -10,7 +10,7 @@
 			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="li-data" v-for="(item,index) in list" @click="toCustomer(item)">
 					<view class="left">
-						<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+item.image">
+						<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$imgFn(item.image)">
 						</u-image>
 						<view class="li-name">
 							<text>{{item.name}}</text>

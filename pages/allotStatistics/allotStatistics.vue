@@ -35,22 +35,22 @@
 										</view>
 
 									</view>
-									<view class="list" v-for="(item,index) in list[current]" :key="index" @click="toProcurementStatisticsDetails(item)">
+									<view class="list" v-for="(itemList,indexList) in list[current]" :key="indexList" @click="toProcurementStatisticsDetails(itemList)">
 										<view class="left">
 											<view class="img">
-												<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+item.main_image">
+												<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$imgFn(itemList.main_image)">
 												</u-image>
 											</view>
 											<view class="li-item">
-												<text class="balck">{{item.name}}</text>
-												<text>{{item.number}}</text>
-												<text class="hui-se">零售价：&yen;{{item.retail_price}}</text>
+												<text class="balck">{{itemList.name}}</text>
+												<text>{{itemList.number}}</text>
+												<text class="hui-se">零售价：&yen;{{itemList.retail_price}}</text>
 											</view>
 										</view>
 										<view class="right">
 											<view class="money">
-												<text>调出数量：<text class="red">{{item.out_quantity}}</text> </text>
-												<text>调入数量：<text class="red">{{item.in_quantity}}</text> </text>
+												<text>调出数量：<text class="red">{{itemList.out_quantity}}</text> </text>
+												<text>调入数量：<text class="red">{{itemList.in_quantity}}</text> </text>
 											</view>
 											<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 										</view>

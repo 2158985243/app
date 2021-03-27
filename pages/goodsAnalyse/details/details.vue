@@ -7,7 +7,7 @@
 			<view class="imgs">
 				<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll" scroll-left="120">
 					<u-image width="180rpx" height="180rpx" border-radius="20rpx" @click='previewImg($cfg.domain+item)' class="scroll-view-item_H"
-					 :src="$cfg.domain+item" v-for="(item,index) in oracle.images"></u-image>
+					 :src="$imgFn(item)" v-for="(item,index) in oracle.images"></u-image>
 				</scroll-view>
 			</view>
 			<!--  -->
@@ -147,7 +147,7 @@
 						</view>
 						<view class="related" v-for="(item,index) in nav_list[2].data" :key="index">
 							<view class="left">
-								<u-image width="100rpx" height="100rpx" border-radius="14rpx" class="" :src="$cfg.domain+item.goods.main_image"></u-image>
+								<u-image width="100rpx" height="100rpx" border-radius="14rpx" class="" :src="$imgFn(item.goods.main_image)"></u-image>
 								<view class="lf-item">
 									<text>{{item.goods.name}}</text>
 									<text>{{item.goods.number}}</text>

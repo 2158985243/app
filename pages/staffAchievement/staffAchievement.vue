@@ -32,16 +32,16 @@
 
 								</view>
 								<view class="list">
-									<view class="li" v-for="(item,index) in list[current]" :key="index" @click="toperformanceDetails(item)">
+									<view class="li" v-for="(item_list,index_list) in list[current]" :key="index_list" @click="toperformanceDetails(item_list)">
 										<view class="left">
-											<text class="black">{{item.name || '无员工'}}</text>
-											<u-line-progress height='10' :percent="(Number(item.total_money)/Number(total_money[current]))*100"
+											<text class="black">{{item_list.name || '无员工'}}</text>
+											<u-line-progress height='10' :percent="(Number(item_list.total_money)/Number(total_money[current]))*100"
 											 :show-percent='false' :round="true" :active-color="colors[index%4]"></u-line-progress>
 										</view>
 										<view class="right">
 											<view class="right-item">
-												<text class="red">&yen;{{item.total_money}}</text>
-												<text>数量{{item.num}},毛利&yen;{{(Number(item.total_money)-Number(item.total_price)).toFixed(2)}}</text>
+												<text class="red">&yen;{{item_list.total_money}}</text>
+												<text>数量{{item_list.num}},毛利&yen;{{(Number(item_list.total_money)-Number(item_list.total_price)).toFixed(2)}}</text>
 											</view>
 											<u-icon name="arrow-right" color="#bebebe" size="36"></u-icon>
 										</view>

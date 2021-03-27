@@ -7,48 +7,65 @@
 		</u-navbar>
 		<view class="box">
 			<view class="form_item">
+				<view class="left">
+					
 				<text>商品</text>
 				<u-input placeholder='请输入货号/商品名称/条码' v-model="form.keyword" type="text" />
+				</view>
 				<u-icon name="scan" @tap='handelScan' color="#2979ff" size="38"></u-icon>
 			</view>
 			<view class="form_item">
+				<view class="left">
 				<text>店铺</text>
 				<u-input placeholder='请选择店铺' @click="toStore" :disabled='true' v-model="shop" type="text" />
+			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
+				<view class="left">
 				<text>分类</text>
 				<u-input placeholder='请选择商品分类' @tap="toCategory" :disabled='true' v-model="category" type="text" />
+			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 		</view>
 		<view class="box">
 			<view class="form_item">
+				<view class="left">
 				<text>品牌</text>
 				<u-input placeholder='请选择品牌' @tap="toTrademark" :disabled='true' type='text' v-model="trademark_name" />
+			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
+				<view class="left">
 				<text>年份</text>
 				<u-input placeholder='请选择年份' @tap="toYear" :disabled='true' v-model="form.year" type="text" />
+			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :params="params"></u-picker>
 			<view class="form_item">
+				<view class="left">
 				<text>季节</text>
 				<u-input placeholder='请选择季节' @tap="toSeason" :disabled='true' v-model="form.season" type="text" />
+			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<u-select v-model="showSeason" @confirm="confirm" :list="list"></u-select>
 		</view>
 		<view class="box">
 			<view class="form_item">
+				<view class="left">
 				<text>显示零库存</text>
 				<u-switch v-model="checked1" @change="warning" active-value="1" inactive-value="0"></u-switch>
 			</view>
+			</view>
 			<view class="form_item">
+				<view class="left">
 				<text>显示停用商品</text>
 				<u-switch v-model="checked2" @change="warning1" active-value="1" inactive-value="0"></u-switch>
+			</view>
 			</view>
 		</view>
 		<view class="btn" @click="sure">
@@ -287,7 +304,12 @@
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
-
+				justify-content: space-between;
+				.left{
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+				}
 				text {
 					width: 220rpx;
 					// text-align: left;

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "支出详情",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input"
+  }
+}

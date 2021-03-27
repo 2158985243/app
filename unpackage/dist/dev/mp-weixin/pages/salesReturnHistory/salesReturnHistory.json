@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-navbar": "/node-modules/uview-ui/components/u-navbar/u-navbar",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "k-scroll-view": "/components/k-scroll-view/k-scroll-view",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast",
+    "tab-control": "/components/tabControl-tag/tabControl-tag"
+  }
+}

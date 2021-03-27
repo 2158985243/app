@@ -15,23 +15,23 @@
 							 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
 							 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 								<view class="cen">
-									<view class="list" v-for="(item,index) in list[current]" :key="index" @click="toProcurementStatisticsDetails(item)">
+									<view class="list" v-for="(itemList,indexList) in list[current]" :key="indexList" @click="toProcurementStatisticsDetails(itemList)">
 										<view class="left">
 											<view class="img">
-												<u-image width="100" border-radius='10' height="100" mode='aspectFit' :src="$cfg.domain+item.customer.image">
+												<u-image width="100" border-radius='10' height="100" mode='aspectFit' :src="$imgFn(itemList.customer.image)">
 												</u-image>
 											</view>
 											<view class="li-item">
-												<text class="balck">{{item.customer.name}}</text>
-												<text class="time">{{item.ctime}}</text>
-												<text class="hui-se">{{item.user.name}}</text>
+												<text class="balck">{{itemList.customer.name}}</text>
+												<text class="time">{{itemList.ctime}}</text>
+												<text class="hui-se">{{itemList.user.name}}</text>
 											</view>
 										</view>
 										<view class="right">
 											<view class="money">
-												<text :class="item.money>0? 'red':'green'">&yen;{{item.money}}</text>
-												<text class="hui center">调整后余额：&yen;{{item.balance}}</text>
-												<text class="hui">{{item.store.name}}</text>
+												<text :class="itemList.money>0? 'red':'green'">&yen;{{itemList.money}}</text>
+												<text class="hui center">调整后余额：&yen;{{itemList.balance}}</text>
+												<text class="hui">{{itemList.store.name}}</text>
 											</view>
 										</view>
 									</view>

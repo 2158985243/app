@@ -1,7 +1,7 @@
 <template>
 	<view class="pointExchange">
 		<u-navbar back-icon-color='#ffffff' title="积分兑换" :background="background" title-color="#ffffff">
-			
+
 		</u-navbar>
 		<view class="box">
 			<u-popup v-model="show" mode="right" width="80%">
@@ -163,7 +163,7 @@
 			<view class="specification" v-if="goodsOf">
 				<view class="goods-of">
 					<!-- mode='aspectFit'  -->
-					<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+goodsOf.main_image">
+					<u-image width="140rpx" height="140rpx" border-radius='20' :src="goodsOf.main_image|imgFn">
 					</u-image>
 					<view class="goodsNews">
 						<text class="goods-name">{{goodsOf.name}}</text>
@@ -224,7 +224,7 @@
 						</u-icon>
 						<view class="goods-of" v-if="item.goodsData[0]">
 							<u-image width="140rpx" height="140rpx" border-radius='20'
-								:src="$cfg.domain+item.goodsData[0].goodsOf.main_image"></u-image>
+								:src="item.goodsData[0].goodsOf.main_image|imgFn"></u-image>
 							<view class="goodsNews">
 								<text class="goods-name">{{item.goodsData[0].goodsOf.name}}</text>
 								<text class="goods-number">{{item.goodsData[0].goodsOf.number}}</text>
@@ -265,6 +265,7 @@
 		pointExchangeList,
 		goods
 	} from '../../../api/goods.js'
+	import url from '../../../api/configuration.js'
 	import store from '@/store'
 	import {
 		brandList
@@ -341,7 +342,11 @@
 				option_data: {}
 			}
 		},
-
+		filters: {
+			imgFn(v) {
+				return url.domain + v
+			}
+		},
 		computed: {
 			// // 商品组
 			saveData() {
@@ -1131,7 +1136,7 @@
 		.box {
 			width: 100%;
 			position: fixed;
-			top: calc(80rpx + var(--status-bar-height));
+			top: calc(78rpx + var(--status-bar-height));
 			z-index: 1000;
 		}
 
@@ -1205,7 +1210,7 @@
 			.slot-wrap {
 				display: flex;
 				align-items: center;
-				justify-content: center;
+				justify-content: space-between;
 				width: 100%;
 				height: 80rpx;
 

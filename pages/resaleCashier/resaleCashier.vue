@@ -167,7 +167,7 @@
 			<view class="specification" v-if="goodsOf">
 				<view class="goods-of">
 					<!-- mode='aspectFit'  -->
-					<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+goodsOf.main_image">
+					<u-image width="140rpx" height="140rpx" border-radius='20' :src="$imgFn(goodsOf.main_image)">
 					</u-image>
 					<view class="goodsNews">
 						<text class="goods-name">{{goodsOf.name}}</text>
@@ -228,7 +228,7 @@
 						</u-icon>
 						<view class="goods-of" v-if="item.goodsData[0]">
 							<u-image width="140rpx" height="140rpx" border-radius='20'
-								:src="$cfg.domain+item.goodsData[0].goodsOf.main_image"></u-image>
+								:src="$imgFn(item.goodsData[0].goodsOf.main_image)"></u-image>
 							<view class="goodsNews">
 								<text class="goods-name">{{item.goodsData[0].goodsOf.name}}</text>
 								<text class="goods-number">{{item.goodsData[0].goodsOf.number}}</text>
@@ -1142,7 +1142,7 @@
 		.box {
 			width: 100%;
 			position: fixed;
-			top: calc(80rpx + var(--status-bar-height));
+			top: calc(78rpx + var(--status-bar-height));
 			z-index: 1000;
 		}
 
@@ -1216,10 +1216,12 @@
 			.slot-wrap {
 				display: flex;
 				align-items: center;
-				justify-content: center;
+				justify-content: space-between;
 				width: 100%;
 				height: 80rpx;
-
+				.search{
+					width: 75%;
+				}
 				.search_add {
 					display: flex;
 					align-items: center;

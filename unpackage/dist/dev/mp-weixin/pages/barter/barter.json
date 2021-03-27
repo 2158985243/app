@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "换货",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-number-box": "/node-modules/uview-ui/components/u-number-box/u-number-box"
+  }
+}

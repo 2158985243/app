@@ -4,50 +4,67 @@
 			
 			<view class="box">
 				<view class="form_item">
+					<view class="left">
+						
 					<text>名称</text>
 					<u-input placeholder='请输入商品名称' v-model="form.name" type="text" />
+					</view>
 					<u-icon name="arrow-right" class="man_r" @tap="toProductName" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>货号</text>
 					<u-input placeholder='请输入商品货号' v-model="form.number" type="text" />
 				</view>
+				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>颜色</text>
 					<u-input placeholder='请选择颜色' @tap="toColors" :disabled='true' type='text' v-model="colors_name" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>尺码</text>
 					<u-input placeholder='请选择尺码' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
 
 			<view class="box">
 				<view class="form_item">
+					<view class="left">
 					<text>采购价</text>
 					<u-input placeholder='0.00' v-model="form.purchase_price" type="number" />
+				</view>
 				</view>
 				<view class="form_item">
 					<text>零售价</text>
 					<u-input placeholder='0.00' v-model="form.retail_price" type="number" />
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>会员价</text>
 					<u-input placeholder='0.00' v-model="form.customer_price" type='number' />
+				</view>
 				</view>
 			</view>
 
 			<view class="box">
 				<view class="form_item">
+					<view class="left">
 					<text>分类</text>
 					<u-input placeholder='请选择商品分类' @tap="toCategory" :disabled='true' v-model="category" type="text" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>供应商</text>
 					<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier" type="text" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="box1">
@@ -58,7 +75,7 @@
 								<text class="main-img" v-if="index==0">主</text>
 								<u-icon class="icon" @click="del(index)" name="close-circle-fill" color="#000000" size="32"></u-icon>
 								<u-image v-if="list_img.length>0"  @tap='previewImg($cfg.domain+item)' width="100rpx"
-								 border-radius="14" image-mode='aspectFit' height="100rpx" :src="item|filterImage"></u-image>
+								 border-radius="14" image-mode='aspectFit' height="100rpx" :src="$imgFn(item)"></u-image>
 							</view>
 							<view class="plus" @click="uploadImg" v-if="list_img.length<6">
 								<u-icon name="plus" color="#606266" size="36"></u-icon>
@@ -72,24 +89,31 @@
 
 			<view class="box">
 				<view class="form_item">
+					<view class="left">
 					<text>商品条码</text>
 					<u-input placeholder='扫条形码获取商品信息' v-model="form.barcode" type="text" />
+				</view>
 					<u-icon name="scan" color="#2979ff" @tap="toBarcode" size="50"></u-icon>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>单品条码</text>
 					<u-input placeholder='' v-model="barcode_tit" :disabled='true' type="text" />
+				</view>
 					<text class="set" @click="toBarcodes">设置</text>
 					<u-toast ref="uToast" />
 				</view>
 			</view>
 			<view class="box">
 				<view class="form_item">
+					<view class="left">
 					<text>初始库存</text>
 					<u-input placeholder='' :disabled='true' v-model="form.remarks" type="text" />
+				</view>
 					<text class="set" @click="toGoodsStock">设置</text>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>库存预警</text>
 					<u-switch v-model="checked1" @change="warning" active-value="1" inactive-value="0"></u-switch>
 					<text v-if="checked1" class="bounds">上限:</text>
@@ -97,23 +121,30 @@
 					<text v-if="checked1" class="bounds">下限:</text>
 					<u-input v-if="checked1" placeholder='0' class="bounded" v-model="form.warning_min" type="number" />
 				</view>
+				</view>
 			</view>
 			<view class="box">
 			<view class="form_item">
+				<view class="left">
 				<text>显示顺序</text>
 				<u-input placeholder='' v-model="form.sort" type="number" />
 				<!-- <u-input placeholder='请输入备注信息' v-model="form.remarks" type="text" /> -->
 			</view>
+			</view>
 			<view class="form_item">
+				<view class="left">
 				<text>支持积分兑换</text>
 				<u-switch v-model="checked2" @change="exchange" active-value="1" inactive-value="0"></u-switch>
 				<text v-if="checked2" class="min_exchange">所需积分:</text>
 				<u-input v-if="checked2" placeholder='0' class="border_bt" v-model="form.exchange_value" type="number" />
 
 			</view>
+			</view>
 			<view class="form_item">
+				<view class="left">
 				<text>商品启用状态</text>
 				<u-switch v-model="checked3" @change="changeStatus" active-value="1" inactive-value="0"></u-switch>
+			</view>
 			</view>
 			<view class="form_item3" @click="hidde" v-if="!his">
 				<text>显示更多</text>
@@ -125,60 +156,80 @@
 			</view>
 			<view class="box" v-show="his">
 				<view class="form_item">
+					<view class="left">
 					<text>品牌</text>
 					<u-input placeholder='请选择品牌' @tap="toTrademark" :disabled='true' type='text' v-model="trademark_name" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>年份</text>
 					<u-input placeholder='请选择年份' @tap="toYear" :disabled='true' type='text' v-model="form.year" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :params="params"></u-picker>
 				<view class="form_item">
+					<view class="left">
 					<text>季节</text>
 					<u-input placeholder='请选择季节' @tap="toSeason" :disabled='true' type='text' v-model="form.season" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<u-select v-model="showSeason" @confirm="confirm" :list="list"></u-select>
 				<view class="form_item">
+					<view class="left">
 					<text>单位</text>
 					<u-input placeholder='请选择单位' @tap="toUnitList" :disabled='true' type='text' v-model="unitList_name" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
 
 			<view class="box" v-show="his">
 				<view class="form_item">
+					<view class="left">
 					<text>材质</text>
 					<u-input placeholder='请输入或选择材质' type='text' v-model="form.material" />
+				</view>
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>风格</text>
 					<u-input placeholder='请输入或选择风格' type='text' v-model="form.style" />
+				</view>
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>款式</text>
 					<u-input placeholder='请输入或选择款式' type='text' v-model="form.model" />
+				</view>
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>产地</text>
 					<u-input placeholder='请输入或选择产地' type='text' v-model="form.origin" />
+				</view>
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
 			<view class="box bottoms" v-show="his">
 				<view class="form_item">
+					<view class="left">
 					<text>执行标准</text>
 					<u-input placeholder='请输入或选择执行标准' type='text' v-model="form.standard" />
+				</view>
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>安全类型</text>
 					<u-input placeholder='请输入或选择执行标准' type='text' v-model="form.security" />
+				</view>
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
@@ -310,17 +361,6 @@
 			}
 			this.quit()
 			return true;
-		},
-		filters: {
-			filterImage(v) {
-				if (!v) {
-					return v;
-				}
-				if (!/^http/.test((v))) {
-					return url.domain + v;
-				}
-				return v;
-			}
 		},
 		created() {
 			// 监听从裁剪页发布的事件，获得裁剪结果
@@ -934,7 +974,13 @@
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
-
+				justify-content: space-between;
+				.left{
+					display: flex;
+					justify-content: space-between;
+					flex-direction: row;
+					align-items: center;
+				}
 				text {
 					width: 220rpx;
 					// text-align: left;

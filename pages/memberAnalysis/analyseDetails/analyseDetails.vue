@@ -1,7 +1,7 @@
 <template>
 	<view class="analyseDetails">
 		<view class="header">
-			<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$cfg.domain+form.customer.image"></u-image>
+			<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$imgFn(form.customer.image)"></u-image>
 			<view class="cur-item">
 				<text>{{form.customer.name}}</text>
 				<text>{{form.customer.mobile}}</text>
@@ -51,7 +51,7 @@
 				<text class="tit">消费最多</text>
 				<view class="box-list-item">
 					<view class="list" v-for="(item,index) in form.resume_goods">
-						<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$cfg.domain+item.goods.main_image"></u-image>
+						<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$imgFn(item.goods.main_image)"></u-image>
 						<view class="list-item">
 							<text>{{item.goods.name}}</text>
 							<text class="orgin">{{item.times}}次</text>

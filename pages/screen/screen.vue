@@ -7,39 +7,57 @@
 		</u-navbar>
 		<view class="box">
 			<view class="form_item">
-				<text>商品信息</text>
-				<u-input placeholder='请输入货号/商品名称' v-model="form.kw_goods" type="text" />
+				<view class="left">
+					<text>商品信息</text>
+					<u-input placeholder='请输入货号/商品名称' v-model="form.kw_goods" type="text" />
+				</view>
 			</view>
 			<view class="form_item">
-				<text>会员信息</text>
-				<u-input placeholder='请输入会员卡号、手机号或姓名' v-model="form.kw_customer" type="text" />
+				<view class="left">
+					<text>会员信息</text>
+					<u-input placeholder='请输入会员卡号、手机号或姓名' v-model="form.kw_customer" type="text" />
+				</view>
 			</view>
 			<view class="form_item">
-				<text>支付类型</text>
-				<u-input placeholder='请选择支付类型' @tap="toPatternOfPayment"  :disabled='true' type='text' v-model="account_name" />
+				<view class="left">
+					<text>支付类型</text>
+					<u-input placeholder='请选择支付类型' @tap="toPatternOfPayment" :disabled='true' type='text'
+						v-model="account_name" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
-				<text>单据状态</text>
-				<u-input placeholder='请选择单据状态'@tap="show = true"  :disabled='true' v-model="status_name" type="text" />
+				<view class="left">
+					<text>单据状态</text>
+					<u-input placeholder='请选择单据状态' @tap="show = true" :disabled='true' v-model="status_name"
+						type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
-				<text>销售单号</text>
-				<u-input placeholder='请输入销售单号' v-model="form.trade_no" type="number" />
+				<view class="left">
+					<text>销售单号</text>
+					<u-input placeholder='请输入销售单号' v-model="form.trade_no" type="number" />
+				</view>
 			</view>
 
 		</view>
 		<view class="box">
 			<view class="form_item">
-				<text>开始日期</text>
-				<u-input placeholder='请选择开始日期' @tap="hiddenTime(0)" :disabled='true' v-model="form.start_time" type="text" />
+				<view class="left">
+					<text>开始日期</text>
+					<u-input placeholder='请选择开始日期' @tap="hiddenTime(0)" :disabled='true' v-model="form.start_time"
+						type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :params="params"></u-picker>
 			<view class="form_item">
-				<text>结束日期</text>
-				<u-input placeholder='请选择结束日期' @tap="hiddenTime(1)" :disabled='true' v-model="form.end_time" type="text" />
+				<view class="left">
+					<text>结束日期</text>
+					<u-input placeholder='请选择结束日期' @tap="hiddenTime(1)" :disabled='true' v-model="form.end_time"
+						type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<u-picker mode="time" v-model="showtime1" @confirm="confirmTime1" :params="params"></u-picker>
@@ -62,9 +80,9 @@
 				form: {
 					kw_goods: '',
 					kw_customer: '',
-					account_id:'',
-					status:0,
-					trade_no:'',
+					account_id: '',
+					status: 0,
+					trade_no: '',
 					start_time: '',
 					end_time: '',
 				},
@@ -81,37 +99,36 @@
 				showtime: false,
 				showtime1: false,
 				show: false,
-				list:[
-					{
-						value:'0',
-						label:'全部'
+				list: [{
+						value: '0',
+						label: '全部'
 					},
 					{
-						value:'1',
-						label:'正常'
+						value: '1',
+						label: '正常'
 					},
 					{
-						value:'2',
-						label:'作废'
+						value: '2',
+						label: '作废'
 					},
 					{
-						value:'3',
-						label:'退货'
+						value: '3',
+						label: '退货'
 					},
-					
+
 				]
-				
+
 			}
 		},
 		methods: {
 			// 清空
 			clear() {
-				this.form={
+				this.form = {
 					kw_goods: '',
 					kw_customer: '',
-					account_id:'',
-					status:0,
-					trade_no:'',
+					account_id: '',
+					status: 0,
+					trade_no: '',
 					start_time: '',
 					end_time: '',
 				}
@@ -126,11 +143,11 @@
 			},
 			sure() {
 				// console.log(this.form);
-				
+
 				let obj = {
-					status_name:this.status_name,
-					account_name:this.account_name,
-					form:this.form
+					status_name: this.status_name,
+					account_name: this.account_name,
+					form: this.form
 				}
 				this.$store.commit('screenFn', {
 					screenDate: obj
@@ -165,38 +182,38 @@
 				this.form.end_time = `${v.year}-${v.month}-${v.day}`;
 			},
 			// 单据类型
-			confirm(v){
+			confirm(v) {
 				this.form.status = v[0].value;
 				this.status_name = v[0].label;
 			},
 			// 选择支付类型
-			toPatternOfPayment(){
+			toPatternOfPayment() {
 				uni.navigateTo({
-					url:`/pages/patternOfPayment/patternOfPayment?iq=1`
+					url: `/pages/patternOfPayment/patternOfPayment?iq=1`
 				})
 			}
 		},
 		onLoad() {
 			let bl = false
-			for(let key in store.state.screenDate){
+			for (let key in store.state.screenDate) {
 				bl = true
 			}
-			if(bl){
+			if (bl) {
 				this.status_name = store.state.screenDate.status_name;
-				this.account_name =store.state.screenDate.account_name;
+				this.account_name = store.state.screenDate.account_name;
 				this.form = store.state.screenDate.form
-				if(this.form.start_time == undefined){
+				if (this.form.start_time == undefined) {
 					let date = this.$date.thirtyDays()
 					this.form.start_time = date.start_time;
 					this.form.end_time = date.end_time;
 				}
-			}else{
+			} else {
 				let date = this.$date.thirtyDays()
 				this.form.start_time = date.start_time;
 				this.form.end_time = date.end_time;
 			}
-			uni.$on('patternOfPayment',res=>{
-				if(res){
+			uni.$on('patternOfPayment', res => {
+				if (res) {
 					this.form.account_id = res.account_id;
 					this.account_name = res.name
 				}
@@ -242,11 +259,18 @@
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
+				justify-content: space-between;
 
 				text {
 					width: 220rpx;
 					// text-align: left;
 					padding-left: 20rpx;
+				}
+
+				.left {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
 				}
 
 				.min_exchange {

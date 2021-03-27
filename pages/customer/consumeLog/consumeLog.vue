@@ -2,7 +2,7 @@
 	<view class="consumeLog">
 		<view class="membered">
 			<view class="left">
-				<u-image width="80rpx" mode='aspectFit' border-radius="10" class="header_image" height="80rpx" :src="$cfg.domain+obj.image"></u-image>
+				<u-image width="80rpx" mode='aspectFit' border-radius="10" class="header_image" height="80rpx" :src="$imgFn(obj.image)"></u-image>
 				<view class="l-item">
 					<text>{{obj.name}}</text>
 					<text>{{obj.number}}</text>
@@ -18,7 +18,7 @@
 		 :autoPullUp="autoPullUp" :inBottom="pull" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 			<view class="list" v-for="(item,index) in list" :key="index" @click="clickItem(item)">
 				<view class="left">
-					<u-image width="80rpx" mode='aspectFit' border-radius="10" class="header_image" height="80rpx" :src="$cfg.domain+item.goods.main_image"></u-image>
+					<u-image width="80rpx" mode='aspectFit' border-radius="10" class="header_image" height="80rpx" :src="$imgFn(item.goods.main_image)"></u-image>
 					<view class="list-item">
 						<text>{{item.goods.name}}</text>
 						<view class="left-num">

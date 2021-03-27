@@ -5,7 +5,7 @@
 		<view class="text-area">
 			<text class="title">boss</text>
 			<view class="photo" @click="toInformation">
-				<u-avatar class='left1' :src="src|filterImage" mode="square"></u-avatar>
+				<u-avatar class='left1' :src="$imgFn(src)" mode="square"></u-avatar>
 				<view class="context">
 					<text>{{member_name}}</text>
 					<text>{{store_name}}</text>
@@ -81,17 +81,6 @@
 						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
 					}
 				],
-			}
-		},
-		filters: {
-			filterImage(v) {
-				if (!v) {
-					return v;
-				}
-				if (!/^http/.test((v))) {
-					return url.domain + v;
-				}
-				return v;
 			}
 		},
 		methods: {

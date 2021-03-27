@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "修改选择商品",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-number-box": "/node-modules/uview-ui/components/u-number-box/u-number-box",
+    "u-popup": "/node-modules/uview-ui/components/u-popup/u-popup",
+    "u-radio-group": "/node-modules/uview-ui/components/u-radio-group/u-radio-group",
+    "u-radio": "/node-modules/uview-ui/components/u-radio/u-radio",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "navigationBarTitleText": "新增会员",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-checkbox-group": "/node-modules/uview-ui/components/u-checkbox-group/u-checkbox-group",
+    "u-checkbox": "/node-modules/uview-ui/components/u-checkbox/u-checkbox",
+    "k-scroll-view": "/components/k-scroll-view/k-scroll-view",
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-picker": "/node-modules/uview-ui/components/u-picker/u-picker",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast",
+    "tab-control": "/components/tabControl-tag/tabControl-tag"
+  }
+}

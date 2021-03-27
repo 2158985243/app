@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "新增供应商",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-picker": "/node-modules/uview-ui/components/u-picker/u-picker",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button"
+  }
+}

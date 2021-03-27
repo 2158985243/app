@@ -11,7 +11,7 @@
 				<uni-list-item :title="item.name" class="listit" v-for="(item,index) in list" :key="index" @click="toShopInformation(item)"
 				 :note="'有效日期:'+item.expired_at" :showArrow='true' :clickable='true'>
 					<template slot="header">
-						<u-image width="80rpx" class="header_image" height="80rpx" :src="$cfg.domain+item.images"></u-image>
+						<u-image width="80rpx" class="header_image" height="80rpx" :src="$imgFn(item.images)"></u-image>
 					</template>
 					<template slot="footer">
 						<u-checkbox-group>

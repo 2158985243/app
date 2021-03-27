@@ -25,7 +25,7 @@
 							<view class="li" v-for="(itemed,indexed) in item" :key="indexed" @click="customerOf(itemed)">
 								<view class="left">
 									<view class="img">
-										<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+itemed.image">
+										<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$imgFn(itemed.image)">
 										</u-image>
 									</view>
 									<view class="name">
@@ -145,6 +145,7 @@
 				return sum
 			}
 		},
+		
 		methods: {
 			// 点击查看详情
 			customerOf(item){
@@ -329,6 +330,8 @@
 				background-color: #f2f1f5;
 
 				.nav-radio {
+					display: flex;
+					flex-direction: row;
 					text {
 						margin-right: 10rpx;
 					}

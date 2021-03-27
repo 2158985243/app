@@ -10,7 +10,7 @@
 				<u-icon name="scan" color="#ffffff" @tap='handelScan' size="50"></u-icon>
 			</view>
 			<view class="sale">
-				<view class="sale-box">
+				<view class="sale-box" style="background-image:url('../../static/image/logo.png') no-repeat" >
 					<view class="cont">
 						<view class="day">
 							<view @tap="changne(0)" class="today" :class="active==0? '':'active'">
@@ -63,6 +63,7 @@
 </template>
 
 <script>
+	
 	import {
 		getNewCustomer
 	} from '../../api/customer.js'
@@ -72,7 +73,6 @@
 	import {
 		getTotal
 	} from '../../api/goods.js'
-
 	import store from '@/store'
 	export default {
 		data() {
@@ -338,6 +338,8 @@
 				height: 80rpx;
 				display: flex;
 				padding: 20rpx;
+				flex-direction: row;
+				align-items: center;
 			}
 			.sale {
 				width: 100%;
@@ -354,7 +356,7 @@
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					background: url(../../static/image/logo.png) no-repeat center center;
+					background:url(../../static/image/logo.png) no-repeat;
 					background-size: 100% 100%;
 				}
 

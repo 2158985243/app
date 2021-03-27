@@ -34,23 +34,23 @@
 										</view>
 
 									</view>
-									<view class="list" v-for="(item,index) in list[current]" :key="index" @click="toProcurementStatisticsDetails(item)">
+									<view class="list" v-for="(itemList,indexList) in list[current]" :key="indexList" @click="toProcurementStatisticsDetails(itemList)">
 										<view class="left">
 											<view class="img">
-												<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$cfg.domain+item.main_image">
+												<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$imgFn(itemList.main_image)">
 												</u-image>
 											</view>
 											<view class="li-item">
-												<text class="balck">{{item.name}} <text>{{item.number}}</text></text>
-												<text class="hui-se">单价数量：&yen;{{item.sales_price}}*{{item.quantity}}</text>
-												<text class="hui-se ">采购均价：&yen;{{item.avg_price}}</text>
+												<text class="balck">{{itemList.name}} <text>{{itemList.number}}</text></text>
+												<text class="hui-se">单价数量：&yen;{{itemList.sales_price}}*{{itemList.quantity}}</text>
+												<text class="hui-se ">采购均价：&yen;{{itemList.avg_price}}</text>
 											</view>
 										</view>
 										<view class="right">
 											<view class="money">
-												<text class="red">&yen;{{item.retail_price}}</text>
-												<text>金额：&yen;{{(Number(item.sales_price)*Number(item.quantity)).toFixed(2)}}</text>
-												<text>毛利：&yen;{{((Number(item.sales_price)-Number(item.avg_price))*Number(item.quantity)).toFixed(2)}}</text>
+												<text class="red">&yen;{{itemList.retail_price}}</text>
+												<text>金额：&yen;{{(Number(itemList.sales_price)*Number(itemList.quantity)).toFixed(2)}}</text>
+												<text>毛利：&yen;{{((Number(itemList.sales_price)-Number(itemList.avg_price))*Number(itemList.quantity)).toFixed(2)}}</text>
 											</view>
 											<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 										</view>

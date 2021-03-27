@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "会员等级晋升编辑",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-switch": "/node-modules/uview-ui/components/u-switch/u-switch",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-select": "/node-modules/uview-ui/components/u-select/u-select"
+  }
+}

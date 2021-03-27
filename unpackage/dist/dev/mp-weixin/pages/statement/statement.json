@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "报表",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon"
+  }
+}

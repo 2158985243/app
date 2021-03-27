@@ -1,0 +1,184 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.pointAdjustList.data-v-0617f402 {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  background-color: #f5f4f8;
+}
+.pointAdjustList .right_icon.data-v-0617f402 {
+  margin-right: 30rpx;
+}
+.pointAdjustList .mains.data-v-0617f402 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+}
+.pointAdjustList .mains .swiper.data-v-0617f402 {
+  margin-top: 84rpx;
+  height: calc(100% - 84rpx);
+}
+.pointAdjustList .mains .cen.data-v-0617f402 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+  background-color: #FFFFFF;
+}
+.pointAdjustList .mains .cen .list.data-v-0617f402 {
+  width: 100%;
+  padding: 20rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  background-color: #FFFFFF;
+  border-bottom: 0.01rem solid #EEEEEE;
+}
+.pointAdjustList .mains .cen .list .left.data-v-0617f402 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+}
+.pointAdjustList .mains .cen .list .left .img.data-v-0617f402 {
+  margin-right: 20rpx;
+}
+.pointAdjustList .mains .cen .list .left .li-item.data-v-0617f402 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.pointAdjustList .mains .cen .list .left .li-item text.data-v-0617f402 {
+  font-size: 20rpx;
+  color: #666666;
+}
+.pointAdjustList .mains .cen .list .left .li-item .time.data-v-0617f402 {
+  padding: 10rpx 0;
+}
+.pointAdjustList .mains .cen .list .left .li-item .balck.data-v-0617f402 {
+  font-size: 28rpx;
+  color: #000000;
+}
+.pointAdjustList .mains .cen .list .left .li-item .hui-se.data-v-0617f402 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+}
+.pointAdjustList .mains .cen .list .left .li-item .hui-se .li-number.data-v-0617f402 {
+  color: #FF5A5F;
+  padding-left: 8rpx;
+}
+.pointAdjustList .mains .cen .list .right.data-v-0617f402 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.pointAdjustList .mains .cen .list .right text.data-v-0617f402 {
+  font-size: 20rpx;
+}
+.pointAdjustList .mains .cen .list .right .money.data-v-0617f402 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.pointAdjustList .mains .cen .list .right .money .red.data-v-0617f402 {
+  color: #FF5A5F;
+}
+.pointAdjustList .mains .cen .list .right .money .green.data-v-0617f402 {
+  color: #009D37;
+}
+.pointAdjustList .mains .cen .list .right .money .center.data-v-0617f402 {
+  padding: 10rpx 0;
+}
+.pointAdjustList .mains .cen .list .right .money .hui.data-v-0617f402 {
+  color: #666666;
+}
+.pointAdjustList .mains .cen .list .right .money text.data-v-0617f402 {
+  text-align: right;
+}
+.pointAdjustList .mains .cen .list .red.data-v-0617f402 {
+  color: #FF5A5F;
+}
+

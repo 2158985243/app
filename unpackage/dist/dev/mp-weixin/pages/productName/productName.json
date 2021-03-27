@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "选择商品名称",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-search": "/node-modules/uview-ui/components/u-search/u-search"
+  }
+}

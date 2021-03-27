@@ -37,7 +37,7 @@
 			</view>
 			<view class="shopping-cart" v-for="(item,index) in shopping" :key="index">
 				<view class="headers" v-if="item.goodsData[0]">
-					<u-image width="140rpx" height="140rpx" mode='aspectFit' border-radius='20' :src="$cfg.domain+item.goodsData[0].goodsOf.main_image"></u-image>
+					<u-image width="140rpx" height="140rpx" mode='aspectFit' border-radius='20' :src="$imgFn(item.goodsData[0].goodsOf.main_image)"></u-image>
 					<view class="substance">
 						<view class="goodsNews">
 							<text class="goods-name">{{item.goodsData[0].goodsOf.name}}</text>

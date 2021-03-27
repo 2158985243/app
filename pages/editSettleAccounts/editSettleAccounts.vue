@@ -14,7 +14,7 @@
 			</view>
 			<view class="membered" v-else>
 				<view class="left">
-					<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$cfg.domain+members.image"></u-image>
+					<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$imgFn(members.image)"></u-image>
 					<text>{{members.name}}</text>
 					<u-icon name="close-circle-fill" color="#ffffff" @click="clear" size="30"></u-icon>
 				</view>
@@ -31,7 +31,7 @@
 					<view class="goods-list" v-for="(itemGoods,indexGoods) in item.data" :key="indexGoods">
 						<view class="dole" v-if="itemGoods.quantity>0" @click="togoodsOf(item,index,indexGoods)">
 							<view class="goods-left">
-								<u-image width="100rpx" mode='aspectFit' border-radius="10" class="header_image" height="100rpx" :src="$cfg.domain+item.goodsOf.main_image"></u-image>
+								<u-image width="100rpx" mode='aspectFit' border-radius="10" class="header_image" height="100rpx" :src="$imgFn(item.goodsOf.main_image)"></u-image>
 								<view class="item-left">
 									<text class="hei">{{item.goodsOf.name}} <text class="hui">{{item.goodsOf.number}}</text></text>
 									<text class="zc">{{item.name}}-{{itemGoods.size.name}}</text>

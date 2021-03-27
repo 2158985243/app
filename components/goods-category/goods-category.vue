@@ -3,7 +3,8 @@
 		<view class="left">
 			<view class="list-nav">
 				<!-- :style="{height:hig+'rpx'}" -->
-				<view class="nav" v-for="(item,index) in dataList" :key='index' @click="change(index,item)" :class="acitve==index? 'acitve':''">
+				<view class="nav" v-for="(item,index) in dataList" :key='index' @click="change(index,item)"
+					:class="acitve==index? 'acitve':''">
 					<text class="nav-ol">
 						{{item.name}}
 					</text>
@@ -13,23 +14,28 @@
 		</view>
 		<view class="right">
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
-			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" :inBottom='inBottom' @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+				:loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height"
+				:bottom="bottom" :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" :inBottom='inBottom'
+				@onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list-arr" v-for="(item,index) in dataList" :key='index'>
 					<view class="list-arr-name" v-show="acitve==index">
 						<!-- :style="{height:hig+'rpx'}" -->
 						<view class="list-shop" v-for="(item1,index1) in item.arr" @click="rightchange(index1,item1)">
 							<view class="img">
-								<u-image width="100rpx" height="100rpx" border-radius="20rpx" mode='aspectFit' :src="$cfg.domain+item1.main_image"></u-image>
+								<u-image width="100rpx" height="100rpx" border-radius="20rpx" mode='aspectFit'
+									:src="$imgFn(item1.main_image)"></u-image>
 							</view>
 							<view class="cont">
 								<text>{{item1.name}}</text>
 								<text class="number">{{item1.number}}</text>
-								<text class="retail" v-if="!condition">{{item1.retail_price? `&yen;${item1.retail_price}`:`${item1.exchange_value}积分`}}</text>
-								<text class="retail" v-else>{{item1.purchase_price?`&yen;${item1.purchase_price}`:`${item1.exchange_value}积分`}}</text>
+								<text class="retail"
+									v-if="!condition">{{item1.retail_price? `&yen;${item1.retail_price}`:`${item1.exchange_value}积分`}}</text>
+								<text class="retail"
+									v-else>{{item1.purchase_price?`&yen;${item1.purchase_price}`:`${item1.exchange_value}积分`}}</text>
 							</view>
 							<block v-if="goodsQuantity[item1.id]">
-								<text class="numberops" v-if="goodsQuantity[item1.id].quantity!=0">{{goodsQuantity[item1.id].quantity}}</text>
+								<text class="numberops"
+									v-if="goodsQuantity[item1.id].quantity!=0">{{goodsQuantity[item1.id].quantity}}</text>
 							</block>
 						</view>
 					</view>
@@ -66,7 +72,7 @@
 				type: Number,
 				default: 0
 			},
-			inBottom:{
+			inBottom: {
 				type: Boolean,
 				default: false
 			}
@@ -75,6 +81,7 @@
 		components: {
 			kScrollView
 		},
+
 		data() {
 			return {
 				acitve: 0,
@@ -99,7 +106,6 @@
 				iq: '',
 			};
 		},
-
 		computed: {
 			goodsQuantity() {
 				let quantity = {};

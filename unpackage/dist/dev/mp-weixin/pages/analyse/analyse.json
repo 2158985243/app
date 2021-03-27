@@ -1,0 +1,12 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-navbar": "/node-modules/uview-ui/components/u-navbar/u-navbar",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-picker": "/node-modules/uview-ui/components/u-picker/u-picker",
+    "u-select": "/node-modules/uview-ui/components/u-select/u-select",
+    "tab-control": "/components/tabControl-tag/tabControl-tag",
+    "refresh": "/components/xing-refresh/xing-refresh"
+  }
+}

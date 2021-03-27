@@ -8,18 +8,21 @@
 				<view class="login_c">
 					<u-form :model="form" ref="uForm">
 						<u-form-item left-icon='phone' :left-icon-style='color'>
-							<u-input :type="'number'" :custom-style='custom' :clearable=false placeholder='请输入注册手机' v-model="form.member_mobile"></u-input>
+							<u-input :type="'number'" :custom-style='custom' :clearable=false placeholder='请输入注册手机'
+								v-model="form.member_mobile"></u-input>
 						</u-form-item>
 						<u-form-item left-icon='account' :left-icon-style='color'>
-							<u-input placeholder='请输入用户账号\boss' :custom-style='custom' :clearable=false v-model="form.account"></u-input>
+							<u-input placeholder='请输入用户账号\boss' :custom-style='custom' :clearable=false
+								v-model="form.account"></u-input>
 						</u-form-item>
 						<u-form-item left-icon='lock' :left-icon-style='color'>
-							<u-input :type='"password"' :custom-style='custom' maxlength='11' :clearable=false placeholder='请输入密码' v-model="form.password" />
+							<u-input :type='"password"' :custom-style='custom' maxlength='11' :clearable=false
+								placeholder='请输入密码' v-model="form.password" />
 						</u-form-item>
 					</u-form>
 					<view class="btn">
 						<u-button class='btn1' type="primary" @click="register">登录</u-button>
-						<u-button class='btn2' @click="enroll">注册试用</u-button>
+						<view class='btn2' @click="enroll">注册试用</view>
 					</view>
 					<view class="password">
 						<u-checkbox-group size='25'>
@@ -46,18 +49,25 @@
 				<view class="box">
 					<scroll-view scroll-y="true" class="scroll-Y">
 						<u-radio-group v-model="value" :wrap="true">
-							<u-radio shape="square" @change="radioGroupChange($event,item)" v-for="(item, index) in stores" :key="index"
-							 :name="item.name">
-								<text>{{item.name}}</text>
-								<!--  -->
-								<text class="stale" v-if="item.is_valid==0" >已过期</text>
+							<u-radio shape="square" @change="radioGroupChange($event,item)"
+								v-for="(item, index) in stores" :key="index" :name="item.name">
+								<view class="scroll-radio-z">
+
+									<text>{{item.name}}</text>
+									<!--  -->
+									<text class="stale" v-if="item.is_valid==0">已过期</text>
+								</view>
 							</u-radio>
 						</u-radio-group>
 					</scroll-view>
 				</view>
 				<view class="btds">
-					<u-button :hair-line="false" @click="abrogate" class="btnChild">取消</u-button>
-					<u-button :hair-line="false" @click='ensure' class="btnChild">确定</u-button>
+					<view class="btn" @click="abrogate" >
+						取消
+					</view>
+					<view class="btn btn-border-left" @click='ensure'>
+						确定
+					</view>
 				</view>
 			</u-popup>
 			<u-toast ref="uToast" />
@@ -131,7 +141,7 @@
 					this.$store.commit('authorityFn', {
 						authority: res.authority
 					});
-					
+
 					uni.setStorageSync('userLoginInfo', datas);
 					uni.setStorageSync('userMessage', res);
 					uni.switchTab({
@@ -210,27 +220,43 @@
 
 			.btds {
 				width: 100%;
-				height: 90rpx;
+				height: 80rpx;
 				display: flex;
 				justify-content: center;
 				align-items: center;
-
+				border-top: 1rpx solid #808080;
+				.btn{
+					flex: 1;
+					height: 80rpx;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+				.btn-border-left{
+					border-left: 1rpx solid #808080;
+				}
 			}
 
 			.box {
-				margin: 0 40rpx;
+				width: 100%;
+				padding: 0 40rpx;
 				height: 640rpx;
 				display: flex;
 				// overflow: hidden;
 				overflow-y: scroll;
-				/deep/.u-radio-group{
+				/deep/.u-radio-group {
 					width: 100%;
 				}
-				.u-radio {
+				.scroll-radio-z{
+					width: 450rpx;
+					display: flex;
+					justify-content: space-between;
+				}
+				/deep/.u-radio {
 					width: 100%;
 					height: 80rpx;
-					border-bottom: 0.01rem solid #C8C7CC;
-
+					border-bottom: 0.01rem solid #C8C7CC !important;
+					justify-content: space-between;
 					/deep/.u-radio__label {
 						width: 100%;
 						color: #0064cf;
@@ -240,16 +266,13 @@
 
 
 				.stale {
-					float: right;
+					// float: right;
 					color: #DD524D;
 				}
 			}
 		}
 
-		.btnChild {
-			flex: 1;
-			border-radius: 0 !important;
-		}
+		
 
 		.from_login {
 			width: 100vw;
@@ -273,13 +296,18 @@
 
 					.btn1 {
 						width: 33vw;
-						height: 4vh;
+						height: 80rpx;
 					}
 
 					.btn2 {
 						width: 33vw;
-						height: 4vh;
+						height: 80rpx;
 						color: #007AFF;
+						border: 1rpx solid #2979ff;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						border-radius: 16rpx;
 					}
 				}
 

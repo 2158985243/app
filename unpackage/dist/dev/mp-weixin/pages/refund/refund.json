@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "退货",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-number-box": "/node-modules/uview-ui/components/u-number-box/u-number-box",
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast"
+  }
+}

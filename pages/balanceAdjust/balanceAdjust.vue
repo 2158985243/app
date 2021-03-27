@@ -2,7 +2,7 @@
 	<view class="balanceAdjust">
 		<view class="membered">
 			<view class="left">
-				<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$cfg.domain+obj.image"></u-image>
+				<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="obj.image|imgFn"></u-image>
 				<text>{{obj.name}}</text>
 			</view>
 			<view class="right">
@@ -43,6 +43,7 @@
 	import {
 		balanceAdjust
 	} from '../../api/customer.js'
+	import url from '../../api/configuration.js'
 	export default {
 		data() {
 			return {
@@ -64,6 +65,11 @@
 		computed: {
 			moneyed() {
 				return Number(this.obj.balance) + Number(this.form.money)
+			}
+		},
+		filters: {
+			imgFn(v) {
+				return url.domain + v
 			}
 		},
 		methods: {
@@ -171,7 +177,7 @@
 				width: 100%;
 				display: flex;
 				height: 80rpx;
-				padding: 20rpx 0;
+				padding: 20rpx;
 				background-color: #fff;
 
 				.rod {

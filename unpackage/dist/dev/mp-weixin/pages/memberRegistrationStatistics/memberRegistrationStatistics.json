@@ -1,0 +1,10 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-navbar": "/node-modules/uview-ui/components/u-navbar/u-navbar",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-select": "/node-modules/uview-ui/components/u-select/u-select",
+    "u-line-progress": "/node-modules/uview-ui/components/u-line-progress/u-line-progress"
+  }
+}

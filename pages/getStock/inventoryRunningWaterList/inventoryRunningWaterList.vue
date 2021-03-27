@@ -5,7 +5,7 @@
 		</u-navbar>
 		<view class="header-item">
 			<u-image width="140rpx" mode='aspectFit' class="header_image" height="140rpx"
-				:src="$cfg.domain+form.goodsof.main_image"></u-image>
+				:src="$imgFn(form.goodsof.main_image)"></u-image>
 			<view class="right">
 				<text class="black">{{form.goodsof.name}} <text class="gray"> {{form.goodsof.number}}</text></text>
 				<view class="colors">
@@ -22,27 +22,27 @@
 			<view class="box-nav">
 				<view class="nav">
 					<text class="gray">期初</text>
-					<text class="black">{{0}}</text>
+					<text class="black">{{nav_list.base||0}}</text>
 				</view>
 				<view class="nav">
 					<text class="gray">采购</text>
-					<text class="black">{{0}}</text>
+					<text class="black">{{nav_list.purchase||0}}</text>
 				</view>
 				<view class="nav">
 					<text class="gray">调拨</text>
-					<text class="black">{{0}}</text>
+					<text class="black">{{nav_list.allocate||0}}</text>
 				</view>
 				<view class="nav">
 					<text class="gray">零售</text>
-					<text class="black">{{0}}</text>
+					<text class="black">{{nav_list.sales||0}}</text>
 				</view>
 				<view class="nav">
 					<text class="gray">盘点</text>
-					<text class="black">{{0}}</text>
+					<text class="black">{{nav_list.check||0}}</text>
 				</view>
 				<view class="nav">
 					<text class="gray">结余</text>
-					<text class="black">{{0}}</text>
+					<text class="black">{{nav_list.stock||0}}</text>
 				</view>
 
 			</view>
@@ -92,7 +92,7 @@
 				},
 				list: [],
 				nav_list: {},
-				
+
 				refreshType: 'custom',
 				refreshTip: '正在下拉',
 				loadTip: '获取更多数据',
@@ -107,7 +107,7 @@
 					'background-color': '#ffffff'
 				},
 				last_page: 0,
-				pull:false,
+				pull: false,
 				page: 1,
 				page_size: 20,
 			}
@@ -134,19 +134,19 @@
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
-				if(!this.pull){
-					
-				if (this.page >= this.last_page) {
-					this.$refs.uToast.show({
-						title: '加载到底了',
-						type: 'default',
-						position: 'bottom'
-					})
-					this.pull = true
-				} else {
-					this.page++;
-					this.init()
-				}
+				if (!this.pull) {
+
+					if (this.page >= this.last_page) {
+						this.$refs.uToast.show({
+							title: '加载到底了',
+							type: 'default',
+							position: 'bottom'
+						})
+						this.pull = true
+					} else {
+						this.page++;
+						this.init()
+					}
 				}
 			},
 		},

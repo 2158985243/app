@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "会员充值列表",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "k-scroll-view": "/components/k-scroll-view/k-scroll-view",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast",
+    "u-picker": "/node-modules/uview-ui/components/u-picker/u-picker"
+  }
+}

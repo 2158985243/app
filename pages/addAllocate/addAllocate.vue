@@ -25,7 +25,7 @@
 			<view class="shopping-boxs" v-if="shopping.length>0">
 				<view class="shopping-cart" v-for="(item,index) in shopping" :key="index">
 					<view class="headers" v-if="item.goodsData[0]">
-						<u-image width="140rpx" height="140rpx" mode='aspectFit' border-radius='20' :src="$cfg.domain+item.goodsData[0].goodsOf.main_image"></u-image>
+						<u-image width="140rpx" height="140rpx" mode='aspectFit' border-radius='20' :src="$imFn(item.goodsData[0].goodsOf.main_image)"></u-image>
 						<view class="substance" @click="showgd(item,index)">
 							<view class="goodsNews">
 								<text class="goods-name">{{item.goodsData[0].goodsOf.name}}</text>
@@ -92,7 +92,7 @@
 				<view class="specification">
 					<view class="goods-of" v-if="goodsDetails[0]">
 						<!-- mode='aspectFit'  -->
-						<u-image width="140rpx" height="140rpx" border-radius='20' :src="$cfg.domain+goodsDetails[0].goodsOf.main_image"></u-image>
+						<u-image width="140rpx" height="140rpx" border-radius='20' :src="$imgFn(goodsDetails[0].goodsOf.main_image)"></u-image>
 						<view class="goodsNews">
 							<text class="goods-name">{{goodsDetails[0].goodsOf.name}}</text>
 							<text class="goods-number">{{goodsDetails[0].goodsOf.number}}</text>

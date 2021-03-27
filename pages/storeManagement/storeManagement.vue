@@ -9,14 +9,25 @@
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
 			 :autoPullUp="autoPullUp" :inBottom="pull"  :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
-				<uni-list>
+				<!-- <uni-list>
 					<uni-list-item :title="item.name" class="listit" v-for="(item,index) in list" :key="index" @click="toShopInformation(item)"
 					 :note="'有效日期:'+item.expired_at" :showArrow='true' :clickable='true'>
 						<template slot="header">
-							<u-image width="80rpx" class="header_image" height="80rpx" :src="$cfg.domain+item.images"></u-image>
 						</template>
 					</uni-list-item>
-				</uni-list>
+				</uni-list> -->
+				<view class="list" v-for="(item,index) in list" :key="index" @click="toShopInformation(item)">
+					<view class="left">
+						<u-image width="80rpx" class="header_image" height="80rpx" :src="$imgFn(item.images)"></u-image>
+						<view class="left-item">
+							<text class="black">{{item.name}}</text>
+							<text class="gray">有效日期：{{item.expired_at}}</text>
+						</view>
+					</view>
+					<view class="right">
+						<u-icon name="arrow-right" class="down" color="#cccccc" size="34"></u-icon>
+					</view>
+				</view>
 				<!-- 数据列表 -->
 			</k-scroll-view>
 			<u-toast ref="uToast" />
@@ -26,7 +37,6 @@
 
 <script>
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
-	import url from '../../api/configuration.js'
 	import {
 		uploadImage
 	} from "../../api/uploadImage.js"
@@ -147,6 +157,33 @@
 			display: flex;
 			flex-direction: column;
 			height: calc(100vh - 80rpx);
+			.list{
+				width: 100%;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+				padding: 20rpx;
+				background-color: #FFFFFF;
+				border-bottom: 0.01rem solid #F5F5F5;
+				.left{
+					display: flex;
+					flex-direction: row;
+					.left-item{
+						margin-left: 10rpx;
+						display: flex;
+						flex-direction: column;
+						.black{
+							color: #000000;
+						}
+						.gray{
+							color: #C0C0C0;
+							font-size: 24rpx;
+							margin-top: 10rpx;
+						}
+					}
+				}
+			}
 		}
 		/deep/.u-image__image {
 			border-radius: 18rpx !important;

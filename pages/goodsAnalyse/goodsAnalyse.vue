@@ -91,7 +91,7 @@
 				</view>
 				<view class="list" v-for="(item,index) in list" :key="index" @click="toDetails(item)">
 					<view class="left">
-						<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" :src="$cfg.domain+item.main_image"></u-image>
+						<u-image width="80rpx" mode='aspectFit' class="header_image" height="80rpx" :src="$imgFn(item.main_image)"></u-image>
 						<view class="left-item">
 							<text class="black">{{item.number}}<text class="gray">{{item.name}}</text></text>
 							<text class="gy">零售价:&yen;{{item.retail_price}}</text>

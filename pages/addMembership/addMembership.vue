@@ -2,7 +2,8 @@
 	<view class="addMembership">
 		<view class="nav">
 			<view class="list">
-				<view class="nav-list" v-for="(item,index) in list" :key="index" @click="itemClick(index)" :class="index==active? 'active':''">
+				<view class="nav-list" v-for="(item,index) in list" :key="index" @click="itemClick(index)"
+					:class="index==active? 'active':''">
 					{{item}}
 				</view>
 			</view>
@@ -10,66 +11,94 @@
 		<view class="mains" v-show="active==0">
 			<view class="box ">
 				<view class="form_item">
-					<text>姓名</text>
-					<u-input placeholder='请输入会员姓名' v-model="form.name" type="text" />
+					<view class="left">
+						<text>姓名</text>
+						<u-input placeholder='请输入会员姓名' v-model="form.name" type="text" />
+					</view>
 				</view>
 				<view class="form_item">
-					<text>电话</text>
-					<u-input placeholder='请输入会员手机号码' maxlength='11' v-model="form.mobile" type="number" />
+					<view class="left">
+						<text>电话</text>
+						<u-input placeholder='请输入会员手机号码' maxlength='11' v-model="form.mobile" type="number" />
+					</view>
 				</view>
 				<view class="form_item">
-					<text>卡号</text>
-					<u-input placeholder='可以直接使用手机号码' v-model="form.number" type="number" />
+					<view class="left">
+						<text>卡号</text>
+						<u-input placeholder='可以直接使用手机号码' v-model="form.number" type="number" />
+					</view>
 				</view>
 				<view class="form_item">
-					<text>等级</text>
-					<u-input placeholder='请选择会员等级' :disabled='true' @tap="toCustomerLevel" v-model="customer" type="text" />
+					<view class="left">
+						<text>等级</text>
+						<u-input placeholder='请选择会员等级' :disabled='true' @tap="toCustomerLevel" v-model="customer"
+							type="text" />
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
 			<view class="box ">
 				<view class="form_item">
-					<text>性别</text>
-					<u-radio-group v-model="gender_value" @change="radioGroupChange">
-						<u-radio v-for="(item, index) in genders" :key="index" :name="item.name" :disabled="item.disabled">
-							{{item.name}}
-						</u-radio>
-					</u-radio-group>
+					<view class="left">
+						<text>性别</text>
+						<u-radio-group v-model="gender_value" @change="radioGroupChange">
+							<u-radio v-for="(item, index) in genders" :key="index" :name="item.name"
+								:disabled="item.disabled">
+								{{item.name}}
+							</u-radio>
+						</u-radio-group>
 
+					</view>
 				</view>
 				<view class="form_item">
-					<text>日期</text>
-					<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.birthday" type="text" />
+					<view class="left">
+						<text>生日</text>
+						<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.birthday"
+							type="text" />
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :params="params"></u-picker>
 				<view class="form_item">
-					<text>密码</text>
-					<u-input placeholder='请输入六位数字密码' class="hidden" maxlength='6' :clearable='false' v-model="form.password" type="number" />
-					<u-input placeholder='请输入六位数字密码' maxlength='6' :password-icon="false" :clearable='false' v-model="form.password"
-					 type="password" />
+					<view class="left">
+						<text>密码</text>
+						<u-input placeholder='请输入六位数字密码' class="hidden" maxlength='6' :clearable='false'
+							v-model="form.password" type="number" />
+						<u-input placeholder='请输入六位数字密码' maxlength='6' :password-icon="false" :clearable='false'
+							v-model="form.password" type="password" />
+					</view>
 				</view>
-				<u-keyboard ref="uKeyboard" mode="number" @change="valChange" @backspace="backspace" v-model="show"></u-keyboard>
+				<u-keyboard ref="uKeyboard" mode="number" @change="valChange" @backspace="backspace" v-model="show">
+				</u-keyboard>
 				<view class="form_item">
-					<text>有效期至</text>
-					<u-input placeholder='请选择有效时间' @tap="hiddenTime1" :disabled='true' v-model="form.expired_at" type="text" />
+					<view class="left">
+						<text>有效期至</text>
+						<u-input placeholder='请选择有效时间' @tap="hiddenTime1" :disabled='true' v-model="form.expired_at"
+							type="text" />
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<u-picker mode="time" v-model="showtime1" @confirm="confirmTime1" :params="params"></u-picker>
 			</view>
 			<view class="box">
 				<view class="form_item">
-					<text>标签</text>
-					<u-input placeholder='请输入标签' v-model="form.tag" type="text" />
+					<view class="left">
+						<text>标签</text>
+						<u-input placeholder='请输入标签' v-model="form.tag" type="text" />
+					</view>
 					<u-icon name="arrow-right" class="man_r" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
-					<text>地址</text>
-					<u-input placeholder='请输入地址' v-model="form.address" type="text" />
+					<view class="left">
+						<text>地址</text>
+						<u-input placeholder='请输入地址' v-model="form.address" type="text" />
+					</view>
 				</view>
 				<view class="form_item">
-					<text>备注</text>
-					<u-input placeholder='请输入备注' v-model="form.remarks" type="text" />
+					<view class="left">
+						<text>备注</text>
+						<u-input placeholder='请输入备注' v-model="form.remarks" type="text" />
+					</view>
 				</view>
 				<view class="form_images">
 					<text>上传图片</text>
@@ -77,7 +106,8 @@
 						<view class="plus" v-if="form.image==''">
 							<u-icon name="plus" color="#606266" size="36"></u-icon>
 						</view>
-						<u-image v-else width="120rpx" image-mode='aspectFit' height="120rpx" :src="form.image|filterImage"></u-image>
+						<u-image v-else width="120rpx" image-mode='aspectFit' height="120rpx"
+							:src="$imgFn(form.image)"></u-image>
 					</view>
 				</view>
 			</view>
@@ -149,18 +179,7 @@
 				show: false,
 				showtime: false,
 				showtime1: false,
-				userMessage:{}
-			}
-		},
-		filters: {
-			filterImage(v) {
-				if (!v) {
-					return v;
-				}
-				if (!/^http/.test((v))) {
-					return url.domain + v;
-				}
-				return v;
+				userMessage: {}
 			}
 		},
 		created() {
@@ -187,7 +206,7 @@
 		},
 		methods: {
 			// 裁剪
-			uploadImg(){
+			uploadImg() {
 				this.$u.route({
 					// 关于此路径，请见下方"注意事项"
 					url: '/pages/avatar/u-avatar-cropper',
@@ -272,17 +291,17 @@
 				}
 
 			},
-			async customerNumber(){
+			async customerNumber() {
 				let res = await generateCustomerNumber()
 				let res1 = await configList()
 				// console.log(res);
 				// console.log(res1);
-				if(!res.code){
-					if(res1.auto_generate_customer_number.value==1){
+				if (!res.code) {
+					if (res1.auto_generate_customer_number.value == 1) {
 						this.form.number = res.number
 					}
 				}
-				
+
 			}
 
 		},
@@ -386,14 +405,15 @@
 						padding: 0 30rpx 0 20rpx;
 					}
 
-					.img{
+					.img {
 						width: 120rpx;
 						height: 120rpx;
 						display: flex;
 						justify-content: center;
 						align-items: center;
 						background-color: #f4f5f6;
-						.plus{
+
+						.plus {
 							width: 100%;
 							height: 100%;
 							display: flex;
@@ -404,16 +424,23 @@
 				}
 
 				.form_item {
+
+
+					width: 100%;
+					height: 85rpx;
 					display: flex;
 					flex-direction: row;
 					align-items: center;
+					justify-content: space-between;
 					background-color: #FFFFFF;
+					position: relative;
 					padding-right: 20rpx;
 					margin-bottom: 2rpx;
-					width: 100%;
-					height: 85rpx;
-					position: relative;
-
+					.left{
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+					}
 					// justify-content: space-between;
 					.demo {
 						display: flex;
@@ -499,6 +526,7 @@
 
 				.box1 {
 					margin-bottom: 20rpx;
+					width: 100%;
 
 					.form_item1 {
 						padding-right: 20rpx;

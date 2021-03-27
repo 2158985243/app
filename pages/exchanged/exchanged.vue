@@ -4,7 +4,7 @@
 
 			<view class="membered">
 				<view class="left">
-					<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$cfg.domain+members.image"></u-image>
+					<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$imgFn(members.image)"></u-image>
 					<text>{{members.name || '散客'}}</text>
 				</view>
 				<view class="right">
@@ -21,7 +21,7 @@
 						<view class="goods-list" v-for="(itemGoods,indexGoods) in item.data" :key="indexGoods">
 							<view class="dole" v-if="itemGoods.quantity>0" @click="togoodsOf(item,indexed,indexGoods)">
 								<view class="goods-left">
-									<u-image width="100rpx" mode='aspectFit' border-radius="10" class="header_image" height="100rpx" :src="$cfg.domain+item.goodsOf.main_image"></u-image>
+									<u-image width="100rpx" mode='aspectFit' border-radius="10" class="header_image" height="100rpx" :src="$imgFn(item.goodsOf.main_image)"></u-image>
 									<view class="item-left">
 										<text class="hei">{{item.goodsOf.name}} <text class="hui">{{item.goodsOf.number}}</text></text>
 										<text class="zc">{{item.name}}-{{itemGoods.size.name}}</text>
@@ -37,10 +37,10 @@
 						</view>
 					</view>
 				</block>
-				<block v-for="(item,index) in sales.sales_goods" :key="'sales'+index">
+				<block v-for="(item,index) in sales.sales_goods" :key="index">
 					<view class="hdr_item" v-if="item.quantity >0">
 						<view class="left">
-							<u-image width="100rpx" mode='aspectFit' class="header_image" height="100rpx" :src="$cfg.domain+item.goods.main_image"></u-image>
+							<u-image width="100rpx" mode='aspectFit' class="header_image" height="100rpx" :src="$imgFn(item.goods.main_image)"></u-image>
 							<view class="t_item">
 								<text class="borad">{{item.goods.name}} <text class="hui">{{item.goods.number}}</text></text>
 								<text>{{item.color.name}}-{{item.size.name}}</text>
