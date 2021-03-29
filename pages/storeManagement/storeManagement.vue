@@ -40,6 +40,7 @@
 	import {
 		uploadImage
 	} from "../../api/uploadImage.js"
+	// import url from ''
 	import {
 		storeList
 	} from "../../api/store.js"
@@ -67,7 +68,7 @@
 				list: [],
 				last_page: 0,
 				iq: '',
-				url:url.domain,
+				url:this.$cfg.domain,
 				pull:false
 			}
 		},

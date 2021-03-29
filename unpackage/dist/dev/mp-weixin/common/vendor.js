@@ -822,7 +822,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"中数研服装进销存","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_NAME":"中数研服装进销存","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1922,7 +1922,7 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 102:
+/***/ 103:
 /*!***************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/user.js ***!
   \***************************************************************/
@@ -2006,7 +2006,7 @@ exports.getInfo = getInfo;var editUser = function editUser(data) {
 
 /***/ }),
 
-/***/ 103:
+/***/ 104:
 /*!***************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/mine.js ***!
   \***************************************************************/
@@ -2192,7 +2192,7 @@ var install = function install(Vue) {
 
 /***/ }),
 
-/***/ 112:
+/***/ 113:
 /*!*****************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/member.js ***!
   \*****************************************************************/
@@ -2222,7 +2222,7 @@ exports.configList = configList;var configEdit = function configEdit(data) {
 
 /***/ }),
 
-/***/ 1171:
+/***/ 1172:
 /*!*****************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/manage.js ***!
   \*****************************************************************/
@@ -2609,7 +2609,7 @@ deepClone;exports.default = _default;
 
 /***/ }),
 
-/***/ 1516:
+/***/ 1517:
 /*!*****************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/pages/avatar/weCropper.js ***!
   \*****************************************************************************/
@@ -3878,7 +3878,7 @@ deepClone;exports.default = _default;
 
 /***/ }),
 
-/***/ 153:
+/***/ 154:
 /*!**********************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/uploadImage.js ***!
   \**********************************************************************/
@@ -3899,7 +3899,7 @@ var uploadImage = function uploadImage(id, data) {
 
 /***/ }),
 
-/***/ 154:
+/***/ 155:
 /*!****************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/store.js ***!
   \****************************************************************/
@@ -3956,7 +3956,7 @@ exports.storeEdit = storeEdit;var storeDel = function storeDel(id) {
 
 /***/ }),
 
-/***/ 1547:
+/***/ 1556:
 /*!**********************************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/libs/util/emitter.js ***!
   \**********************************************************************************************/
@@ -4016,7 +4016,7 @@ function _broadcast(componentName, eventName, params) {
 
 /***/ }),
 
-/***/ 1548:
+/***/ 1557:
 /*!******************************************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/libs/util/async-validator.js ***!
   \******************************************************************************************************/
@@ -4046,7 +4046,7 @@ function _broadcast(componentName, eventName, params) {
 var formatRegExp = /%[sdj%]/g;
 var warning = function warning() {}; // don't print warning message when in production env or node runtime
 
-if (typeof process !== 'undefined' && Object({"NODE_ENV":"development","VUE_APP_NAME":"中数研服装进销存","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}) && "development" !== 'production' && typeof window !==
+if (typeof process !== 'undefined' && Object({"VUE_APP_NAME":"中数研服装进销存","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}) && "development" !== 'production' && typeof window !==
 'undefined' && typeof document !== 'undefined') {
   warning = function warning(type, errors) {
     if (typeof console !== 'undefined' && console.warn) {
@@ -5379,11 +5379,11 @@ Schema.warning = warning;
 Schema.messages = messages;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 1549)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 1558)))
 
 /***/ }),
 
-/***/ 1549:
+/***/ 1558:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -5414,7 +5414,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 1550);
+        if (!path) path = __webpack_require__(/*! path */ 1559);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -5428,7 +5428,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 1550:
+/***/ 1559:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -5738,7 +5738,7 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 1549)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 1558)))
 
 /***/ }),
 
@@ -5985,7 +5985,7 @@ function code(value) {var len = arguments.length > 1 && arguments[1] !== undefin
 
 /***/ }),
 
-/***/ 1628:
+/***/ 1637:
 /*!*********************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/components/uni-icons/icons.js ***!
   \*********************************************************************************/
@@ -6127,7 +6127,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 1643:
+/***/ 1652:
 /*!***********************************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/libs/util/province.js ***!
   \***********************************************************************************************/
@@ -6139,7 +6139,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 1644:
+/***/ 1653:
 /*!*******************************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/libs/util/city.js ***!
   \*******************************************************************************************/
@@ -6151,7 +6151,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 1645:
+/***/ 1654:
 /*!*******************************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/libs/util/area.js ***!
   \*******************************************************************************************/
@@ -6232,7 +6232,104 @@ queryParams;exports.default = _default;
 
 /***/ }),
 
-/***/ 179:
+/***/ 18:
+/*!************************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/libs/function/route.js ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _queryParams = _interopRequireDefault(__webpack_require__(/*! ../../libs/function/queryParams.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+/**
+                                                                                                                                                                                                                                                                                            * 路由跳转
+                                                                                                                                                                                                                                                                                            * 注意:本方法没有对跳转的回调函数进行封装
+                                                                                                                                                                                                                                                                                            */
+function route() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var config = {
+    type: 'navigateTo',
+    url: '',
+    delta: 1, // navigateBack页面后退时,回退的层数
+    params: {}, // 传递的参数
+    animationType: 'pop-in', // 窗口动画,只在APP有效
+    animationDuration: 300 // 窗口动画持续时间,单位毫秒,只在APP有效
+  };
+  config = Object.assign(config, options);
+  // 如果url没有"/"开头，添加上，因为uni的路由跳转需要"/"开头
+  if (config.url[0] != '/') config.url = '/' + config.url;
+  // 判断是否有传递显式的参数,Object.keys转为数组并判断长度,switchTab类型时不能携带参数
+  if (Object.keys(config.params).length && config.type != 'switchTab') {
+    // 判断用户传递的url中，是否带有参数
+    // 使用正则匹配，主要依据是判断是否有"/","?","="等，如“/page/index/index?name=mary"
+    // 如果有url中有get参数，转换后无需带上"?"
+    var query = '';
+    if (/.*\/.*\?.*=.*/.test(config.url)) {
+      // object对象转为get类型的参数
+      query = (0, _queryParams.default)(config.params, false);
+      // 因为已有get参数,所以后面拼接的参数需要带上"&"隔开
+      config.url += "&" + query;
+    } else {
+      query = (0, _queryParams.default)(config.params);
+      config.url += query;
+    }
+  }
+  // 简写形式，把url和参数拼接起来
+  if (typeof options === 'string' && typeof params == 'object') {
+    var _query = '';
+    if (/.*\/.*\?.*=.*/.test(options)) {
+      // object对象转为get类型的参数
+      _query = (0, _queryParams.default)(params, false);
+      // 因为已有get参数,所以后面拼接的参数需要带上"&"隔开
+      options += "&" + _query;
+    } else {
+      _query = (0, _queryParams.default)(params);
+      options += _query;
+    }
+  }
+  // 判断是否一个字符串，如果是，直接跳转(简写法)
+  // 如果是中情形，默认第二个参数为对象形式的参数
+  if (typeof options === 'string') {
+    if (options[0] != '/') options = '/' + options;
+    return uni.navigateTo({
+      url: options });
+
+  }
+  // navigateTo类型的跳转
+  if (config.type == 'navigateTo' || config.type == 'to') {
+    return uni.navigateTo({
+      url: config.url,
+      animationType: config.animationType,
+      animationDuration: config.animationDuration });
+
+  }
+  if (config.type == 'redirectTo' || config.type == 'redirect') {
+    return uni.redirectTo({
+      url: config.url });
+
+  }
+  if (config.type == 'switchTab' || config.type == 'tab') {
+    return uni.switchTab({
+      url: config.url });
+
+  }
+  if (config.type == 'reLaunch') {
+    return uni.reLaunch({
+      url: config.url });
+
+  }
+  if (config.type == 'navigateBack' || config.type == 'back') {
+    return uni.navigateBack({
+      delta: parseInt(config.delta ? config.delta : this.delta) });
+
+  }
+}var _default =
+
+route;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 180:
 /*!********************************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/components/u-avatar-cropper/weCropper.js ***!
   \********************************************************************************************/
@@ -7501,104 +7598,7 @@ queryParams;exports.default = _default;
 
 /***/ }),
 
-/***/ 18:
-/*!************************************************************************************************!*\
-  !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/libs/function/route.js ***!
-  \************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _queryParams = _interopRequireDefault(__webpack_require__(/*! ../../libs/function/queryParams.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-/**
-                                                                                                                                                                                                                                                                                            * 路由跳转
-                                                                                                                                                                                                                                                                                            * 注意:本方法没有对跳转的回调函数进行封装
-                                                                                                                                                                                                                                                                                            */
-function route() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  var config = {
-    type: 'navigateTo',
-    url: '',
-    delta: 1, // navigateBack页面后退时,回退的层数
-    params: {}, // 传递的参数
-    animationType: 'pop-in', // 窗口动画,只在APP有效
-    animationDuration: 300 // 窗口动画持续时间,单位毫秒,只在APP有效
-  };
-  config = Object.assign(config, options);
-  // 如果url没有"/"开头，添加上，因为uni的路由跳转需要"/"开头
-  if (config.url[0] != '/') config.url = '/' + config.url;
-  // 判断是否有传递显式的参数,Object.keys转为数组并判断长度,switchTab类型时不能携带参数
-  if (Object.keys(config.params).length && config.type != 'switchTab') {
-    // 判断用户传递的url中，是否带有参数
-    // 使用正则匹配，主要依据是判断是否有"/","?","="等，如“/page/index/index?name=mary"
-    // 如果有url中有get参数，转换后无需带上"?"
-    var query = '';
-    if (/.*\/.*\?.*=.*/.test(config.url)) {
-      // object对象转为get类型的参数
-      query = (0, _queryParams.default)(config.params, false);
-      // 因为已有get参数,所以后面拼接的参数需要带上"&"隔开
-      config.url += "&" + query;
-    } else {
-      query = (0, _queryParams.default)(config.params);
-      config.url += query;
-    }
-  }
-  // 简写形式，把url和参数拼接起来
-  if (typeof options === 'string' && typeof params == 'object') {
-    var _query = '';
-    if (/.*\/.*\?.*=.*/.test(options)) {
-      // object对象转为get类型的参数
-      _query = (0, _queryParams.default)(params, false);
-      // 因为已有get参数,所以后面拼接的参数需要带上"&"隔开
-      options += "&" + _query;
-    } else {
-      _query = (0, _queryParams.default)(params);
-      options += _query;
-    }
-  }
-  // 判断是否一个字符串，如果是，直接跳转(简写法)
-  // 如果是中情形，默认第二个参数为对象形式的参数
-  if (typeof options === 'string') {
-    if (options[0] != '/') options = '/' + options;
-    return uni.navigateTo({
-      url: options });
-
-  }
-  // navigateTo类型的跳转
-  if (config.type == 'navigateTo' || config.type == 'to') {
-    return uni.navigateTo({
-      url: config.url,
-      animationType: config.animationType,
-      animationDuration: config.animationDuration });
-
-  }
-  if (config.type == 'redirectTo' || config.type == 'redirect') {
-    return uni.redirectTo({
-      url: config.url });
-
-  }
-  if (config.type == 'switchTab' || config.type == 'tab') {
-    return uni.switchTab({
-      url: config.url });
-
-  }
-  if (config.type == 'reLaunch') {
-    return uni.reLaunch({
-      url: config.url });
-
-  }
-  if (config.type == 'navigateBack' || config.type == 'back') {
-    return uni.navigateBack({
-      delta: parseInt(config.delta ? config.delta : this.delta) });
-
-  }
-}var _default =
-
-route;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 188:
+/***/ 189:
 /*!****************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/staff.js ***!
   \****************************************************************/
@@ -13254,7 +13254,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"中数研服装进销存","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_NAME":"中数研服装进销存","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -13275,14 +13275,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"中数研服装进销存","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_NAME":"中数研服装进销存","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"中数研服装进销存","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_NAME":"中数研服装进销存","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -13368,7 +13368,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"中数研服装进销存","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_NAME":"中数研服装进销存","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -13833,25 +13833,6 @@ timeFrom;exports.default = _default;
 
 /***/ }),
 
-/***/ 2038:
-/*!*********************************************************************!*\
-  !*** C:/Users/admin/Desktop/clothingAPP/clothing/utils/publicFn.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-var _configuration = _interopRequireDefault(__webpack_require__(/*! ../api/configuration.js */ 47));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-
-function imgFn(v) {
-  return _configuration.default.domain + v;
-}
-
-module.exports = {
-  imgFn: imgFn };
-
-/***/ }),
-
 /***/ 21:
 /*!********************************************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/libs/function/colorGradient.js ***!
@@ -13962,7 +13943,7 @@ function rgbToHex(rgb) {
 
 /***/ }),
 
-/***/ 213:
+/***/ 214:
 /*!******************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/account.js ***!
   \******************************************************************/
@@ -14201,7 +14182,7 @@ randomArray;exports.default = _default;
 
 /***/ }),
 
-/***/ 254:
+/***/ 255:
 /*!****************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/brand.js ***!
   \****************************************************************/
@@ -14249,7 +14230,7 @@ exports.brandEdit = brandEdit;var brandDel = function brandDel(id) {
 
 /***/ }),
 
-/***/ 255:
+/***/ 256:
 /*!*************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/goods_category.js ***!
   \*************************************************************************/
@@ -14337,7 +14318,33 @@ random;exports.default = _default;
 
 /***/ }),
 
-/***/ 279:
+/***/ 28:
+/*!***********************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/libs/function/trim.js ***!
+  \***********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function trim(str) {var pos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'both';
+  if (pos == 'both') {
+    return str.replace(/^\s+|\s+$/g, "");
+  } else if (pos == "left") {
+    return str.replace(/^\s*/, '');
+  } else if (pos == 'right') {
+    return str.replace(/(\s*$)/g, "");
+  } else if (pos == 'all') {
+    return str.replace(/\s+/g, "");
+  } else {
+    return str;
+  }
+}var _default =
+
+trim;exports.default = _default;
+
+/***/ }),
+
+/***/ 280:
 /*!*****************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/colors.js ***!
   \*****************************************************************/
@@ -14382,32 +14389,6 @@ exports.colorEdit = colorEdit;var colorDel = function colorDel(id) {
     return error;
   });
 };exports.colorDel = colorDel;
-
-/***/ }),
-
-/***/ 28:
-/*!***********************************************************************************************!*\
-  !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/libs/function/trim.js ***!
-  \***********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function trim(str) {var pos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'both';
-  if (pos == 'both') {
-    return str.replace(/^\s+|\s+$/g, "");
-  } else if (pos == "left") {
-    return str.replace(/^\s*/, '');
-  } else if (pos == 'right') {
-    return str.replace(/(\s*$)/g, "");
-  } else if (pos == 'all') {
-    return str.replace(/\s+/g, "");
-  } else {
-    return str;
-  }
-}var _default =
-
-trim;exports.default = _default;
 
 /***/ }),
 
@@ -14521,7 +14502,7 @@ function getParent(name, keys) {
 
 /***/ }),
 
-/***/ 304:
+/***/ 305:
 /*!****************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/sizes.js ***!
   \****************************************************************/
@@ -14645,7 +14626,47 @@ function sys() {
 
 /***/ }),
 
-/***/ 329:
+/***/ 33:
+/*!***************************************************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/libs/function/debounce.js ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var timeout = null;
+
+/**
+                                                                                                                         * 防抖原理：一定时间内，只有最后一次操作，再过wait毫秒后才执行函数
+                                                                                                                         * 
+                                                                                                                         * @param {Function} func 要执行的回调函数 
+                                                                                                                         * @param {Number} wait 延时的时间
+                                                                                                                         * @param {Boolean} immediate 是否立即执行 
+                                                                                                                         * @return null
+                                                                                                                         */
+function debounce(func) {var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  // 清除定时器
+  if (timeout !== null) clearTimeout(timeout);
+  // 立即执行，此类情况一般用不到
+  if (immediate) {
+    var callNow = !timeout;
+    timeout = setTimeout(function () {
+      timeout = null;
+    }, wait);
+    if (callNow) typeof func === 'function' && func();
+  } else {
+    // 设置定时器，当最后一次操作后，timeout不会再被清除，所以在延时wait毫秒后执行func回调方法
+    timeout = setTimeout(function () {
+      typeof func === 'function' && func();
+    }, wait);
+  }
+}var _default =
+
+debounce;exports.default = _default;
+
+/***/ }),
+
+/***/ 330:
 /*!*******************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/supplier.js ***!
   \*******************************************************************/
@@ -14735,46 +14756,6 @@ exports.repaymentCancel = repaymentCancel;var reconciliation = function reconcil
     return error;
   });
 };exports.reconciliation = reconciliation;
-
-/***/ }),
-
-/***/ 33:
-/*!***************************************************************************************************!*\
-  !*** C:/Users/admin/Desktop/clothingAPP/clothing/node_modules/uview-ui/libs/function/debounce.js ***!
-  \***************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var timeout = null;
-
-/**
-                                                                                                                         * 防抖原理：一定时间内，只有最后一次操作，再过wait毫秒后才执行函数
-                                                                                                                         * 
-                                                                                                                         * @param {Function} func 要执行的回调函数 
-                                                                                                                         * @param {Number} wait 延时的时间
-                                                                                                                         * @param {Boolean} immediate 是否立即执行 
-                                                                                                                         * @return null
-                                                                                                                         */
-function debounce(func) {var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  // 清除定时器
-  if (timeout !== null) clearTimeout(timeout);
-  // 立即执行，此类情况一般用不到
-  if (immediate) {
-    var callNow = !timeout;
-    timeout = setTimeout(function () {
-      timeout = null;
-    }, wait);
-    if (callNow) typeof func === 'function' && func();
-  } else {
-    // 设置定时器，当最后一次操作后，timeout不会再被清除，所以在延时wait毫秒后执行func回调方法
-    timeout = setTimeout(function () {
-      typeof func === 'function' && func();
-    }, wait);
-  }
-}var _default =
-
-debounce;exports.default = _default;
 
 /***/ }),
 
@@ -15121,7 +15102,7 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ 39);
 
 /***/ }),
 
-/***/ 386:
+/***/ 387:
 /*!***************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/unit.js ***!
   \***************************************************************/
@@ -15979,7 +15960,7 @@ var _upload = _interopRequireDefault(__webpack_require__(/*! ./upload/upload.js 
 
 /***/ }),
 
-/***/ 411:
+/***/ 412:
 /*!**************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/purchaseStorage.js ***!
   \**************************************************************************/
@@ -16064,7 +16045,7 @@ exports.counts = counts;var countDetails = function countDetails(data) {
 
 /***/ }),
 
-/***/ 412:
+/***/ 413:
 /*!*******************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/allocate.js ***!
   \*******************************************************************/
@@ -18318,7 +18299,7 @@ var index = {
 
 /***/ }),
 
-/***/ 493:
+/***/ 494:
 /*!*************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/purchaseRefund.js ***!
   \*************************************************************************/
@@ -19008,7 +18989,26 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 542:
+/***/ 52:
+/*!*********************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/utils/publicFn.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var _configuration = _interopRequireDefault(__webpack_require__(/*! ../api/configuration.js */ 47));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+function imgFn(v) {
+  return _configuration.default.domain + v;
+}
+
+module.exports = {
+  imgFn: imgFn };
+
+/***/ }),
+
+/***/ 543:
 /*!****************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/check.js ***!
   \****************************************************************/
@@ -19016,7 +19016,7 @@ exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.checkListDel = exports.checkListEdit = exports.checkListId = exports.checkListAdd = exports.checkLists = exports.getCounts = exports.checkDetails = exports.checkCounts = exports.checkCancel = exports.checkDel = exports.checkEdit = exports.check = exports.checkAdd = exports.checkList = void 0;var _requestConfig = _interopRequireDefault(__webpack_require__(/*! @/js_sdk/app-request/requestConfig */ 37));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.checkListDel = exports.checkListEdit = exports.checkListId = exports.checkListAdd = exports.checkLists = exports.getUncheckGoods = exports.getCounts = exports.checkDetails = exports.checkCounts = exports.checkCancel = exports.checkDel = exports.checkEdit = exports.check = exports.checkAdd = exports.checkList = void 0;var _requestConfig = _interopRequireDefault(__webpack_require__(/*! @/js_sdk/app-request/requestConfig */ 37));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 // 盘点列表
 var checkList = function checkList(data) {
   return _requestConfig.default.get("/check/list", data).then(function (res) {
@@ -19100,8 +19100,18 @@ exports.checkDetails = checkDetails;var getCounts = function getCounts(data) {
   });
 };
 
+// 未盘点商品列表
+exports.getCounts = getCounts;var getUncheckGoods = function getUncheckGoods(data) {
+  return _requestConfig.default.post("/check/get_uncheck_goods", data).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+
 // 子单列表
-exports.getCounts = getCounts;var checkLists = function checkLists(data) {
+exports.getUncheckGoods = getUncheckGoods;var checkLists = function checkLists(data) {
   return _requestConfig.default.get("/check_list/list", data).then(function (res) {
     return res;
   }).catch(function (error) {
@@ -19152,7 +19162,7 @@ exports.checkListEdit = checkListEdit;var checkListDel = function checkListDel(i
 
 /***/ }),
 
-/***/ 58:
+/***/ 59:
 /*!****************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/login.js ***!
   \****************************************************************/
@@ -19183,7 +19193,7 @@ exports.login = login;var register = function register(data) {
 
 /***/ }),
 
-/***/ 639:
+/***/ 640:
 /*!********************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/expendLog.js ***!
   \********************************************************************/
@@ -19268,7 +19278,7 @@ exports.expendLogAnalyse = expendLogAnalyse;var expendLoganalyseDetails = functi
 
 /***/ }),
 
-/***/ 648:
+/***/ 649:
 /*!*********************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/expendItem.js ***!
   \*********************************************************************/
@@ -19316,7 +19326,7 @@ exports.expendItemEdit = expendItemEdit;var expendItemDel = function expendItemD
 
 /***/ }),
 
-/***/ 67:
+/***/ 68:
 /*!*******************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/customer.js ***!
   \*******************************************************************/
@@ -19631,148 +19641,7 @@ exports.getInfo2 = getInfo2;var curAnalyseDetails = function curAnalyseDetails(d
 
 /***/ }),
 
-/***/ 68:
-/*!*********************************************************************!*\
-  !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/salesOrder.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.refund = exports.analyseDetails = exports.analyse = exports.getSalesMoney = exports.counts = exports.countDetails = exports.unsalesList = exports.salesOrderCounts = exports.salesOrderCancel = exports.salesOrderDel = exports.salesOrderEdit = exports.salesOrder = exports.salesOrderAdd = exports.salesOrderList = void 0;var _requestConfig = _interopRequireDefault(__webpack_require__(/*! @/js_sdk/app-request/requestConfig */ 37));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-// 单据列表
-var salesOrderList = function salesOrderList(data) {
-  return _requestConfig.default.get("/sales/list", data).then(function (res) {
-    console.log(res);
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-// 新增单据
-exports.salesOrderList = salesOrderList;var salesOrderAdd = function salesOrderAdd(data) {
-  return _requestConfig.default.post("/sales/add", data).then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-
-// 查看单据
-exports.salesOrderAdd = salesOrderAdd;var salesOrder = function salesOrder(id) {
-  return _requestConfig.default.get("/sales/" + id).then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-// 编辑挂单
-exports.salesOrder = salesOrder;var salesOrderEdit = function salesOrderEdit(id, data) {
-  return _requestConfig.default.post("/sales/edit/" + id, data).then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-// 删除挂单
-exports.salesOrderEdit = salesOrderEdit;var salesOrderDel = function salesOrderDel(id) {
-  return _requestConfig.default.post("/sales/del/" + id).then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-
-// 作废挂单
-exports.salesOrderDel = salesOrderDel;var salesOrderCancel = function salesOrderCancel(id) {
-  return _requestConfig.default.post("/sales/cancel/" + id).then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-// 统计
-exports.salesOrderCancel = salesOrderCancel;var salesOrderCounts = function salesOrderCounts(data) {
-  return _requestConfig.default.post("/sales/counts", data).then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-// 挂单列表
-exports.salesOrderCounts = salesOrderCounts;var unsalesList = function unsalesList() {
-  return _requestConfig.default.get("/sales/unsales_list").then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-// 统计详情
-exports.unsalesList = unsalesList;var countDetails = function countDetails(data) {
-  return _requestConfig.default.post("/sales/counts_details", data).then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-// 统计详情
-exports.countDetails = countDetails;var counts = function counts(data) {
-  return _requestConfig.default.post("/sales/counts_details", data).then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-// 获取销售额
-exports.counts = counts;var getSalesMoney = function getSalesMoney(data) {
-  return _requestConfig.default.post("/sales/get_sales_money", data).then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-// 销售分析
-exports.getSalesMoney = getSalesMoney;var analyse = function analyse(data) {
-  return _requestConfig.default.post("/sales/analyse", data).then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-// 销售分析详情
-exports.analyse = analyse;var analyseDetails = function analyseDetails(data) {
-  return _requestConfig.default.post("/sales/analyse_details", data).then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};
-// 退货&换货
-exports.analyseDetails = analyseDetails;var refund = function refund(data) {
-  return _requestConfig.default.post("/sales/refund", data).then(function (res) {
-    return res;
-  }).catch(function (error) {
-    //这里只会在接口是失败状态返回，不需要去处理错误提示
-    return error;
-  });
-};exports.refund = refund;
-
-/***/ }),
-
-/***/ 681:
+/***/ 682:
 /*!****************************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/js_sdk/u-charts/u-charts/u-charts.js ***!
   \****************************************************************************************/
@@ -25449,6 +25318,147 @@ if ( true && typeof module.exports === "object") {
 /***/ }),
 
 /***/ 69:
+/*!*********************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/salesOrder.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.refund = exports.analyseDetails = exports.analyse = exports.getSalesMoney = exports.counts = exports.countDetails = exports.unsalesList = exports.salesOrderCounts = exports.salesOrderCancel = exports.salesOrderDel = exports.salesOrderEdit = exports.salesOrder = exports.salesOrderAdd = exports.salesOrderList = void 0;var _requestConfig = _interopRequireDefault(__webpack_require__(/*! @/js_sdk/app-request/requestConfig */ 37));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+// 单据列表
+var salesOrderList = function salesOrderList(data) {
+  return _requestConfig.default.get("/sales/list", data).then(function (res) {
+    console.log(res);
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+// 新增单据
+exports.salesOrderList = salesOrderList;var salesOrderAdd = function salesOrderAdd(data) {
+  return _requestConfig.default.post("/sales/add", data).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+
+// 查看单据
+exports.salesOrderAdd = salesOrderAdd;var salesOrder = function salesOrder(id) {
+  return _requestConfig.default.get("/sales/" + id).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+// 编辑挂单
+exports.salesOrder = salesOrder;var salesOrderEdit = function salesOrderEdit(id, data) {
+  return _requestConfig.default.post("/sales/edit/" + id, data).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+// 删除挂单
+exports.salesOrderEdit = salesOrderEdit;var salesOrderDel = function salesOrderDel(id) {
+  return _requestConfig.default.post("/sales/del/" + id).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+
+// 作废挂单
+exports.salesOrderDel = salesOrderDel;var salesOrderCancel = function salesOrderCancel(id) {
+  return _requestConfig.default.post("/sales/cancel/" + id).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+// 统计
+exports.salesOrderCancel = salesOrderCancel;var salesOrderCounts = function salesOrderCounts(data) {
+  return _requestConfig.default.post("/sales/counts", data).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+// 挂单列表
+exports.salesOrderCounts = salesOrderCounts;var unsalesList = function unsalesList() {
+  return _requestConfig.default.get("/sales/unsales_list").then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+// 统计详情
+exports.unsalesList = unsalesList;var countDetails = function countDetails(data) {
+  return _requestConfig.default.post("/sales/counts_details", data).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+// 统计详情
+exports.countDetails = countDetails;var counts = function counts(data) {
+  return _requestConfig.default.post("/sales/counts_details", data).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+// 获取销售额
+exports.counts = counts;var getSalesMoney = function getSalesMoney(data) {
+  return _requestConfig.default.post("/sales/get_sales_money", data).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+// 销售分析
+exports.getSalesMoney = getSalesMoney;var analyse = function analyse(data) {
+  return _requestConfig.default.post("/sales/analyse", data).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+// 销售分析详情
+exports.analyse = analyse;var analyseDetails = function analyseDetails(data) {
+  return _requestConfig.default.post("/sales/analyse_details", data).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};
+// 退货&换货
+exports.analyseDetails = analyseDetails;var refund = function refund(data) {
+  return _requestConfig.default.post("/sales/refund", data).then(function (res) {
+    return res;
+  }).catch(function (error) {
+    //这里只会在接口是失败状态返回，不需要去处理错误提示
+    return error;
+  });
+};exports.refund = refund;
+
+/***/ }),
+
+/***/ 70:
 /*!****************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/goods.js ***!
   \****************************************************************/
@@ -25612,7 +25622,7 @@ exports.generateCustomerNumber = generateCustomerNumber;var getStockLog = functi
 
 /***/ }),
 
-/***/ 722:
+/***/ 723:
 /*!************************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/customerLevel.js ***!
   \************************************************************************/
@@ -25678,7 +25688,7 @@ exports.setAutoPromotion = setAutoPromotion;var getAutoPromotion = function getA
 
 /***/ }),
 
-/***/ 888:
+/***/ 889:
 /*!****************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/point.js ***!
   \****************************************************************/
@@ -25735,7 +25745,7 @@ exports.pointDel = pointDel;var pointGetDefault = function pointGetDefault(data)
 
 /***/ }),
 
-/***/ 889:
+/***/ 890:
 /*!*******************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/discount.js ***!
   \*******************************************************************/

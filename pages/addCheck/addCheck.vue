@@ -14,9 +14,9 @@
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<u-action-sheet :list="scopes" @click="scopeItem" v-model="show"></u-action-sheet>
-				<view class="form_item">
+				<view class="form_item" @tap="toNoInventory">
 					<text>未盘点商品</text>
-					<view class="lan" @tap="toNoInventory">查看未盘点商品({{noInventory}})</view>
+					<view class="lan" >查看未盘点商品</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
@@ -69,7 +69,8 @@
 	import store from '@/store'
 	import {
 		checkAdd,
-		checkListDel
+		checkListDel,
+		getUncheckGoods
 	} from '../../api/check.js'
 	export default {
 		data() {
@@ -106,7 +107,7 @@
 						backgroundColor: '#dd524d'
 					}
 				}],
-				userName: store.state.store.userName,
+				userName: store.state.store.user_name,
 				show: false,
 
 			}
@@ -123,8 +124,8 @@
 			},
 			// 初始化
 			async init() {
-				this.shop = store.state.store.userName;
-				this.form.store_id = store.state.store.store_id;
+				this.shop = this.$store.state.store.name
+				this.form.store_id = this.$store.state.store.store_id
 			},
 			// 前往店铺
 			toStore() {
@@ -155,8 +156,13 @@
 			},
 			// 未盘点
 			toNoInventory() {
+				let item = {
+					check_list_id:this.bill[0].id,
+					check_list_ids:this.form.check_list_ids,
+					store_id:this.form.store_id
+				}
 				uni.navigateTo({
-					url: '/pages/noInventory/noInventory?'
+					url: '/pages/addCheck/noInventory/noInventory?item='+ encodeURIComponent(JSON.stringify(item))
 				})
 			},
 			// 点击了某一项
@@ -198,6 +204,7 @@
 			uni.$off()
 		},
 		onLoad() {
+			
 			this.init()
 			uni.$on("gloEvent", (res) => {
 				if (res) {

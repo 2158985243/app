@@ -557,6 +557,25 @@
 				this.$store.commit('barcodeAction', {
 					barcodeDa: {}
 				});
+				if(obj.purchase_price==undefined){
+					obj.purchase_price = 0
+				}
+				if(obj.retail_price==undefined){
+					obj.retail_price = 0
+				}
+				if(obj.customer_price==undefined){
+					obj.customer_price = 0
+				}
+				if(obj.goods_category_id==undefined){
+					obj.goods_category_id = 0
+				}
+				if(obj.supplier_id==undefined){
+					obj.supplier_id = 0
+				}
+				if(obj.brand_id==undefined){
+					obj.brand_id = 0
+				}
+				
 				let res = await goodsEdit(this.id, obj);
 				if (!res.code) {
 					uni.navigateBack()

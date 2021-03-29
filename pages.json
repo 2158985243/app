@@ -8,6 +8,7 @@
 			"style": {
 				"navigationStyle": "custom",
 				"app-plus": {
+				"bounce": "none", 
 					"titleView": false,
 					"scrollIndicator": "none"
 				}
@@ -18,6 +19,7 @@
 			"style": {
 				"navigationStyle": "custom",
 				"app-plus": {
+				"bounce": "none", 
 					"titleView": false,
 					"scrollIndicator": "none"
 				}
@@ -29,6 +31,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 
@@ -40,6 +43,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -50,6 +54,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -58,6 +63,7 @@
 			"style": {
 				"navigationStyle": "custom",
 				"app-plus": {
+				"bounce": "none", 
 					"titleView": false,
 					"scrollIndicator": "none"
 				}
@@ -69,6 +75,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -78,6 +85,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -90,6 +98,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -101,6 +110,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -112,6 +122,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -122,6 +133,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 				// "enablePullDownRefresh": true,
@@ -135,6 +147,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -146,6 +159,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -155,7 +169,11 @@
 			"path": "components/u-avatar-cropper/u-avatar-cropper",
 			"style": {
 				"navigationBarTitleText": "头像裁剪",
-				"navigationBarBackgroundColor": "#000000"
+				"navigationBarBackgroundColor": "#000000",
+				"app-plus": {
+				"bounce": "none", 
+					"scrollIndicator": "none"
+				}
 			}
 		}, {
 			"path": "pages/staffManagement/staffManagement",
@@ -163,6 +181,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -174,6 +193,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -185,6 +205,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -195,6 +216,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -206,6 +228,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -217,6 +240,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -226,7 +250,11 @@
 			"style": {
 				"navigationBarTitleText": "修改密码",
 				"navigationBarBackgroundColor": "#2979ff",
-				"navigationBarTextStyle": "white"
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+				"bounce": "none", 
+					"scrollIndicator": "none"
+				}
 			}
 
 		}, {
@@ -236,6 +264,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -246,6 +275,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -257,6 +287,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -267,6 +298,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -278,6 +310,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -289,6 +322,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -301,6 +335,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -311,6 +346,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -322,6 +358,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -332,6 +369,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -343,6 +381,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -353,6 +392,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -364,6 +404,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -374,6 +415,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -384,6 +426,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -395,6 +438,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -405,6 +449,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -416,6 +461,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -427,6 +473,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -437,6 +484,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -448,6 +496,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -461,6 +510,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -471,6 +521,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -481,6 +532,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -491,6 +543,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -501,6 +554,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -511,6 +565,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -521,6 +576,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -531,6 +587,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -541,6 +598,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -552,6 +610,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -562,6 +621,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -572,6 +632,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -582,6 +643,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -592,6 +654,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -603,6 +666,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -614,6 +678,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -625,6 +690,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -635,6 +701,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -645,6 +712,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -655,6 +723,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -666,6 +735,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -677,6 +747,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -687,6 +758,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -697,6 +769,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -708,6 +781,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -718,6 +792,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -729,6 +804,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -739,6 +815,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -750,6 +827,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -760,6 +838,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -770,6 +849,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 				// "enablePullDownRefresh": true 
@@ -781,6 +861,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -791,6 +872,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -802,6 +884,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -813,6 +896,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -823,6 +907,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -833,6 +918,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -844,6 +930,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -855,6 +942,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -865,6 +953,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -875,6 +964,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -886,6 +976,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -896,6 +987,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -907,6 +999,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -917,6 +1010,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -927,6 +1021,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -937,6 +1032,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -947,6 +1043,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -957,6 +1054,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -967,6 +1065,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -977,6 +1076,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -987,6 +1087,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -997,6 +1098,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1007,6 +1109,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1017,6 +1120,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1027,6 +1131,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1038,6 +1143,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1048,6 +1154,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1058,6 +1165,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1069,6 +1177,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1080,6 +1189,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1091,6 +1201,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1102,6 +1213,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1112,6 +1224,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1123,6 +1236,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1134,6 +1248,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+				"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1144,6 +1259,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1155,6 +1271,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1166,6 +1283,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1177,6 +1295,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1188,6 +1307,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1198,6 +1318,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1208,6 +1329,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1218,6 +1340,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1228,6 +1351,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1235,10 +1359,12 @@
 		}, {
 			"path": "pages/mutualTransfer/mutualTransfer",
 			"style": {
+				
 				"navigationBarTitleText": "账户互转",
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1250,6 +1376,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1260,6 +1387,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1270,6 +1398,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1280,6 +1409,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1290,6 +1420,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1300,6 +1431,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1310,6 +1442,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1320,6 +1453,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1330,6 +1464,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1340,6 +1475,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1351,6 +1487,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1362,6 +1499,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1372,6 +1510,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1383,6 +1522,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1393,6 +1533,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1403,6 +1544,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1413,6 +1555,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1423,6 +1566,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1433,6 +1577,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1444,6 +1589,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1454,6 +1600,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1464,6 +1611,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1475,6 +1623,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1486,6 +1635,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1497,6 +1647,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1508,6 +1659,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1518,6 +1670,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1529,6 +1682,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1539,6 +1693,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1550,6 +1705,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1560,6 +1716,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1570,6 +1727,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1580,6 +1738,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1590,6 +1749,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1600,6 +1760,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1610,6 +1771,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1620,6 +1782,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1631,6 +1794,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1642,6 +1806,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1653,6 +1818,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1664,6 +1830,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1674,6 +1841,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1685,6 +1853,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1695,6 +1864,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1706,6 +1876,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1716,6 +1887,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1727,6 +1899,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1737,6 +1910,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1748,6 +1922,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1758,6 +1933,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1769,6 +1945,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1779,6 +1956,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1790,6 +1968,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1801,6 +1980,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1812,6 +1992,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1823,6 +2004,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1834,6 +2016,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1845,6 +2028,7 @@
 				"navigationBarBackgroundColor": "#2979ff",
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1855,6 +2039,7 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
@@ -1865,12 +2050,27 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white",
 				"app-plus": {
+					"bounce": "none", 
 					"scrollIndicator": "none"
 				}
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/addCheck/noInventory/noInventory",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "预计未盘点商品",
+                "navigationBarBackgroundColor": "#2979ff",
+                "navigationBarTextStyle": "white",
+                "app-plus": {
+                	"bounce": "none", 
+                	"scrollIndicator": "none"
+                }
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

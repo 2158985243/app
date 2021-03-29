@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "预计未盘点商品",
+  "navigationBarBackgroundColor": "#2979ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-search": "/node-modules/uview-ui/components/u-search/u-search",
+    "k-scroll-view": "/components/k-scroll-view/k-scroll-view",
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-toast": "/node-modules/uview-ui/components/u-toast/u-toast",
+    "u-popup": "/node-modules/uview-ui/components/u-popup/u-popup",
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input"
+  }
+}

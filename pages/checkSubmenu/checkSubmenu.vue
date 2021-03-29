@@ -321,7 +321,7 @@
 			async particulars(v) {
 				let res = await checkListId(v)
 				let arr = []
-
+				this.form.remarks = res.remarks
 				res.check_goods.map((v, i) => {
 					arr.push({
 						goodsData: []
@@ -344,7 +344,7 @@
 								goods_spec_info:{
 									// id:0,
 									// sales:0,
-									stock:8,
+									stock:v2.before_quantity,
 									// store_id:0,
 								},
 								hidden:true,

@@ -248,7 +248,6 @@
 				list: [],
 				page: 1,
 				page_size: 20,
-				keyword: '',
 				refreshType: 'custom',
 				refreshTip: '正在下拉',
 				loadTip: '获取更多数据',

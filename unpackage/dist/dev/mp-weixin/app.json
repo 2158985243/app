@@ -178,7 +178,8 @@
     "pages/businessSetUp/config/config",
     "pages/avatar/u-avatar-cropper",
     "pages/getStock/inventoryRunningWater/inventoryRunningWater",
-    "pages/getStock/inventoryRunningWaterList/inventoryRunningWaterList"
+    "pages/getStock/inventoryRunningWaterList/inventoryRunningWaterList",
+    "pages/addCheck/noInventory/noInventory"
   ],
   "subPackages": [],
   "window": {

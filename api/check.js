@@ -82,6 +82,16 @@ export const getCounts = (data) => {
 	});
 };
 
+// 未盘点商品列表
+export const getUncheckGoods = (data) => {
+	return $http.post("/check/get_uncheck_goods",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
+
 // 子单列表
 export const checkLists = (data) => {
 	return $http.get("/check_list/list",data).then((res) => {
