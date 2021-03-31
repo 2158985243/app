@@ -555,6 +555,7 @@
 				let res = await goodsList({
 					page: this.page,
 					page_size: this.page_size,
+					status: 1,
 					keyword: this.keyword
 				});
 				this.dataList = [];
@@ -585,6 +586,7 @@
 						let res = await goodsList({
 							page: this.page,
 							page_size: this.page_size,
+							status: 1,
 							goods_category_id: e.id,
 							keyword: this.keyword
 						});
@@ -604,6 +606,7 @@
 					page: this.page,
 					page_size: this.page_size,
 					goods_category_id: this.mored.id,
+					status: 1,
 					keyword: this.keyword
 				});
 				this.dataList[index].arr.push(...res.data);
@@ -828,6 +831,7 @@
 <style scoped lang="scss">
 	.warenauswahl {
 		width: 100%;
+		height: 100vh;
 		background-color: #e3e3e3;
 		display: flex;
 		flex-direction: column;
@@ -1106,17 +1110,19 @@
 			}
 		}
 
-		// .box{
-		// 	width: 100%;
-		// 	position: fixed;
-		// 	top: 80rpx;
-		// }
+		.box{
+			width: 100%;
+			position: fixed;
+			top: calc(78rpx + var(--status-bar-height));
+			z-index: 1000;
+		}
 		.list {
 			width: 100%;
 			// max-height: 70%;
+			height: calc(100% - 240rpx);
 			display: flex;
-			flex: auto;
-			margin-bottom: 80rpx;
+			margin: 78rpx 0 80rpx 0;
+			overflow: hidden;
 		}
 
 		.shopping-cart {

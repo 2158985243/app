@@ -1,10 +1,11 @@
 <template name="tabControl">
-	<scroll-view scroll-x="true" :class="fixed?'fxied':''" :scroll-left='scrollLeft'
-	 scroll-with-animation id="tabcard">
+	<scroll-view scroll-x="true" :class="fixed?'fxied':''" :scroll-left='scrollLeft' scroll-with-animation id="tabcard">
 		<view class="tabList" :style="isEqually?'display: flex;justify-content: space-between;padding-left:0;':''">
-			<view :class="'tabItem'+(currentIndex==index?' thisOpenSelect':'')" :style="isEqually? 'width:'+windowWidth/values.length+'px;margin-right:0;':''"
-			 v-for="(item,index) in values" :id="'item'+index" :key='index' @click="_onClick(item,index)">
-				<text class="textsize" :style="(currentIndex==index?'font-size:'+activeSize+'rpx;color:'+activeColor:'font-size:'+itemSize+'rpx')">{{item.name}}</text>
+			<view :class="'tabItem'+(currentIndex==index?' thisOpenSelect':'')"
+				:style="isEqually? 'width:'+windowWidth/values.length+'px;margin-right:0;':''"
+				v-for="(item,index) in values" :id="'item'+index" :key='index' @click="_onClick(item,index)">
+				<text class="textsize"
+					:style="(currentIndex==index?'font-size:'+activeSize+'rpx;color:'+activeColor:'font-size:'+itemSize+'rpx')">{{item.name}}</text>
 				<view class="activeLine" :style="{width: lineWidth+'rpx'}"></view>
 			</view>
 		</view>
@@ -123,18 +124,18 @@
 
 		},
 		methods: {
-			_onClick(item,index) {
+			_onClick(item, index) {
 				// console.log(this.currentIndex , index);
 				// if (this.currentIndex !== index) {
-					this.currentIndex = index
-					this.$emit('clickItem', {
-						currentIndex: index,
-						item:item
-					})
-					// 开启滚动
-					if (this.scrollFlag) {
-						this.tabListScroll(index)
-					}
+				this.currentIndex = index
+				this.$emit('clickItem', {
+					currentIndex: index,
+					item: item
+				})
+				// 开启滚动
+				if (this.scrollFlag) {
+					this.tabListScroll(index)
+				}
 				// }
 			},
 			// 选项移动
@@ -145,7 +146,7 @@
 				if (this.wornScroll - this.newScroll > 0) {
 					for (let i = 0; i < this.leftList.length; i++) {
 						if (i > 1 && i == this.currentIndex) {
-							scoll = this.leftList[i-1]
+							scoll = this.leftList[i - 1]
 						}
 					}
 					// console.log(index,scoll);
@@ -186,13 +187,16 @@
 		text-align: center;
 		// margin: 10rpx 0;
 		// border: 1rpx solid #cccccc;
-		background-color: #FFFFFF; 
+		background-color: #FFFFFF;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
 		// border-bottom: 0.01rem solid #E5E5E5;
 		.tabItem {
 			margin-right: 60rpx;
 			display: inline-block;
 			position: relative;
-			
+
 			text {
 				// font-size: 30rpx;
 				line-height: 44rpx;

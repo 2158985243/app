@@ -1,6 +1,6 @@
 <template>
 	<view class="allotQuery">
-		<u-navbar back-icon-color='#ffffff' title="调拨查询" :background="background" title-color="#ffffff">
+		<u-navbar back-icon-color='#ffffff' title="查询" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<text class="right_icon" @click="clear">清空</text>
 			</template>
@@ -180,7 +180,10 @@
 			},
 		},
 		onUnload() {
-			uni.$off()
+			uni.$off("supplierDatum")
+			uni.$off("gloEvent")
+			uni.$off("trademarkDatum")
+			uni.$off("categoryDatum")
 		},
 		onLoad() {
 			let date = this.$date.thirtyDays()

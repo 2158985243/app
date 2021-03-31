@@ -111,6 +111,15 @@ export const checkListAdd = (data) => {
 		return error;
 	});
 };
+// 添加单个商品到子单
+export const singleAdd = (data) => {
+	return $http.post("/check_list/single_add",data).then((res) => {
+		return res;
+	}).catch(function(error) {
+		//这里只会在接口是失败状态返回，不需要去处理错误提示
+		return error;
+	});
+};
 
 // 子单详情
 export const checkListId = (id) => {

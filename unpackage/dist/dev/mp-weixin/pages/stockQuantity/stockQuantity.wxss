@@ -267,31 +267,20 @@
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
 }
 .stockQuantity .hd_main .icon_right.data-v-12fe3aec {
-  margin-right: 30rpx;
+  text-align: right;
 }
 .stockQuantity .hd_main .title_hd.data-v-12fe3aec {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
   color: #FFFFFF;
 }
 .stockQuantity .hd_main .title_hd .tlt.data-v-12fe3aec {
-  width: 150rpx;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: right;
+  text-align: left;
 }
 .stockQuantity .hd_main .down.data-v-12fe3aec {
   padding-left: 10rpx;

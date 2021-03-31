@@ -211,9 +211,7 @@
 				uni.navigateBack()
 			}
 		},
-		onUnload() {
-			uni.$off()
-		},
+		
 		onLoad() {
 			if (store.state.store.store_id > 0) {
 				this.form.store_is = store.state.store.store_id;
@@ -264,7 +262,12 @@
 					this.category = res.name;
 				}
 			});
-		}
+		},
+		onUnload() {
+			uni.$off("gloEvent")
+			uni.$off("trademarkDatum")
+			uni.$off("categoryDatum")
+		},
 	}
 </script>
 

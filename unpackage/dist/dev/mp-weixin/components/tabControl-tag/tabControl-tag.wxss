@@ -34,6 +34,16 @@
   white-space: nowrap;
   text-align: center;
   background-color: #FFFFFF;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
 }
 .tabList .tabItem.data-v-32a952a4 {
   margin-right: 60rpx;

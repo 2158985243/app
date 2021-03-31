@@ -29,6 +29,11 @@
           "pathName": "pages/grabble/grabble",
           "query": "id=12",
           "scene": null
+        },
+        {
+          "name": "pages/businessOverview/businessOverview",
+          "pathName": "pages/businessOverview/businessOverview",
+          "scene": null
         }
       ]
     }
