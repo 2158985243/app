@@ -1,6 +1,6 @@
 <template>
-	<view class="memberAnalysis">
-		<u-navbar back-icon-color='#ffffff' title="会员分析" :background="background" title-color="#ffffff">
+	<view class="analyse">
+		<u-navbar back-icon-color='#ffffff' title="销售分析" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
 			</template>
@@ -19,16 +19,12 @@
 								<view class="chart">
 									<!-- @onPullUp="handleLoadMore" -->
 									<view class="qiun-columns">
-										<!-- v-if="item.length>0" -->
 										<view class="qiun-charts">
-											<canvas canvas-id="canvasRing" id="canvasRing" class="charts" @touchstart="touchRing"></canvas>
+											<canvas canvas-id="canvasMix" id="canvasMix" class="charts" disable-scroll=true @touchstart="touchMix"
+											 @touchmove="moveMix" @touchend.stop="touchEndMix"></canvas>
 										</view>
-										<!-- <view class="" v-if="item.length==0">
-											<text>占无数据</text>
-										</view> -->
 									</view>
 								</view>
-
 							</template>
 							<template slot="bottom">
 								<view>
@@ -41,37 +37,38 @@
 			</swiper>
 			<view class="nav">
 				<view class="nav-item">
-					<text class="red">{{customer_data.total_customer || 0}}</text>
-					<text class="hui">会员总数</text>
+					<text class="red">{{sales_amount||0}}</text>
+					<text class="hui">销售笔数</text>
 				</view>
 				<view class="nav-item">
-					<text class="red">{{customer_data.new_customer || 0}}</text>
-					<text class="hui">新增会员</text>
+					<text class="red">{{sales_quantity||0}}</text>
+					<text class="hui">销售数量</text>
 				</view>
 				<view class="nav-item">
-					<text class="red">{{customer_data.money || 0}}</text>
-					<text class="hui">会员充值</text>
+					<text class="red">{{saleroom||0}}</text>
+					<text class="hui">销售额</text>
 				</view>
 				<view class="nav-item">
-					<text class="red">{{customer_money[current] || 0}}</text>
-					<text class="hui">会员消费</text>
+					<text class="red">{{goods_cost||0}}</text>
+					<text class="hui">毛利润</text>
 				</view>
 
 			</view>
-			<view class="list">
-				<view class="li" v-for="(item,index) in list[current]" :key="index" @click="spendingDetails(item)">
-					<view class="left">
-						<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$imgFn(item.customer_image)"></u-image>
-						<view class="item-li">
-							<text>{{item.customer_name}}</text>
-							<text>{{item.mobile}}</text>
-						</view>
-
-					</view>
-					<view class="right">
-						<text>{{item.money}}</text>
-						<u-icon name="arrow-right" color="#bebebe" size="36"></u-icon>
-					</view>
+			<view class="list" v-if="list[current].length>0">
+				<view class="li">
+					<text>日期</text>
+					<text>销售笔数</text>
+					<text>销售数</text>
+					<text>销售额</text>
+					<text>毛利润</text>
+				</view>
+				<view class="li" v-for="(item,index) in list[current]" :key="index" @click="toAnalyseDetails(item)">
+					<text>{{item.date}}</text>
+					<text>{{item.sales_amount}}</text>
+					<text>{{item.sales_quantity}}</text>
+					<text>{{item.sales_money}}</text>
+					<text>{{item.goods_cost}}</text>
+					<u-icon name="arrow-right" color="#bebebe" size="30"></u-icon>
 				</view>
 			</view>
 		</view>
@@ -85,16 +82,15 @@
 </template>
 
 <script>
-	import tabControl from '@/components/tabControl-tag/tabControl-tag.vue';
+	import uCharts from '@/js_sdk/u-charts/u-charts/u-charts.js';
 	import refresh from '@/components/xing-refresh/xing-refresh.vue'
-	import uCharts from "@/js_sdk/u-charts/u-charts/u-charts.js"
+	import tabControl from '@/components/tabControl-tag/tabControl-tag.vue';
 	var _self;
-	var canvaRing = null;
-
+	var canvaMix = null;
 	import store from '@/store'
 	import {
 		analyse
-	} from '../../api/customer.js'
+	} from '../../api/salesOrder.js'
 	export default {
 		components: {
 			tabControl,
@@ -184,16 +180,92 @@
 
 				},
 				strots: [], //店铺组
-				page: 1,
 				page_size: 10,
-				customer_data: {},
-				customer_money: [
-					0, 0, 0, 0, 0
-				]
+				saleroom: 0, //销售额
+				sales_amount: 0, //销售笔数
+				goods_cost: 0, //毛利润
+				sales_quantity: 0, //销售数量
 			}
 		},
 		methods: {
-			// 
+			// getServerData() {
+
+			// },
+			showMix(canvasId, chartData) {
+				canvaMix = new uCharts({
+					$this: _self,
+					canvasId: canvasId,
+					type: 'area',
+					fontSize: 11,
+					legend: {
+						show: true,
+						position: 'top',
+						float: 'center'
+					},
+					background: '#FFFFFF',
+					pixelRatio: _self.pixelRatio,
+					categories: chartData.categories,
+					series: chartData.series,
+					// animation: true,
+					enableScroll: true, //开启图表拖拽功能
+					xAxis: {
+						disableGrid: true,
+						type: 'grid',
+						gridType: 'dash',
+						itemCount: 4,
+						scrollShow: true,
+						scrollAlign: 'left',
+					},
+					yAxis: {
+
+						disableGrid: true,
+						gridType: 'dash',
+						gridColor: '#e6e6e6',
+						splitNumber: 5, //Y轴网格数量
+						dashLength: 12, //Y轴网格为虚线时，单段虚线长度
+						format: (val) => {
+							return val.toFixed(0)
+						}
+					},
+					width: _self.cWidth * _self.pixelRatio,
+					height: _self.cHeight * _self.pixelRatio,
+					dataLabel: true,
+					dataPointShape: true,
+					extra: {
+						tooltip: {
+							bgColor: '#000000',
+							bgOpacity: 0.7,
+							gridType: 'straight',
+							dashLength: 8,
+							gridColor: '#1890ff',
+							fontColor: '#FFFFFF',
+							horizentalLine: true,
+							xAxisLabel: true,
+							yAxisLabel: true,
+							labelBgColor: '#DFE8FF',
+							labelBgOpacity: 0.95,
+							labelAlign: 'left',
+							labelFontColor: '#666666'
+						}
+					},
+				});
+			},
+			touchMix(e) {
+				canvaMix.scrollStart(e);
+			},
+			moveMix(e) {
+				canvaMix.scroll(e);
+			},
+			touchEndMix(e) {
+				canvaMix.scrollEnd(e);
+				//下面是toolTip事件，如果滚动后不需要显示，可不填写
+				canvaMix.showToolTip(e, {
+					format: function(item, category) {
+						return category + ' ' + item.name + ':' + item.data
+					}
+				});
+			},
+			//
 			async confirmStrores(e) {
 				this.store_id = e[0].value
 				if (this.current == 0) {
@@ -231,79 +303,65 @@
 			// 初始化
 			async init(timeStar, timeEnd) {
 				this.chartData = {
-					series: [{
-						name: '会员',
-						data: ''
-					}, {
-						name: '散客',
-						data: ''
-					}]
+					series: []
 				}
 				let res = await analyse({
 					start_time: timeStar,
 					end_time: timeEnd,
 					store_id: this.store_id
 				})
-				this.customer_data = res.customer_data
-				if (res.rank_list.length > 0) {
-
+				console.log(res);
+				let chartData = {
+					"categories": [],
+					"series": [{
+						"name": `销售额:0`,
+						"data": [],
+						"legendShape ": "triangle",
+						"addPoint ": true,
+						"pointShape ": "circle",
+						"type": "area",
+						"color": "#6D34FB"
+					}]
+				}
+				if (res.length > 0) {
 					this.list[this.current] = []
-					res.rank_list.map(v => {
-						if (v.customer_id > 0) {
-							this.list[this.current].push({
-								...v,
-							})
-							this.customer_money[this.current] += Number(v.money)
-						}
-						this.total[this.current] += Number(v.money);
+					this.list[this.current] = res
+					this.saleroom = 0;
+					let dates = [];
+					let datas = [];
+					this.sales_amount = 0;
+					this.sales_quantity = 0;
+
+					res.map(v => {
+						this.saleroom += Number(v.sales_money)
+						this.sales_amount += Number(v.sales_amount)
+						this.sales_quantity += Number(v.sales_quantity)
+						this.goods_cost += Number(v.goods_cost)
+						dates.push(v.date)
+						datas.push(v.sales_money)
 					})
-					this.chartData.series[0].data = this.customer_money[this.current]
-					this.chartData.series[1].data = this.total[this.current]
-					this.bos[this.current] = this.chartData
+					this.saleroom = this.saleroom.toFixed(2)
+					let chartData = {
+						"categories": dates,
+						"series": [{
+							"name": `销售额:${this.saleroom}`,
+							"data": datas,
+							"legendShape ": "triangle",
+							"addPoint ": true,
+							"pointShape ": "circle",
+							"type": "area",
+							"color": "#6D34FB"
+						}]
+					}
+
+					this.total[this.current] = chartData;
 					// console.log(this.chartData);
-					_self.showRing("canvasRing", this.bos[this.current], this.total[this.current])
+					_self.showMix("canvasMix", chartData);
 					this.$forceUpdate()
 				} else {
-					_self.showRing("canvasRing", this.chartData, 0)
+					_self.showMix("canvasMix", chartData);
 
 				}
-			},
-			// 显示canva
-			showRing(canvasId, chartData, total) {
-				canvaRing = new uCharts({
-					$this: _self,
-					canvasId: canvasId,
-					type: 'ring',
-					fontSize: 11,
-					legend: true,
-					title: {
-						name: total == 0 ? '' :total.toFixed(2) ,
-						color: '#7cb5ec',
-						fontSize: 12 * _self.pixelRatio,
-						offsetY: -5 * _self.pixelRatio,
-					},
-					subtitle: {
-						name: total == 0 ?'暂无数据':'营业额',
-						color: '#666666',
-						fontSize: 12 * _self.pixelRatio,
-						offsetY: 1 * _self.pixelRatio,
-					},
-					extra: {
-						pie: {
-							offsetAngle: -45,
-							ringWidth: 40 * _self.pixelRatio,
-							labelWidth: 15
-						}
-					},
-					background: '#FFFFFF',
-					pixelRatio: _self.pixelRatio,
-					series: chartData.series,
-					animation: true,
-					width: _self.cWidth * _self.pixelRatio,
-					height: _self.cHeight * _self.pixelRatio,
-					disablePieStroke: true,
-					dataLabel: true,
-				});
 			},
 			touchRing(e) {
 				canvaRing.showToolTip(e, {
@@ -311,10 +369,6 @@
 						return item.name + ':' + item.data
 					}
 				});
-			},
-			getServerData() {
-				_self.showRing("canvasRing", this.chartData, 100);
-
 			},
 			// 点击日期
 			async onClickItem(val) {
@@ -326,7 +380,7 @@
 			// 移动
 			async scollSwiper(e) {
 				this.current = e.target.current
-				if (this.bos[this.current].length == 0) {
+				if (this.list[this.current].length == 0) {
 					if (this.current == 0) {
 						let currentdate = this.$date.today()
 						this.dateAll.today1.statrTime = currentdate.start_time
@@ -349,14 +403,13 @@
 						// console.log(yearEnd, monthEnd, todayEnd);
 						this.init(currentdate.start_time, currentdate.end_time)
 					} else if (this.current == 4) {
-						this.dateAll.today5.statrTime = this.start_time
-						this.dateAll.today5.endTime = this.end_time
-						this.init(this.start_time, this.end_time)
+
+						// this.init(this.start_time, this.end_time)
 
 					}
 
 				} else {
-					_self.showRing("canvasRing", this.bos[this.current], this.total[this.current])
+					_self.showMix("canvasMix", this.total[this.current]);
 				}
 			},
 			// 下拉刷新
@@ -379,17 +432,20 @@
 			/// 开始时间
 			confirmTime(v) {
 				this.start_time = `${v.year}-${v.month}-${v.day}`;
+				this.dateAll.today5.statrTime = this.start_time
 				this.showtime1 = true;
 			},
 			// 结束时间
 			async confirmTime1(v) {
 				this.end_time = `${v.year}-${v.month}-${v.day}`;
+				this.dateAll.today5.endTime = this.end_time
 				this.init(this.start_time, this.end_time);
 			},
-			// 前往会员分析详情
-			spendingDetails(val) {
+			// 前往支出详情
+			toAnalyseDetails(val) {
+
 				uni.navigateTo({
-					url:`/pages/memberAnalysis/analyseDetails/analyseDetails?id=${val.customer_id}`
+					url: `/pages/analyse/analyseDetails/analyseDetails?date=${val.date}&store_id=${this.store_id}`
 				})
 			}
 		},
@@ -410,17 +466,13 @@
 			if (store.state.store.store_id > 0) {
 				this.store_id = store.state.store.store_id;
 			}
-			if (query.current > 0) {
-				this.current = Number(query.current);
-			}
 			_self = this;
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
+			// this.getServerData();
 			this.init(this.start_time, this.end_time);
-		},
-		onShow() {
 
-		}
+		},
 	}
 </script>
 
@@ -431,7 +483,7 @@
 		overflow-x: hidden;
 	}
 
-	.memberAnalysis {
+	.analyse {
 		width: 100%;
 		height: 100%;
 		display: flex;
@@ -449,7 +501,6 @@
 
 			.swiper {
 				margin-top: 84rpx;
-				// height: calc(100% - #{84rpx});
 				height: 500rpx;
 			}
 
@@ -461,7 +512,7 @@
 			.nav {
 				width: 100vw;
 				height: 100rpx;
-				margin: 40rpx 0;
+				margin: 20rpx 0;
 				display: flex;
 				flex-direction: row;
 				background-color: #FFFFFF;
@@ -486,7 +537,6 @@
 			}
 
 			.list {
-				// margin-top: 40rpx;
 				width: 100%;
 				display: flex;
 				flex-direction: column;
@@ -494,46 +544,22 @@
 				.li {
 					width: 100%;
 					display: flex;
-					justify-content: space-between;
+					flex-direction: row;
 					padding: 20rpx;
 					border-bottom: 0.01rem solid #e3e3e3;
 					background-color: #FFFFFF;
 
-					.left {
+					text {
+						flex: 1;
 						display: flex;
-						flex-direction: row;
-
-						.item-li {
-							display: flex;
-							flex-direction: column;
-							margin-left: 20rpx;
-						}
-
-						text {
-							flex: 1;
-							display: flex;
-							// align-items: center;
-							// justify-content: center;
-						}
-					}
-
-					.right {
-						display: flex;
-						flex-direction: row;
 						align-items: center;
-						// justify-content: center;
-
-						// text {
-						// 	display: flex;
-						// 	justify-content: flex-end;
-						// }
+						justify-content: center;
+						font-size: 20rpx;
 					}
 				}
 			}
 		}
 
-
-		//charts
 		.qiun-padding {
 			padding: 2%;
 			width: 96%;

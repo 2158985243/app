@@ -1,6 +1,6 @@
 <template>
-	<view class="memberAnalysis">
-		<u-navbar back-icon-color='#ffffff' title="会员分析" :background="background" title-color="#ffffff">
+	<view class="statics">
+		<u-navbar back-icon-color='#ffffff' title="支出分析" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
 			</template>
@@ -19,16 +19,11 @@
 								<view class="chart">
 									<!-- @onPullUp="handleLoadMore" -->
 									<view class="qiun-columns">
-										<!-- v-if="item.length>0" -->
 										<view class="qiun-charts">
 											<canvas canvas-id="canvasRing" id="canvasRing" class="charts" @touchstart="touchRing"></canvas>
 										</view>
-										<!-- <view class="" v-if="item.length==0">
-											<text>占无数据</text>
-										</view> -->
 									</view>
 								</view>
-
 							</template>
 							<template slot="bottom">
 								<view>
@@ -39,36 +34,12 @@
 					</scroll-view>
 				</swiper-item>
 			</swiper>
-			<view class="nav">
-				<view class="nav-item">
-					<text class="red">{{customer_data.total_customer || 0}}</text>
-					<text class="hui">会员总数</text>
-				</view>
-				<view class="nav-item">
-					<text class="red">{{customer_data.new_customer || 0}}</text>
-					<text class="hui">新增会员</text>
-				</view>
-				<view class="nav-item">
-					<text class="red">{{customer_data.money || 0}}</text>
-					<text class="hui">会员充值</text>
-				</view>
-				<view class="nav-item">
-					<text class="red">{{customer_money[current] || 0}}</text>
-					<text class="hui">会员消费</text>
-				</view>
 
-			</view>
 			<view class="list">
 				<view class="li" v-for="(item,index) in list[current]" :key="index" @click="spendingDetails(item)">
-					<view class="left">
-						<u-image width="70rpx" mode='aspectFit' border-radius="10" class="header_image" height="70rpx" :src="$imgFn(item.customer_image)"></u-image>
-						<view class="item-li">
-							<text>{{item.customer_name}}</text>
-							<text>{{item.mobile}}</text>
-						</view>
-
-					</view>
-					<view class="right">
+					<text>{{item.expend_item.name}}</text>
+					<text>{{item.ratio}}</text>
+					<view class="text">
 						<text>{{item.money}}</text>
 						<u-icon name="arrow-right" color="#bebebe" size="36"></u-icon>
 					</view>
@@ -93,8 +64,11 @@
 
 	import store from '@/store'
 	import {
-		analyse
-	} from '../../api/customer.js'
+		expendLogAnalyse
+	} from '../../api/expendLog.js'
+	import {
+		storeList
+	} from '../../api/store.js'
 	export default {
 		components: {
 			tabControl,
@@ -184,12 +158,7 @@
 
 				},
 				strots: [], //店铺组
-				page: 1,
-				page_size: 10,
-				customer_data: {},
-				customer_money: [
-					0, 0, 0, 0, 0
-				]
+				page_size: 10
 			}
 		},
 		methods: {
@@ -231,37 +200,31 @@
 			// 初始化
 			async init(timeStar, timeEnd) {
 				this.chartData = {
-					series: [{
-						name: '会员',
-						data: ''
-					}, {
-						name: '散客',
-						data: ''
-					}]
+					series: []
 				}
-				let res = await analyse({
+				let res = await expendLogAnalyse({
 					start_time: timeStar,
 					end_time: timeEnd,
 					store_id: this.store_id
 				})
-				this.customer_data = res.customer_data
-				if (res.rank_list.length > 0) {
-
-					this.list[this.current] = []
-					res.rank_list.map(v => {
-						if (v.customer_id > 0) {
-							this.list[this.current].push({
-								...v,
-							})
-							this.customer_money[this.current] += Number(v.money)
-						}
-						this.total[this.current] += Number(v.money);
+				if (res.data.length > 0) {
+					res.data.map((v) => {
+						this.chartData.series.push({
+							name: v.expend_item.name,
+							data: Number(v.money)
+						})
 					})
-					this.chartData.series[0].data = this.customer_money[this.current]
-					this.chartData.series[1].data = this.total[this.current]
 					this.bos[this.current] = this.chartData
+					this.list[this.current] = []
+					res.data.map(v => {
+						this.list[this.current].push({
+							...v,
+							ratio: ((Number(v.money) / Number(res.total)) * 100).toFixed(2) + '%'
+						})
+					})
+					this.total[this.current] = res.total;
 					// console.log(this.chartData);
-					_self.showRing("canvasRing", this.bos[this.current], this.total[this.current])
+					this.showRing("canvasRing", this.bos[this.current], this.total[this.current])
 					this.$forceUpdate()
 				} else {
 					_self.showRing("canvasRing", this.chartData, 0)
@@ -277,13 +240,13 @@
 					fontSize: 11,
 					legend: true,
 					title: {
-						name: total == 0 ? '' :total.toFixed(2) ,
+						name: total == 0 ? '' : total.toFixed(2),
 						color: '#7cb5ec',
 						fontSize: 12 * _self.pixelRatio,
 						offsetY: -5 * _self.pixelRatio,
 					},
 					subtitle: {
-						name: total == 0 ?'暂无数据':'营业额',
+						name: total == 0 ? '暂无数据' : '总支出',
 						color: '#666666',
 						fontSize: 12 * _self.pixelRatio,
 						offsetY: 1 * _self.pixelRatio,
@@ -351,7 +314,7 @@
 					} else if (this.current == 4) {
 						this.dateAll.today5.statrTime = this.start_time
 						this.dateAll.today5.endTime = this.end_time
-						this.init(this.start_time, this.end_time)
+						// this.init(this.start_time, this.end_time)
 
 					}
 
@@ -379,27 +342,52 @@
 			/// 开始时间
 			confirmTime(v) {
 				this.start_time = `${v.year}-${v.month}-${v.day}`;
+				this.dateAll.today5.statrTime = this.start_time
 				this.showtime1 = true;
 			},
 			// 结束时间
 			async confirmTime1(v) {
 				this.end_time = `${v.year}-${v.month}-${v.day}`;
+				this.dateAll.today5.endTime = this.end_time
 				this.init(this.start_time, this.end_time);
 			},
-			// 前往会员分析详情
+			// 前往支出详情
 			spendingDetails(val) {
-				uni.navigateTo({
-					url:`/pages/memberAnalysis/analyseDetails/analyseDetails?id=${val.customer_id}`
-				})
+				if (this.current == 0) {
+					let currentdate = this.$date.today()
+					uni.navigateTo({
+						url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+					})
+				} else if (this.current == 1) {
+					let currentdate = this.$date.yesterday()
+					uni.navigateTo({
+						url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+					})
+				} else if (this.current == 2) {
+					let currentdate = this.$date.thisWeek()
+					uni.navigateTo({
+						url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+					})
+				} else if (this.current == 3) {
+					let currentdate = this.$date.thisMonth()
+					uni.navigateTo({
+						url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+					})
+				} else if (this.current == 4) {
+					uni.navigateTo({
+						url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}`
+					})
+				}
+
 			}
 		},
 		onLoad(query) {
 			this.strored()
-			if (query.timeStar) {
-				this.start_time = query.timeStar;
-				this.end_time = query.timeEnd;
-				this.dateAll.today5['statrTime'] = query.timeStar;
-				this.dateAll.today5['endTime'] = query.timeEnd;
+			if (query.start_time) {
+				this.start_time = query.start_time;
+				this.end_time = query.end_time;
+				this.dateAll.today5['statrTime'] = query.start_time;
+				this.dateAll.today5['endTime'] = query.end_time;
 			} else {
 				let date = new Date();
 				this.start_time = this.$u.timeFormat(date, 'yyyy-mm-dd');
@@ -416,6 +404,15 @@
 			_self = this;
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
+			if (query.start_time) {
+				this.start_time = query.start_time;
+				this.end_time = query.end_time;
+				this.current = Number(query.current);
+				if (query.store_id) {
+					this.store_id = query.store_id
+
+				}
+			}
 			this.init(this.start_time, this.end_time);
 		},
 		onShow() {
@@ -431,7 +428,7 @@
 		overflow-x: hidden;
 	}
 
-	.memberAnalysis {
+	.statics {
 		width: 100%;
 		height: 100%;
 		display: flex;
@@ -458,35 +455,8 @@
 				height: 500rpx;
 			}
 
-			.nav {
-				width: 100vw;
-				height: 100rpx;
-				margin: 40rpx 0;
-				display: flex;
-				flex-direction: row;
-				background-color: #FFFFFF;
-
-				.nav-item {
-					flex: 1;
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					align-items: center;
-
-					.hui {
-						color: #c8c8c8;
-						font-size: 26rpx;
-					}
-
-					.red {
-						color: #DD524D;
-						font-size: 24rpx;
-					}
-				}
-			}
-
 			.list {
-				// margin-top: 40rpx;
+				margin-top: 40rpx;
 				width: 100%;
 				display: flex;
 				flex-direction: column;
@@ -499,39 +469,27 @@
 					border-bottom: 0.01rem solid #e3e3e3;
 					background-color: #FFFFFF;
 
-					.left {
+					text {
+						flex: 1;
 						display: flex;
-						flex-direction: row;
-
-						.item-li {
-							display: flex;
-							flex-direction: column;
-							margin-left: 20rpx;
-						}
-
-						text {
-							flex: 1;
-							display: flex;
-							// align-items: center;
-							// justify-content: center;
-						}
+						align-items: center;
+						justify-content: center;
 					}
 
-					.right {
+					.text {
+						flex: 1;
 						display: flex;
-						flex-direction: row;
 						align-items: center;
-						// justify-content: center;
+						justify-content: center;
 
-						// text {
-						// 	display: flex;
-						// 	justify-content: flex-end;
-						// }
+						text {
+							display: flex;
+							justify-content: flex-end;
+						}
 					}
 				}
 			}
 		}
-
 
 		//charts
 		.qiun-padding {

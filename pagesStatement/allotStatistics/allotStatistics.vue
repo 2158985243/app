@@ -1,6 +1,6 @@
 <template>
-	<view class="salesStatistics">
-		<u-navbar back-icon-color='#ffffff' title="销售统计" :background="background" title-color="#ffffff">
+	<view class="allotStatistics">
+		<u-navbar back-icon-color='#ffffff' title="调拨统计" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
 			</template>
@@ -11,26 +11,27 @@
 			<swiper class="swiper" @change='scollSwiper' :current='current'>
 				<swiper-item v-for="(item,index) in bos" :key='index'>
 					<scroll-view scroll-y="true" style="height: 100%;">
-						<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
-						 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-						 :autoPullUp="autoPullUp" :inBottom="pull[current]" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+						<!-- <refresh @interrupt="interrupt" @pushToInterrupt="pushToInterrupt" @finished="finished" @scrolltolower="g">
+							<template slot="top">
+								<view :style="'position: absolute; bottom: 0px;height: ' + 40 + 'px;line-height:' + 40 + 'px;  width: 100%;text-align: center;'">{{tip}}</view>
+							</template>
+							<template slot="content"> -->
+							<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
+							 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
+							 :autoPullUp="autoPullUp" :inBottom="pull[current]" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 								<view class="cen">
 									<view class="list-nav">
 										<view class="nav-item">
-											<text class="red-number">{{total[current] || 0}}</text>
-											<text class="hui-number">销售笔数</text>
+											<text class="red-number">{{total_amount[current] || 0}}</text>
+											<text class="hui-number">调拨笔数</text>
+										</view>
+										<view class="nav-item">
+											<text class="red-number">{{out_quantity[current] || 0}}</text>
+											<text class="hui-number">调出数量</text>
 										</view>
 										<view class="nav-item">
 											<text class="red-number">{{in_quantity[current] || 0}}</text>
-											<text class="hui-number">销售数量</text>
-										</view>
-										<view class="nav-item">
-											<text class="red-number">{{money[current] || 0}}</text>
-											<text class="hui-number">销售金额</text>
-										</view>
-										<view class="nav-item">
-											<text class="red-number">{{in_money[current] || 0}}</text>
-											<text class="hui-number">销售毛利</text>
+											<text class="hui-number">调入数量</text>
 										</view>
 
 									</view>
@@ -41,23 +42,28 @@
 												</u-image>
 											</view>
 											<view class="li-item">
-												<text class="balck">{{itemList.name}} <text>{{itemList.number}}</text></text>
-												<text class="hui-se">单价数量：&yen;{{itemList.sales_price}}*{{itemList.quantity}}</text>
-												<text class="hui-se ">采购均价：&yen;{{itemList.avg_price}}</text>
+												<text class="balck">{{itemList.name}}</text>
+												<text>{{itemList.number}}</text>
+												<text class="hui-se">零售价：&yen;{{itemList.retail_price}}</text>
 											</view>
 										</view>
 										<view class="right">
 											<view class="money">
-												<text class="red">&yen;{{itemList.retail_price}}</text>
-												<text>金额：&yen;{{(Number(itemList.sales_price)*Number(itemList.quantity)).toFixed(2)}}</text>
-												<text>毛利：&yen;{{((Number(itemList.sales_price)-Number(itemList.avg_price))*Number(itemList.quantity)).toFixed(2)}}</text>
+												<text>调出数量：<text class="red">{{itemList.out_quantity}}</text> </text>
+												<text>调入数量：<text class="red">{{itemList.in_quantity}}</text> </text>
 											</view>
 											<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 										</view>
 									</view>
 								</view>
-						
-							</k-scroll-view>
+								</k-scroll-view>
+							<!-- </template>
+							<template slot="bottom">
+								<view>
+								</view>
+							</template>
+						</refresh> -->
+
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -79,15 +85,12 @@
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import store from '@/store'
 	import {
-		salesOrderCounts
-
-	} from '../../api/salesOrder.js'
-
+		allocateCounts
+	} from '../../api/allocate.js'
 	export default {
 		components: {
 			tabControl,
 			kScrollView
-			
 		},
 		data() {
 			return {
@@ -164,16 +167,15 @@
 				},
 				strots: [], //店铺组
 				page: [1, 1, 1, 1],
-				page_size: 20,
+				page_size: 10,
 				start_time: '',
 				end_time: '',
-				in_money: [0, 0, 0, 0, 0],
+				out_quantity: [0, 0, 0, 0, 0],
 				in_quantity: [0, 0, 0, 0, 0],
-				money: [0, 0, 0, 0, 0],
 				count: [0, 0, 0, 0, 0],
+				total_amount: [0, 0, 0, 0, 0],
 				store_id: [],
 				store_ids: [],
-				staff_id:0,
 				refreshType: 'custom',
 				refreshTip: '正在下拉',
 				loadTip: '获取更多数据',
@@ -192,6 +194,30 @@
 
 		},
 		methods: {
+			// 下拉刷新
+			handlePullDown(stopLoad) {
+				this.page[this.current] = 1;
+				this.list[this.current] = [];
+				this.pull[this.current] = false;
+				this.init()
+				stopLoad ? stopLoad() : '';
+			},
+			// 上拉加载
+			async handleLoadMore(stopLoad) {
+				if (!this.pull[this.current]) {
+					if (this.page[this.current] >= this.last_page[this.current]) {
+						this.$refs.uToast.show({
+							title: '加载到底了',
+							type: 'default',
+							position: 'bottom'
+						})
+						this.pull[this.current] = true
+					} else {
+						this.page[this.current]++;
+						this.init()
+					}
+				}
+			},
 			// 
 			async confirmStrores(e) {
 				this.store_ids[0] = e[0].value
@@ -226,42 +252,31 @@
 				}
 			},
 			// 初始化
-			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id, supplier_id, staff_id) {
+			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id) {
 				// 当天
-				let currentdate = this.$date.today()
-				let res = await salesOrderCounts({
+				let currentdate = this.$date.today();
+				let res = await allocateCounts({
 					start_time: timeStar || currentdate.start_time,
 					end_time: timeEnd || currentdate.end_time,
 					store_ids: store_ids || this.store_ids,
 					keyword: keyword,
 					brand_id: brand_id,
 					goods_category_id: goods_category_id,
-					staff_id: staff_id,
-					supplier_id: supplier_id,
 					page: this.page[this.current],
 					page_size: this.page_size
 				})
 				console.log(res);
+				// if (!res.code) {
+				// }
 				if(this.page[this.current]==1){
 					this.list[this.current] = []
 				}
 				if (!res.code) {
 					this.list[this.current].push(...res.data)
 					this.last_page[this.current] = res.last_page
-					// this.list[this.current] = res;
-					// let sum1 = 0;
-					// let sum2 = 0;
-					// let sum3 = 0;
-					// this.count[this.current] = 0;
-					// this.list[this.current].map((v) => {
-					// 	sum1 += Number(v.sales_price);
-					// 	sum2 += Number(v.quantity);
-					// 	sum3 += (Number(v.sales_price) - Number(v.avg_price)) * Number(v.quantity);
-					// })
-					this.in_money[this.current] = res.total_profit;
-					this.in_quantity[this.current] = res.total_quantity;
-					this.total[this.current] = res.total_num;
-					this.money[this.current] = res.total_money;
+					this.total_amount[this.current] = res.total_amount;
+					this.out_quantity[this.current] = res.total_out_quantity;
+					this.in_quantity[this.current] = res.total_in_quantity;
 					this.$forceUpdate()
 				}
 
@@ -359,33 +374,9 @@
 					ids = this.store_id
 				}
 				uni.navigateTo({
-					url: `/pages/salesDetails/salesDetails?staff_id=${this.staff_id}&store_ids=${ids}&goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
+					url: `/pages/allotDetails/allotDetails?store_ids=${ids}&goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
 				})
-			},
-			// 下拉刷新
-			handlePullDown(stopLoad) {
-				this.page[this.current] = 1;
-				this.list[this.current] = [];
-				this.pull[this.current] = false;
-				this.init()
-				stopLoad ? stopLoad() : '';
-			},
-			// 上拉加载
-			async handleLoadMore(stopLoad) {
-				if (!this.pull[this.current]) {
-					if (this.page[this.current] >= this.last_page[this.current]) {
-						this.$refs.uToast.show({
-							title: '加载到底了',
-							type: 'default',
-							position: 'bottom'
-						})
-						this.pull[this.current] = true
-					} else {
-						this.page[this.current]++;
-						this.init()
-					}
-				}
-			},
+			}
 		},
 		onUnload() {
 			uni.$off()
@@ -409,10 +400,8 @@
 			uni.$on('allotQuery', (res) => {
 				if (res) {
 					this.store_ids = res.store_ids
-					this.staff_id = res.staff_id
 					this.page[this.current] = 1
-					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id, res.supplier_id,
-						res.staff_id)
+					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id)
 				}
 			})
 		}
@@ -420,7 +409,7 @@
 </script>
 
 <style scoped lang="scss">
-	.salesStatistics {
+	.allotStatistics {
 		width: 100%;
 		height: 100%;
 		display: flex;
@@ -502,14 +491,12 @@
 							text {
 								font-size: 20rpx;
 								color: #666666;
-								// padding-bottom: 10rpx;
 							}
 
 							.balck {
 								font-size: 28rpx;
 								color: #000000;
 							}
-
 
 							.hui-se {
 								display: flex;
@@ -532,11 +519,6 @@
 
 						text {
 							font-size: 20rpx;
-							// padding-bottom: 10rpx;
-						}
-
-						.red {
-							color: #FF5A5F;
 						}
 
 						.money {
@@ -544,11 +526,12 @@
 							flex-direction: column;
 							justify-content: center;
 
-
+							
 						}
 					}
-
-
+					.red {
+						color: #FF5A5F;
+					}
 				}
 			}
 		}

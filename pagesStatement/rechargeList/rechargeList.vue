@@ -1,5 +1,5 @@
 <template>
-	<view class="performanceDetails">
+	<view class="rechargeList">
 		<view class="mains">
 			<view class="nav">
 				<view class="nav-date" @click="selectTime">
@@ -13,53 +13,58 @@
 				</view>
 				<view class="nav-item">
 					<view class="nav-money">
-						<text>销售额</text>
-						<text>{{sumMoney}}</text>
+						<text>充值金额</text>
+						<text>{{total_recharge_money}}</text>
+					</view>
+					<view class="nav-money">
+						<text>赠送金额</text>
+						<text>{{total_reward_money}}</text>
 					</view>
 					<view class="nav-money">
 						<text>笔数</text>
 						<text>{{total}}</text>
 					</view>
-					<view class="nav-money">
-						<text>数量</text>
-						<text>{{total_quantity}}</text>
-					</view>
+
 				</view>
 			</view>
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+			 :autoPullUp="autoPullUp" :inBottom="pull" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list">
 					<view class="li" v-for="(item,index) in list" :key="index">
 						<view class="li-nav">
-							<text>{{item.business_time}}</text>
-							<text>共{{item.counts}}笔，数量{{item.quantity}},金额&yen;{{item.money}}</text>
+							<text>{{item.date}} {{item.week}}</text>
+							<text>合计&yen;{{item.money}}</text>
 						</view>
-						<view class="li-list" v-for="(item_gd,index_gd) in item.list" :key="index_gd" @click="expenseCancellation(item_gd)">
+						<view class="li-list" v-for="(item_gd,index_gd) in item.list" :key="index_gd" @click="toStoredDetails(item_gd)">
 							<view class="left">
 								<view class="left-it">
-									<text class="item-name">{{item_gd.name}}</text>
+									<text class="item-name">{{item_gd.customer.name}}</text>
 									<view class="item-time">
-										<text class="lan">{{item_gd.time}}|{{item_gd.customer?item_gd.customer.name:'散客'}}</text>
-										<text>x{{item_gd.quantity}}</text>
+										<text class="lan">{{item_gd.time}}|{{item_gd.account?item_gd.account.name:' '}}</text>
+										<!-- <text>x{{item_gd.quantity}}</text> -->
 									</view>
 								</view>
 							</view>
 							<view class="right">
-								<text :class="item_gd.money>0? 'lan':'red'">&yen;{{item_gd.money}}</text>
-								<text class="right-name">{{item_gd.sales}}</text>
+								<view class="rg-item">
+
+									<text :class="item_gd.money>0? 'lan':'red'">&yen;{{item_gd.money}}</text>
+									<text class="right-name">赠送&yen;{{item_gd.reward_money}}</text>
+								</view>
+								<u-icon name="arrow-right"color="#cccccc"  size="30"></u-icon>
 							</view>
 						</view>
 						<!-- <view class="left">
-							<text>{{item.expend_item.name}}</text>
-							<view class="li-date">
-								{{item.time}} | {{item.account.name}}
-							</view>
-						</view>
-						<view class="right">
-							<text class="fonts">{{item.money}}</text>
-							<u-icon name="arrow-right" color="#ccc" size="34"></u-icon>
-						</view> -->
+									<text>{{item.expend_item.name}}</text>
+									<view class="li-date">
+										{{item.time}} | {{item.account.name}}
+									</view>
+								</view>
+								<view class="right">
+									<text class="fonts">{{item.money}}</text>
+									<u-icon name="arrow-right" color="#ccc" size="34"></u-icon>
+								</view> -->
 					</view>
 				</view>
 				<!-- 数据列表 -->
@@ -81,8 +86,8 @@
 <script>
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import {
-		salesOrderList
-	} from '../../../api/salesOrder.js'
+		rechargeList
+	} from '../../api/customer.js'
 	export default {
 		components: {
 			kScrollView
@@ -100,7 +105,6 @@
 				store_id: 0,
 				expend_item_id: 0,
 				name: '',
-
 				page: 1,
 				page_size: 10,
 				list: [],
@@ -120,6 +124,9 @@
 				form: {
 					start_time: '',
 					end_time: '',
+					store_id: 0,
+					user_id: 0,
+					account_id: 0,
 				},
 
 				refreshType: 'custom',
@@ -136,6 +143,10 @@
 					'background-color': '#ffffff'
 				},
 				last_page: 0,
+				keys: 0,
+				total_reward_money: 0,
+				total_recharge_money: 0,
+				pull:false
 			}
 		},
 		methods: {
@@ -154,27 +165,31 @@
 			// 下拉刷新
 			handlePullDown(stopLoad) {
 				this.page = 1;
-				this.list = []
-				this.init()
+				this.list = [];
+				this.pull = false;
+				this.init();
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
-				if (this.page >= this.last_page) {
-					this.$refs.uToast.show({
-						title: '加载到底了',
-						type: 'default',
-						position: 'bottom'
-					})
-
-				} else {
-					this.page++;
-					this.init()
+				if(!this.pull){
+					if (this.page >= this.last_page) {
+						this.$refs.uToast.show({
+							title: '加载到底了',
+							type: 'default',
+							position: 'bottom'
+						})
+						this.pull = true;
+					} else {
+						this.page++;
+						this.init()
+					}
 				}
 			},
 
 			async init() {
-				let res = await salesOrderList({
+				delete this.form.current
+				let res = await rechargeList({
 					...this.form,
 					page: this.page,
 					page_size: this.page_size
@@ -190,42 +205,20 @@
 				} else {
 					this.list.push(...res.list.data);
 				}
+				this.total = res.total_num;
+				this.total_recharge_money = res.total_recharge_money;
+				this.total_reward_money = res.total_reward_money;
+				this.last_page = res.list.last_page
 				this.list.map((v2) => {
 					v2.list.map((v) => {
 						let arr = [];
 						let sales = [];
-						let num = 0;
-						v.goods.map((v1) => {
-							arr.push(`${v1.goods.name} x${v1.quantity}`)
-							num += Number(v1.quantity)
-						});
-						v.sales_payment.map((v1) => {
-							if (v1.account) {
-								sales.push(v1.account.name)
-							}
-						})
-						v['name'] = arr.join(',');
-						v['sales'] = sales.join(',');
-						v['quantity'] = num.toFixed()
+
 					})
 				})
-				this.total = res.total_amount;
-				this.total_quantity = res.total_quantity;
-				this.sumMoney = res.total_money
-				this.last_page = res.list.last_page
+
 			},
-			// 获取当前月份
-			monthDate() {
-				let currentdate = this.$date.thisMonth()
-				this.form.start_time = currentdate.start_time;
-				this.form.end_time = currentdate.end_time;
-			},
-			// 前往项目详情
-			expenseCancellation(item) {
-				uni.navigateTo({
-					url: `/pages/staffAchievement/detailsStaffDocuments/detailsStaffDocuments?id=${item.id}`
-				})
-			},
+
 			// 选择时间
 			selectTime() {
 				this.show_time = !this.show_time
@@ -272,36 +265,33 @@
 			async confirmTime1(v) {
 				this.form.end_time = `${v.year}-${v.month}-${v.day}`;
 				this.init();
+			},
+			// 详情
+			toStoredDetails(item){
+				uni.navigateTo({
+					url:`/pages/storedDetails/storedDetails?id=${item.id}&title_name=会员充值详情`
+				})
 			}
-			
-		},
-		onUnload() {
-			uni.$off()
 		},
 		onLoad(query) {
-			this.monthDate();
-			this.store_id = query.store_id;
-			this.expend_item_id = query.expend_item_id;
+			this.form = query;
 			this.name = query.name;
-			// uni.$on('screened', res => {
-			// 	if (res) {
-			// 		console.log(res);
-			// 		this.form = res
-			// 		this.page = 1;
-			// 		this.list = []
-			// 		this.init();
-			// 	}
-			// })
-		},
-		onShow() {
+			if (query.keys) {
+				this.keys = query.keys
+			}
 			this.list = []
 			this.init();
-		}
+			
+		},
+		onShow() {
+
+		},
+		
 	}
 </script>
 
 <style scoped lang="scss">
-	.performanceDetails {
+	.rechargeList {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
@@ -336,10 +326,10 @@
 		//日期选择
 		.dates-time {
 			width: 100%;
-			height: calc(100% - 120rpx - var(--status-bar-height));
+			height: calc(100% - 140rpx - var(--status-bar-height));
 			background-color: rgba($color: #000000, $alpha: 0.3);
 			position: absolute;
-			top: calc(150rpx + var(--status-bar-height));
+			top: calc(140rpx + var(--status-bar-height));
 			display: flex;
 			flex-direction: row;
 
@@ -465,8 +455,13 @@
 
 					.right {
 						display: flex;
-						flex-direction: column;
-						position: relative;
+						flex-direction: row;
+
+						.rg-item {
+							display: flex;
+							flex-direction: column;
+							position: relative;
+						}
 
 						text {
 							text-align: right;
@@ -486,7 +481,10 @@
 							bottom: 0;
 							right: 0;
 							width: 200rpx;
-							font-size: 22rpx;
+							font-size: 20rpx;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
 						}
 					}
 				}

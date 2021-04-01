@@ -2408,12 +2408,6 @@
 						"navigationBarTextStyle": "white"
 					}
 				},{
-					"path": "storeManagement/storeManagement",
-					"style": {
-						"navigationStyle": "custom", // 隐藏系统导航栏
-						"navigationBarTextStyle": "white"
-					}
-				},{
 					"path": "selectAccount/selectAccount",
 					"style": {
 						"navigationStyle": "custom", // 隐藏系统导航栏
@@ -2700,8 +2694,477 @@
 				}
 			
 			]
-		}
+		},
+		{
+			"root": "pagesStatement",
+			"pages": [
+				{
+					"path": "procurementStatistics/procurementStatistics",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "businessOverview/businessOverview",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "toProcurementStatisticsDetails/toProcurementStatisticsDetails",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "stockEnquiries/stockEnquiries",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "salesStatistics/salesStatistics",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "salesDetails/salesDetails",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "allotStatistics/allotStatistics",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "allotDetails/allotDetails",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "checkStatistics/checkStatistics",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "rechargeList/rechargeList",
+					"style": {
+						"navigationBarTitleText": "会员充值列表",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "storedDetails/storedDetails",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "pointExchangeList/pointExchangeList",
+					"style": {
+						"navigationBarTitleText": "积分兑换明细",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "pointDetails/pointDetails",
+					"style": {
+						"navigationBarTitleText": "积分兑换详情",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "statics/statics",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "spendingDetails/spendingDetails",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "expenseCancellation/expenseCancellation",
+					"style": {
+						"navigationBarTitleText": "支出详情",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "pointAdjustList/pointAdjustList",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "pointAdjustList/pointQuery/pointQuery",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
 
+				},{
+					"path": "balanceAdjustList/balanceAdjustList",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+
+				},{
+					"path": "cashierCheck/cashierCheck",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+
+				},{
+					"path": "cashierReconciliationDetails/cashierReconciliationDetails",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "cashierBalance/cashierBalance",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "warenverbrauch/warenverbrauch",
+					"style": {
+						"navigationBarTitleText": "商品消费详情",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+
+				}, {
+					"path": "repaymentDetails/repaymentDetails",
+					"style": {
+						"navigationBarTitleText": "还款详情",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+
+				}, {
+					"path": "reconciliation/reconciliation",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+
+				}, {
+					"path": "reconciliationRepayment/reconciliationRepayment",
+					"style": {
+						"navigationBarTitleText": "供应商付款",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "supplierLog/supplierLog",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "supplierLogDetails/supplierLogDetails",
+					"style": {
+						"navigationBarTitleText": "供应商还款详情",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "analyse/analyse",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "analyse/analyseDetails/analyseDetails",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "goodsAnalyse/goodsAnalyse",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "goodsAnalyse/details/details",
+					"style": {
+						"navigationBarTitleText": "商品详情",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "memberAnalysis/memberAnalysis",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "memberAnalysis/analyseDetails/analyseDetails",
+					"style": {
+						"navigationBarTitleText": "会员分析详情",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "balanceEnquiry/balanceEnquiry",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "memberRegistrationStatistics/memberRegistrationStatistics",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "staffAchievement/staffAchievement",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+
+				}, {
+					"path": "staffAchievement/performanceDetails/performanceDetails",
+					"style": {
+						"navigationBarTitleText": "业绩详情",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+
+				}, {
+					"path": "staffAchievement/detailsStaffDocuments/detailsStaffDocuments",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+
+				}
+			]
+		},
+		{
+			"root": "pagesMine",
+			"pages": [
+				{
+					"path": "information/information",
+					"style": {
+						"navigationBarTitleText": "账户信息",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "businessSetUp/businessSetUp",
+					"style": {
+						"navigationBarTitleText": "营业设置",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "businessSetUp/autoPromotion/autoPromotion",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white",
+						"app-plus": {
+							"bounce": "none",
+							"scrollIndicator": "none"
+						}
+					}
+
+				}, {
+					"path": "businessSetUp/editAutoPromotion/editAutoPromotion",
+					"style": {
+						"navigationBarTitleText": "会员等级晋升编辑",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "businessSetUp/config/config",
+					"style": {
+						"navigationBarTitleText": "参数设置",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "changePassPword/changePassPword",
+					"style": {
+						"navigationBarTitleText": "修改密码",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "storeManagement/storeManagement",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "addShopInformation/addShopInformation",
+					"style": {
+						"navigationBarTitleText": "新增店铺信息",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "editShopInformation/editShopInformation",
+					"style": {
+						"navigationBarTitleText": "编辑店铺信息",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "staffManagement/staffManagement",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "addStaffsInformation/addStaffsInformation",
+					"style": {
+						"navigationBarTitleText": "新增员工信息",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				},{
+					"path": "editStaffsInformation/editStaffsInformation",
+					"style": {
+						"navigationBarTitleText": "编辑员工信息",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "userManagement/userManagement",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+
+				}, {
+					"path": "userManagement/addUserManagement/addUserManagement",
+					"style": {
+						"navigationBarTitleText": "新增用户",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+
+				}, {
+					"path": "userManagement/tademark/tademark",
+					"style": {
+						"navigationBarTitleText": "品牌权限",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+
+				}, {
+					"path": "userManagement/purviewSetting/purviewSetting",
+					"style": {
+						"navigationBarTitleText": "权限设置",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+
+				}, {
+					"path": "userManagement/editUserManagement/editUserManagement",
+					"style": {
+						"navigationBarTitleText": "账户/权限编辑",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+
+				}, {
+					"path": "customerLevel/customerLevel",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+
+				}, {
+					"path": "addCustomerLevel/addCustomerLevel",
+					"style": {
+						"navigationBarTitleText": "新增等级",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+
+				}, {
+					"path": "editCustomer/editCustomer",
+					"style": {
+						"navigationBarTitleText": "编辑等级",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "pointList/pointList",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "pointAdd/pointAdd",
+					"style": {
+						"navigationBarTitleText": "新增积分倍率",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "pointEdit/pointEdit",
+					"style": {
+						"navigationBarTitleText": "编辑积分倍率",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white"
+					}
+				}, {
+					"path": "patternOfPayment/patternOfPayment",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white",
+						"app-plus": {
+							"bounce": "none",
+							"scrollIndicator": "none"
+						}
+					}
+
+				}, {
+					"path": "addPatternOfPayment/addPatternOfPayment",
+					"style": {
+						"navigationBarTitleText": "新增支付方式",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white",
+						"app-plus": {
+							"bounce": "none",
+							"scrollIndicator": "none"
+						}
+					}
+
+				}, {
+					"path": "editPatternOfPayment/editPatternOfPayment",
+					"style": {
+						"navigationBarTitleText": "编辑支付方式",
+						"navigationBarBackgroundColor": "#2979ff",
+						"navigationBarTextStyle": "white",
+						"app-plus": {
+							"bounce": "none",
+							"scrollIndicator": "none"
+						}
+					}
+
+				}
+			
+			]
+		}
+		
 	],
 
 	"globalStyle": {

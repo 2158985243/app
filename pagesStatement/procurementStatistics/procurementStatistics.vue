@@ -1,6 +1,6 @@
 <template>
-	<view class="salesStatistics">
-		<u-navbar back-icon-color='#ffffff' title="销售统计" :background="background" title-color="#ffffff">
+	<view class="procurementStatistics">
+		<u-navbar back-icon-color='#ffffff' title="采购统计" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
 			</template>
@@ -11,59 +11,66 @@
 			<swiper class="swiper" @change='scollSwiper' :current='current'>
 				<swiper-item v-for="(item,index) in bos" :key='index'>
 					<scroll-view scroll-y="true" style="height: 100%;">
+						<!-- <refresh @interrupt="interrupt" @pushToInterrupt="pushToInterrupt" @finished="finished" @scrolltolower="g">
+							<template slot="top">
+								<view :style="'position: absolute; bottom: 0px;height: ' + 40 + 'px;line-height:' + 40 + 'px;  width: 100%;text-align: center;'">{{tip}}</view>
+							</template>
+							<template slot="content"> -->
+
 						<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 						 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
 						 :autoPullUp="autoPullUp" :inBottom="pull[current]" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
-								<view class="cen">
-									<view class="list-nav">
-										<view class="nav-item">
-											<text class="red-number">{{total[current] || 0}}</text>
-											<text class="hui-number">销售笔数</text>
-										</view>
-										<view class="nav-item">
-											<text class="red-number">{{in_quantity[current] || 0}}</text>
-											<text class="hui-number">销售数量</text>
-										</view>
-										<view class="nav-item">
-											<text class="red-number">{{money[current] || 0}}</text>
-											<text class="hui-number">销售金额</text>
-										</view>
-										<view class="nav-item">
-											<text class="red-number">{{in_money[current] || 0}}</text>
-											<text class="hui-number">销售毛利</text>
-										</view>
-
+							<view class="cen">
+								<view class="list-nav">
+									<view class="nav-item">
+										<text class="red-number">{{count[current] || 0}}</text>
+										<text class="hui-number">采购笔数</text>
 									</view>
-									<view class="list" v-for="(itemList,indexList) in list[current]" :key="indexList" @click="toProcurementStatisticsDetails(itemList)">
-										<view class="left">
-											<view class="img">
-												<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$imgFn(itemList.main_image)">
-												</u-image>
-											</view>
-											<view class="li-item">
-												<text class="balck">{{itemList.name}} <text>{{itemList.number}}</text></text>
-												<text class="hui-se">单价数量：&yen;{{itemList.sales_price}}*{{itemList.quantity}}</text>
-												<text class="hui-se ">采购均价：&yen;{{itemList.avg_price}}</text>
-											</view>
+									<view class="nav-item">
+										<text class="red-number">{{sumNumber[current] || 0}}</text>
+										<text class="hui-number">采购数量</text>
+									</view>
+									<view class="nav-item">
+										<text class="red-number">{{sumMoney[current] || 0}}</text>
+										<text class="hui-number">采购金额</text>
+									</view>
+
+								</view>
+								<view class="list" v-for="(itemList,indexList) in list[current]" :key="indexList" @click="toProcurementStatisticsDetails(itemList)">
+									<view class="left">
+										<view class="img">
+											<u-image width="100" border-radius='18' height="100" mode='aspectFit' :src="$imgFn(itemList.main_image)">
+											</u-image>
 										</view>
-										<view class="right">
-											<view class="money">
-												<text class="red">&yen;{{itemList.retail_price}}</text>
-												<text>金额：&yen;{{(Number(itemList.sales_price)*Number(itemList.quantity)).toFixed(2)}}</text>
-												<text>毛利：&yen;{{((Number(itemList.sales_price)-Number(itemList.avg_price))*Number(itemList.quantity)).toFixed(2)}}</text>
-											</view>
-											<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
+										<view class="li-item">
+											<text class="balck">{{itemList.name}}</text>
+											<text>{{itemList.number}}</text>
+											<text class="hui-se">单价数量：&yen;{{itemList.price}}&nbsp;*<text class="li-number"> {{itemList.quantity}}</text></text>
 										</view>
+									</view>
+									<view class="right">
+										<view class="money">
+											<text>金额： </text>
+											<text class="money">&yen;{{Number(itemList.price)*Number(itemList.quantity)}} </text>
+										</view>
+										<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 									</view>
 								</view>
-						
-							</k-scroll-view>
+							</view>
+							<!-- 	</template>
+							<template slot="bottom">
+								<view>
+								</view>
+							</template>
+						</refresh>
+ -->
+						</k-scroll-view>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
 		</view>
 
-						<u-toast ref="uToast" />
+		<u-toast ref="uToast" />
 		<!-- 开始时间 -->
 		<u-picker mode="time" v-model="showtime" @confirm="confirmTime" title="开始时间" :params="params"></u-picker>
 		<!-- 结束时间 -->
@@ -79,15 +86,12 @@
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import store from '@/store'
 	import {
-		salesOrderCounts
-
-	} from '../../api/salesOrder.js'
-
+		counts
+	} from '../../api/purchaseStorage.js'
 	export default {
 		components: {
 			tabControl,
 			kScrollView
-			
 		},
 		data() {
 			return {
@@ -164,16 +168,14 @@
 				},
 				strots: [], //店铺组
 				page: [1, 1, 1, 1],
-				page_size: 20,
+				page_size: 10,
 				start_time: '',
 				end_time: '',
-				in_money: [0, 0, 0, 0, 0],
-				in_quantity: [0, 0, 0, 0, 0],
-				money: [0, 0, 0, 0, 0],
+				sumNumber: [0, 0, 0, 0, 0],
+				sumMoney: [0, 0, 0, 0, 0],
 				count: [0, 0, 0, 0, 0],
 				store_id: [],
-				store_ids: [],
-				staff_id:0,
+
 				refreshType: 'custom',
 				refreshTip: '正在下拉',
 				loadTip: '获取更多数据',
@@ -184,8 +186,8 @@
 				bottom: 0,
 				autoPullUp: true,
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
-				last_page: [0, 0, 0, 0],
-				pull: [false, false, false, false]
+				last_page: [0, 0, 0, 0,0],
+				pull: [false, false, false, false,false]
 			}
 		},
 		computed: {
@@ -207,10 +209,10 @@
 					this.init(this.dateAll.today5.statrTime, this.dateAll.today5.endTime)
 				}
 			},
-			// 
+			// 显示店铺列表
 			showStrore() {
 				uni.navigateTo({
-					url: `/pages/allotQuery/allotQuery`
+					url: `/pages/stockEnquiries/stockEnquiries`
 				})
 			},
 			// 店铺数组
@@ -226,49 +228,41 @@
 				}
 			},
 			// 初始化
-			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id, supplier_id, staff_id) {
+			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id, type, supplier_id) {
 				// 当天
 				let currentdate = this.$date.today()
-				let res = await salesOrderCounts({
+				let res = await counts({
 					start_time: timeStar || currentdate.start_time,
 					end_time: timeEnd || currentdate.end_time,
 					store_ids: store_ids || this.store_ids,
 					keyword: keyword,
 					brand_id: brand_id,
 					goods_category_id: goods_category_id,
-					staff_id: staff_id,
 					supplier_id: supplier_id,
+					type: type || 2,
 					page: this.page[this.current],
 					page_size: this.page_size
+
 				})
-				console.log(res);
-				if(this.page[this.current]==1){
+				if (this.page[this.current] == 1) {
 					this.list[this.current] = []
 				}
 				if (!res.code) {
 					this.list[this.current].push(...res.data)
 					this.last_page[this.current] = res.last_page
-					// this.list[this.current] = res;
-					// let sum1 = 0;
-					// let sum2 = 0;
-					// let sum3 = 0;
-					// this.count[this.current] = 0;
-					// this.list[this.current].map((v) => {
-					// 	sum1 += Number(v.sales_price);
-					// 	sum2 += Number(v.quantity);
-					// 	sum3 += (Number(v.sales_price) - Number(v.avg_price)) * Number(v.quantity);
-					// })
-					this.in_money[this.current] = res.total_profit;
-					this.in_quantity[this.current] = res.total_quantity;
-					this.total[this.current] = res.total_num;
-					this.money[this.current] = res.total_money;
+
+					this.count[this.current] = res.total_num;
+					this.sumNumber[this.current] = res.total_quantity;
+					this.sumMoney[this.current] = res.total_money;
 					this.$forceUpdate()
 				}
+
 
 			},
 			// 点击日期
 			async onClickItem(val) {
 				this.current = val.currentIndex;
+				// console.log(this.current);
 				if (this.current == 4) {
 					this.showtime = true;
 				}
@@ -339,8 +333,9 @@
 				let end_time = ''
 				if (this.current == 0) {
 					let date = this.$date.today()
-					start_time = date.start_time;
-					end_time = date.end_time;
+					console.log(date);
+					start_time = date.start_time
+					end_time = date.end_time
 				} else if (this.current == 1) {
 					start_time = this.dateAll.today2.statrTime;
 					end_time = this.dateAll.today2.endTime
@@ -354,12 +349,8 @@
 					start_time = this.dateAll.today5.statrTime;
 					end_time = this.dateAll.today5.endTime
 				}
-				let ids = this.store_ids
-				if (ids.length == 0) {
-					ids = this.store_id
-				}
 				uni.navigateTo({
-					url: `/pages/salesDetails/salesDetails?staff_id=${this.staff_id}&store_ids=${ids}&goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
+					url: `/pages/toProcurementStatisticsDetails/toProcurementStatisticsDetails?goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
 				})
 			},
 			// 下拉刷新
@@ -397,7 +388,7 @@
 				this.store_ids = []
 				this.store_ids.push(store.state.store.store_id)
 			}
-			if(query.start_time){
+			if (query.start_time) {
 				this.start_time = query.start_time;
 				this.end_time = query.end_time;
 				this.current = Number(query.current);
@@ -406,13 +397,11 @@
 			}
 			// 初始化
 			this.init(this.start_time, this.end_time);
-			uni.$on('allotQuery', (res) => {
+			uni.$on('stockEnquiries', (res) => {
 				if (res) {
-					this.store_ids = res.store_ids
-					this.staff_id = res.staff_id
 					this.page[this.current] = 1
-					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id, res.supplier_id,
-						res.staff_id)
+					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id, res.type,
+						res.supplier_id)
 				}
 			})
 		}
@@ -420,7 +409,7 @@
 </script>
 
 <style scoped lang="scss">
-	.salesStatistics {
+	.procurementStatistics {
 		width: 100%;
 		height: 100%;
 		display: flex;
@@ -487,7 +476,6 @@
 					border-bottom: 0.01rem solid #EEEEEE;
 
 					.left {
-						width: 65%;
 						display: flex;
 						flex-direction: row;
 
@@ -502,14 +490,12 @@
 							text {
 								font-size: 20rpx;
 								color: #666666;
-								// padding-bottom: 10rpx;
 							}
 
 							.balck {
 								font-size: 28rpx;
 								color: #000000;
 							}
-
 
 							.hui-se {
 								display: flex;
@@ -524,31 +510,24 @@
 					}
 
 					.right {
-						width: 35%;
 						display: flex;
 						flex-direction: row;
-						justify-content: space-between;
+						justify-content: center;
 						align-items: center;
 
 						text {
 							font-size: 20rpx;
-							// padding-bottom: 10rpx;
-						}
-
-						.red {
-							color: #FF5A5F;
 						}
 
 						.money {
 							display: flex;
-							flex-direction: column;
-							justify-content: center;
+							flex-direction: row;
 
-
+							.money {
+								color: #FF5A5F;
+							}
 						}
 					}
-
-
 				}
 			}
 		}

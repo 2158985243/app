@@ -1,5 +1,7 @@
 <template>
-	<view class="performanceDetails">
+	<view class="cashierReconciliationDetails">
+		<u-navbar back-icon-color='#ffffff' :title="name" :background="background" title-color="#ffffff">
+		</u-navbar>
 		<view class="mains">
 			<view class="nav">
 				<view class="nav-date" @click="selectTime">
@@ -13,53 +15,40 @@
 				</view>
 				<view class="nav-item">
 					<view class="nav-money">
-						<text>销售额</text>
-						<text>{{sumMoney}}</text>
+						<text>合计金额</text>
+						<text>{{sumMoney.toFixed(2)}}</text>
 					</view>
 					<view class="nav-money">
 						<text>笔数</text>
 						<text>{{total}}</text>
 					</view>
-					<view class="nav-money">
-						<text>数量</text>
-						<text>{{total_quantity}}</text>
-					</view>
+
 				</view>
 			</view>
 			<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
+			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" :inBottom="pull" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list">
 					<view class="li" v-for="(item,index) in list" :key="index">
 						<view class="li-nav">
-							<text>{{item.business_time}}</text>
-							<text>共{{item.counts}}笔，数量{{item.quantity}},金额&yen;{{item.money}}</text>
+							<text>{{item.date}} {{item.week}}</text>
+							<text>合计&yen;{{item.money}}</text>
 						</view>
-						<view class="li-list" v-for="(item_gd,index_gd) in item.list" :key="index_gd" @click="expenseCancellation(item_gd)">
+						<view class="li-list" v-for="(item_gd,index_gd) in item.list" :key="index_gd" >
 							<view class="left">
 								<view class="left-it">
-									<text class="item-name">{{item_gd.name}}</text>
+									<text class="item-name">{{item_gd.type_name}}</text>
 									<view class="item-time">
 										<text class="lan">{{item_gd.time}}|{{item_gd.customer?item_gd.customer.name:'散客'}}</text>
-										<text>x{{item_gd.quantity}}</text>
+										<!-- <text>x{{item_gd.quantity}}</text> -->
 									</view>
 								</view>
 							</view>
 							<view class="right">
 								<text :class="item_gd.money>0? 'lan':'red'">&yen;{{item_gd.money}}</text>
-								<text class="right-name">{{item_gd.sales}}</text>
+								<text class="right-name">{{keys == 0? item_gd.name:''}}</text>
 							</view>
 						</view>
-						<!-- <view class="left">
-							<text>{{item.expend_item.name}}</text>
-							<view class="li-date">
-								{{item.time}} | {{item.account.name}}
-							</view>
-						</view>
-						<view class="right">
-							<text class="fonts">{{item.money}}</text>
-							<u-icon name="arrow-right" color="#ccc" size="34"></u-icon>
-						</view> -->
 					</view>
 				</view>
 				<!-- 数据列表 -->
@@ -81,8 +70,9 @@
 <script>
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import {
-		salesOrderList
-	} from '../../../api/salesOrder.js'
+		salesDetails,
+		balanceList
+	} from '../../api/manage.js'
 	export default {
 		components: {
 			kScrollView
@@ -100,7 +90,6 @@
 				store_id: 0,
 				expend_item_id: 0,
 				name: '',
-
 				page: 1,
 				page_size: 10,
 				list: [],
@@ -120,6 +109,9 @@
 				form: {
 					start_time: '',
 					end_time: '',
+					store_id: 0,
+					user_id: 0,
+					account_id: 0,
 				},
 
 				refreshType: 'custom',
@@ -136,6 +128,8 @@
 					'background-color': '#ffffff'
 				},
 				last_page: 0,
+				keys: 0,
+				pull:false
 			}
 		},
 		methods: {
@@ -154,78 +148,120 @@
 			// 下拉刷新
 			handlePullDown(stopLoad) {
 				this.page = 1;
-				this.list = []
+				this.list = [];
+				this.pull = false;
 				this.init()
 				stopLoad ? stopLoad() : '';
 			},
 			// 上拉加载
 			async handleLoadMore(stopLoad) {
+				if(!this.pull){
 				if (this.page >= this.last_page) {
 					this.$refs.uToast.show({
 						title: '加载到底了',
 						type: 'default',
 						position: 'bottom'
 					})
-
+					this.pull = true;
 				} else {
 					this.page++;
 					this.init()
-				}
+				}}
 			},
 
 			async init() {
-				let res = await salesOrderList({
-					...this.form,
-					page: this.page,
-					page_size: this.page_size
-				})
-				if (this.list.length > 0) {
-					res.list.data.map((v) => {
-						if (this.list[this.list.length - 1].business_time == v.business_time) {
-							this.list[this.list.length - 1].list.push(...v.list)
-						} else {
-							this.list.push(v)
-						}
+				if (this.keys == 0) {
+
+					delete this.form.name
+					let res = await salesDetails({
+						...this.form,
+						page: this.page,
+						page_size: this.page_size
 					})
+					console.log(res);
+					if (this.list.length > 0) {
+						res.list.data.map((v) => {
+							if (this.list[this.list.length - 1].business_time == v.business_time) {
+								this.list[this.list.length - 1].list.push(...v.list)
+							} else {
+								this.list.push(v)
+							}
+						})
+					} else {
+						this.list.push(...res.list.data);
+					}
+					this.total = res.total_num;
+					this.sumMoney = res.total_money;
+					this.last_page = res.list.last_page
 				} else {
-					this.list.push(...res.list.data);
+					delete this.form.name
+					delete this.form.keys
+					let res = await balanceList({
+						...this.form,
+						page: this.page,
+						page_size: this.page_size
+					})
+					console.log(res);
+					if (this.list.length > 0) {
+						res.list.data.map((v) => {
+							if (this.list[this.list.length - 1].business_time == v.business_time) {
+								this.list[this.list.length - 1].list.push(...v.list)
+							} else {
+								this.list.push(v)
+							}
+						})
+					} else {
+						this.list.push(...res.list.data);
+					}
+					this.total = res.total_num;
+					this.sumMoney = res.total_money;
+					this.last_page = res.list.last_page
 				}
 				this.list.map((v2) => {
 					v2.list.map((v) => {
 						let arr = [];
 						let sales = [];
 						let num = 0;
-						v.goods.map((v1) => {
-							arr.push(`${v1.goods.name} x${v1.quantity}`)
-							num += Number(v1.quantity)
-						});
-						v.sales_payment.map((v1) => {
-							if (v1.account) {
-								sales.push(v1.account.name)
-							}
-						})
+						// v.sales_goods.map((v1) => {
+						// 	arr.push(`${v1.goods.name} x${v1.quantity}`)
+						// 	num += Number(v1.quantity)
+						// });
+						if (v.type == 0) {
+							v['type_name'] = '储蓄卡充值';
+						} else if (v.type == 1) {
+							v['type_name'] = '余额调整';
+						} else if (v.type == 2) {
+							v['type_name'] = '商品消费';
+						} else if (v.transaction_type_id == 0) {
+							v['type_name'] = '采购入库';
+						} else if (v.transaction_type_id == 1) {
+							v['type_name'] = '采购退货';
+						} else if (v.transaction_type_id == 2) {
+							v['type_name'] = '费用支出';
+						} else if (v.transaction_type_id == 3) {
+							v['type_name'] = '账户转入';
+						} else if (v.transaction_type_id == 4) {
+							v['type_name'] = '账户转出';
+						} else if (v.transaction_type_id == 5) {
+							v['type_name'] = '消费结账';
+						} else if (v.transaction_type_id == 6) {
+							v['type_name'] = '商品退款';
+						} else if (v.transaction_type_id == 7) {
+							v['type_name'] = '会员充值';
+						} else if (v.transaction_type_id == 8) {
+							v['type_name'] = '会员还款';
+						} else if (v.transaction_type_id == 9) {
+							v['type_name'] = '会员欠款';
+						}
+
 						v['name'] = arr.join(',');
-						v['sales'] = sales.join(',');
+
 						v['quantity'] = num.toFixed()
 					})
 				})
-				this.total = res.total_amount;
-				this.total_quantity = res.total_quantity;
-				this.sumMoney = res.total_money
-				this.last_page = res.list.last_page
+
 			},
-			// 获取当前月份
-			monthDate() {
-				let currentdate = this.$date.thisMonth()
-				this.form.start_time = currentdate.start_time;
-				this.form.end_time = currentdate.end_time;
-			},
-			// 前往项目详情
-			expenseCancellation(item) {
-				uni.navigateTo({
-					url: `/pages/staffAchievement/detailsStaffDocuments/detailsStaffDocuments?id=${item.id}`
-				})
-			},
+			
 			// 选择时间
 			selectTime() {
 				this.show_time = !this.show_time
@@ -272,36 +308,44 @@
 			async confirmTime1(v) {
 				this.form.end_time = `${v.year}-${v.month}-${v.day}`;
 				this.init();
+			},
+			// 搜索
+			showStrore() {
+				uni.navigateTo({
+					url: `/pages/screen/screen`
+				})
 			}
-			
 		},
 		onUnload() {
 			uni.$off()
 		},
 		onLoad(query) {
-			this.monthDate();
-			this.store_id = query.store_id;
-			this.expend_item_id = query.expend_item_id;
+			this.form = query;
 			this.name = query.name;
-			// uni.$on('screened', res => {
-			// 	if (res) {
-			// 		console.log(res);
-			// 		this.form = res
-			// 		this.page = 1;
-			// 		this.list = []
-			// 		this.init();
-			// 	}
-			// })
-		},
-		onShow() {
+			console.log(query);
+			if (query.keys) {
+				this.keys = query.keys
+			}
 			this.list = []
 			this.init();
+			uni.$on('screen', res => {
+				if (res) {
+					console.log(res);
+					this.form = res
+					this.page = 1;
+					this.list = []
+					this.init();
+				}
+			})
+		},
+		onShow() {
+
 		}
 	}
 </script>
 
 <style scoped lang="scss">
-	.performanceDetails {
+	.cashierReconciliationDetails {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
@@ -336,10 +380,10 @@
 		//日期选择
 		.dates-time {
 			width: 100%;
-			height: calc(100% - 120rpx - var(--status-bar-height));
+			height: calc(100% - 200rpx - var(--status-bar-height));
 			background-color: rgba($color: #000000, $alpha: 0.3);
 			position: absolute;
-			top: calc(150rpx + var(--status-bar-height));
+			top: calc(230rpx + var(--status-bar-height));
 			display: flex;
 			flex-direction: row;
 
@@ -486,7 +530,10 @@
 							bottom: 0;
 							right: 0;
 							width: 200rpx;
-							font-size: 22rpx;
+							font-size: 20rpx;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
 						}
 					}
 				}

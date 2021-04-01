@@ -1,6 +1,6 @@
 <template>
-	<view class="salesStatistics">
-		<u-navbar back-icon-color='#ffffff' title="销售统计" :background="background" title-color="#ffffff">
+	<view class="checkStatistics">
+		<u-navbar back-icon-color='#ffffff' title="盘点统计" :background="background" title-color="#ffffff">
 			<template slot="right">
 				<u-icon name="arrow-down-fill" @click="showStrore" color="#ffffff" class="right_icon" size="36"></u-icon>
 			</template>
@@ -17,20 +17,24 @@
 								<view class="cen">
 									<view class="list-nav">
 										<view class="nav-item">
-											<text class="red-number">{{total[current] || 0}}</text>
-											<text class="hui-number">销售笔数</text>
+											<text class="red-number">{{count[current]||0}}</text>
+											<text class="hui-number">盘点笔数</text>
 										</view>
 										<view class="nav-item">
-											<text class="red-number">{{in_quantity[current] || 0}}</text>
-											<text class="hui-number">销售数量</text>
+											<text class="red-number">{{goods_number[current]||0}}</text>
+											<text class="hui-number">商品数</text>
 										</view>
 										<view class="nav-item">
-											<text class="red-number">{{money[current] || 0}}</text>
-											<text class="hui-number">销售金额</text>
+											<text class="red-number">{{in_quantity[current]||0}}</text>
+											<text class="hui-number">盘点数量</text>
 										</view>
 										<view class="nav-item">
-											<text class="red-number">{{in_money[current] || 0}}</text>
-											<text class="hui-number">销售毛利</text>
+											<text class="red-number">{{out_quantity[current]||0}}</text>
+											<text class="hui-number">盈亏数量</text>
+										</view>
+										<view class="nav-item">
+											<text class="red-number">{{money[current]||0}}</text>
+											<text class="hui-number">盈亏金额</text>
 										</view>
 
 									</view>
@@ -41,22 +45,21 @@
 												</u-image>
 											</view>
 											<view class="li-item">
-												<text class="balck">{{itemList.name}} <text>{{itemList.number}}</text></text>
-												<text class="hui-se">单价数量：&yen;{{itemList.sales_price}}*{{itemList.quantity}}</text>
-												<text class="hui-se ">采购均价：&yen;{{itemList.avg_price}}</text>
+												<text class="balck">{{itemList.name}}</text>
+												<text class="hui-se">盘点数量：{{itemList.quantity}}</text>
+												<text class="hui-se ">盈亏数量：<text class="red">{{itemList.gain_quantity}}</text> </text>
 											</view>
 										</view>
 										<view class="right">
 											<view class="money">
-												<text class="red">&yen;{{itemList.retail_price}}</text>
-												<text>金额：&yen;{{(Number(itemList.sales_price)*Number(itemList.quantity)).toFixed(2)}}</text>
-												<text>毛利：&yen;{{((Number(itemList.sales_price)-Number(itemList.avg_price))*Number(itemList.quantity)).toFixed(2)}}</text>
+												<text>{{itemList.number}}</text>
+												<text>进货价：<text class="">&yen;{{itemList.purchase_price}}</text> </text>
+												<text>盈亏金额：<text class="">&yen;{{Number(itemList.purchase_price)*Number(itemList.gain_quantity)}}</text> </text>
 											</view>
 											<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 										</view>
 									</view>
 								</view>
-						
 							</k-scroll-view>
 					</scroll-view>
 				</swiper-item>
@@ -79,15 +82,14 @@
 	import kScrollView from '@/components/k-scroll-view/k-scroll-view.vue';
 	import store from '@/store'
 	import {
-		salesOrderCounts
-
-	} from '../../api/salesOrder.js'
-
+		checkCounts,
+		checkDetails
+	} from '../../api/check.js'
+	
 	export default {
 		components: {
 			tabControl,
 			kScrollView
-			
 		},
 		data() {
 			return {
@@ -164,16 +166,17 @@
 				},
 				strots: [], //店铺组
 				page: [1, 1, 1, 1],
-				page_size: 20,
+				page_size: 10,
 				start_time: '',
 				end_time: '',
-				in_money: [0, 0, 0, 0, 0],
+				out_quantity: [0, 0, 0, 0, 0],
 				in_quantity: [0, 0, 0, 0, 0],
 				money: [0, 0, 0, 0, 0],
 				count: [0, 0, 0, 0, 0],
+				goods_number: [0, 0, 0, 0, 0],
 				store_id: [],
 				store_ids: [],
-				staff_id:0,
+				
 				refreshType: 'custom',
 				refreshTip: '正在下拉',
 				loadTip: '获取更多数据',
@@ -226,18 +229,18 @@
 				}
 			},
 			// 初始化
-			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id, supplier_id, staff_id) {
+			async init(timeStar, timeEnd, keyword, store_ids, brand_id, goods_category_id) {
 				// 当天
+				
 				let currentdate = this.$date.today()
-				let res = await salesOrderCounts({
+				console.log(timeStar);
+				let res = await checkCounts({
 					start_time: timeStar || currentdate.start_time,
 					end_time: timeEnd || currentdate.end_time,
 					store_ids: store_ids || this.store_ids,
 					keyword: keyword,
 					brand_id: brand_id,
 					goods_category_id: goods_category_id,
-					staff_id: staff_id,
-					supplier_id: supplier_id,
 					page: this.page[this.current],
 					page_size: this.page_size
 				})
@@ -248,20 +251,12 @@
 				if (!res.code) {
 					this.list[this.current].push(...res.data)
 					this.last_page[this.current] = res.last_page
-					// this.list[this.current] = res;
-					// let sum1 = 0;
-					// let sum2 = 0;
-					// let sum3 = 0;
-					// this.count[this.current] = 0;
-					// this.list[this.current].map((v) => {
-					// 	sum1 += Number(v.sales_price);
-					// 	sum2 += Number(v.quantity);
-					// 	sum3 += (Number(v.sales_price) - Number(v.avg_price)) * Number(v.quantity);
-					// })
-					this.in_money[this.current] = res.total_profit;
-					this.in_quantity[this.current] = res.total_quantity;
-					this.total[this.current] = res.total_num;
-					this.money[this.current] = res.total_money;
+				
+					this.count[this.current] = res.total_num;
+					this.out_quantity[this.current] = res.total_quantity;
+					this.in_quantity[this.current] = res.total_gain_quantity;
+					this.money[this.current] = res.total_gain_money;
+					this.goods_number[this.current] = res.total_goods_num;
 					this.$forceUpdate()
 				}
 
@@ -324,13 +319,11 @@
 			/// 开始时间
 			confirmTime(v) {
 				this.start_time = `${v.year}-${v.month}-${v.day}`;
-				this.dateAll.today5.statrTime = this.start_time
 				this.showtime1 = true;
 			},
 			// 结束时间
 			async confirmTime1(v) {
 				this.end_time = `${v.year}-${v.month}-${v.day}`;
-				this.dateAll.today5.endTime = this.end_time
 				this.init(this.start_time, this.end_time);
 			},
 			// 
@@ -359,7 +352,7 @@
 					ids = this.store_id
 				}
 				uni.navigateTo({
-					url: `/pages/salesDetails/salesDetails?staff_id=${this.staff_id}&store_ids=${ids}&goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
+					url: `/pages/checkDetails/checkDetails?store_ids=${ids}&goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
 				})
 			},
 			// 下拉刷新
@@ -409,10 +402,8 @@
 			uni.$on('allotQuery', (res) => {
 				if (res) {
 					this.store_ids = res.store_ids
-					this.staff_id = res.staff_id
 					this.page[this.current] = 1
-					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id, res.supplier_id,
-						res.staff_id)
+					this.init(res.start_time, res.end_time, res.keyword, res.store_ids, res.brand_id, res.goods_category_id)
 				}
 			})
 		}
@@ -420,7 +411,7 @@
 </script>
 
 <style scoped lang="scss">
-	.salesStatistics {
+	.checkStatistics {
 		width: 100%;
 		height: 100%;
 		display: flex;
@@ -510,6 +501,9 @@
 								color: #000000;
 							}
 
+							.red {
+								color: #FF5A5F;
+							}
 
 							.hui-se {
 								display: flex;
@@ -533,10 +527,6 @@
 						text {
 							font-size: 20rpx;
 							// padding-bottom: 10rpx;
-						}
-
-						.red {
-							color: #FF5A5F;
 						}
 
 						.money {

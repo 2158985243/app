@@ -53,7 +53,7 @@
 					<text class="hui">会员充值</text>
 				</view>
 				<view class="nav-item">
-					<text class="red">{{customer_money[current] || 0}}</text>
+					<text class="red">{{customer_money[current].toFixed(2) || 0}}</text>
 					<text class="hui">会员消费</text>
 				</view>
 

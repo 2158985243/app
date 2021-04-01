@@ -95,6 +95,7 @@
 			// 前往详情页面
 			clickItem(item) {
 				let date = ''
+				console.log(item.day);
 				if (item.day) {
 					date = item.day
 				}
