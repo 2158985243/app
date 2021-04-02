@@ -133,13 +133,13 @@
 					stateGood: false
 				})
 				uni.navigateTo({
-					url: `/pages/addReturn/addReturn`
+					url: `/pagesRepertory/addReturn/addReturn`
 				})
 			},
 			// 前往查询页面
 			toRefer() {
 				uni.navigateTo({
-					url: `/pages/refer/refer`
+					url: `/pagesRepertory/refer/refer`
 				})
 			},
 			// 
@@ -147,15 +147,15 @@
 				// console.log(item);
 				if (item.status == 0) {
 					uni.navigateTo({
-						url: `/pages/returnedGoodsHistory/returnedGoodsHistory?id=${item.id}`
+						url: `/pagesRepertory/returnedGoodsHistory/returnedGoodsHistory?id=${item.id}`
 					})
 				} else if (item.status == 1) {
 					uni.navigateTo({
-						url: `/pages/haveToReturn/haveToReturn?id=${item.id}`
+						url: `/pagesRepertory/haveToReturn/haveToReturn?id=${item.id}`
 					})
 				} else if (item.status == 2) {
 					uni.navigateTo({
-						url: `/pages/haveBeenCancelled/haveBeenCancelled?id=${item.id}`
+						url: `/pagesRepertory/haveBeenCancelled/haveBeenCancelled?id=${item.id}`
 					})
 				}
 

@@ -130,13 +130,13 @@
 					stateGood: false
 				})
 				uni.navigateTo({
-					url: `/pages/addCheck/addCheck`
+					url: `/pagesRepertory/addCheck/addCheck`
 				})
 			},
 			// 前往查询页面
 			toRefer() {
 				uni.navigateTo({
-					url: `/pages/refer/refer`
+					url: `/pagesRepertory/refer/refer`
 				})
 			},
 			// 
@@ -144,15 +144,15 @@
 				// console.log(item);
 				if (item.status == 0) {
 					uni.navigateTo({
-						url: `/pages/drafCheck/drafCheck?id=${item.id}`
+						url: `/pagesRepertory/drafCheck/drafCheck?id=${item.id}`
 					})
 				} else if (item.status == 1) {
 					uni.navigateTo({
-						url: `/pages/stopCheck/stopCheck?id=${item.id}`
+						url: `/pagesRepertory/stopCheck/stopCheck?id=${item.id}`
 					})
 				} else if (item.status == 2) {
 					uni.navigateTo({
-						url: `/pages/checkCancellation/checkCancellation?id=${item.id}`
+						url: `/pagesRepertory/checkCancellation/checkCancellation?id=${item.id}`
 					})
 				}
 

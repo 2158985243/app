@@ -596,13 +596,13 @@
 			// 前往选择经手人
 			toSelecSalesperson() {
 				uni.navigateTo({
-					url: '/pages/selecSalesperson/selecSalesperson'
+					url: '/pagesHome/selecSalesperson/selecSalesperson'
 				})
 			},
 			// 前往选择会员
 			toMemberSelect() {
 				uni.navigateTo({
-					url: '/pages/memberSelect/memberSelect'
+					url: '/pagesHome/memberSelect/memberSelect'
 				})
 			},
 			// 增加商品
@@ -626,13 +626,13 @@
 					specificationOfGoods: this.goods
 				})
 				uni.navigateTo({
-					url: '/pages/resaleCashier/resaleCashier?account=true'
+					url: '/pagesHome/resaleCashier/resaleCashier?account=true'
 				})
 			},
 			// 
 			toIntegralList() {
 				uni.navigateTo({
-					url: '/pages/IntegralList/IntegralList'
+					url: '/pagesHome/IntegralList/IntegralList'
 				})
 			},
 			// 挂单或者收款
@@ -681,7 +681,7 @@
 							})
 							if (!res.code) {
 								uni.navigateTo({
-									url: `/pages/resaleCashier/resaleCashier`
+									url: `/pagesHome/resaleCashier/resaleCashier`
 								})
 							}
 						} else {
@@ -886,7 +886,7 @@
 					indexGoods: indexGoods
 				}
 				uni.navigateTo({
-					url: '/pages/editItems/editItems?obj=' + encodeURIComponent(JSON.stringify(obj))
+					url: '/pagesHome/editItems/editItems?obj=' + encodeURIComponent(JSON.stringify(obj))
 				})
 			},
 			// 支付列表
@@ -944,7 +944,7 @@
 					has_password: this.members.has_password
 				}
 				uni.navigateTo({
-					url: '/pages/combination/combination?obj=' + encodeURIComponent(JSON.stringify(obj))
+					url: '/pagesHome/combination/combination?obj=' + encodeURIComponent(JSON.stringify(obj))
 				})
 			},
 			// 显示修改金额弹框
@@ -984,7 +984,7 @@
 					this.show_psd = false;
 					this.showPayment = false;
 					uni.navigateTo({
-						url: `/pages/paymentSuccess/paymentSuccess?payItem=${this.payItem.name}&money=${this.form.money}`
+						url: `/pagesHome/paymentSuccess/paymentSuccess?payItem=${this.payItem.name}&money=${this.form.money}`
 					})
 				}
 			},

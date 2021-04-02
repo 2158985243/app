@@ -68,7 +68,7 @@
 			// 前往新增会员等级
 			async toAddCustomerLevel() {
 				uni.navigateTo({
-					url: `/pages/addCustomerLevel/addCustomerLevel`
+					url: `/pagesMine/addCustomerLevel/addCustomerLevel`
 				})
 			},
 			// 初始化
@@ -83,7 +83,7 @@
 					uni.navigateBack()
 				} else {
 					uni.navigateTo({
-						url: '/pages/editCustomer/editCustomer?item=' + encodeURIComponent(JSON.stringify(item))
+						url: '/pagesMine/editCustomer/editCustomer?item=' + encodeURIComponent(JSON.stringify(item))
 
 					})
 				}

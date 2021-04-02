@@ -242,7 +242,7 @@
 							let res = await purchaseStorageCancel(_this.id);
 							if (!res.code) {
 								uni.navigateTo({
-									url: `/pages/libraryHistory/libraryHistory`
+									url: `/pagesRepertory/libraryHistory/libraryHistory`
 								})
 							}
 						} else if (res.cancel) {
@@ -265,7 +265,7 @@
 					stateGood: false
 				})
 				uni.navigateTo({
-					url: `/pages/purchaseStorage/purchaseStorage`
+					url: `/pagesRepertory/purchaseStorage/purchaseStorage`
 				})
 			},
 		},

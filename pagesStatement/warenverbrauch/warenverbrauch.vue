@@ -115,7 +115,6 @@
 		methods: {
 			// 
 			confirm(v) {
-				console.log(v[0]);
 				let bl = false;
 				this.form.sales_goods.map(v => {
 					if (v.quantity > 0) {
@@ -125,12 +124,12 @@
 				if (bl) {
 					if (v[0].value == 1) {
 						uni.navigateTo({
-							url: `/pages/barter/barter?sales_goods=` + encodeURIComponent(JSON.stringify(this.form))
+							url: `/pagesHome/barter/barter?sales_goods=` + encodeURIComponent(JSON.stringify(this.form))
 						})
 					} else {
 						// refund
 						uni.navigateTo({
-							url: `/pages/refund/refund?sales_goods=` + encodeURIComponent(JSON.stringify(this.form))
+							url: `/pagesHome/refund/refund?sales_goods=` + encodeURIComponent(JSON.stringify(this.form))
 						})
 					}
 				} else {

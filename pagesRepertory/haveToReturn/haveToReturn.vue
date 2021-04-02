@@ -261,7 +261,7 @@
 					stateGood: false
 				})
 				uni.navigateTo({
-					url: `/pages/salesReturnHistory/salesReturnHistory`
+					url: `/pagesRepertory/salesReturnHistory/salesReturnHistory`
 				})
 			},
 		},

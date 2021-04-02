@@ -164,7 +164,7 @@
 					})
 				}
 				uni.navigateTo({
-					url: '/pages/selectProducts/selectProducts'
+					url: '/pagesRepertory/selectProducts/selectProducts'
 				})
 			},
 			// 初始化商品数量

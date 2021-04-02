@@ -259,7 +259,7 @@
 			// 前往会员等级
 			toCustomerLevel() {
 				uni.navigateTo({
-					url: `/pages/customerLevel/customerLevel?iq=1`
+					url: `/pagesMine/customerLevel/customerLevel?iq=1`
 				})
 			},
 			// 提交

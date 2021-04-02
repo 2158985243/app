@@ -212,7 +212,7 @@
 			// 显示店铺列表
 			showStrore() {
 				uni.navigateTo({
-					url: `/pages/stockEnquiries/stockEnquiries`
+					url: `/pagesStatement/stockEnquiries/stockEnquiries`
 				})
 			},
 			// 店铺数组
@@ -350,7 +350,7 @@
 					end_time = this.dateAll.today5.endTime
 				}
 				uni.navigateTo({
-					url: `/pages/toProcurementStatisticsDetails/toProcurementStatisticsDetails?goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
+					url: `/pagesStatement/toProcurementStatisticsDetails/toProcurementStatisticsDetails?goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
 				})
 			},
 			// 下拉刷新

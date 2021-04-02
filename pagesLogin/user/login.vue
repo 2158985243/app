@@ -168,7 +168,7 @@
 			},
 			enroll: function() {
 				uni.navigateTo({
-					url: `/pages/signIn/signIn?`
+					url: `/pagesLogin/signIn/signIn?`
 				})
 			},
 			init: function() {

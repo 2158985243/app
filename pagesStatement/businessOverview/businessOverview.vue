@@ -400,23 +400,23 @@
 			toProcurementStatistics() {
 				if (this.current == 0) {
 					uni.navigateTo({
-						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
+						url: `/pagesStatement/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 1) {
 					uni.navigateTo({
-						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
+						url: `/pagesStatement/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 2) {
 					uni.navigateTo({
-						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
+						url: `/pagesStatement/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 3) {
 					uni.navigateTo({
-						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
+						url: `/pagesStatement/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
+						url: `/pagesStatement/procurementStatistics/procurementStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
 					})
 				}
 
@@ -425,23 +425,23 @@
 			toSalesStatistics() {
 				if (this.current == 0) {
 					uni.navigateTo({
-						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
+						url: `/pagesStatement/salesStatistics/salesStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 1) {
 					uni.navigateTo({
-						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
+						url: `/pagesStatement/salesStatistics/salesStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 2) {
 					uni.navigateTo({
-						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
+						url: `/pagesStatement/salesStatistics/salesStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 3) {
 					uni.navigateTo({
-						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
+						url: `/pagesStatement/salesStatistics/salesStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/salesStatistics/salesStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
+						url: `/pagesStatement/salesStatistics/salesStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
 					})
 				}
 
@@ -450,23 +450,23 @@
 			toAllotStatistics() {
 				if (this.current == 0) {
 					uni.navigateTo({
-						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
+						url: `/pagesStatement/allotStatistics/allotStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 1) {
 					uni.navigateTo({
-						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
+						url: `/pagesStatement/allotStatistics/allotStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 2) {
 					uni.navigateTo({
-						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
+						url: `/pagesStatement/allotStatistics/allotStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 3) {
 					uni.navigateTo({
-						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
+						url: `/pagesStatement/allotStatistics/allotStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/allotStatistics/allotStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
+						url: `/pagesStatement/allotStatistics/allotStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
 					})
 				}
 
@@ -475,23 +475,23 @@
 			toCheckStatistics() {
 				if (this.current == 0) {
 					uni.navigateTo({
-						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
+						url: `/pagesStatement/checkStatistics/checkStatistics?start_time=${this.dateAll.today1.statrTime}&end_time=${this.dateAll.today1.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 1) {
 					uni.navigateTo({
-						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
+						url: `/pagesStatement/checkStatistics/checkStatistics?start_time=${this.dateAll.today2.statrTime}&end_time=${this.dateAll.today2.endTime}&current=${this.current}&store_id=${this.store_id}`
 					})
 				} else if (this.current == 2) {
 					uni.navigateTo({
-						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
+						url: `/pagesStatement/checkStatistics/checkStatistics?start_time=${this.dateAll.today3.statrTime}&end_time=${this.dateAll.today3.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 3) {
 					uni.navigateTo({
-						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
+						url: `/pagesStatement/checkStatistics/checkStatistics?start_time=${this.dateAll.today4.statrTime}&end_time=${this.dateAll.today4.endTime}&current=4&store_id=${this.store_id}`
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/checkStatistics/checkStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
+						url: `/pagesStatement/checkStatistics/checkStatistics?start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}&current=4&store_id=${this.store_id}`
 					})
 				}
 

@@ -118,12 +118,12 @@
 				if (bl) {
 					if (v[0].value == 1) {
 						uni.navigateTo({
-							url: `/pages/barter/barter?sales_goods=` + encodeURIComponent(JSON.stringify(this.form))
+							url: `/pagesHome/barter/barter?sales_goods=` + encodeURIComponent(JSON.stringify(this.form))
 						})
 					} else {
 						// refund
 						uni.navigateTo({
-							url: `/pages/refund/refund?sales_goods=` + encodeURIComponent(JSON.stringify(this.form))
+							url: `/pagesHome/refund/refund?sales_goods=` + encodeURIComponent(JSON.stringify(this.form))
 						})
 					}
 				} else {

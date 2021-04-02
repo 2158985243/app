@@ -229,7 +229,7 @@
 					stateGood: false
 				})
 				uni.navigateTo({
-					url: `/pages/addAllocate/addAllocate`
+					url: `/pagesRepertory/addAllocate/addAllocate`
 				})
 			},
 		},

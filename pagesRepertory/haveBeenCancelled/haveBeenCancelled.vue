@@ -242,7 +242,7 @@
 							let res = await purchaseRefundCancel(_this.id);
 							if (!res.code) {
 								uni.navigateTo({
-									url: `/pages/salesReturnHistory/salesReturnHistory`
+									url: `/pagesRepertory/salesReturnHistory/salesReturnHistory`
 								})
 							}
 						} else if (res.cancel) {
@@ -265,7 +265,7 @@
 					stateGood: false
 				})
 				uni.navigateTo({
-					url: `/pages/addReturn/addReturn`
+					url: `/pagesRepertory/addReturn/addReturn`
 				})
 			},
 		},

@@ -181,18 +181,18 @@
 				if(item.type==2){
 					item['name'] = this.name 
 					uni.navigateTo({
-						url:'/pages/supplierLogDetails/supplierLogDetails?item='+ encodeURIComponent(JSON.stringify(item))
+						url:'/pagesStatement/supplierLogDetails/supplierLogDetails?item='+ encodeURIComponent(JSON.stringify(item))
 					})
 				}else if(item.type==0){
 					// 入库
 					uni.navigateTo({
-						url:`/pages/storageHistory/storageHistory?id=${item.purchase.id}`
+						url:`/pagesRepertory/storageHistory/storageHistory?id=${item.purchase.id}`
 					})
 					
 				}else if(item.type == 1){
 					// 退货
 					uni.navigateTo({
-						url:`/pages/haveToReturn/haveToReturn?id=${item.purchase.id}`
+						url:`/pagesRepertory/haveToReturn/haveToReturn?id=${item.purchase.id}`
 					})
 				}
 			}

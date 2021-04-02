@@ -210,7 +210,7 @@
 			// 
 			showStrore() {
 				uni.navigateTo({
-					url: `/pages/allotQuery/allotQuery`
+					url: `/pagesStatement/allotQuery/allotQuery`
 				})
 			},
 			// 店铺数组
@@ -359,7 +359,7 @@
 					ids = this.store_id
 				}
 				uni.navigateTo({
-					url: `/pages/salesDetails/salesDetails?staff_id=${this.staff_id}&store_ids=${ids}&goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
+					url: `/pagesStatement/salesDetails/salesDetails?staff_id=${this.staff_id}&store_ids=${ids}&goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
 				})
 			},
 			// 下拉刷新

@@ -136,7 +136,7 @@
 			// 前往编辑采购退货
 			toHaveToReturn(item) {
 				uni.navigateTo({
-					url: `/pages/stopAllocate/stopAllocate?id=${item.id}`
+					url: `/pagesRepertory/stopAllocate/stopAllocate?id=${item.id}`
 				})
 			},
 		},

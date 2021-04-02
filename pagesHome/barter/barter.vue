@@ -73,7 +73,7 @@
 					specificationOfGoods: []
 				})
 				uni.navigateTo({
-					url: `/pages/warenauswahl/warenauswahl`
+					url: `/pagesHome/warenauswahl/warenauswahl`
 				})
 			},
 		},

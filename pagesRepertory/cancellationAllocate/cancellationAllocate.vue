@@ -213,7 +213,7 @@
 							let res = await allocateCancel(_this.id);
 							if (!res.code) {
 								uni.navigateTo({
-									url: `/pages/allocate/allocate`
+									url: `/pagesRepertory/allocate/allocate`
 								})
 							}
 						} else if (res.cancel) {
@@ -236,7 +236,7 @@
 					stateGood: false
 				})
 				uni.navigateTo({
-					url: `/pages/addAllocate/addAllocate`
+					url: `/pagesRepertory/addAllocate/addAllocate`
 				})
 			},
 		},

@@ -24,7 +24,8 @@
 			<view class="form_item">
 				<text>地区信息</text>
 				<u-input placeholder='请选择地区' :disabled='true' @click='showPicker' v-model="form.area" type="text" />
-				<u-picker mode="region" v-model="show" :default-region='defaultres' @confirm="sele" :params="params"></u-picker>
+				<u-picker mode="region" v-model="show" :default-region='defaultres' @confirm="sele" :params="params">
+				</u-picker>
 			</view>
 			<view class="form_item">
 				<text>详细地址</text>
@@ -132,13 +133,9 @@
 				}
 				let res = await supplierAdd(obj)
 				if (!res.code) {
-					// if (this.val) {
-						uni.navigateBack()
-					// } else {
-					// 	uni.navigateTo({
-					// 		url: '/pages/supplier/supplier'
-					// 	})
-					// }
+
+					uni.navigateBack()
+
 				}
 			},
 		},

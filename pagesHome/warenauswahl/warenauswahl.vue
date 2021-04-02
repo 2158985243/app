@@ -393,7 +393,7 @@
 			// 增加商品
 			toAddCommodity(){
 				uni.navigateTo({
-					url: `/pages/addCommodity/addCommodity`
+					url: `/pagesRepertory/addCommodity/addCommodity`
 				})
 			},
 			// 全部尺码组数组变化
@@ -538,7 +538,7 @@
 			// 
 			toCancelledList() {
 				uni.navigateTo({
-					url: `/pages/cancelledList/cancelledList`
+					url: `/pagesHome/cancelledList/cancelledList`
 				})
 			},
 
@@ -797,7 +797,7 @@
 					});
 					if (!this.account) {
 						uni.navigateTo({
-							url: `/pages/exchanged/exchanged`
+							url: `/pagesHome/exchanged/exchanged`
 						})
 					} else {
 						uni.navigateBack()

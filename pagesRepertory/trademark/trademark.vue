@@ -77,7 +77,7 @@
 			// 前往添加分类
 			toAddCategory() {
 				uni.navigateTo({
-					url: '/pages/addTrademark/addTrademark'
+					url: '/pagesRepertory/addTrademark/addTrademark'
 				})
 			},
 			// 显示隐藏修改按钮

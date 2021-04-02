@@ -117,7 +117,7 @@
 					uni.navigateBack();
 				} else {
 					uni.navigateTo({
-						url: `/pages/editShopInformation/editShopInformation?id=${item.id}`
+						url: `/pagesMine/editShopInformation/editShopInformation?id=${item.id}`
 					})
 				}
 
@@ -125,7 +125,7 @@
 			// 前往新增店铺信息
 			toAddShopInformation() {
 				uni.navigateTo({
-					url: `/pages/addShopInformation/addShopInformation`
+					url: `/pagesMine/addShopInformation/addShopInformation`
 				})
 			}
 		},

@@ -353,7 +353,7 @@
 					sizerDa: []
 				});
 				uni.navigateTo({
-					url: `/pages/addCommodity/addCommodity`
+					url: `/pagesRepertory/addCommodity/addCommodity`
 				})
 			},
 			toEditCommodity() {
@@ -437,7 +437,7 @@
 			rightNav(e) {
 				// console.log(e);
 				uni.navigateTo({
-					url: `/pages/commodityDetails/commodityDetails?id=${e.id}`
+					url: `/pagesRepertory/commodityDetails/commodityDetails?id=${e.id}`
 				})
 			},
 			// 输入框输入

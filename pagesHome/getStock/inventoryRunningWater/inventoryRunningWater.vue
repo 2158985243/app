@@ -88,14 +88,14 @@
 			// 前往店铺
 			toStore() {
 				uni.navigateTo({
-					url: '/pages/storeManagement/storeManagement?iq=1'
+					url: '/pagesMine/storeManagement/storeManagement?iq=1'
 				})
 			},
 			// 商品
 			selectProducts() {
 				
 				uni.navigateTo({
-					url: '/pages/selectProducts/selectProducts?condition=1&stockLog=1'
+					url: '/pagesRepertory/selectProducts/selectProducts?condition=1&stockLog=1'
 				})
 			},
 			// 确认
@@ -123,7 +123,7 @@
 					}
 				}
 				uni.navigateTo({
-					url:`/pages/getStock/inventoryRunningWaterList/inventoryRunningWaterList?item=`+ encodeURIComponent(JSON.stringify(item))
+					url:`/pagesHome/getStock/inventoryRunningWaterList/inventoryRunningWaterList?item=`+ encodeURIComponent(JSON.stringify(item))
 				})
 			}
 			// async init() {

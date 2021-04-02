@@ -538,7 +538,7 @@
 			// 
 			toCancelledList() {
 				uni.navigateTo({
-					url: `/pages/cancelledList/cancelledList`
+					url: `/pagesHome/cancelledList/cancelledList`
 				})
 			},
 
@@ -821,7 +821,7 @@
 					});
 					if (!this.account) {
 						uni.navigateTo({
-							url: `/pages/settleAccounts/settleAccounts`
+							url: `/pagesHome/settleAccounts/settleAccounts`
 						})
 					} else {
 						uni.$emit('editGood', true)

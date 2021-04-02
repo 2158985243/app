@@ -122,7 +122,7 @@
 						let res = await salesOrderEdit(this.id, this.form)
 						if (!res.code) {
 							uni.navigateTo({
-								url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
+								url: `/pagesHome/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
 							})
 						}
 					} else {
@@ -130,7 +130,7 @@
 							let res = await refund(this.form);
 							if (!res.code) {
 								uni.navigateTo({
-									url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1&page=6`
+									url: `/pagesHome/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1&page=6`
 								})
 							}
 						} else {
@@ -138,7 +138,7 @@
 							let res = await salesOrderAdd(this.form);
 							if (!res.code) {
 								uni.navigateTo({
-									url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
+									url: `/pagesHome/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
 								})
 							}
 						}
@@ -233,14 +233,14 @@
 						let res = await salesOrderEdit(this.id, this.form)
 						if (!res.code) {
 							uni.navigateTo({
-								url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
+								url: `/pagesHome/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
 							})
 						}
 					} else {
 						let res = await salesOrderAdd(this.form);
 						if (!res.code) {
 							uni.navigateTo({
-								url: `/pages/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
+								url: `/pagesHome/paymentSuccess/paymentSuccess?payItem=${name_str}&money=${this.form.money}&combina=1`
 							})
 						}
 					}

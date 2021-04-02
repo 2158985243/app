@@ -197,7 +197,7 @@
 			},
 			toStore() {
 				uni.navigateTo({
-					url: '/pages/storeManagement/storeManagement?iq=1'
+					url: '/pagesMine/storeManagement/storeManagement?iq=1'
 				})
 			},
 			onSuccess(data, index, lists, name) {

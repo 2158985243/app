@@ -191,7 +191,7 @@
 			// 前往店铺
 			toStore() {
 				uni.navigateTo({
-					url: '/pages/storeManagement/storeManagement?iq=1'
+					url: '/pagesMine/storeManagement/storeManagement?iq=1'
 				})
 			},
 			// 草稿或者盘点汇总
@@ -201,7 +201,7 @@
 					// 汇总
 					if (this.form.check_list_ids.length > 0) {
 						uni.navigateTo({
-							url: '/pages/inventoryPreview/inventoryPreview?id=' + this.id + '&obj=' + encodeURIComponent(JSON.stringify(
+							url: '/pagesRepertory/inventoryPreview/inventoryPreview?id=' + this.id + '&obj=' + encodeURIComponent(JSON.stringify(
 								this.form))
 						})
 					} else {
@@ -214,7 +214,7 @@
 					let res = await checkEdit(this.id, this.form)
 					if (!res.code) {
 						uni.navigateTo({
-							url: '/pages/stockTaking/stockTaking?'
+							url: '/pagesRepertory/stockTaking/stockTaking?'
 						})
 					}
 				}
@@ -225,7 +225,7 @@
 					specificationOfGoods: []
 				})
 				uni.navigateTo({
-					url: `/pages/checkSubmenu/checkSubmenu?index=${index}&id=${item.id}`
+					url: `/pagesRepertory/checkSubmenu/checkSubmenu?index=${index}&id=${item.id}`
 				})
 			},
 			// 删除盘点草稿单
@@ -239,7 +239,7 @@
 							let res = await checkCancel(_this.id);
 							if (!res.code) {
 								uni.navigateTo({
-									url: `/pages/stockTaking/stockTaking`
+									url: `/pagesRepertory/stockTaking/stockTaking`
 								})
 							}
 						} else if (res.cancel) {

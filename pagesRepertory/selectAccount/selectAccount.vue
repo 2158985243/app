@@ -38,7 +38,7 @@
 			},
 			toAddPatternOfPayment() {
 				uni.navigateTo({
-					url: `/pages/addPatternOfPayment/addPatternOfPayment`
+					url: `/pagesMine/addPatternOfPayment/addPatternOfPayment`
 				})
 			},
 			navigate(e){

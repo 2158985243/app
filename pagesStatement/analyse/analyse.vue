@@ -445,7 +445,7 @@
 			toAnalyseDetails(val) {
 
 				uni.navigateTo({
-					url: `/pages/analyse/analyseDetails/analyseDetails?date=${val.date}&store_id=${this.store_id}`
+					url: `/pagesStatement/analyse/analyseDetails/analyseDetails?date=${val.date}&store_id=${this.store_id}`
 				})
 			}
 		},

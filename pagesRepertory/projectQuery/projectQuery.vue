@@ -48,19 +48,19 @@
 		methods: {
 			toAddArticle() {
 				uni.navigateTo({
-					url: '/pages/article/article'
+					url: '/pagesRepertory/article/article'
 				})
 			},
 			// 前往选择账户
 			toSelectAccount() {
 				uni.navigateTo({
-					url: '/pages/selectAccount/selectAccount'
+					url: '/pagesRepertory/selectAccount/selectAccount'
 				})
 			},
 			// 前往选择经手人
 			toSelecSalesperson() {
 				uni.navigateTo({
-					url: '/pages/selecSalesperson/selecSalesperson'
+					url: '/pagesHome/selecSalesperson/selecSalesperson'
 				})
 			},
 			// 确定

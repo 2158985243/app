@@ -71,7 +71,7 @@
 		methods: {
 			clickItem(item){
 				uni.navigateTo({
-					url:`/pages/salesOrderDetails/salesOrderDetails?id=${item.sales_order_id}`
+					url:`/pagesHome/salesOrderDetails/salesOrderDetails?id=${item.sales_order_id}`
 				})
 			},
 			async init(){

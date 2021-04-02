@@ -165,25 +165,25 @@
 			// 前往店铺
 			toStore() {
 				uni.navigateTo({
-					url: '/pages/storeManagementSelect/storeManagementSelect'
+					url: '/pagesMine/storeManagementSelect/storeManagementSelect'
 				})
 			},
 			// 品牌
 			toTrademark() {
 				uni.navigateTo({
-					url: '/pages/trademark/trademark'
+					url: '/pagesRepertory/trademark/trademark'
 				})
 			},
 			// 前往商品管理页面
 			toCategory() {
 				uni.navigateTo({
-					url: '/pages/category/category'
+					url: '/pagesRepertory/category/category'
 				})
 			},
 			// 供应商
 			toChooseSupplier() {
 				uni.navigateTo({
-					url: '/pages/chooseSupplier/chooseSupplier'
+					url: '/pagesRepertory/chooseSupplier/chooseSupplier'
 				})
 			},
 		},

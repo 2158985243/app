@@ -121,11 +121,11 @@
 			toPatternOfPayment() {
 				if (this.form.customer_id == 0) {
 					uni.navigateTo({
-						url: `/pages/patternOfPayment/patternOfPayment?iq=1&ip=1`
+						url: `/pagesMine/patternOfPayment/patternOfPayment?iq=1&ip=1`
 					})
 				} else {
 					uni.navigateTo({
-						url: `/pages/patternOfPayment/patternOfPayment?iq=1`
+						url: `/pagesMine/patternOfPayment/patternOfPayment?iq=1`
 					})
 				}
 

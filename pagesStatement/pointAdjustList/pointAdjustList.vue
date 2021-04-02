@@ -185,7 +185,7 @@
 			// 
 			showStrore() {
 				uni.navigateTo({
-					url: `/pages/pointAdjustList/pointQuery/pointQuery`
+					url: `/pagesRepertory/pointAdjustList/pointQuery/pointQuery`
 				})
 			},
 			// 店铺数组

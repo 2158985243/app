@@ -170,7 +170,7 @@
 			// 前往选择经手人
 			toSelecSalesperson() {
 				uni.navigateTo({
-					url: '/pages/selecSalesperson/selecSalesperson'
+					url: '/pagesHome/selecSalesperson/selecSalesperson'
 				})
 			},
 			// 确定支付

@@ -223,7 +223,7 @@
 			// 前往项目详情
 			expenseCancellation(item) {
 				uni.navigateTo({
-					url: `/pages/staffAchievement/detailsStaffDocuments/detailsStaffDocuments?id=${item.id}`
+					url: `/pagesStatement/staffAchievement/detailsStaffDocuments/detailsStaffDocuments?id=${item.id}`
 				})
 			},
 			// 选择时间

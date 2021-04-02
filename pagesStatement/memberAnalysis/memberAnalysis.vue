@@ -389,7 +389,7 @@
 			// 前往会员分析详情
 			spendingDetails(val) {
 				uni.navigateTo({
-					url:`/pages/memberAnalysis/analyseDetails/analyseDetails?id=${val.customer_id}`
+					url:`/pagesRepertory/memberAnalysis/analyseDetails/analyseDetails?id=${val.customer_id}`
 				})
 			}
 		},

@@ -148,7 +148,7 @@
 			// 前往编辑采购退货
 			toHaveToReturn(item) {
 				uni.navigateTo({
-					url: `/pages/salesOrderDetails/salesOrderDetails?id=${item.id}`
+					url: `/pagesHome/salesOrderDetails/salesOrderDetails?id=${item.id}`
 				})
 			},
 		},

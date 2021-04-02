@@ -85,26 +85,26 @@
 			toStore() {
 
 				uni.navigateTo({
-					url: '/pages/storeManagementSelect/storeManagementSelect'
+					url: '/pagesMine/storeManagementSelect/storeManagementSelect'
 				})
 			},
 			// 前往用户权限
 			purviewSetting() {
 
 				uni.navigateTo({
-					url: '/pages/userManagement/purviewSetting/purviewSetting'
+					url: '/pagesMine/userManagement/purviewSetting/purviewSetting'
 				})
 			},
 			// 前往选择经手人
 			toSelecSalesperson() {
 				uni.navigateTo({
-					url: '/pages/selecSalesperson/selecSalesperson'
+					url: '/pagesMine/selecSalesperson/selecSalesperson'
 				})
 			},
 			// 品牌！！！
 			toTrademark() {
 				uni.navigateTo({
-					url: '/pages/userManagement/tademark/tademark'
+					url: '/pagesMine/userManagement/tademark/tademark'
 				})
 			},
 			// 账号是否启用

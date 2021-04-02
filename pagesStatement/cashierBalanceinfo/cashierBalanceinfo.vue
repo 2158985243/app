@@ -168,19 +168,19 @@
 				console.log(item);
 				if (this.form.type == 'turnover' || this.form.type == 'consume') {
 					uni.navigateTo({
-						url: `/pages/warenverbrauch/warenverbrauch?id=${item.id}`
+						url: `/pagesStatement/warenverbrauch/warenverbrauch?id=${item.id}`
 					})
 				} else if (this.form.type == 'recharge') {
 					uni.navigateTo({
-						url: `/pages/storedDetails/storedDetails?id=${item.id}`
+						url: `/pagesStatement/storedDetails/storedDetails?id=${item.id}`
 					})
 				} else if (this.form.type == 'expend') {
 					uni.navigateTo({
-						url: `/pages/expenseCancellation/expenseCancellation?id=${item.id}`
+						url: `/pagesStatement/expenseCancellation/expenseCancellation?id=${item.id}`
 					})
 				} else if (this.form.type == 'repayment') {
 					uni.navigateTo({
-						url: `/pages/repaymentDetails/repaymentDetails?id=${item.id}`
+						url: `/pagesStatement/repaymentDetails/repaymentDetails?id=${item.id}`
 					})
 				}
 			},

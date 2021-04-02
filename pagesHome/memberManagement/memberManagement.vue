@@ -440,7 +440,7 @@
 			// 增加会员
 			toAddMember() {
 				uni.navigateTo({
-					url: `/pages/addMembership/addMembership`
+					url: `/pagesHome/addMembership/addMembership`
 				})
 			},
 			// 初始化
@@ -539,7 +539,7 @@
 			customerOf(item) {
 				// console.log(item);
 				uni.navigateTo({
-					url: `/pages/customer/customer?id=${item.id}`
+					url: `/pagesHome/customer/customer?id=${item.id}`
 				})
 			}
 		},

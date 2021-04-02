@@ -158,7 +158,7 @@
 			expenseCancellation(item) {
 
 				uni.navigateTo({
-					url: `/pages/expenseCancellation/expenseCancellation?id=${item.id}`
+					url: `/pagesStatement/expenseCancellation/expenseCancellation?id=${item.id}`
 				})
 			},
 			// 选择时间

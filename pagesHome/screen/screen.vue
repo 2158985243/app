@@ -189,7 +189,7 @@
 			// 选择支付类型
 			toPatternOfPayment() {
 				uni.navigateTo({
-					url: `/pages/patternOfPayment/patternOfPayment?iq=1`
+					url: `/pagesMine/patternOfPayment/patternOfPayment?iq=1`
 				})
 			}
 		},

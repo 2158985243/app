@@ -137,14 +137,14 @@
 					stateGood: false
 				})
 				uni.navigateTo({
-					url: `/pages/purchaseStorage/purchaseStorage`
+					url: `/pagesRepertory/purchaseStorage/purchaseStorage`
 				})
 			},
 			// 前往查询页面
 			toRefer() {
 				// 
 				uni.navigateTo({
-					url: '/pages/refer/refer'
+					url: '/pagesRepertory/refer/refer'
 				})
 			},
 			// 
@@ -152,15 +152,15 @@
 				// console.log(item);
 				if (item.status == 0) {
 					uni.navigateTo({
-						url: `/pages/purchaseStorageHistory/purchaseStorageHistory?id=${item.id}`
+						url: `/pagesRepertory/purchaseStorageHistory/purchaseStorageHistory?id=${item.id}`
 					})
 				} else if (item.status == 1) {
 					uni.navigateTo({
-						url: `/pages/storageHistory/storageHistory?id=${item.id}`
+						url: `/pagesRepertory/storageHistory/storageHistory?id=${item.id}`
 					})
 				} else if (item.status == 2) {
 					uni.navigateTo({
-						url: `/pages/cancellation/cancellation?id=${item.id}`
+						url: `/pagesRepertory/cancellation/cancellation?id=${item.id}`
 					})
 				}
 

@@ -61,24 +61,24 @@
 			},
 			toAddPatternOfPayment() {
 				uni.navigateTo({
-					url: `/pages/addPatternOfPayment/addPatternOfPayment`
+					url: `/pagesHome/addPatternOfPayment/addPatternOfPayment`
 				})
 			},
 			itemCilck(e) {
 				uni.navigateTo({
-					url: '/pages/accountLog/accountLog?obj=' + encodeURIComponent(JSON.stringify(e))
+					url: '/pagesHome/accountLog/accountLog?obj=' + encodeURIComponent(JSON.stringify(e))
 				})
 			},
 			// 账户互转
 			toMutualTransfer() {
 				uni.navigateTo({
-					url: `/pages/mutualTransfer/mutualTransfer`
+					url: `/pagesHome/mutualTransfer/mutualTransfer`
 				})
 			},
 			// 账户互转
 			toBaseMoneyAdjust() {
 				uni.navigateTo({
-					url: `/pages/baseMoneyAdjust/baseMoneyAdjust`
+					url: `/pagesHome/baseMoneyAdjust/baseMoneyAdjust`
 				})
 			},
 

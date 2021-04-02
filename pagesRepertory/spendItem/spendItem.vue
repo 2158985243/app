@@ -125,7 +125,7 @@
 							let res = await expendLogCancel(_this.id);
 							if (!res.code) {
 								uni.navigateTo({
-									url: '/pages/expenseBook/expenseBook'
+									url: '/pagesRepertory/expenseBook/expenseBook'
 								})
 							}
 						} else if (res.cancel) {
@@ -149,7 +149,7 @@
 							let res = await expendLogCancel(_this.id);
 							if (!res.code) {
 								uni.navigateTo({
-									url: '/pages/expenseBook/expenseBook'
+									url: '/pagesRepertory/expenseBook/expenseBook'
 								})
 							}
 						} else if (res.cancel) {

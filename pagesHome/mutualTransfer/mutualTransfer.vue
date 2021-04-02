@@ -47,7 +47,7 @@
 			toSelectAccount(e) {
 				this.index = e
 				uni.navigateTo({
-					url: '/pages/selectAccount/selectAccount'
+					url: '/pagesRepertory/selectAccount/selectAccount'
 				})
 			},
 			async sure() {

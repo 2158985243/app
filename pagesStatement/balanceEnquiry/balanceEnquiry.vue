@@ -135,7 +135,7 @@
 			// 
 			cilckItem(id){
 				uni.navigateTo({
-					url:`/pages/customer/customer?id=${id}`
+					url:`/pagesHome/customer/customer?id=${id}`
 				})
 			}
 		},

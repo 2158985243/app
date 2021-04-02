@@ -70,7 +70,7 @@
 			},
 			toAddColor() {
 				uni.navigateTo({
-					url: '/pages/addColor/addColor'
+					url: '/pagesRepertory/addColor/addColor'
 				})
 			},
 			edit() {
@@ -107,7 +107,7 @@
 					name: e.item.name
 				}
 				uni.navigateTo({
-					url: `/pages/editColor/editColor?id=${str.id}&name=${str.name}`
+					url: `/pagesRepertory/editColor/editColor?id=${str.id}&name=${str.name}`
 				})
 			},
 			// 删除对应的color

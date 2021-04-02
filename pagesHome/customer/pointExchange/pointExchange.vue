@@ -553,7 +553,7 @@
 			// 
 			toCancelledList() {
 				uni.navigateTo({
-					url: `/pages/cancelledList/cancelledList`
+					url: `/pagesHome/cancelledList/cancelledList`
 				})
 			},
 
@@ -814,8 +814,7 @@
 					});
 					if (!this.account) {
 						uni.navigateTo({
-							url: '/pages/customer/determineCash/determineCash?obj=' + encodeURIComponent(JSON
-								.stringify(this.option_data))
+							url: '/pagesHome/customer/determineCash/determineCash?obj=' + encodeURIComponent(JSON.stringify(this.option_data))
 						})
 					} else {
 						uni.navigateBack()

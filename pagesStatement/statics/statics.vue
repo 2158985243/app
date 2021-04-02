@@ -356,26 +356,26 @@
 				if (this.current == 0) {
 					let currentdate = this.$date.today()
 					uni.navigateTo({
-						url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+						url: `/pagesStatement/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
 					})
 				} else if (this.current == 1) {
 					let currentdate = this.$date.yesterday()
 					uni.navigateTo({
-						url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+						url: `/pagesStatement/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
 					})
 				} else if (this.current == 2) {
 					let currentdate = this.$date.thisWeek()
 					uni.navigateTo({
-						url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+						url: `/pagesStatement/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
 					})
 				} else if (this.current == 3) {
 					let currentdate = this.$date.thisMonth()
 					uni.navigateTo({
-						url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+						url: `/pagesStatement/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}`
+						url: `/pagesStatement/spendingDetails/spendingDetails?expend_item_id=${val.expend_item_id}&store_id=${this.store_id}&name=${val.expend_item.name}&start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}`
 					})
 				}
 

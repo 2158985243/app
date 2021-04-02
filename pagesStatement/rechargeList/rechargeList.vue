@@ -269,7 +269,7 @@
 			// 详情
 			toStoredDetails(item){
 				uni.navigateTo({
-					url:`/pages/storedDetails/storedDetails?id=${item.id}&title_name=会员充值详情`
+					url:`/pagesStatement/storedDetails/storedDetails?id=${item.id}&title_name=会员充值详情`
 				})
 			}
 		},

@@ -82,7 +82,7 @@
 					specificationOfGoods: []
 				})
 				uni.navigateTo({
-					url: `/pages/editSettleAccounts/editSettleAccounts?id=${item.id}`
+					url: `/pagesHome/editSettleAccounts/editSettleAccounts?id=${item.id}`
 				})
 			},
 			// 下拉刷新

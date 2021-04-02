@@ -103,7 +103,7 @@
 					date = item.mouth
 				}
 				uni.navigateTo({
-					url: `/pages/customerCountDetails/customerCountDetails?store_id=${this.store_id}&date=${date}`
+					url: `/pagesRepertory/customerCountDetails/customerCountDetails?store_id=${this.store_id}&date=${date}`
 				})
 			},
 		},

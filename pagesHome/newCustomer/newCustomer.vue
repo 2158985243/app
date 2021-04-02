@@ -150,7 +150,7 @@
 			// 点击查看详情
 			customerOf(item){
 				uni.navigateTo({
-					url: `/pages/customer/customer?id=${item.id}`
+					url: `/pagesHome/customer/customer?id=${item.id}`
 				})
 			},
 			//选择 

@@ -596,13 +596,13 @@
 			// 添加商品
 			toAddCommodity() {
 				uni.navigateTo({
-					url: `/pages/addCommodity/addCommodity`
+					url: `/pagesRepertory/addCommodity/addCommodity`
 				})
 			},
 			// 编辑商品
 			toEditCommodity() {
 				uni.navigateTo({
-					url: `/pages/editCommodity/editCommodity?id=${this.id}`
+					url: `/pagesRepertory/editCommodity/editCommodity?id=${this.id}`
 				})
 			},
 			async init(v) {
@@ -823,7 +823,7 @@
 					sizes:this.oracle.size
 				}
 				uni.navigateTo({
-					url:`/pages/getStock/inventoryRunningWater/inventoryRunningWater?item=`+ encodeURIComponent(JSON.stringify(obj))
+					url:`/pagesHome/getStock/inventoryRunningWater/inventoryRunningWater?item=`+ encodeURIComponent(JSON.stringify(obj))
 				})
 			}
 		},

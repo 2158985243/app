@@ -105,13 +105,13 @@
 			// 前往编辑店铺信息
 			toShopInformation(id) {
 				uni.navigateTo({
-					url: `/pages/editStaffsInformation/editStaffsInformation?id=${id}`
+					url: `/pagesMine/editStaffsInformation/editStaffsInformation?id=${id}`
 				})
 			},
 			// 前往新增店铺信息
 			toAddSupplier() {
 				uni.navigateTo({
-					url: `/pages/addSupplier/addSupplier?val=1`
+					url: `/pagesRepertory/addSupplier/addSupplier?val=1`
 				})
 			}
 		},

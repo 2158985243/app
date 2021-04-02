@@ -88,13 +88,13 @@
 			// 前往供应商
 			toChooseSupplier() {
 				uni.navigateTo({
-					url: '/pages/chooseSupplier/chooseSupplier'
+					url: '/pagesRepertory/chooseSupplier/chooseSupplier'
 				})
 			},
 			// 前往店铺
 			toStore() {
 				uni.navigateTo({
-					url: '/pages/storeManagement/storeManagement?iq=1'
+					url: '/pagesMine/storeManagement/storeManagement?iq=1'
 				})
 			},
 			// 打开选择时间

@@ -128,7 +128,7 @@
 					purview: []
 				});
 				uni.navigateTo({
-					url: `/pages/userManagement/editUserManagement/editUserManagement?id=${item.id}&is_admin=${item.is_admin}`
+					url: `/pagesMine/userManagement/editUserManagement/editUserManagement?id=${item.id}&is_admin=${item.is_admin}`
 				})
 			},
 			// 前往新增用户信息
@@ -143,7 +143,7 @@
 					purview: []
 				});
 				uni.navigateTo({
-					url: `/pages/userManagement/addUserManagement/addUserManagement`
+					url: `/pagesMine/userManagement/addUserManagement/addUserManagement`
 				})
 			}
 		},

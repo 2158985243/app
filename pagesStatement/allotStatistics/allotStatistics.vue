@@ -236,7 +236,7 @@
 			// 
 			showStrore() {
 				uni.navigateTo({
-					url: `/pages/allotQuery/allotQuery`
+					url: `/pagesStatement/allotQuery/allotQuery`
 				})
 			},
 			// 店铺数组
@@ -374,7 +374,7 @@
 					ids = this.store_id
 				}
 				uni.navigateTo({
-					url: `/pages/allotDetails/allotDetails?store_ids=${ids}&goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
+					url: `/pagesStatement/allotDetails/allotDetails?store_ids=${ids}&goods_id=${item.goods_id}&start_time=${start_time}&end_time=${end_time}&title_name=${item.name}`
 				})
 			}
 		},

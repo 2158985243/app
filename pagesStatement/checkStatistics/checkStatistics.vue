@@ -213,7 +213,7 @@
 			// 
 			showStrore() {
 				uni.navigateTo({
-					url: `/pages/allotQuery/allotQuery`
+					url: `/pagesStatement/allotQuery/allotQuery`
 				})
 			},
 			// 店铺数组

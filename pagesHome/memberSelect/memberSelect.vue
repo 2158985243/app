@@ -80,7 +80,7 @@
 			// 增加会员
 			toAddMember() {
 				uni.navigateTo({
-					url: `/pages/addMembership/addMembership`
+					url: `/pagesHome/addMembership/addMembership`
 				})
 			},
 			search: function(value) {

@@ -50,7 +50,7 @@
 			// 前往编辑
 			toEdit(){
 				uni.navigateTo({
-					url: `/pages/businessSetUp/editAutoPromotion/editAutoPromotion`
+					url: `/pagesMine/businessSetUp/editAutoPromotion/editAutoPromotion`
 				})
 			},
 			// 初始化

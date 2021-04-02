@@ -149,7 +149,7 @@
 			// 前往搜索条件
 			toCondition() {
 				uni.navigateTo({
-					url:`/pages/grabble/grabble`
+					url:`/pagesHome/grabble/grabble`
 				})
 			},
 			// 初始化
@@ -180,7 +180,7 @@
 			// 进入商品详情
 			itemClick(item) {
 				uni.navigateTo({
-					url: `/pages/getStock/getStock?id=${item.id}`
+					url: `/pagesHome/getStock/getStock?id=${item.id}`
 				})
 			},
 			// 下拉刷新

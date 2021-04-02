@@ -70,12 +70,12 @@
 			// 前往新增积分
 			toPointAdd() {
 				uni.navigateTo({
-					url: '/pages/pointAdd/pointAdd'
+					url: '/pagesMine/pointAdd/pointAdd'
 				})
 			},
 			toPointEdit(item) {
 				uni.navigateTo({
-					url: '/pages/pointEdit/pointEdit?item=' + encodeURIComponent(JSON.stringify(item))
+					url: '/pagesMine/pointEdit/pointEdit?item=' + encodeURIComponent(JSON.stringify(item))
 				})
 			}
 		},

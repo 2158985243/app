@@ -312,7 +312,7 @@
 			// 搜索
 			showStrore() {
 				uni.navigateTo({
-					url: `/pages/screen/screen`
+					url: `/pagesHome/screen/screen`
 				})
 			}
 		},

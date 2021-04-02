@@ -116,7 +116,7 @@
 			// 前往新增店铺信息
 			toAddShopInformation() {
 				uni.navigateTo({
-					url: `/pages/addStaffsInformation/addStaffsInformation`
+					url: `/pagesHome/addStaffsInformation/addStaffsInformation`
 				})
 			}
 		},

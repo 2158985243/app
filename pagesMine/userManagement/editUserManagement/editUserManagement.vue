@@ -126,7 +126,7 @@
 			toStore() {
 				if (this.is_admin == 0) {
 					uni.navigateTo({
-						url: '/pages/storeManagementSelect/storeManagementSelect'
+						url: '/pagesMine/storeManagementSelect/storeManagementSelect'
 					})
 				}
 			},
@@ -134,21 +134,21 @@
 			purviewSetting() {
 				if (this.is_admin == 0) {
 					uni.navigateTo({
-						url: '/pages/userManagement/purviewSetting/purviewSetting'
+						url: '/pagesMine/userManagement/purviewSetting/purviewSetting'
 					})
 				}
 			},
 			// 前往选择经手人
 			toSelecSalesperson() {
 				uni.navigateTo({
-					url: '/pages/selecSalesperson/selecSalesperson'
+					url: '/pagesHome/selecSalesperson/selecSalesperson'
 				})
 			},
 			// 品牌！！！
 			toTrademark() {
 				if (this.is_admin == 0) {
 					uni.navigateTo({
-						url: '/pages/userManagement/tademark/tademark'
+						url: '/pagesMine/userManagement/tademark/tademark'
 					})
 				}
 			},

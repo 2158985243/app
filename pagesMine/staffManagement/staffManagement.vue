@@ -113,13 +113,13 @@
 			// 前往编辑店铺信息
 			toShopInformation(id) {
 				uni.navigateTo({
-					url: `/pages/editStaffsInformation/editStaffsInformation?id=${id}`
+					url: `/pagesMine/editStaffsInformation/editStaffsInformation?id=${id}`
 				})
 			},
 			// 前往新增店铺信息
 			toAddShopInformation() {
 				uni.navigateTo({
-					url: `/pages/addStaffsInformation/addStaffsInformation`
+					url: `/pagesMine/addStaffsInformation/addStaffsInformation`
 				})
 			}
 		},

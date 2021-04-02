@@ -177,19 +177,19 @@
 			// add
 			toadd() {
 				uni.navigateTo({
-					url: `/pages/expense/expense`
+					url: `/pagesRepertory/expense/expense`
 				})
 			},
 			// 详情
 			toSpendItem(item) {
 				uni.navigateTo({
-					url: `/pages/spendItem/spendItem?id=${item.id}`
+					url: `/pagesRepertory/spendItem/spendItem?id=${item.id}`
 				})
 			},
 			// 查询
 			toProjectQuery() {
 				uni.navigateTo({
-					url: `/pages/projectQuery/projectQuery`
+					url: `/pagesRepertory/projectQuery/projectQuery`
 				})
 			},
 			// 统计
@@ -205,7 +205,7 @@
 				let timeStar = this.$u.timeFormat(Date.parse(monthStartDate) / 1000, 'yyyy-mm-dd'); //s
 				let timeEnd = this.$u.timeFormat(Date.parse(monthEndDate) / 1000, 'yyyy-mm-dd'); //s
 				uni.navigateTo({
-					url: `/pages/statics/statics?start_time=${timeStar}&end_time=${timeEnd}&current=${4}`
+					url: `/pagesStatement/statics/statics?start_time=${timeStar}&end_time=${timeEnd}&current=${4}`
 				})
 			},
 			// 选择日期

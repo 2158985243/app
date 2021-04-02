@@ -803,13 +803,13 @@
 					sizerDa: []
 				});
 				uni.navigateTo({
-					url: `/pages/addCommodity/addCommodity`
+					url: `/pagesRepertory/addCommodity/addCommodity`
 				})
 			},
 			// 编辑商品
 			toEditCommodity() {
 				uni.navigateTo({
-					url: `/pages/editCommodity/editCommodity?id=${this.id}`
+					url: `/pagesRepertory/editCommodity/editCommodity?id=${this.id}`
 				})
 			},
 			// 初始化
@@ -963,25 +963,25 @@
 			// 前往编辑采购退货
 			toHaveToReturn2(item) {
 				uni.navigateTo({
-					url: `/pages/salesOrderDetails/salesOrderDetails?id=${item.id}`
+					url: `/pagesHome/salesOrderDetails/salesOrderDetails?id=${item.id}`
 				})
 			},
 			// 前往编辑采购退货
 			toHaveToReturn1(item) {
 				if (item.type == 0) {
 					uni.navigateTo({
-						url: `/pages/storageHistory/storageHistory?id=${item.id}`
+						url: `/pagesRepertory/storageHistory/storageHistory?id=${item.id}`
 					})
 				} else {
 					uni.navigateTo({
-						url: `/pages/haveToReturn/haveToReturn?id=${item.id}`
+						url: `/pagesRepertory/haveToReturn/haveToReturn?id=${item.id}`
 					})
 				}
 			},
 			// 前往编辑采购退货
 			toHaveToReturn3(item) {
 				uni.navigateTo({
-					url: `/pages/stopAllocate/stopAllocate?id=${item.id}`
+					url: `/pagesRepertory/stopAllocate/stopAllocate?id=${item.id}`
 				})
 			},
 		},

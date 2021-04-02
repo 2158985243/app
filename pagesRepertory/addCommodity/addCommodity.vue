@@ -585,41 +585,41 @@
 			},
 			toChooseSupplier() {
 				uni.navigateTo({
-					url: '/pages/chooseSupplier/chooseSupplier'
+					url: '/pagesRepertory/chooseSupplier/chooseSupplier'
 				})
 			},
 			// 前往商品库页面
 			toProductName() {
 				uni.navigateTo({
-					url: '/pages/productName/productName'
+					url: '/pagesRepertory/productName/productName'
 				})
 			},
 			// 前往尺码页面
 			toSizes() {
 				uni.navigateTo({
-					url: '/pages/sizes/sizes'
+					url: '/pagesRepertory/sizes/sizes'
 				})
 			},
 			// 前往颜色页面
 			toColors() {
 				uni.navigateTo({
-					url: '/pages/colors/colors'
+					url: '/pagesRepertory/colors/colors'
 				})
 			},
 			// 前往商品管理页面
 			toCategory() {
 				uni.navigateTo({
-					url: '/pages/category/category'
+					url: '/pagesRepertory/category/category'
 				})
 			},
 			toTrademark() {
 				uni.navigateTo({
-					url: '/pages/trademark/trademark'
+					url: '/pagesRepertory/trademark/trademark'
 				})
 			},
 			toUnitList() {
 				uni.navigateTo({
-					url: '/pages/unitList/unitList'
+					url: '/pagesRepertory/unitList/unitList'
 				})
 			},
 			// 商品条码扫码
@@ -662,7 +662,7 @@
 						});
 					}
 					uni.navigateTo({
-						url: '/pages/barcode/barcode'
+						url: '/pagesRepertory/barcode/barcode'
 					})
 
 				} else {
@@ -702,7 +702,7 @@
 						});
 					}
 					uni.navigateTo({
-						url: '/pages/addCommodity/goodsStock/goodsStock'
+						url: '/pagesRepertory/addCommodity/goodsStock/goodsStock'
 					})
 				} else {
 					this.$refs.uToast.show({

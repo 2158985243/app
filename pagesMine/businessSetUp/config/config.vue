@@ -359,7 +359,7 @@
 			//积分
 			toIntegralList() {
 				uni.navigateTo({
-					url: '/pages/IntegralList/IntegralList'
+					url: '/pagesHome/IntegralList/IntegralList'
 				})
 			},
 

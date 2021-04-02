@@ -55,7 +55,7 @@
 			},
 			toAddPatternOfPayment() {
 				uni.navigateTo({
-					url: `/pages/addPatternOfPayment/addPatternOfPayment`
+					url: `/pagesMine/addPatternOfPayment/addPatternOfPayment`
 				})
 			},
 			toEditPatternOfPayment(item) {
@@ -64,7 +64,7 @@
 					if (!item.system) {
 
 						uni.navigateTo({
-							url: `/pages/editPatternOfPayment/editPatternOfPayment?id=${item.account_id}&name=${item.name}`
+							url: `/pagesMine/editPatternOfPayment/editPatternOfPayment?id=${item.account_id}&name=${item.name}`
 						})
 					}
 				} else {

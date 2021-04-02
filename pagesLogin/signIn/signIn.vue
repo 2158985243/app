@@ -130,7 +130,7 @@
 		methods: {
 			login() {
 				uni.reLaunch({
-					url: '/pages/user/login'
+					url: '/pagesLogin/user/login'
 				})
 			},
 			async nextInf(index) {
@@ -196,7 +196,7 @@
 			/*** 验证码 ***/
 			clickssq() {
 				this.show = true;
-				console.log(1);
+				// console.log(1);
 			},
 			// 取消选择
 			countermand(res) {

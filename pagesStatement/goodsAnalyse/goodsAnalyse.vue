@@ -978,7 +978,7 @@
 			// 详情
 			toDetails(item) {
 				uni.navigateTo({
-					url: `/pages/goodsAnalyse/details/details?id=${item.id}`
+					url: `/pagesStatement/goodsAnalyse/details/details?id=${item.id}`
 				})
 			},
 			// 选择类型

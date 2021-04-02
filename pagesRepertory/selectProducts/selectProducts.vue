@@ -558,7 +558,7 @@
 			},
 			toAddCommodity() {
 				uni.navigateTo({
-					url: `/pages/addCommodity/addCommodity`
+					url: `/pagesRepertory/addCommodity/addCommodity`
 				})
 			},
 			toEditCommodity() {

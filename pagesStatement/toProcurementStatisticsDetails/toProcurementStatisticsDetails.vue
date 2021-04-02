@@ -141,11 +141,11 @@
 			toHaveToReturn(item) {
 				if (item.type == 0) {
 					uni.navigateTo({
-						url: `/pages/storageHistory/storageHistory?id=${item.id}`
+						url: `/pagesRepertory/storageHistory/storageHistory?id=${item.id}`
 					})
 				} else {
 					uni.navigateTo({
-						url: `/pages/haveToReturn/haveToReturn?id=${item.id}`
+						url: `/pagesRepertory/haveToReturn/haveToReturn?id=${item.id}`
 					})
 				}
 			},

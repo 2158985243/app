@@ -277,7 +277,7 @@
 			// 前往供应商
 			toChooseSupplier() {
 				uni.navigateTo({
-					url: '/pages/chooseSupplier/chooseSupplier'
+					url: '/pagesRepertory/chooseSupplier/chooseSupplier'
 				})
 			},
 			hiddenTime() {
@@ -286,13 +286,13 @@
 			// 前往店铺
 			toStore() {
 				uni.navigateTo({
-					url: '/pages/storeManagement/storeManagement?iq=1'
+					url: '/pagesMine/storeManagement/storeManagement?iq=1'
 				})
 			},
 			// 前往选择账户
 			toSelectAccount() {
 				uni.navigateTo({
-					url: '/pages/selectAccount/selectAccount'
+					url: '/pagesRepertory/selectAccount/selectAccount'
 				})
 			},
 			// 前往选择商品
@@ -303,7 +303,7 @@
 					})
 				}
 				uni.navigateTo({
-					url: '/pages/selectProducts/selectProducts'
+					url: '/pagesRepertory/selectProducts/selectProducts'
 				})
 			},
 			// 优惠价格确定

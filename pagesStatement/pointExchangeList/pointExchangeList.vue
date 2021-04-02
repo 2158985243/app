@@ -198,12 +198,12 @@
 			expenseCancellation(item) {
 
 				uni.navigateTo({
-					url: `/pages/expenseCancellation/expenseCancellation?id=${item.id}`
+					url: `/pagesStatement/expenseCancellation/expenseCancellation?id=${item.id}`
 				})
 			},
 			toStoredDetails(item){
 				uni.navigateTo({
-					url: `/pages/pointDetails/pointDetails?id=${item.id}`
+					url: `/pagesStatement/pointDetails/pointDetails?id=${item.id}`
 				})
 				
 			},

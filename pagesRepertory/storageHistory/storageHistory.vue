@@ -264,7 +264,7 @@
 					stateGood: false
 				})
 				uni.navigateTo({
-					url: `/pages/purchaseStorage/purchaseStorage`
+					url: `/pagesRepertory/purchaseStorage/purchaseStorage`
 				})
 			},
 		},

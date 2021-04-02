@@ -143,13 +143,13 @@
 			// 前往选择会员
 			toMemberSelect() {
 				uni.navigateTo({
-					url: '/pages/memberSelect/memberSelect'
+					url: '/pagesHome/memberSelect/memberSelect'
 				})
 			},
 			// 前往选择经手人
 			toSelecSalesperson() {
 				uni.navigateTo({
-					url: '/pages/selecSalesperson/selecSalesperson'
+					url: '/pagesHome/selecSalesperson/selecSalesperson'
 				})
 			},
 			// 清空会员
@@ -195,7 +195,7 @@
 				})
 				this.option_data.account = true
 				uni.navigateTo({
-					url: '/pages/customer/pointExchange/pointExchange?obj=' + encodeURIComponent(JSON.stringify(this.option_data))
+					url: '/pagesHome/customer/pointExchange/pointExchange?obj=' + encodeURIComponent(JSON.stringify(this.option_data))
 				})
 			},
 			// 前往编辑商品
@@ -207,7 +207,7 @@
 					bl: true
 				}
 				uni.navigateTo({
-					url: '/pages/editItems/editItems?obj=' + encodeURIComponent(JSON.stringify(obj))
+					url: '/pagesHome/editItems/editItems?obj=' + encodeURIComponent(JSON.stringify(obj))
 				})
 			},
 			// 兑换
@@ -245,7 +245,7 @@
 						})
 						if (!res.code) {
 							uni.navigateTo({
-								url: `/pages/customer/forSuccessful/forSuccessful`
+								url: `/pagesHome/customer/forSuccessful/forSuccessful`
 							})
 						}
 					} else {

@@ -115,13 +115,13 @@
 			// 付款方式
 			toPatternOfPayment() {
 				uni.navigateTo({
-					url: `/pages/patternOfPayment/patternOfPayment?iq=1&ip=1`
+					url: `/pagesMine/patternOfPayment/patternOfPayment?iq=1&ip=1`
 				})
 			},
 			// 供应商
 			toChooseSupplier() {
 				uni.navigateTo({
-					url: '/pages/chooseSupplier/chooseSupplier'
+					url: '/pagesRepertory/chooseSupplier/chooseSupplier'
 				})
 			},
 

@@ -95,13 +95,13 @@
 			},
 			toSupplierDetails(item){
 				uni.navigateTo({
-					url:`/pages/supplierLog/supplierLog?id=${item.id}&name=${item.name}`
+					url:`/pagesStatement/supplierLog/supplierLog?id=${item.id}&name=${item.name}`
 				})
 			},
 			// 
 			toReconciliationRepayment(){
 				uni.navigateTo({
-					url:`/pages/reconciliationRepayment/reconciliationRepayment`
+					url:`/pagesStatement/reconciliationRepayment/reconciliationRepayment`
 				})
 			}
 		},

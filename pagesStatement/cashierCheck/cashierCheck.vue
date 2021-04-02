@@ -288,26 +288,26 @@
 				if (this.current == 0) {
 					let currentdate = this.$date.today()
 					uni.navigateTo({
-						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+						url: `/pagesStatement/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
 					})
 				} else if (this.current == 1) {
 					let currentdate = this.$date.yesterday()
 					uni.navigateTo({
-						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+						url: `/pagesStatement/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
 					})
 				} else if (this.current == 2) {
 					let currentdate = this.$date.thisWeek()
 					uni.navigateTo({
-						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+						url: `/pagesStatement/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
 					})
 				} else if (this.current == 3) {
 					let currentdate = this.$date.thisMonth()
 					uni.navigateTo({
-						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
+						url: `/pagesStatement/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${currentdate.start_time}&end_time=${currentdate.end_time}`
 					})
 				} else if (this.current == 4) {
 					uni.navigateTo({
-						url: `/pages/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}`
+						url: `/pagesStatement/cashierReconciliationDetails/cashierReconciliationDetails?name=${item.account.name}&store_id=${this.store_id}&user_id=${item.user_id}&account_id=${item.account_id}&start_time=${this.dateAll.today5.statrTime}&end_time=${this.dateAll.today5.endTime}`
 					})
 				}
 

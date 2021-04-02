@@ -334,7 +334,7 @@
 					this.store_from_to = true;
 				}
 				uni.navigateTo({
-					url: '/pages/storeManagement/storeManagement?iq=1'
+					url: '/pagesMine/storeManagement/storeManagement?iq=1'
 				})
 			},
 			// 前往选择商品
@@ -345,7 +345,7 @@
 					})
 				}
 				uni.navigateTo({
-					url: '/pages/selectProducts/selectProducts'
+					url: '/pagesRepertory/selectProducts/selectProducts'
 				})
 			},
 			// 优惠价格确定

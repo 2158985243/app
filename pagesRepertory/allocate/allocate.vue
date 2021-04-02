@@ -148,32 +148,32 @@
 					stateGood: false
 				})
 				uni.navigateTo({
-					url: `/pages/addAllocate/addAllocate`
+					url: `/pagesRepertory/addAllocate/addAllocate`
 				})
 			},
 			// 前往查询页面
 			toRefer() {
 				uni.navigateTo({
-					url: `/pages/refer/refer`
+					url: `/pagesRepertory/refer/refer`
 				})
 			},
 			// 
 			toPurchase(item) {
 				if (item.to_store_id == store.state.store.store_id) {
 					uni.navigateTo({
-						url: `/pages/callIn/callIn?id=${item.id}`
+						url: `/pagesRepertory/callIn/callIn?id=${item.id}`
 					})
 				} else if (item.status == 0) {
 					uni.navigateTo({
-						url: `/pages/draftAllocate/draftAllocate?id=${item.id}`
+						url: `/pagesRepertory/draftAllocate/draftAllocate?id=${item.id}`
 					})
 				} else if (item.status == 1) {
 					uni.navigateTo({
-						url: `/pages/stopAllocate/stopAllocate?id=${item.id}`
+						url: `/pagesRepertory/stopAllocate/stopAllocate?id=${item.id}`
 					})
 				} else if (item.status == 3) {
 					uni.navigateTo({
-						url: `/pages/cancellationAllocate/cancellationAllocate?id=${item.id}`
+						url: `/pagesRepertory/cancellationAllocate/cancellationAllocate?id=${item.id}`
 					})
 				}
 

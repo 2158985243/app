@@ -77,7 +77,7 @@
 			toStoreManagement(){
 				if(this.$store.state.authority.join(",").indexOf('store_management') != -1){
 					uni.navigateTo({
-						url: `/pages/storeManagement/storeManagement`
+						url: `/pagesMine/storeManagement/storeManagement`
 					})
 				}else{
 					uni.showToast({
@@ -92,7 +92,7 @@
 			toStaffManagement(){
 				if(this.$store.state.authority.join(",").indexOf('staff_management') != -1){
 					uni.navigateTo({
-						url: `/pages/staffManagement/staffManagement`
+						url: `/pagesMine/staffManagement/staffManagement`
 					})
 				}else{
 					uni.showToast({
@@ -107,7 +107,7 @@
 			toUserManagement(){
 				if(this.$store.state.authority.join(",").indexOf('user_management') != -1){
 					uni.navigateTo({
-						url: `/pages/userManagement/userManagement`
+						url: `/pagesMine/userManagement/userManagement`
 					})
 				}else{
 					uni.showToast({
@@ -122,7 +122,7 @@
 			toPatternOfPayment(){
 				if(this.$store.state.authority.join(",").indexOf('pay_type') != -1){
 					uni.navigateTo({
-						url: `/pages/patternOfPayment/patternOfPayment`
+						url: `/pagesMine/patternOfPayment/patternOfPayment`
 					})
 				}else{
 					uni.showToast({
@@ -137,7 +137,7 @@
 			toCustomerLevel(){
 				if(this.$store.state.authority.join(",").indexOf('customer_level') != -1){
 					uni.navigateTo({
-						url: `/pages/customerLevel/customerLevel`
+						url: `/pagesMine/customerLevel/customerLevel`
 					})
 				}else{
 					uni.showToast({
@@ -152,7 +152,7 @@
 			toAutoPromotion(){
 				if(this.$store.state.authority.join(",").indexOf('customer_level_promotion') != -1){
 					uni.navigateTo({
-						url: `/pages/businessSetUp/autoPromotion/autoPromotion`
+						url: `/pagesMine/businessSetUp/autoPromotion/autoPromotion`
 					})
 				}else{
 					uni.showToast({
@@ -168,7 +168,7 @@
 			toPointList(){
 				if(this.$store.state.authority.join(",").indexOf('point_setting') != -1){
 					uni.navigateTo({
-						url: `/pages/pointList/pointList`
+						url: `/pagesMine/pointList/pointList`
 					})
 				}else{
 					uni.showToast({
@@ -213,7 +213,7 @@
 			toParamSetting(){
 				if(this.$store.state.authority.join(",").indexOf('param_setting') != -1){
 					uni.navigateTo({
-						url: `/pages/businessSetUp/config/config`
+						url: `/pagesMine/businessSetUp/config/config`
 					})
 				}else{
 					uni.showToast({

@@ -137,32 +137,32 @@
 			// 前往编辑
 			toEditCustomer() {
 				uni.navigateTo({
-					url: `/pages/editMember/editMember?id=${this.id}`
+					url: `/pagesHome/editMember/editMember?id=${this.id}`
 				})
 			},
 
 			// 前往会员充值
 			toRecharge() {
 				uni.navigateTo({
-					url: '/pages/recharge/recharge?obj=' + encodeURIComponent(JSON.stringify(this.form))
+					url: '/pagesHome/recharge/recharge?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
 			// 前往密码设置
 			toPasswordSetup() {
 				uni.navigateTo({
-					url: `/pages/customer/passwordSetup/passwordSetup?id=${this.id}&password=${this.form.password}`
+					url: `/pagesHome/customer/passwordSetup/passwordSetup?id=${this.id}&password=${this.form.password}`
 				})
 			},
 			// 前往余额调整
 			toBalanceAdjust() {
 				uni.navigateTo({
-					url: '/pages/balanceAdjust/balanceAdjust?obj=' + encodeURIComponent(JSON.stringify(this.form))
+					url: '/pagesHome/balanceAdjust/balanceAdjust?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
 			// 前往积分调整
 			toPointAdjust() {
 				uni.navigateTo({
-					url: '/pages/pointAdjust/pointAdjust?obj=' + encodeURIComponent(JSON.stringify(this.form))
+					url: '/pagesHome/pointAdjust/pointAdjust?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
 			// 前往积分兑换
@@ -171,40 +171,39 @@
 					specificationOfGoods: []
 				})
 				uni.navigateTo({
-					url: '/pages/customer/pointExchange/pointExchange?obj=' + encodeURIComponent(JSON.stringify(this.form))
+					url: '/pagesHome/customer/pointExchange/pointExchange?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
 			// 前往积分
 			toPointLog() {
 				uni.navigateTo({
-					url: '/pages/pointLog/pointLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
+					url: '/pagesHome/pointLog/pointLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
 			// 前往会员挂失
 			toCustomerBan() {
 				uni.navigateTo({
-					url: '/pages/customerBan/customerBan?obj=' + encodeURIComponent(JSON.stringify(this.form))
+					url: '/pagesHome/customerBan/customerBan?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
 			// 前往欠款记录
 			toDebtLog() {
 				uni.navigateTo({
-					url: '/pages/repayment/repayment?obj=' + encodeURIComponent(JSON.stringify(this.form))
+					url: '/pagesHome/repayment/repayment?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 				
 			},
 			// 前往消费记录
 			toConsumeLog() {
 				uni.navigateTo({
-					url: '/pages/customer/consumeLog/consumeLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
+					url: '/pagesHome/customer/consumeLog/consumeLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 				
 			},
 			// 前往余额
 			toBalanceLog() {
-
 				uni.navigateTo({
-					url: '/pages/balanceLog/balanceLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
+					url: '/pagesHome/balanceLog/balanceLog?obj=' + encodeURIComponent(JSON.stringify(this.form))
 				})
 			},
 
