@@ -1,0 +1,6 @@
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pagesHome/common/vendor"],{370:
+/*!*******************************************************************!*\
+  !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/discount.js ***!
+  \*******************************************************************/
+/*! no static exports found */function(t,n,u){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.discountDel=n.discountEdit=n.discountAdd=n.discountList=void 0;var e=o(u(/*! @/js_sdk/app-request/requestConfig */37));function o(t){return t&&t.__esModule?t:{default:t}}var c=function(t){return e.default.get("/discount/list",t).then((function(t){return t})).catch((function(t){return t}))};n.discountList=c;var i=function(t){return e.default.post("/discount/add",t).then((function(t){return t})).catch((function(t){return t}))};n.discountAdd=i;var r=function(t,n){return e.default.post("/discount/edit/"+t,n).then((function(t){return t})).catch((function(t){return t}))};n.discountEdit=r;var d=function(t){return e.default.post("/discount/del/"+t).then((function(t){return t})).catch((function(t){return t}))};n.discountDel=d}}]);
+//# sourceMappingURL=../../../.sourcemap/mp-weixin/pagesHome/common/vendor.js.map

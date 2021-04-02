@@ -96,8 +96,10 @@
 							page_size: this.page_size,
 							...this.refer_data
 						});
-						this.list[this.current].push(...res.data)
-						this.last_page[this.current] = res.last_page
+						this.$nextTick(()=>{
+							this.list[this.current].push(...res.data)
+							this.last_page[this.current] = res.last_page
+						})
 					} else if (this.current == 1) {
 						let res = await checkList({
 							status: 0,
@@ -106,8 +108,10 @@
 							...this.refer_data
 				
 						});
-						this.list[this.current].push(...res.data)
-						this.last_page[this.current] = res.last_page
+						this.$nextTick(()=>{
+							this.list[this.current].push(...res.data)
+							this.last_page[this.current] = res.last_page
+						})
 					} else {
 						let res = await checkList({
 							status: 2,
@@ -115,8 +119,10 @@
 							page_size: this.page_size,
 							...this.refer_data
 						});
-						this.list[this.current].push(...res.data)
-						this.last_page[this.current] = res.last_page
+						this.$nextTick(()=>{
+							this.list[this.current].push(...res.data)
+							this.last_page[this.current] = res.last_page
+						})
 					}
 					this.$forceUpdate()
 				}

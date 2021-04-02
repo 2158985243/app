@@ -3,13 +3,18 @@
 		<view class="mains">
 			<view class="box">
 				<view class="form_item">
+					<view class="left">
+						
 					<text>调出店铺</text>
 					<u-input placeholder='请选择调出店铺' @click="toStore(0)" :disabled='true' v-model="from_store_name" type="text" />
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>调入店铺</text>
 					<u-input placeholder='请选择调入店铺' @click="toStore(1)" :disabled='true' v-model="to_store_name" type="text" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
@@ -63,14 +68,18 @@
 			</view>
 			<view class="box ">
 				<view class="form_item">
+					<view class="left">
 					<text>业务时间</text>
 					<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.business_time" type="text" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :default-time="form.business_time" :params="params"></u-picker>
 				<view class="form_item">
+					<view class="left">
 					<text>备注</text>
 					<u-input v-model="form.remarks" type="text" />
+				</view>
 				</view>
 			</view>
 
@@ -845,7 +854,9 @@
 
 		.box {
 			margin-bottom: 20rpx;
-
+			width: 100%;
+			display: flex;
+			flex-direction: column;
 			.other-expenses {
 				width: 100%;
 				display: flex;
@@ -901,13 +912,18 @@
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
-
+				width: 100%;
+				justify-content: space-between;
 				text {
 					width: 220rpx;
 					// text-align: left;
 					padding-left: 20rpx;
 				}
-
+				.left{
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+				}
 				.min_exchange {
 					width: 150rpx;
 				}

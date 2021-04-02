@@ -3,9 +3,9 @@
 		<view class="box">
 			<view class="item-list">
 				<text>消费</text>
-				<u-input v-model="money" class="borders" placeholder="" :clearable="false" type="number" />
-				<text>元，获得</text>
-				<u-input v-model="point" class="borders" placeholder="" :clearable="false" type="number" />
+				<u-input v-model="money" class="borders" placeholder=" " :clearable="false" type="number" />
+				<text>元,获得</text>
+				<u-input v-model="point" class="borders" placeholder=" " :clearable="false" type="number" />
 				<text>积分</text>
 			</view>
 			<view class="item-checked">
@@ -89,26 +89,25 @@
 		}
 
 		.box {
-			width: 100%;
+			width: 100vw;
 			display: flex;
 			flex-direction: column;
 
 			.item-list {
+				width: 100vw;
 				display: flex;
 				flex-direction: row;
 				align-items: center;
-				justify-content: center;
 				background-color: #FFFFFF;
 				padding: 20rpx;
 				padding-right: 35%;
 				border-bottom: 0.01rpx solid #EEEEEE;
-
-				// /deep/.u-input__input{
-				// 	width: 100rpx !important;
-				// 	border-bottom: 1rpx solid #007AFF;
-				// }
+				
+				/deep/.u-input__input{
+					width: 100rpx !important;
+					border-bottom: 1rpx solid #007AFF;
+				}
 				/deep/.uni-input-input {
-					// width: 100rpx !important;
 					border-bottom: 1rpx solid #007AFF;
 					text-indent: 0.5em;
 				}

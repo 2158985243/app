@@ -1186,7 +1186,7 @@
 			width: 94%;
 			margin: 0 auto;
 			background-color: #FFFFFF;
-			margin-top: calc(200rpx + var(--status-bar-height));
+			margin-top: calc(198rpx + var(--status-bar-height));
 			border-radius: 20rpx;
 			display: flex;
 			flex-direction: column;
@@ -1215,7 +1215,7 @@
 			align-items: center;
 			padding: 20rpx;
 			position: fixed;
-			top: calc(84rpx + var(--status-bar-height));
+			top: calc(78rpx + var(--status-bar-height));
 			z-index: 99;
 
 			.select-left {
@@ -1266,7 +1266,7 @@
 			.nav-header {
 				width: 100%;
 				position: sticky;
-				top: calc(204rpx + var(--status-bar-height));
+				top: calc(198rpx + var(--status-bar-height));
 				display: flex;
 				flex-direction: column;
 				z-index: 99;

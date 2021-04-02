@@ -9,19 +9,19 @@
 		<view class="box">
 			<view class="form_item">
 				<text>入库单号</text>
-				<u-input placeholder='' :disabled='true' v-model="form.number" type="number" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.number" type="number" />
 			</view>
 			<view class="form_item">
 				<text>业务时间</text>
-				<u-input placeholder='' :disabled='true' v-model="form.business_time" type="text" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.business_time" type="text" />
 			</view>
 			<view class="form_item" >
 				<text>供应商</text>
-				<u-input placeholder='' :disabled='true' v-model="form.supplier.name" type='text' />
+				<u-input placeholder=' ' :disabled='true' v-model="form.supplier.name" type='text' />
 			</view>
 			<view class="form_item" >
 				<text>店铺</text>
-				<u-input placeholder='' :disabled='true' v-model="form.store.name" type='text' />
+				<u-input placeholder=' ' :disabled='true' v-model="form.store.name" type='text' />
 			</view>
 		</view>
 		<!--  -->
@@ -71,33 +71,33 @@
 		<view class="box">
 			<view class="form_item">
 				<text>优惠金额</text>
-				<u-input placeholder='' :disabled='true' v-model="form.discount_amount" type="number" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.discount_amount" type="number" />
 			</view>
 			<view class="form_item">
 				<text>其他金额</text>
-				<u-input placeholder='' :disabled='true' v-model="form.other_expense" type="number" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.other_expense" type="number" />
 			</view>
 			<view class="form_item">
 				<text>应付金额</text>
-				<u-input placeholder='' :disabled='true' v-model="form.goods_amount" type='number' />
+				<u-input placeholder=' ' :disabled='true' v-model="form.goods_amount" type='number' />
 			</view>
 			<view class="form_item">
 				<text>付款账户</text>
-				<u-input placeholder='' :disabled='true' v-model="form.store_account.name" type="text" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.store_account.name" type="text" />
 			</view>
 			<view class="form_item">
 				<text>实付金额</text>
-				<u-input placeholder='' :disabled='true' v-model="form.pay_money" type="number" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.pay_money" type="number" />
 			</view>
 		</view>
 		<view class="box marbottom">
 			<view class="form_item">
 				<text>制单人</text>
-				<u-input placeholder='' :disabled='true' v-model="form.user.name" type="text" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.user.name" type="text" />
 			</view>
 			<view class="form_item">
 				<text>备注</text>
-				<u-input placeholder='' :disabled='true' v-model="form.remarks" type="text" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.remarks" type="text" />
 			</view>
 			
 		</view>

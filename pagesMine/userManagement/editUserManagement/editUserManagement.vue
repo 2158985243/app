@@ -2,41 +2,61 @@
 	<view class="editUserManagement">
 		<view class="box">
 			<view class="item-box">
-				<text class="item-title">姓名</text>
-				<u-input placeholder='输入用户姓名' :disabled='is_admin == 1? true:false' v-model="form.name" type="text" />
+				<view class="left">
+					<text class="item-title">姓名</text>
+					<u-input placeholder='输入用户姓名' :disabled='is_admin == 1? true:false' v-model="form.name"
+						type="text" />
+				</view>
 			</view>
 			<view class="item-box">
-				<text class="item-title">账号</text>
-				<u-input placeholder='输入用户登录账号' maxlength='15' :disabled='is_admin == 1? true:false' v-model="form.account" type="text" />
+				<view class="left">
+					<text class="item-title">账号</text>
+					<u-input placeholder='输入用户登录账号' maxlength='15' :disabled='is_admin == 1? true:false'
+						v-model="form.account" type="text" />
+				</view>
 			</view>
 			<view class="item-box">
-				<text class="item-title">密码</text>
-				<u-input placeholder='输入用户登录密码' maxlength='11' :disabled='true' :password-icon="false" v-model="form.password" type="password" />
+				<view class="left">
+					<text class="item-title">密码</text>
+					<u-input placeholder='输入用户登录密码' maxlength='11' :disabled='true' :password-icon="false"
+						v-model="form.password" type="password" />
+				</view>
 				<text class="reset" @click="reset">重置密码</text>
 			</view>
 		</view>
 		<view class="box">
 			<view class="item-box">
-				<text class="item-title">用户权限</text>
-				<u-input placeholder='请选择用户权限' @click='purviewSetting' v-model="purview_name" :disabled='true' type="text" />
+				<view class="left">
+					<text class="item-title">用户权限</text>
+					<u-input placeholder='请选择用户权限' @click='purviewSetting' v-model="purview_name" :disabled='true'
+						type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="item-box">
-				<text class="item-title">店铺权限</text>
-				<u-input placeholder='请选择操作店铺' @click="toStore" v-model="shop" :disabled='true' type="text" />
+				<view class="left">
+					<text class="item-title">店铺权限</text>
+					<u-input placeholder='请选择操作店铺' @click="toStore" v-model="shop" :disabled='true' type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="item-box">
-				<text class="item-title">品牌权限</text>
-				<u-input placeholder='请选择品牌' @tap="toTrademark" v-model="trademark_name" :disabled='true' type="text" />
+				<view class="left">
+					<text class="item-title">品牌权限</text>
+					<u-input placeholder='请选择品牌' @tap="toTrademark" v-model="trademark_name" :disabled='true'
+						type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 		</view>
 
 		<view class="box">
 			<view class="item-box">
-				<text class="item-title">关联员工</text>
-				<u-input placeholder='请选择关联员工' @tap="toSelecSalesperson" v-model="staff" :disabled='true' type="text" />
+				<view class="left">
+					<text class="item-title">关联员工</text>
+					<u-input placeholder='请选择关联员工' @tap="toSelecSalesperson" v-model="staff" :disabled='true'
+						type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 		</view>
@@ -44,7 +64,8 @@
 		<view class="box">
 			<view class="item-w">
 				<text class="item-warning">账号是否启用</text>
-				<u-switch v-model="checked" @change="warning" :disabled='is_admin == 1? true:false' active-value="1" inactive-value="0"></u-switch>
+				<u-switch v-model="checked" @change="warning" :disabled='is_admin == 1? true:false' active-value="1"
+					inactive-value="0"></u-switch>
 			</view>
 			<!-- <view class="kb">
 
@@ -56,7 +77,8 @@
 					重置密码
 				</view>
 				<u-input placeholder='' maxlength='11' :clearable='false' class="inout" height='60' :border='true'
-				 placeholder-style="background-color:#ffffff;" :password-icon="false" v-model="password" type="password" />
+					placeholder-style="background-color:#ffffff;" :password-icon="false" v-model="password"
+					type="password" />
 				<view class="aniu">
 					<view class="qx" @click="show = false">
 						取消
@@ -362,6 +384,7 @@
 		height: 100vh;
 		flex-direction: column;
 		overflow: hidden;
+
 		.box {
 			width: 100%;
 			display: flex;
@@ -378,7 +401,11 @@
 				background-color: #FFFFFF;
 				border-bottom: 0.01rem solid #E5E5E5;
 				padding: 0 20rpx;
-
+				.left{
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+				}
 				.item-title {
 					width: 160rpx;
 					display: flex;

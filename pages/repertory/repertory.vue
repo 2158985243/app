@@ -97,7 +97,7 @@
 						sizerDa: []
 					});
 					uni.navigateTo({
-						url: `/pages/addCommodity/addCommodity`
+						url: `/pagesRepertory/addCommodity/addCommodity`
 					})
 				}else{
 					uni.showToast({
@@ -112,7 +112,7 @@
 			toCommodityManagement(){
 				if(this.$store.state.authority.join(",").indexOf('goods_management') != -1){
 					uni.navigateTo({
-						url: `/pages/commodityManagement/commodityManagement`
+						url: `/pagesRepertory/commodityManagement/commodityManagement`
 					})
 				}else{
 					uni.showToast({
@@ -127,7 +127,7 @@
 			toSupplier(){
 				if(this.$store.state.authority.join(",").indexOf('supplier_management') != -1){
 					uni.navigateTo({
-						url: `/pages/supplier/supplier`
+						url: `/pagesRepertory/supplier/supplier`
 					})
 				}else{
 					uni.showToast({
@@ -142,7 +142,7 @@
 			toAddSupplier(){
 				if(this.$store.state.authority.join(",").indexOf('supplier_management') != -1){
 					uni.navigateTo({
-						url: `/pages/addSupplier/addSupplier`
+						url: `/pagesRepertory/addSupplier/addSupplier`
 					})
 				}else{
 					uni.showToast({
@@ -163,7 +163,7 @@
 						stateGood:false
 					})
 					uni.navigateTo({
-						url: `/pages/purchaseStorage/purchaseStorage`
+						url: `/pagesRepertory/purchaseStorage/purchaseStorage`
 					})
 				}else{
 					uni.showToast({
@@ -182,7 +182,7 @@
 						referDate: obj
 					})
 					uni.navigateTo({
-						url: `/pages/libraryHistory/libraryHistory`
+						url: `/pagesRepertory/libraryHistory/libraryHistory`
 					})
 				}else{
 					uni.showToast({
@@ -201,7 +201,7 @@
 						referDate: obj
 					})
 					uni.navigateTo({
-						url: `/pages/salesReturnHistory/salesReturnHistory`
+						url: `/pagesRepertory/salesReturnHistory/salesReturnHistory`
 					})
 				}else{
 					uni.showToast({
@@ -222,7 +222,7 @@
 						stateGood:false
 					})
 					uni.navigateTo({
-						url: `/pages/addReturn/addReturn`
+						url: `/pagesRepertory/addReturn/addReturn`
 					})
 				}else{
 					uni.showToast({
@@ -243,7 +243,7 @@
 						stateGood:false
 					})
 					uni.navigateTo({
-						url: `/pages/addAllocate/addAllocate`
+						url: `/pagesRepertory/addAllocate/addAllocate`
 					})
 				}else{
 					uni.showToast({
@@ -262,7 +262,7 @@
 						referDate: obj
 					})
 					uni.navigateTo({
-						url: `/pages/allocate/allocate`
+						url: `/pagesRepertory/allocate/allocate`
 					})
 				}else{
 					uni.showToast({
@@ -277,7 +277,7 @@
 			toAddCheck(){
 				if(this.$store.state.authority.join(",").indexOf('stock_check') != -1){
 					uni.navigateTo({
-						url: `/pages/addCheck/addCheck`
+						url: `/pagesRepertory/addCheck/addCheck`
 					})
 				}else{
 					uni.showToast({
@@ -296,7 +296,7 @@
 						referDate: obj
 					})
 					uni.navigateTo({
-						url: `/pages/stockTaking/stockTaking`
+						url: `/pagesRepertory/stockTaking/stockTaking`
 					})
 				}else{
 					uni.showToast({
@@ -311,7 +311,7 @@
 			toExpense(){
 				if(this.$store.state.authority.join(",").indexOf('expend_management') != -1){
 					uni.navigateTo({
-						url: `/pages/expense/expense`
+						url: `/pagesRepertory/expense/expense`
 					})
 				}else{
 					uni.showToast({
@@ -326,7 +326,7 @@
 			toExpenseBook(){
 				if(this.$store.state.authority.join(",").indexOf('expend_management') != -1){
 					uni.navigateTo({
-						url: `/pages/expenseBook/expenseBook`
+						url: `/pagesRepertory/expenseBook/expenseBook`
 					})
 				}else{
 					uni.showToast({
@@ -341,7 +341,7 @@
 			toStockQuantity(){
 				if(this.$store.state.authority.join(",").indexOf('stock_inquire') != -1){
 					uni.navigateTo({
-						url: `/pages/stockQuantity/stockQuantity`
+						url: `/pagesRepertory/stockQuantity/stockQuantity`
 					})
 				}else{
 					uni.showToast({

@@ -15,12 +15,12 @@
 
 				<view class="form_item">
 					<text>业务时间</text>
-					<u-input placeholder='' :disabled='true' v-model="scopes_name" type="text" />
+					<u-input placeholder=' ' :disabled='true' v-model="scopes_name" type="text" />
 				</view>
 				<u-action-sheet :list="scopes" @click="scopeItem" v-model="show"></u-action-sheet>
 				<view class="form_item">
 					<text>店铺</text>
-					<u-input placeholder='' :disabled='true' v-model="shop" type="text" />
+					<u-input placeholder=' ' :disabled='true' v-model="shop" type="text" />
 				</view>
 			</view>
 			<!-- 中部 -->

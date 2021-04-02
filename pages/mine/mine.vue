@@ -107,19 +107,19 @@
 			// 前往账户信息
 			toInformation(){
 				uni.navigateTo({
-					url: `/pages/information/information`
+					url: `/pagesMine/information/information`
 				})
 			},
 			// 前往营业设置
 			toBusinessSetUp(){
 				uni.navigateTo({
-					url: `/pages/businessSetUp/businessSetUp`
+					url: `/pagesMine/businessSetUp/businessSetUp`
 				})
 			},
 			// 前往修改密码
 			toChangePassPword(){
 				uni.navigateTo({
-					url: `/pages/changePassPword/changePassPword`
+					url: `/pagesMine/changePassPword/changePassPword`
 				})
 			},
 			async init() {

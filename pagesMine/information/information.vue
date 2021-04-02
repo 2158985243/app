@@ -215,7 +215,6 @@
 				}
 			},
 			headerImg() {
-				
 				this.$u.route({
 					// 关于此路径，请见下方"注意事项"
 					url: '/pages/avatar/u-avatar-cropper',

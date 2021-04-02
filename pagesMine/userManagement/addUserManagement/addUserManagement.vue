@@ -2,40 +2,55 @@
 	<view class="addUserManagement">
 		<view class="box">
 			<view class="item-box">
+				<view class="left">
+					
 				<text class="item-title">姓名</text>
 				<u-input placeholder='输入用户姓名' v-model="form.name" type="text" />
+				</view>
 			</view>
 			<view class="item-box">
+				<view class="left">
 				<text class="item-title">账号</text>
 				<u-input placeholder='输入用户登录账号' maxlength='15' v-model="form.account" type="text" />
 			</view>
+			</view>
 			<view class="item-box">
+				<view class="left">
 				<text class="item-title">密码</text>
 				<u-input placeholder='输入用户登录密码' maxlength='11' v-model="form.password" type="password" />
+			</view>
 			</view>
 		</view>
 		<view class="box">
 			<view class="item-box">
+				<view class="left">
 				<text class="item-title">用户权限</text>
 				<u-input placeholder='请选择用户权限' @click='purviewSetting' v-model="purview_name" :disabled='true' type="text" />
+			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="item-box">
+				<view class="left">
 				<text class="item-title">店铺权限</text>
 				<u-input placeholder='请选择操作店铺' @click="toStore" v-model="shop" :disabled='true' type="text" />
+			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="item-box">
+				<view class="left">
 				<text class="item-title">品牌权限</text>
 				<u-input placeholder='请选择品牌' @tap="toTrademark" v-model="trademark_name" :disabled='true' type="text" />
+			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 		</view>
 
 		<view class="box">
 			<view class="item-box">
+				<view class="left">
 				<text class="item-title">关联员工</text>
 				<u-input placeholder='请选择关联员工' @tap="toSelecSalesperson" v-model="staff" :disabled='true' type="text" />
+			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 		</view>
@@ -222,7 +237,11 @@
 				background-color: #FFFFFF;
 				border-bottom: 0.01rem solid #E5E5E5;
 				padding: 0 20rpx;
-
+				.left{
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+				}
 				.item-title {
 					width: 160rpx;
 					display: flex;

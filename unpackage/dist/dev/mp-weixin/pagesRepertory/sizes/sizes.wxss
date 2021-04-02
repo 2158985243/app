@@ -1,0 +1,149 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.sizes .active.data-v-70456c08 {
+  background-color: #8fbff9 !important;
+}
+.sizes .btn1.data-v-70456c08 {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 99;
+  border-radius: 0 !important;
+}
+.sizes .check-box.data-v-70456c08 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  padding: 10rpx 30rpx;
+}
+.sizes .check-box .check-add.data-v-70456c08 {
+  width: 80rpx;
+  height: 50rpx;
+  border: 1rpx dashed #00aaff;
+  border-radius: 10rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  margin: 10rpx 0;
+}
+.sizes .check-box .check-list.data-v-70456c08 {
+  width: 80rpx;
+  margin: 10rpx 0;
+  height: 50rpx;
+  border-radius: 10rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  background-color: #e8eefc;
+  margin-right: 20rpx;
+}
+.sizes .pop.data-v-70456c08 {
+  width: 70vw;
+  height: 15vh;
+}
+.sizes .pop .titl.data-v-70456c08 {
+  display: block;
+  width: 100%;
+  font-size: 28rpx;
+  padding: 20rpx;
+  text-align: center;
+}
+.sizes .pop .del.data-v-70456c08 {
+  display: block;
+  width: 100%;
+  padding-top: 100rpx;
+  text-align: center;
+}
+.sizes .pop .inputs.data-v-70456c08 {
+  width: 80%;
+  margin: 20rpx auto;
+}
+.sizes .btnChild.data-v-70456c08 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  border-radius: 0 !important;
+}
+.sizes .btn.data-v-70456c08 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.sizes .nav.data-v-70456c08 {
+  text-align: center;
+  padding: 10rpx 0;
+  color: #C0C0C0;
+}
+.sizes .font.data-v-70456c08 {
+  padding-right: 20rpx;
+  font-size: 24rpx;
+  color: #FFFFFF;
+}
+.sizes .u-checkbox-group.data-v-70456c08 {
+  width: 100%;
+  height: 80rpx;
+  padding: 0 20rpx;
+  background-color: #e3e3e3;
+  display: block !important;
+}
+.sizes .u-checkbox-group .u-checkbox.data-v-70456c08 {
+  float: left;
+  line-height: 80rpx;
+}
+.sizes .u-checkbox-group .edit-icon.data-v-70456c08 {
+  float: right;
+  line-height: 80rpx;
+}
+.sizes .u-checkbox-group .edit-icon .icon.data-v-70456c08 {
+  margin-left: 30rpx;
+}
+

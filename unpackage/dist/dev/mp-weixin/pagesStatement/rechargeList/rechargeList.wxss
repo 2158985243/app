@@ -1,0 +1,305 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.rechargeList.data-v-76ccf24e {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  position: relative;
+  min-height: 100%;
+}
+.rechargeList .right_icon.data-v-76ccf24e {
+  margin-right: 30rpx;
+}
+.rechargeList .slot-wrap.data-v-76ccf24e {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  width: 95%;
+  /* 如果您想让slot内容占满整个导航栏的宽度 */
+  /* flex: 1; */
+  /* 如果您想让slot内容与导航栏左右有空隙 */
+  /* padding: 0 30rpx; */
+}
+.rechargeList.data-v-76ccf24e .u-border-bottom:after {
+  border: none;
+}
+.rechargeList .active.data-v-76ccf24e {
+  color: #007AFF;
+}
+.rechargeList .dates-time.data-v-76ccf24e {
+  width: 100%;
+  height: calc(100% - 140rpx - 25px);
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: calc(140rpx + 25px);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+}
+.rechargeList .dates-time .time-list.data-v-76ccf24e {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  height: 60rpx;
+  background-color: #FFFFFF;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.rechargeList .nav.data-v-76ccf24e {
+  width: 100%;
+  height: 140rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  background-color: #2979ff;
+  color: #FFFFFF;
+}
+.rechargeList .nav .nav-date.data-v-76ccf24e {
+  width: 240rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.rechargeList .nav .nav-date .down-fill-right.data-v-76ccf24e {
+  width: 2rpx;
+  height: 50%;
+  background-color: #FFFFFF;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  margin-left: 20rpx;
+}
+.rechargeList .nav .nav-date .date.data-v-76ccf24e {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.rechargeList .nav .nav-item.data-v-76ccf24e {
+  width: calc(100% - 260rpx);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.rechargeList .nav .nav-item .nav-money.data-v-76ccf24e {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.rechargeList .list.data-v-76ccf24e {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.rechargeList .list .li.data-v-76ccf24e {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  background-color: #FFFFFF;
+}
+.rechargeList .list .li .li-nav.data-v-76ccf24e {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  padding: 10rpx;
+  background-color: #E6E4E5;
+}
+.rechargeList .list .li .li-list.data-v-76ccf24e {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  border-bottom: 0.01rem solid #E5E5E5;
+  padding: 20rpx;
+  background-color: #FFFFFF;
+}
+.rechargeList .list .li .li-list .left.data-v-76ccf24e {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+}
+.rechargeList .list .li .li-list .left .left-it.data-v-76ccf24e {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  padding-left: 10rpx;
+}
+.rechargeList .list .li .li-list .left .left-it .item-name.data-v-76ccf24e {
+  padding-bottom: 20rpx;
+  color: #151515;
+}
+.rechargeList .list .li .li-list .left .left-it .item-time.data-v-76ccf24e {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+}
+.rechargeList .list .li .li-list .left .left-it .item-time .lan.data-v-76ccf24e {
+  background-color: #007AFF;
+  color: #FFFFFF;
+  font-size: 20rpx;
+  border-radius: 10rpx;
+  padding: 5rpx;
+  margin-right: 10rpx;
+}
+.rechargeList .list .li .li-list .right.data-v-76ccf24e {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+}
+.rechargeList .list .li .li-list .right .rg-item.data-v-76ccf24e {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  position: relative;
+}
+.rechargeList .list .li .li-list .right text.data-v-76ccf24e {
+  text-align: right;
+}
+.rechargeList .list .li .li-list .right .lan.data-v-76ccf24e {
+  color: #007AFF;
+}
+.rechargeList .list .li .li-list .right .red.data-v-76ccf24e {
+  color: #FF5A5F;
+}
+.rechargeList .list .li .li-list .right .right-name.data-v-76ccf24e {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 200rpx;
+  font-size: 20rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

@@ -14,25 +14,25 @@
 		<view class="box ">
 			<view class="form_item">
 				<text>项目</text>
-				<u-input placeholder='' :disabled='true' v-model="form.expend_item.name" type="text" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.expend_item.name" type="text" />
 			</view>
 			<view class="form_item">
 				<text>账户</text>
-				<u-input placeholder='' :disabled='true' v-model="form.account.name" type="text" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.account.name" type="text" />
 			</view>
 		</view>
 		<view class="box ">
 			<view class="form_item">
 				<text>经手人</text>
-				<u-input placeholder='' :disabled='true' v-model="form.user.name" type="text" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.user.name" type="text" />
 			</view>
 			<view class="form_item">
 				<text>日期</text>
-				<u-input placeholder='' :disabled='true' v-model="form.business_time" type="text" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.business_time" type="text" />
 			</view>
 			<view class="form_item">
 				<text>备注</text>
-				<u-input placeholder='' :disabled='true' v-model="form.remarks" type="text" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.remarks" type="text" />
 			</view>
 		</view>
 		<view class="btn" @click="del">
@@ -136,8 +136,16 @@
 			},
 			async init(id) {
 				let res = await expendLog(id);
-				console.log(res);
 				this.form = res
+				if(this.form.user==null){
+					this.form.user.name = ''
+				}
+				if(this.form.account==null){
+					this.form.account.name = ''
+				}
+				if(this.form.expend_item==null){
+					this.form.expend_item.name = ''
+				}
 			},
 			async del() {
 				let _this = this

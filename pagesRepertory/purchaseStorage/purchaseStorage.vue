@@ -3,13 +3,18 @@
 		<view class="mains">
 			<view class="box">
 				<view class="form_item">
-					<text>供应商</text>
-					<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier" type="text" />
+					<view class="left">
+						<text>供应商</text>
+						<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier"
+							type="text" />
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
-					<text>店铺</text>
-					<u-input placeholder='请选择店铺' @click="toStore" :disabled='true' v-model="shop" type="text" />
+					<view class="left">
+						<text>店铺</text>
+						<u-input placeholder='请选择店铺' @click="toStore" :disabled='true' v-model="shop" type="text" />
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
@@ -25,7 +30,8 @@
 			<view class="shopping-boxs" v-if="shopping.length>0">
 				<view class="shopping-cart" v-for="(item,index) in shopping" :key="index">
 					<view class="headers" v-if="item.goodsData[0]">
-						<u-image width="140rpx" height="140rpx" mode='aspectFit' border-radius='20' :src="$imgFn(item.goodsData[0].goodsOf.main_image)"></u-image>
+						<u-image width="140rpx" height="140rpx" mode='aspectFit' border-radius='20'
+							:src="$imgFn(item.goodsData[0].goodsOf.main_image)"></u-image>
 						<view class="substance" @click="showgd(item,index)">
 							<view class="goodsNews">
 								<text class="goods-name">{{item.goodsData[0].goodsOf.name}}</text>
@@ -39,8 +45,10 @@
 						<view class="sp-color-size" v-if="itemColor.quantity>0">
 							<view class="shopp-color">
 								<text class="color-name">{{itemColor.name}}</text>
-								<text class="color-mn" v-if="goodsMoney[index]">&yen;{{goodsMoney[index].moneys[indexColor]}}</text>
-								<u-icon name="edit-pen-fill" @click="showAmend(index,indexColor)" color="#a8a8a8" size="40"></u-icon>
+								<text class="color-mn"
+									v-if="goodsMoney[index]">&yen;{{goodsMoney[index].moneys[indexColor]}}</text>
+								<u-icon name="edit-pen-fill" @click="showAmend(index,indexColor)" color="#a8a8a8"
+									size="40"></u-icon>
 								<text class="color-quantity">x{{itemColor.quantity}}</text>
 							</view>
 							<view class="sp-size-name-quantity">
@@ -51,7 +59,8 @@
 								</block>
 							</view>
 							<view class="sp-size-name-quantity">
-								<block v-for="(itemSizeQuantity,indexSizeQuantity) in itemColor.data" :key="indexSizeQuantity">
+								<block v-for="(itemSizeQuantity,indexSizeQuantity) in itemColor.data"
+									:key="indexSizeQuantity">
 									<view class="sp-size" v-if="itemSizeQuantity.quantity>0">
 										<text class="sp-size-quantity">{{itemSizeQuantity.quantity}}</text>
 									</view>
@@ -63,8 +72,10 @@
 			</view>
 			<view class="box">
 				<view class="form_item">
-					<text>商品金额</text>
-					<text>{{goodsAmount}}</text>
+					<view class="left">
+						<text>商品金额</text>
+						<text>{{goodsAmount}}</text>
+					</view>
 				</view>
 				<view class="other-expenses">
 					<view class="green"><text>优惠金额</text></view>
@@ -105,35 +116,49 @@
 			</u-popup>
 			<view class="box">
 				<view class="form_item">
-					<text>付款账户</text>
-					<u-input placeholder='请选择付款账户' @tap="toSelectAccount" :disabled='true' v-model="account" type="text" />
+					<view class="left">
+						<text>付款账户</text>
+						<u-input placeholder='请选择付款账户' @tap="toSelectAccount" :disabled='true' v-model="account"
+							type="text" />
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
-					<text>付款金额</text>
-					<u-input v-model="form.pay_money" placeholder='请输入付款金额' type="text" />
+					<view class="left">
+						<text>付款金额</text>
+						<u-input v-model="form.pay_money" placeholder='请输入付款金额' type="text" />
+					</view>
 				</view>
 				<view class="form_item">
-					<text>欠供应商款</text>
-					<u-input v-model="arrears" :disabled='true' type="text" />
+					<view class="left">
+						<text>欠供应商款</text>
+						<u-input v-model="arrears" :disabled='true' type="text" />
+					</view>
 				</view>
 			</view>
 
 			<view class="box ">
 				<view class="form_item">
-					<text>业务时间</text>
-					<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.business_time" type="text" />
+					<view class="left">
+						<text>业务时间</text>
+						<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.business_time"
+							type="text" />
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
-				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :default-time="form.business_time" :params="params"></u-picker>
+				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :default-time="form.business_time"
+					:params="params"></u-picker>
 				<view class="form_item">
-					<text>备注</text>
-					<u-input v-model="form.remarks" type="text" />
+					<view class="left">
+						<text>备注</text>
+						<u-input v-model="form.remarks" type="text" />
+					</view>
 				</view>
 			</view>
 			<view class="foot">
 				<view class="total">
-					合计：{{numberUnits}}件<text class="orgin-money"> &yen;{{goodsAmount-Number(form.discount_amount)+Number(form.other_expense)}}</text>
+					合计：{{numberUnits}}件<text class="orgin-money">
+						&yen;{{goodsAmount-Number(form.discount_amount)+Number(form.other_expense)}}</text>
 				</view>
 				<view class="sub">
 					<view class="btnon1" @click="save(0)">
@@ -149,7 +174,8 @@
 				<view class="specification">
 					<view class="goods-of" v-if="goodsDetails[0]">
 						<!-- mode='aspectFit'  -->
-						<u-image width="140rpx" height="140rpx" border-radius='20' :src="$imgFn(goodsDetails[0].goodsOf.main_image)"></u-image>
+						<u-image width="140rpx" height="140rpx" border-radius='20'
+							:src="$imgFn(goodsDetails[0].goodsOf.main_image)"></u-image>
 						<view class="goodsNews">
 							<text class="goods-name">{{goodsDetails[0].goodsOf.name}}</text>
 							<text class="goods-number">{{goodsDetails[0].goodsOf.number}}</text>
@@ -161,7 +187,8 @@
 					<view class="goods-color">
 						<text>颜色</text>
 						<view class="colors">
-							<view class="colorMo" v-for="(item,index) in goodsDetails" :key="index" @click="clickColor(item,index)" :class="active1==index? 'active':''">
+							<view class="colorMo" v-for="(item,index) in goodsDetails" :key="index"
+								@click="clickColor(item,index)" :class="active1==index? 'active':''">
 								<text>{{item.name}}</text>
 								<text class="pos" v-if="item.quantity>0">{{item.quantity}}</text>
 							</view>
@@ -174,14 +201,18 @@
 								<view class="size-box-list once">
 									<text class="listed">尺码</text>
 									<text class="listed">当前库存</text>
-									<u-number-box class="listed" v-model="item.valNew" size="24" input-width="60" input-height="40" :min="0"
-									 @change="valChangeAll($event,item,index)"></u-number-box>
+									<u-number-box class="listed" v-model="item.valNew" size="24" input-width="60"
+										input-height="40" :min="0" @change="valChangeAll($event,item,index)">
+									</u-number-box>
 								</view>
-								<view class="size-box-list" v-for="(item1,index1) in item.data" :key="index1" @click="clickSize(item1,index1)">
+								<view class="size-box-list" v-for="(item1,index1) in item.data" :key="index1"
+									@click="clickSize(item1,index1)">
 									<text class="listed">{{item1.size.name}}</text>
-									<text class="listed" v-if="item1.goods_spec_info">{{item1.goods_spec_info.stock}}</text>
-									<u-number-box class="listed" v-model="item1.quantity" size="24" input-width="60" input-height="40" :min="0"
-									 @change="valChange($event,index,index1)"></u-number-box>
+									<text class="listed"
+										v-if="item1.goods_spec_info">{{item1.goods_spec_info.stock}}</text>
+									<u-number-box class="listed" v-model="item1.quantity" size="24" input-width="60"
+										input-height="40" :min="0" @change="valChange($event,index,index1)">
+									</u-number-box>
 								</view>
 							</view>
 						</view>
@@ -470,7 +501,7 @@
 					})
 					let res = await purchaseStorageAdd(this.form);
 					if (!res.code) {
-						uni.$emit('purchaseStorage',true)
+						uni.$emit('purchaseStorage', true)
 						uni.navigateBack()
 					}
 				}
@@ -923,6 +954,9 @@
 
 		.box {
 			margin-bottom: 20rpx;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
 
 			.other-expenses {
 				width: 100%;
@@ -979,11 +1013,19 @@
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
+				width: 100%;
+				justify-content: space-between;
 
 				text {
 					width: 220rpx;
 					// text-align: left;
 					padding-left: 20rpx;
+				}
+
+				.left {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
 				}
 
 				.min_exchange {

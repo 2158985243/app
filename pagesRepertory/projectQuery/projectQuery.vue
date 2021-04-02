@@ -7,18 +7,28 @@
 		</u-navbar>
 		<view class="box ">
 			<view class="form_item">
-				<text>支出项目</text>
-				<u-input placeholder='请选择项目' :disabled='true' @click="toAddArticle" v-model="expend_item" type="text" />
+				<view class="left">
+
+					<text>支出项目</text>
+					<u-input placeholder='请选择项目' :disabled='true' @click="toAddArticle" v-model="expend_item"
+						type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
-				<text>支出账户</text>
-				<u-input placeholder='请选择支出账户' :disabled='true' @tap="toSelectAccount" v-model="account" type="text" />
+				<view class="left">
+					<text>支出账户</text>
+					<u-input placeholder='请选择支出账户' :disabled='true' @tap="toSelectAccount" v-model="account"
+						type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
-				<text>经手人</text>
-				<u-input placeholder='请选择经手人' :disabled='true' @tap="toSelecSalesperson" v-model="user" type="text" />
+				<view class="left">
+					<text>经手人</text>
+					<u-input placeholder='请选择经手人' :disabled='true' @tap="toSelecSalesperson" v-model="user"
+						type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 		</view>
@@ -137,7 +147,9 @@
 
 		.box {
 			margin-bottom: 20rpx;
-
+			width: 100%;
+			display: flex;
+			flex-direction: column;
 			.other-expenses {
 				width: 100%;
 				display: flex;
@@ -193,7 +205,14 @@
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
-
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+				.left{
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+				}
 				text {
 					width: 220rpx;
 					// text-align: left;

@@ -4,19 +4,27 @@
 			<!-- 中上部分 -->
 			<view class="box">
 				<view class="form_item">
-					<text>店铺</text>
-					<u-input placeholder='请选择店铺' @click="toStore" :disabled='true' v-model="shop" type="text" />
+					<view class="left">
+
+						<text>店铺</text>
+						<u-input placeholder='请选择店铺' @click="toStore" :disabled='true' v-model="shop" type="text" />
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
-					<text>盘点范围</text>
-					<u-input placeholder='请选择盘点范围' @tap="inventoryRange" :disabled='true' v-model="scopes_name" type="text" />
+					<view class="left">
+						<text>盘点范围</text>
+						<u-input placeholder='请选择盘点范围' @tap="inventoryRange" :disabled='true' v-model="scopes_name"
+							type="text" />
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<u-action-sheet :list="scopes" @click="scopeItem" v-model="show"></u-action-sheet>
 				<view class="form_item" @tap="toNoInventory">
-					<text>未盘点商品</text>
-					<view class="lan" >查看未盘点商品</view>
+					<view class="left">
+						<text>未盘点商品</text>
+						<view class="lan">查看未盘点商品</view>
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
@@ -25,8 +33,8 @@
 				<view class="list">
 					<text class="child" v-for="(item,index) in list" :key="index">{{item}}</text>
 				</view>
-				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in bill" :key="index" @click="click" @open="open"
-				 :options="options">
+				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in bill" :key="index"
+					@click="click" @open="open" :options="options">
 					<view class="item u-border-bottom">
 						<view class="list title-wrap">
 							<text class="itemname"><text class="font">{{userName}}</text> {{'(子单'+(index+1)+')'}}</text>
@@ -139,7 +147,8 @@
 					// 汇总
 					if (this.form.check_list_ids.length > 0) {
 						uni.navigateTo({
-							url: '/pagesRepertory/inventoryPreview/inventoryPreview?obj=' + encodeURIComponent(JSON.stringify(this.form))
+							url: '/pagesRepertory/inventoryPreview/inventoryPreview?obj=' + encodeURIComponent(
+								JSON.stringify(this.form))
 						})
 					} else {
 						this.$u.toast(`单据未保存!`);
@@ -149,7 +158,7 @@
 					this.form.status = 0;
 					let res = await checkAdd(this.form)
 					if (!res.code) {
-						uni.$emit('stockTaking',true)
+						uni.$emit('stockTaking', true)
 						uni.navigateBack()
 					}
 				}
@@ -157,14 +166,15 @@
 			// 未盘点
 			toNoInventory() {
 				let item = {
-					check_list_id:this.bill[0].id,
-					remarks:this.bill[0].remarks,
-					quantity:this.bill[0].quantity,
-					check_list_ids:this.form.check_list_ids,
-					store_id:this.form.store_id
+					check_list_id: this.bill[0].id,
+					remarks: this.bill[0].remarks,
+					quantity: this.bill[0].quantity,
+					check_list_ids: this.form.check_list_ids,
+					store_id: this.form.store_id
 				}
 				uni.navigateTo({
-					url: '/pagesRepertory/addCheck/noInventory/noInventory?item='+ encodeURIComponent(JSON.stringify(item))
+					url: '/pagesRepertory/addCheck/noInventory/noInventory?item=' + encodeURIComponent(JSON
+						.stringify(item))
 				})
 			},
 			// 点击了某一项
@@ -206,7 +216,7 @@
 			uni.$off()
 		},
 		onLoad() {
-			
+
 			this.init()
 			uni.$on("gloEvent", (res) => {
 				if (res) {
@@ -240,7 +250,7 @@
 			});
 			uni.$on("noInventory", (res) => {
 				if (res) {
-					if(res.id != this.bill[0].id){
+					if (res.id != this.bill[0].id) {
 						this.form.check_list_ids.push(res.id);
 					}
 					this.bill[0] = {
@@ -253,8 +263,8 @@
 					})
 				}
 			});
-			
-			
+
+
 		}
 	}
 </script>
@@ -281,6 +291,9 @@
 		// 中间部分
 		.box {
 			margin-bottom: 20rpx;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
 
 			.other-expenses {
 				width: 100%;
@@ -337,6 +350,8 @@
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
+				width: 100%;
+				justify-content: space-between;
 
 				text {
 					width: 220rpx;
@@ -344,7 +359,11 @@
 					padding-left: 20rpx;
 				}
 
-
+				.left {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+				}
 
 				.min_exchange {
 					width: 150rpx;

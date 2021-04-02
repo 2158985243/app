@@ -3,13 +3,18 @@
 		<view class="mains">
 			<view class="box">
 				<view class="form_item">
+					<view class="left">
+						
 					<text>供应商</text>
 					<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier" type="text" />
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>店铺</text>
 					<u-input placeholder='请选择店铺' @click="toStore" :disabled='true' v-model="shop" type="text" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
@@ -63,8 +68,10 @@
 			</view>
 			<view class="box">
 				<view class="form_item">
+					<view class="left">
 					<text>商品金额</text>
 					<text>{{goodsAmount}}</text>
+				</view>
 				</view>
 				<view class="other-expenses">
 					<view class="green"><text>优惠金额</text></view>
@@ -105,8 +112,10 @@
 			</u-popup>
 			<view class="box">
 				<view class="form_item">
+					<view class="left">
 					<text>付款账户</text>
 					<u-input placeholder='请选择付款账户' @tap="toSelectAccount" :disabled='true' v-model="account" type="text" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
@@ -114,21 +123,27 @@
 					<u-input v-model="form.pay_money" placeholder='请输入付款金额' type="text" />
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>欠供应商款</text>
 					<u-input v-model="arrears" :disabled='true' type="text" />
+				</view>
 				</view>
 			</view>
 
 			<view class="box ">
 				<view class="form_item">
+					<view class="left">
 					<text>业务时间</text>
 					<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.business_time" type="text" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :default-time="form.business_time" :params="params"></u-picker>
 				<view class="form_item">
+					<view class="left">
 					<text>备注</text>
 					<u-input v-model="form.remarks" type="text" />
+				</view>
 				</view>
 			</view>
 			<view class="foot">
@@ -917,7 +932,9 @@
 
 		.box {
 			margin-bottom: 20rpx;
-
+			width: 100%;
+			display: flex;
+			flex-direction: column;
 			.other-expenses {
 				width: 100%;
 				display: flex;
@@ -973,7 +990,13 @@
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
-
+				width: 100%;
+				justify-content: space-between;
+				.left{
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+				}
 				text {
 					width: 220rpx;
 					// text-align: left;

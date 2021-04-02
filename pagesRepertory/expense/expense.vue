@@ -10,40 +10,52 @@
 				</view>
 			</view>
 			<view class="right">
-				<u-upload width="120" height='120' upload-text='' :limitType='limit' image-mode='aspectFit' :action="action+'/api/upload'"
-				 :header="header" :name="formData.type" :form-data="formData" @on-success="onSuccess" :file-list="fileList"
-				 :auto-upload="true" :max-size="5 * 1024 * 1024" max-count="1" :show-progress="false" @on-error='onError'
-				 del-bg-color='#000000'>
+				<u-upload width="120" height='120' upload-text=' ' :limitType='limit' image-mode='aspectFit'
+					:action="action+'/api/upload'" :header="header" :name="formData.type" :form-data="formData"
+					@on-success="onSuccess" :file-list="fileList" :auto-upload="true" :max-size="5 * 1024 * 1024"
+					max-count="1" :show-progress="false" @on-error='onError' del-bg-color='#000000'>
 				</u-upload>
 			</view>
 		</view>
 		<view class="box ">
 			<view class="form_item">
-				<text>项目</text>
-				<u-input placeholder='' :disabled='true' @click="toAddArticle" v-model="expend_item" type="text" />
+				<view class="left">
+					<text>项目</text>
+					<u-input placeholder=' ' :disabled='true' @click="toAddArticle" v-model="expend_item" type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
-				<text>账户</text>
-				<u-input placeholder='' :disabled='true'  @tap="toSelectAccount" v-model="account" type="text" />
+				<view class="left">
+					<text>账户</text>
+					<u-input placeholder=' ' :disabled='true' @tap="toSelectAccount" v-model="account" type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 		</view>
 		<view class="box ">
 			<view class="form_item">
-				<text>经手人</text>
-				<u-input placeholder='' :disabled='true' @tap="toSelecSalesperson" v-model="user" type="text" />
+				<view class="left">
+					<text>经手人</text>
+					<u-input placeholder=' ' :disabled='true' @tap="toSelecSalesperson" v-model="user" type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
-				<text>日期</text>
-				<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.business_time" type="text" />
+				<view class="left">
+					<text>日期</text>
+					<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.business_time"
+						type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
-			<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :default-time="form.business_time" :params="params"></u-picker>
+			<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :default-time="form.business_time"
+				:params="params"></u-picker>
 			<view class="form_item">
-				<text>备注</text>
-				<u-input placeholder='' v-model="form.remarks" type="text" />
+				<view class="left">
+					<text>备注</text>
+					<u-input placeholder=' ' v-model="form.remarks" type="text" />
+				</view>
 			</view>
 		</view>
 		<view class="compute">
@@ -102,7 +114,9 @@
 
 <script>
 	import urls from '../../api/configuration.js'
-	import {expendLogAdd} from '../../api/expendLog.js'
+	import {
+		expendLogAdd
+	} from '../../api/expendLog.js'
 	export default {
 		data() {
 			return {
@@ -198,21 +212,21 @@
 			// 确定
 			async ensure() {
 				this.form.money = this.res_number
-				if(this.form.money == 0){
+				if (this.form.money == 0) {
 					this.$refs.uToast.show({
 						title: '请输入金额'
 					})
-				}else if(this.form.expend_item_id == 0){
+				} else if (this.form.expend_item_id == 0) {
 					this.$refs.uToast.show({
 						title: '请选择支出项目'
 					})
-				}else if(this.form.account_id == 0){
+				} else if (this.form.account_id == 0) {
 					this.$refs.uToast.show({
 						title: '请选择账户'
 					})
-				}else{
+				} else {
 					let res = await expendLogAdd(this.form)
-					if(!res.code){
+					if (!res.code) {
 						uni.navigateBack()
 					}
 				}
@@ -353,7 +367,9 @@
 
 		.box {
 			margin-bottom: 20rpx;
-
+			width: 100%;
+			display: flex;
+			flex-direction: column;
 			.other-expenses {
 				width: 100%;
 				display: flex;
@@ -409,13 +425,18 @@
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
-
+				width: 100%;
+				justify-content: space-between;
 				text {
 					width: 220rpx;
 					// text-align: left;
 					padding-left: 20rpx;
 				}
-
+				.left{
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+				}
 				.min_exchange {
 					width: 150rpx;
 				}

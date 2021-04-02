@@ -9,19 +9,26 @@
 			<!-- 中上部分 -->
 			<view class="box">
 				<view class="form_item">
+					<view class="left">
+						
 					<text>店铺</text>
 					<u-input placeholder='请选择店铺' @click="toStore" :disabled='true' v-model="shop" type="text" />
+					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
+					<view class="left">
 					<text>盘点范围</text>
 					<u-input placeholder='请选择盘点范围' @tap="inventoryRange" :disabled='true' v-model="scopes_name" type="text" />
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<u-action-sheet :list="scopes" @click="scopeItem" v-model="show"></u-action-sheet>
 				<view class="form_item"  @tap="toNoInventory">
+					<view class="left">
 					<text>未盘点商品</text>
 					<view class="lan" @tap="toNoInventory">查看未盘点商品</view>
+				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
@@ -326,7 +333,9 @@
 		// 中间部分
 		.box {
 			margin-bottom: 20rpx;
-
+			width: 100%;
+			display: flex;
+			flex-direction: column;
 			.other-expenses {
 				width: 100%;
 				display: flex;
@@ -382,13 +391,18 @@
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
-
+				width: 100%;
+				justify-content: space-between;
 				text {
 					width: 220rpx;
 					// text-align: left;
 					padding-left: 20rpx;
 				}
-
+				.left{
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+				}
 
 
 				.min_exchange {

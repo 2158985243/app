@@ -132,7 +132,7 @@
 			toAddMembership() {
 				if (this.$store.state.authority.join(",").indexOf('customer_management') != -1) {
 					uni.navigateTo({
-						url: `/pages/addMembership/addMembership?`
+						url: `/pagesHome/addMembership/addMembership?`
 					});
 				} else {
 					uni.showToast({
@@ -150,7 +150,7 @@
 						// console.log('条码内容：' + res.result);
 						// this.keyword = res.result;
 						uni.navigateTo({
-							url: `/pages/inventory/inventory?val=${res.result}`
+							url: `/pagesHome/inventory/inventory?val=${res.result}`
 						})
 					}
 				});
@@ -158,7 +158,7 @@
 			search(res) {
 				if (res) {
 					uni.navigateTo({
-						url: `/pages/inventory/inventory?val=${res}`
+						url: `/pagesHome/inventory/inventory?val=${res}`
 					})
 				}
 			},
@@ -166,7 +166,7 @@
 			toStockQuantity() {
 				if (this.$store.state.authority.join(",").indexOf('stock_inquire') != -1) {
 					uni.navigateTo({
-						url: `/pages/stockQuantity/stockQuantity`
+						url: `/pagesHome/stockQuantity/stockQuantity`
 					});
 				} else {
 					uni.showToast({
@@ -181,7 +181,7 @@
 			toMemberManagement() {
 				if (this.$store.state.authority.join(",").indexOf('customer_management') != -1) {
 					uni.navigateTo({
-						url: `/pages/memberManagement/memberManagement`
+						url: `/pagesHome/memberManagement/memberManagement`
 					});
 				} else {
 					uni.showToast({
@@ -196,7 +196,7 @@
 			toAccountManagement() {
 				if (this.$store.state.authority.join(",").indexOf('account_management') != -1) {
 					uni.navigateTo({
-						url: `/pages/accountManagement/accountManagement`
+						url: `/pagesHome/accountManagement/accountManagement`
 					});
 				} else {
 					uni.showToast({
@@ -211,7 +211,7 @@
 			toNewCustomer() {
 				if (this.$store.state.authority.join(",").indexOf('customer_management') != -1) {
 					uni.navigateTo({
-						url: `/pages/newCustomer/newCustomer`
+						url: `/pagesHome/newCustomer/newCustomer`
 					});
 				} else {
 					uni.showToast({
@@ -237,7 +237,7 @@
 						}
 					})
 					uni.navigateTo({
-						url: `/pages/resaleCashier/resaleCashier`
+						url: `/pagesHome/resaleCashier/resaleCashier`
 					});
 				} else {
 					uni.showToast({
@@ -252,7 +252,7 @@
 			toSalesInquiry() {
 				if (this.$store.state.authority.join(",").indexOf('sales_inquire') != -1) {
 					uni.navigateTo({
-						url: `/pages/salesInquiry/salesInquiry`
+						url: `/pagesHome/salesInquiry/salesInquiry`
 					});
 				} else {
 					uni.showToast({

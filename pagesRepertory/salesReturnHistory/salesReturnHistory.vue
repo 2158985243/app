@@ -8,15 +8,18 @@
 		</u-navbar>
 		<view class="box">
 			<tabControl :current="current" :values="items" bgc="#fff" :fixed="true" :scrollFlag='true' :isEqually='true'
-			 @clickItem="onClickItem"></tabControl>
+				@clickItem="onClickItem"></tabControl>
 			<swiper class="swiper" @change='scollSwiper' :current='current'>
 				<swiper-item v-for="(item,index) in list" :key='index'>
 					<scroll-view scroll-y="true" style="height: 100%;">
 						<view class="list">
-							<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
-							 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
-							 :autoPullUp="autoPullUp" :inBottom="pull[current]" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore">
-								<view class="list-box" v-for="(itemList,indexList) in item" @click="toPurchase(itemList)">
+							<k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip"
+								:loadTip="loadTip" :loadingTip="loadingTip" :emptyTip="emptyTip"
+								:touchHeight="touchHeight" :height="height" :bottom="bottom" :autoPullUp="autoPullUp"
+								:inBottom="pull[current]" :stopPullDown="stopPullDown" @onPullDown="handlePullDown"
+								@onPullUp="handleLoadMore">
+								<view class="list-box" v-for="(itemList,indexList) in item"
+									@click="toPurchase(itemList)">
 									<view class="left">
 										<text class="supplier-name">{{itemList.supplier.name}}</text>
 										<text>{{itemList.number}}</text>
@@ -86,7 +89,7 @@
 				stopPullDown: true, // 如果为 false 则不使用下拉刷新，只进行上拉加载
 				last_page: [0, 0, 0],
 				pull: [false, false, false],
-				refer_data:{}
+				refer_data: {}
 			}
 		},
 		methods: {
@@ -100,18 +103,22 @@
 							page_size: this.page_size,
 							...this.refer_data
 						});
-						this.list[this.current].push(...res.data)
-						this.last_page[this.current] = res.last_page
+						this.$nextTick(() => {
+							this.list[this.current].push(...res.data)
+							this.last_page[this.current] = res.last_page
+						})
 					} else if (this.current == 1) {
 						let res = await purchaseRefundList({
 							status: 0,
 							page: this.page[this.current],
 							page_size: this.page_size,
 							...this.refer_data
-				
+
 						});
-						this.list[this.current].push(...res.data)
-						this.last_page[this.current] = res.last_page
+						this.$nextTick(() => {
+							this.list[this.current].push(...res.data)
+							this.last_page[this.current] = res.last_page
+						})
 					} else {
 						let res = await purchaseRefundList({
 							status: 2,
@@ -119,9 +126,12 @@
 							page_size: this.page_size,
 							...this.refer_data
 						});
-						this.list[this.current].push(...res.data)
-						this.last_page[this.current] = res.last_page
+						this.$nextTick(() => {
+							this.list[this.current].push(...res.data)
+							this.last_page[this.current] = res.last_page
+						})
 					}
+					this.$forceUpdate()
 				}
 			},
 			// 前往增加采购信息
@@ -208,21 +218,21 @@
 			uni.$on("refer", async (res) => {
 				if (res) {
 					this.page[this.current] = 1;
-					if(res.start_time == "" || res.start_time == undefined){
+					if (res.start_time == "" || res.start_time == undefined) {
 						delete res.start_time
 						delete res.end_time
-						for(let key in res){
+						for (let key in res) {
 							this.refer_data[key] = res[key]
 						}
-					}else{
+					} else {
 						this.refer_data = res
 					}
 					this.list[this.current] = []
 					this.init()
 				}
 			});
-			uni.$on('salesReturnHistory',async (result)=>{
-				if(result){
+			uni.$on('salesReturnHistory', async (result) => {
+				if (result) {
 					this.list = [
 						[],
 						[],
@@ -231,13 +241,13 @@
 					this.init()
 				}
 			})
-			
+
 		},
 		onReady() {
 			//执行计算组件高度方法
 		},
 		onShow() {
-			
+
 		}
 	}
 </script>

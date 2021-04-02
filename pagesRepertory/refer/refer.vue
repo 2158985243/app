@@ -7,32 +7,43 @@
 		</u-navbar>
 		<view class="box">
 			<view class="form_item">
+				<view class="left">
+					
 				<text>供应商</text>
-				<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier" type="text" />
+				<u-input placeholder='请选择供应商' @click="toChooseSupplier" :disabled='true' v-model="supplier" type="text" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
+				<view class="left">
 				<text>店铺</text>
 				<u-input placeholder='请选择店铺' @click="toStore" :disabled='true' v-model="shop" type="text" />
+			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
+				<view class="left">
 				<text>单号</text>
 				<u-input placeholder='请输入单号' v-model="form.number" type="text" />
 				<!-- <u-icon name="arrow-right" color="#cccccc" size="28"></u-icon> -->
+			</view>
 			</view>
 		</view>
 
 		<view class="box">
 			<view class="form_item">
+				<view class="left">
 				<text>开始日期</text>
-				<u-input placeholder='请选择时间' @tap="hiddenTime(0)" :disabled='true' v-model="form.start_time" type="text" />
+				<u-input placeholder='请选择时间' @click="hiddenTime(0)" :disabled='true' v-model="form.start_time" type="text" />
+			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :params="params"></u-picker>
 			<view class="form_item">
+				<view class="left">
 				<text>结束日期</text>
-				<u-input placeholder='请选择时间' @tap="hiddenTime(1)" :disabled='true' v-model="form.end_time" type="text" />
+				<u-input placeholder='请选择时间' @click="hiddenTime(1)" :disabled='true' v-model="form.end_time" type="text" />
+			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<u-picker mode="time" v-model="showtime1" @confirm="confirmTime1" :params="params"></u-picker>
@@ -166,10 +177,11 @@
 
 <style scoped lang="scss">
 	.refer {
-		width: 100%;
+		width: 100vw;
 		height: 100%;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 		background-color: #F8F8F8;
 
 		.btn {
@@ -183,7 +195,7 @@
 
 		.box {
 			margin-bottom: 20rpx;
-
+			width: 100%;
 			.other-expenses {
 				width: 100%;
 				display: flex;
@@ -236,10 +248,15 @@
 				padding-right: 20rpx;
 				display: flex;
 				align-items: center;
+				justify-content: space-between;
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
-
+				.left{
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+				}
 				text {
 					width: 220rpx;
 					// text-align: left;

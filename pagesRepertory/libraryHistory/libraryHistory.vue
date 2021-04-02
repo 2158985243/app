@@ -97,6 +97,7 @@
 			// 初始化
 			async init() {
 				if (this.list[this.current].length == 0) {
+					
 					if (this.current == 0) {
 						let res = await purchaseStorageList({
 							status: 1,
@@ -104,8 +105,10 @@
 							page_size: this.page_size,
 							...this.refer_data
 						});
-						this.list[this.current].push(...res.data)
-						this.last_page[this.current] = res.last_page
+						this.$nextTick(()=>{
+							this.list[this.current].push(...res.data)
+							this.last_page[this.current] = res.last_page
+						})
 					} else if (this.current == 1) {
 						let res = await purchaseStorageList({
 							status: 0,
@@ -114,8 +117,10 @@
 							...this.refer_data
 
 						});
-						this.list[this.current].push(...res.data)
-						this.last_page[this.current] = res.last_page
+						this.$nextTick(()=>{
+							this.list[this.current].push(...res.data)
+							this.last_page[this.current] = res.last_page
+						})
 					} else {
 						let res = await purchaseStorageList({
 							status: 2,
@@ -123,9 +128,12 @@
 							page_size: this.page_size,
 							...this.refer_data
 						});
-						this.list[this.current].push(...res.data)
-						this.last_page[this.current] = res.last_page
+						this.$nextTick(()=>{
+							this.list[this.current].push(...res.data)
+							this.last_page[this.current] = res.last_page
+						})
 					}
+					this.$forceUpdate()
 				}
 			},
 			// 前往增加采购信息
@@ -223,18 +231,21 @@
 			this.init()
 			uni.$on("refer", async (res) => {
 				if (res) {
-					this.page[this.current] = 1;
-					if (res.start_time == "" || res.start_time == undefined) {
-						delete res.start_time
-						delete res.end_time
-						for (let key in res) {
-							this.refer_data[key] = res[key]
+					this.$nextTick(() => {
+						this.page[this.current] = 1;
+						if (res.start_time == "" || res.start_time == undefined) {
+							delete res.start_time
+							delete res.end_time
+							for (let key in res) {
+								this.refer_data[key] = res[key]
+							}
+						} else {
+							this.refer_data = res
 						}
-					} else {
-						this.refer_data = res
-					}
-					this.list[this.current] = []
-					this.init()
+						
+						this.list[this.current] = []
+						this.init()
+					})
 				}
 			});
 			uni.$on('purchaseStorage', async (result) => {
@@ -245,6 +256,7 @@
 						[]
 					]
 					this.init()
+					this.$forceUpdate()
 				}
 			})
 		},
@@ -270,7 +282,7 @@
 		background-color: #f2f1f5;
 
 		.right_icon {
-			margin-right: 30rpx;
+			margin-right: 10rpx;
 		}
 
 		.box {

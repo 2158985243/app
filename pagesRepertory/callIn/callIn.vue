@@ -3,19 +3,19 @@
 		<view class="box">
 			<view class="form_item">
 				<text>调拨单号</text>
-				<u-input placeholder='' :disabled='true' v-model="form.number" type="number" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.number" type="number" />
 			</view>
 			<view class="form_item">
 				<text>业务时间</text>
-				<u-input placeholder='' :disabled='true' v-model="form.business_time" type="text" />
+				<u-input placeholder=' ' :disabled='true' v-model="form.business_time" type="text" />
 			</view>
 			<view class="form_item">
 				<text>调出店铺</text>
-				<u-input placeholder='' :disabled='true' v-model="form.from_store.name" type='text' />
+				<u-input placeholder=' ' :disabled='true' v-model="form.from_store.name" type='text' />
 			</view>
 			<view class="form_item">
 				<text>调入店铺</text>
-				<u-input placeholder='' :disabled='true' v-model="form.to_store.name" type='text' />
+				<u-input placeholder=' ' :disabled='true' v-model="form.to_store.name" type='text' />
 			</view>
 		</view>
 		<!--  -->
@@ -65,11 +65,11 @@
 			<view class="box marbottom">
 				<view class="form_item">
 					<text>制单人</text>
-					<u-input placeholder='' :disabled='true' v-model="form.user.name" type="text" />
+					<u-input placeholder=' ' :disabled='true' v-model="form.user.name" type="text" />
 				</view>
 				<view class="form_item">
 					<text>备注</text>
-					<u-input placeholder='' :disabled='true' v-model="form.remarks" type="text" />
+					<u-input placeholder=' ' :disabled='true' v-model="form.remarks" type="text" />
 				</view>
 
 			</view>

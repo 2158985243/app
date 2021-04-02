@@ -33,6 +33,43 @@
         {
           "name": "pages/businessOverview/businessOverview",
           "pathName": "pages/businessOverview/businessOverview",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesMine/pointEdit/pointAdd",
+          "pathName": "pagesMine/pointEdit/pointAdd",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesMine/pointEdit/pointAdd",
+          "pathName": "pagesMine/pointEdit/pointAdd",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesMine/pointAdd/pointAdd",
+          "pathName": "pagesMine/pointAdd/pointAdd",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesMine/userManagement/addUserManagement/addUserManagement",
+          "pathName": "pagesMine/userManagement/addUserManagement/addUserManagement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesStatement/goodsAnalyse/goodsAnalyse",
+          "pathName": "pagesStatement/goodsAnalyse/goodsAnalyse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesRepertory/libraryHistory/libraryHistory",
+          "pathName": "pagesRepertory/libraryHistory/libraryHistory",
+          "query": "",
           "scene": null
         }
       ]

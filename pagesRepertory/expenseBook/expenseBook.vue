@@ -9,7 +9,7 @@
 			<!-- <k-scroll-view ref="k-scroll-view" :refreshType="refreshType" :refreshTip="refreshTip" :loadTip="loadTip"
 			 :loadingTip="loadingTip" :emptyTip="emptyTip" :touchHeight="touchHeight" :height="height" :bottom="bottom"
 			 :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" @onPullDown="handlePullDown" @onPullUp="handleLoadMore"> -->
-			<view class="list" v-for="(item,key,index) of list" :key="index">
+			<view class="list" v-for="(item,key,index) of list" :key="key">
 				<view class="headers">
 					<view class="li-date" @click="showDate">
 						<text>{{key}}</text>
@@ -26,7 +26,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="list-li" v-for="(item_li,index_li) in item" :key="index_li" @click="toSpendItem(item_li)">
+				<view class="list-li" v-for="(item_li,index_li) in item" :key="item_li.id" @click.stop="toSpendItem(item_li)">
 					<view class="expend-item">
 						<view class="boo">
 							<text>{{item_li.expend_item.name}}</text>
@@ -182,6 +182,7 @@
 			},
 			// 详情
 			toSpendItem(item) {
+				
 				uni.navigateTo({
 					url: `/pagesRepertory/spendItem/spendItem?id=${item.id}`
 				})

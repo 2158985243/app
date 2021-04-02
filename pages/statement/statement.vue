@@ -116,7 +116,7 @@
 			toStatics() {
 				if(this.$store.state.authority.join(",").indexOf('expend_analysis') != -1){
 					uni.navigateTo({
-						url: `/pages/statics/statics`
+						url: `/pagesStatement/statics/statics`
 					})
 				}else{
 					uni.showToast({
@@ -131,7 +131,7 @@
 			toMemberRegistrationStatistics() {
 				if(this.$store.state.authority.join(",").indexOf('register_statistics') != -1){
 					uni.navigateTo({
-						url: `/pages/memberRegistrationStatistics/memberRegistrationStatistics`
+						url: `/pagesStatement/memberRegistrationStatistics/memberRegistrationStatistics`
 					})
 				}else{
 					uni.showToast({
@@ -161,7 +161,7 @@
 			toStaffAchievement() {
 				if(this.$store.state.authority.join(",").indexOf('achievement_statistics') != -1){
 					uni.navigateTo({
-						url: `/pages/staffAchievement/staffAchievement`
+						url: `/pagesStatement/staffAchievement/staffAchievement`
 					})
 				}else{
 					uni.showToast({
@@ -176,7 +176,7 @@
 			toAnalyse() {
 				if(this.$store.state.authority.join(",").indexOf('sales_analysis') != -1){
 					uni.navigateTo({
-						url: `/pages/analyse/analyse`
+						url: `/pagesStatement/analyse/analyse`
 					})
 				}else{
 					uni.showToast({
@@ -191,7 +191,7 @@
 			toGoodsAnalyse() {
 				if(this.$store.state.authority.join(",").indexOf('goods_analysis') != -1){
 					uni.navigateTo({
-						url: `/pages/goodsAnalyse/goodsAnalyse`
+						url: `/pagesStatement/goodsAnalyse/goodsAnalyse`
 					})
 				}else{
 					uni.showToast({
@@ -206,7 +206,7 @@
 			toMemberAnalysis() {
 				if(this.$store.state.authority.join(",").indexOf('customer_analysis') != -1){
 					uni.navigateTo({
-						url: `/pages/memberAnalysis/memberAnalysis`
+						url: `/pagesStatement/memberAnalysis/memberAnalysis`
 					})
 				}else{
 					uni.showToast({
@@ -221,7 +221,7 @@
 			toProcurementStatistics() {
 				if(this.$store.state.authority.join(",").indexOf('purchase_statistics') != -1){
 					uni.navigateTo({
-						url: `/pages/procurementStatistics/procurementStatistics`
+						url: `/pagesStatement/procurementStatistics/procurementStatistics`
 					})
 				}else{
 					uni.showToast({
@@ -237,7 +237,7 @@
 			toSalesStatistics() {
 				if(this.$store.state.authority.join(",").indexOf('sales_statistics') != -1){
 					uni.navigateTo({
-						url: `/pages/salesStatistics/salesStatistics`
+						url: `/pagesStatement/salesStatistics/salesStatistics`
 					})
 				}else{
 					uni.showToast({
@@ -252,7 +252,7 @@
 			toAllotStatistics() {
 				if(this.$store.state.authority.join(",").indexOf('allocate_statistics') != -1){
 					uni.navigateTo({
-						url: `/pages/allotStatistics/allotStatistics`
+						url: `/pagesStatement/allotStatistics/allotStatistics`
 					})
 				}else{
 					uni.showToast({
@@ -267,7 +267,7 @@
 			toCheckStatistics() {
 				if(this.$store.state.authority.join(",").indexOf('check_statistics') != -1){
 					uni.navigateTo({
-						url: `/pages/checkStatistics/checkStatistics`
+						url: `/pagesStatement/checkStatistics/checkStatistics`
 					})
 				}else{
 					uni.showToast({
@@ -282,7 +282,7 @@
 			toBalanceEnquiry() {
 				if(this.$store.state.authority.join(",").indexOf('balance_inquire') != -1){
 					uni.navigateTo({
-						url: `/pages/balanceEnquiry/balanceEnquiry`
+						url: `/pagesStatement/balanceEnquiry/balanceEnquiry`
 					})
 				}else{
 					uni.showToast({
@@ -297,7 +297,7 @@
 			toBusinessOverview() {
 				if(this.$store.state.authority.join(",").indexOf('business_status') != -1){
 					uni.navigateTo({
-						url: `/pages/businessOverview/businessOverview`
+						url: `/pagesStatement/businessOverview/businessOverview`
 					})
 				}else{
 					uni.showToast({
@@ -312,7 +312,7 @@
 			toCashierCheck() {
 				if(this.$store.state.authority.join(",").indexOf('cashier_balance') != -1){
 					uni.navigateTo({
-						url: `/pages/cashierCheck/cashierCheck`
+						url: `/pagesStatement/cashierCheck/cashierCheck`
 					})
 				}else{
 					uni.showToast({
@@ -327,7 +327,7 @@
 			toCashierBalance() {
 				if(this.$store.state.authority.join(",").indexOf('cashier_balance') != -1){
 					uni.navigateTo({
-						url: `/pages/cashierBalance/cashierBalance`
+						url: `/pagesStatement/cashierBalance/cashierBalance`
 					})
 				}else{
 					uni.showToast({
@@ -342,7 +342,7 @@
 			toReconciliation() {
 				if(this.$store.state.authority.join(",").indexOf('supplier_reconciliation') != -1){
 					uni.navigateTo({
-						url: `/pages/reconciliation/reconciliation`
+						url: `/pagesStatement/reconciliation/reconciliation`
 					})
 				}else{
 					uni.showToast({
