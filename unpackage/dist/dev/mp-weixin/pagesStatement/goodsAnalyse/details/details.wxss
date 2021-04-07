@@ -81,7 +81,7 @@
 .details .goods-data .goods-main .nav.data-v-5e969789 {
   position: -webkit-sticky;
   position: sticky;
-  top: calc(84rpx + 25px);
+  top: 0;
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -189,7 +189,7 @@
           flex-direction: column;
   position: -webkit-sticky;
   position: sticky;
-  top: calc(244rpx + 25px);
+  top: calc(164rpx + 25px);
 }
 .details .goods-data .goods-main .goods-conts .sotck-data.data-v-5e969789 {
   width: 100%;

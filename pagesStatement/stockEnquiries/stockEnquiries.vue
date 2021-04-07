@@ -9,11 +9,11 @@
 			<view class="form_item">
 				<text>商品</text>
 				<u-input placeholder='请输入货号/商品名称/条码' v-model="form.keyword" type="text" />
-				<u-icon name="scan" @tap='handelScan' color="#2979ff" size="38"></u-icon>
+				<u-icon name="scan" @click='handelScan' color="#2979ff" size="38"></u-icon>
 			</view>
 			<view class="form_item">
 				<text>供应商</text>
-				<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier" type="text" />
+				<u-input placeholder='请选择供应商' @click="toChooseSupplier" :disabled='true' v-model="supplier" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
@@ -23,17 +23,17 @@
 			</view>
 			<view class="form_item">
 				<text>品牌</text>
-				<u-input placeholder='请选择品牌' @tap="toTrademark" :disabled='true' type='text' v-model="trademark_name" />
+				<u-input placeholder='请选择品牌' @click="toTrademark" :disabled='true' type='text' v-model="trademark_name" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
 				<text>分类</text>
-				<u-input placeholder='请选择商品分类' @tap="toCategory" :disabled='true' v-model="category" type="text" />
+				<u-input placeholder='请选择商品分类' @click="toCategory" :disabled='true' v-model="category" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
 				<text>单据类型</text>
-				<u-input placeholder='' @tap="show = true" :disabled='true' v-model="itemType" type="text" />
+				<u-input placeholder='' @click="show = true" :disabled='true' v-model="itemType" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 		</view>
@@ -47,13 +47,13 @@
 		<view class="box">
 			<view class="form_item">
 				<text>开始日期</text>
-				<u-input placeholder='请选择时间' @tap="hiddenTime(0)" :disabled='true' v-model="form.start_time" type="text" />
+				<u-input placeholder='请选择时间' @click="hiddenTime(0)" :disabled='true' v-model="form.start_time" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :params="params"></u-picker>
 			<view class="form_item">
 				<text>结束日期</text>
-				<u-input placeholder='请选择时间' @tap="hiddenTime(1)" :disabled='true' v-model="form.end_time" type="text" />
+				<u-input placeholder='请选择时间' @click="hiddenTime(1)" :disabled='true' v-model="form.end_time" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<u-picker mode="time" v-model="showtime1" @confirm="confirmTime1" :params="params"></u-picker>

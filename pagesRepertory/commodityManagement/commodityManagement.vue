@@ -23,7 +23,8 @@
 							<view class="nav-list">
 								<view class="lak" v-for="(item,index) in brandList" :key="index">
 									<view class="nav-name">
-										<view class="nav-kk" @click.stop="clickBrand(item,index)" :class="item.checked? 'actives':''" v-if="index<5">
+										<view class="nav-kk" @click.stop="clickBrand(item,index)"
+											:class="item.checked? 'actives':''" v-if="index<5">
 											{{item.name}}
 										</view>
 									</view>
@@ -44,7 +45,8 @@
 							<view class="nav-list">
 								<view class="lak" v-for="(item,index) in CategoryList" :key="index">
 									<view class="nav-name">
-										<view class="nav-kk" @click.stop="clickCate(item,index)" :class="item.checked? 'actives':''" v-if="index<5">
+										<view class="nav-kk" @click.stop="clickCate(item,index)"
+											:class="item.checked? 'actives':''" v-if="index<5">
 											{{item.name}}
 										</view>
 									</view>
@@ -65,7 +67,8 @@
 							<view class="nav-list">
 								<view class="lak" v-for="(item,index) in status" :key="index">
 									<view class="nav-name">
-										<view class="nav-kk" @click.stop="clickStatus(item,index)" :class="item.checked? 'actives':''">
+										<view class="nav-kk" @click.stop="clickStatus(item,index)"
+											:class="item.checked? 'actives':''">
 											{{item.name}}
 										</view>
 									</view>
@@ -81,7 +84,8 @@
 							<view class="nav-list">
 								<view class="lak" v-for="(item,index) in price" :key="index">
 									<view class="nav-name">
-										<view class="nav-kk" @click.stop="clickPrice(item,index)" :class="item.checked? 'actives':''">
+										<view class="nav-kk" @click.stop="clickPrice(item,index)"
+											:class="item.checked? 'actives':''">
 											{{item.name}}
 										</view>
 									</view>
@@ -105,8 +109,9 @@
 					</view>
 					<view class="pop-listt">
 						<u-checkbox-group :wrap='true'>
-							<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked" v-for="(item, index) in brandList"
-							 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+							<u-checkbox shape="circle" @change="barlistChecked($event,index)" v-model="item.checked"
+								v-for="(item, index) in brandList" :key="index" :name="item.id">{{item.name}}
+							</u-checkbox>
 						</u-checkbox-group>
 					</view>
 				</view>
@@ -119,16 +124,18 @@
 					</view>
 					<view class="pop-listt">
 						<u-checkbox-group :wrap='true'>
-							<u-checkbox shape="circle" @change="cartesChecked($event,index)" v-model="item.checked" v-for="(item, index) in CategoryList"
-							 :key="index" :name="item.id">{{item.name}}</u-checkbox>
+							<u-checkbox shape="circle" @change="cartesChecked($event,index)" v-model="item.checked"
+								v-for="(item, index) in CategoryList" :key="index" :name="item.id">{{item.name}}
+							</u-checkbox>
 						</u-checkbox-group>
 					</view>
 				</view>
 			</u-popup>
 			<view class="nav">
 				<view class="slot-wrap">
-					<u-search class='search' height='60' @change="search" margin='0 30rpx' :show-action="false" :scan="true" shape="square"
-					 placeholder="请输入货号/商品名称/条码" v-model="keyword" @Inventory="handelScan"></u-search>
+					<u-search class='search' height='60' @change="search" margin='0 30rpx' :show-action="false"
+						:scan="true" shape="square" placeholder="请输入货号/商品名称/条码" v-model="keyword"
+						@Inventory="handelScan"></u-search>
 					<view class="search_add" @click="popup">
 						<text>筛选</text>
 						<u-icon name="arrow-down-fill" color="#ffffff" class="right_icon" size="28"></u-icon>
@@ -140,8 +147,8 @@
 			</view>
 		</view>
 		<view class="list">
-			<goods-category :dataList='dataList' :inBottom="pull" @leftNav="leftNav" :vs='vs' @rightNav="rightNav" @handlePullDown="handlePullDown"
-			 @handleLoadMore="handleLoadMore"></goods-category>
+			<goods-category :dataList='dataList' :inBottom="pull" @leftNav="leftNav" :vs='vs' @rightNav="rightNav"
+				@handlePullDown="handlePullDown" @handleLoadMore="handleLoadMore"></goods-category>
 		</view>
 		<u-toast ref="uToast" />
 	</view>
@@ -210,7 +217,11 @@
 				page_size: 20,
 				totalVal: {},
 				last_page: 0,
-				mored: {id:0,index:0,name:'全部'},
+				mored: {
+					id: 0,
+					index: 0,
+					name: '全部'
+				},
 				pull: false
 			}
 		},
@@ -489,6 +500,11 @@
 
 		},
 		onShow() {
+			this.mored = {
+				id: 0,
+				index: 0,
+				name: '全部'
+			}
 			this.init()
 			this.brand()
 			this.Total()

@@ -1,4 +1,4 @@
-(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pagesStatement/common/vendor"],{938:
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pagesStatement/common/vendor"],{954:
 /*!*****************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/manage.js ***!
   \*****************************************************************/

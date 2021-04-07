@@ -8,13 +8,13 @@
 		<text class="tit">系统内置支付方式</text>
 		<block v-for="(item,index) in list1" :key="index">
 			<block v-if="ip==1&&item.name!='扫码支付'|| ip==0">
-				<view class="box" v-if="(ip==1&&item.name!='欠款') || ip==0" @tap='toEditPatternOfPayment(item)'>
+				<view class="box" v-if="(ip==1&&item.name!='欠款') || ip==0" @click='toEditPatternOfPayment(item)'>
 					<text>{{item.name}}</text>
 				</view>
 			</block>
 		</block>
 		<text class="tit">用户自定义支付方式</text>
-		<view class="box" @tap="toEditPatternOfPayment(item)" v-for="(item,index) in list2" :key="item.id">
+		<view class="box" @click="toEditPatternOfPayment(item)" v-for="(item,index) in list2" :key="item.id">
 			<text>{{item.name}}</text>
 			<u-icon class='right' name="arrow-right" color="#cccccc" size="28"></u-icon>
 		</view>

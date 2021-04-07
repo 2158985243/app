@@ -28,7 +28,7 @@
 			<view class="form_item">
 				<view class="left">
 					<text>账户</text>
-					<u-input placeholder=' ' :disabled='true' @tap="toSelectAccount" v-model="account" type="text" />
+					<u-input placeholder=' ' :disabled='true' @click="toSelectAccount" v-model="account" type="text" />
 				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
@@ -37,14 +37,14 @@
 			<view class="form_item">
 				<view class="left">
 					<text>经手人</text>
-					<u-input placeholder=' ' :disabled='true' @tap="toSelecSalesperson" v-model="user" type="text" />
+					<u-input placeholder=' ' :disabled='true' @click="toSelecSalesperson" v-model="user" type="text" />
 				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
 				<view class="left">
 					<text>日期</text>
-					<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.business_time"
+					<u-input placeholder='请选择时间' @click="hiddenTime" :disabled='true' v-model="form.business_time"
 						type="text" />
 				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>

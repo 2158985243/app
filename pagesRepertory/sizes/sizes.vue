@@ -104,7 +104,7 @@
 			</view>
 		</view>
 		<view class="btn">
-			<u-button type="primary" class="btn1" @tap="save">确定</u-button>
+			<u-button type="primary" class="btn1" @click="save">确定</u-button>
 		</view>
 	</view>
 </template>

@@ -80,7 +80,7 @@
 							<text>{{item.name}}</text>
 						</view>
 					</view>
-					<view class="nav-date" v-show="item_active != 0">
+					<view class="nav-date" v-if="item_active != 0">
 						<view class="date" v-for='(item,index) in date_list' @click="dateClick(index)" :class="date_active==index? 'active':''">
 							<text>{{item.name}}</text>
 						</view>
@@ -94,7 +94,7 @@
 				</view>
 				<!-- 内容 -->
 				<view class="goods-conts">
-					<view class="sotck-data" v-show="item_active==0">
+					<view class="sotck-data" v-if="item_active==0">
 						<view class="sotck-nav">
 							<text>颜色</text>
 							<text>尺码</text>
@@ -118,7 +118,7 @@
 							</block>
 						</view>
 					</view>
-					<view class="sotck-data" v-show="item_active==1">
+					<view class="sotck-data" v-if="item_active==1">
 						<view class="sotck-nav">
 							<view class="sotck-title">
 								<text>笔数</text>
@@ -155,7 +155,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="sotck-data" v-show="item_active==2">
+					<view class="sotck-data" v-if="item_active==2">
 						<view class="sotck-nav">
 							<view class="sotck-title">
 								<text>笔数</text>
@@ -187,7 +187,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="sotck-data" v-show="item_active==3">
+					<view class="sotck-data" v-if="item_active==3">
 						<view class="sotck-nav">
 							<view class="sotck-title">
 								<text>笔数</text>
@@ -1028,7 +1028,7 @@
 
 		.goods-data {
 			width: 100%;
-			height: 100vh;
+			max-height: 100vh;
 			display: flex;
 			flex-direction: column;
 			background-color: #FFFFFF;
@@ -1111,8 +1111,8 @@
 					width: 100%;
 					display: flex;
 					flex-direction: column;
-					position: sticky;
-					top: calc(324rpx + var(--status-bar-height));
+					// position: sticky;
+					// top: calc(324rpx + var(--status-bar-height));
 
 					.sotck-data {
 						width: 100%;

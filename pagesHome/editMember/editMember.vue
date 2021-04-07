@@ -23,7 +23,7 @@
 				<view class="form_item">
 					<view class="left">
 					<text>等级</text>
-					<u-input placeholder='请选择会员等级' :disabled='true' @tap="toCustomerLevel" v-model="customer" type="text" />
+					<u-input placeholder='请选择会员等级' :disabled='true' @click="toCustomerLevel" v-model="customer" type="text" />
 				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
@@ -43,7 +43,7 @@
 				<view class="form_item">
 					<view class="left">
 					<text>生日</text>
-					<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.birthday" type="text" />
+					<u-input placeholder='请选择时间' @click="hiddenTime" :disabled='true' v-model="form.birthday" type="text" />
 				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
@@ -60,7 +60,7 @@
 				<view class="form_item">
 					<view class="left">
 					<text>有效期至</text>
-					<u-input placeholder='请选择有效时间' @tap="hiddenTime1" :disabled='true' v-model="form.expired_at" type="text" />
+					<u-input placeholder='请选择有效时间' @click="hiddenTime1" :disabled='true' v-model="form.expired_at" type="text" />
 				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>

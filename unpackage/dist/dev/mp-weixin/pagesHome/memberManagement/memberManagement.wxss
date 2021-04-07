@@ -230,7 +230,6 @@
           flex-direction: column;
   position: -webkit-sticky;
   position: sticky;
-  top: calc(78rpx + 25px);
   z-index: 99;
 }
 .memberManagement .nav .nav-li.data-v-6fc32de5 {

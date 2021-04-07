@@ -5,7 +5,7 @@
 				<u-icon name="plus" @click="toAddPatternOfPayment" color="#ffffff" class="right_icon" size="34"></u-icon>
 			</template>
 		</u-navbar>
-		<view class="header" @tap="itemCilck({account_id:0})">
+		<view class="header" @click="itemCilck({account_id:0})">
 			<text>总余额</text>
 			<view class="">
 				<text class="lan">&yen;{{sum_money}}</text>
@@ -13,7 +13,7 @@
 			</view>
 		</view>
 		<view class="list">
-			<view class="box" @tap="itemCilck(item)" v-for="(item,index) in list" :key="item.id">
+			<view class="box" @click="itemCilck(item)" v-for="(item,index) in list" :key="item.id">
 				<text>{{item.name}}</text>
 				<view class="">
 					<text>&yen;{{item.sum_money}}</text>
@@ -106,9 +106,9 @@
 		.header {
 			width: 100%;
 			height: 100rpx;
-			position: fixed;
+			// position: fixed;
 			background-color: #FFFFFF;
-			top: calc(84rpx + var(--status-bar-height));
+			// top: calc(88rpx + var(--status-bar-height));
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
@@ -129,7 +129,7 @@
 		.list {
 			display: flex;
 			flex-direction: column;
-			margin: 100rpx 0;
+			// margin: 100rpx 0;
 
 			.box {
 				display: flex;

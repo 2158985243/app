@@ -8,7 +8,7 @@
 			</template>
 		</u-navbar>
 		<view class="search">
-			<u-search placeholder="请输入商品名称" @change='changed' shape='square' :show-action='false' height='60' :input-style="style_input"
+			<u-search placeholder="请输入商品名称" @change='changed' shape='square' class="square" :show-action='false' height='60' :input-style="style_input"
 			 margin='20rpx 50rpx 20rpx 20rpx' v-model="keyword"></u-search>
 		</view>
 		<view class="list">
@@ -20,7 +20,7 @@
 			</uni-indexed-list>
 		</view>
 		<view class="btn">
-			<u-button type="primary" class="btn" @tap="save">选择</u-button>
+			<u-button type="primary" class="btn" @click="save">选择</u-button>
 		</view>
 	</view>
 </template>
@@ -34,7 +34,7 @@
 	import store from '@/store'
 	export default {
 		components: {
-			// uniIndexedList 
+			uniIndexedList 
 		},
 		data() {
 			return {
@@ -184,10 +184,14 @@
 			align-items: center;
 			justify-content: center;
 			// height: 100rpx;
+			width: 100%;
+			.square{
+				width: 94%;
+			}
 		}
 
 		.right_icon {
-			margin-right: 40rpx;
+			margin-right: 10rpx;
 		}
 	}
 </style>

@@ -21,7 +21,7 @@
 			<view class="form_item">
 				<view class="left">
 					<text>支付类型</text>
-					<u-input placeholder='请选择支付类型' @tap="toPatternOfPayment" :disabled='true' type='text'
+					<u-input placeholder='请选择支付类型' @click="toPatternOfPayment" :disabled='true' type='text'
 						v-model="account_name" />
 				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -29,7 +29,7 @@
 			<view class="form_item">
 				<view class="left">
 					<text>单据状态</text>
-					<u-input placeholder='请选择单据状态' @tap="show = true" :disabled='true' v-model="status_name"
+					<u-input placeholder='请选择单据状态' @click="show = true" :disabled='true' v-model="status_name"
 						type="text" />
 				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -46,7 +46,7 @@
 			<view class="form_item">
 				<view class="left">
 					<text>开始日期</text>
-					<u-input placeholder='请选择开始日期' @tap="hiddenTime(0)" :disabled='true' v-model="form.start_time"
+					<u-input placeholder='请选择开始日期' @click="hiddenTime(0)" :disabled='true' v-model="form.start_time"
 						type="text" />
 				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -55,7 +55,7 @@
 			<view class="form_item">
 				<view class="left">
 					<text>结束日期</text>
-					<u-input placeholder='请选择结束日期' @tap="hiddenTime(1)" :disabled='true' v-model="form.end_time"
+					<u-input placeholder='请选择结束日期' @click="hiddenTime(1)" :disabled='true' v-model="form.end_time"
 						type="text" />
 				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>

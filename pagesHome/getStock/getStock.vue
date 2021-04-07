@@ -78,18 +78,18 @@
 							<text>{{item.name}}</text>
 						</view>
 					</view>
-					<view class="nav-date" v-show="item_active != 0">
+					<view class="nav-date" v-if="item_active != 0">
 						<view class="date" v-for='(item,index) in date_list' @click="dateClick(index)" :class="date_active==index? 'active':''">
 							<text>{{item.name}}</text>
 						</view>
 					</view>
-					<view class="store-select" v-show="item_active != 0">
+					<view class="store-select" v-if="item_active != 0">
 						<view class="title_hd" @click="show = true">
 							<text class="tlt">{{title_name}}</text>
 							<u-icon name="arrow-down-fill" class="down" color="#2979ff" size="34"></u-icon>
 						</view>
 					</view>
-					<view class="box" v-show="item_active == 0">
+					<view class="box" v-if="item_active == 0">
 						<view class="box-item">
 							<view class="left">
 								合并库存
@@ -110,7 +110,7 @@
 					</view>
 				</view>
 				<view class="goods-conts">
-					<view class="sotck-data" v-show="item_active==0">
+					<view class="sotck-data" v-if="item_active==0">
 						<view class="goods-item">
 							<block v-for="(item,index) in nav_list[0].data[sum_number] ">
 								<view class="goods-title" v-if="item.quantity != 0">
@@ -147,7 +147,7 @@
 							</block>
 						</view>
 					</view>
-					<view class="sotck-data" v-show="item_active==1">
+					<view class="sotck-data" v-if="item_active==1">
 						<view class="chart">
 							<view class="qiun-charts">
 								<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts" @touchstart="touchColumn"></canvas>

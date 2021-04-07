@@ -341,7 +341,7 @@
 			toStockQuantity(){
 				if(this.$store.state.authority.join(",").indexOf('stock_inquire') != -1){
 					uni.navigateTo({
-						url: `/pagesRepertory/stockQuantity/stockQuantity`
+						url: `/pagesHome/stockQuantity/stockQuantity`
 					})
 				}else{
 					uni.showToast({

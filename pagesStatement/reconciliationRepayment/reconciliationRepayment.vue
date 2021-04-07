@@ -6,7 +6,7 @@
 					供应商名称
 				</view>
 				<view class="right">
-					<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier_name" type="text" />
+					<u-input placeholder='请选择供应商' @click="toChooseSupplier" :disabled='true' v-model="supplier_name" type="text" />
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>
@@ -25,7 +25,7 @@
 					付款账户
 				</view>
 				<view class="right">
-					<u-input placeholder='请选择付款账户' @tap="toPatternOfPayment" :disabled='true' v-model="account_name" type="text" />
+					<u-input placeholder='请选择付款账户' @click="toPatternOfPayment" :disabled='true' v-model="account_name" type="text" />
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 			</view>

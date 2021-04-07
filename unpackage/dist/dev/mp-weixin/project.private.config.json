@@ -13,24 +13,6 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/stockQuantity/stockQuantity",
-          "pathName": "pages/stockQuantity/stockQuantity",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/addMembership/addMembership",
-          "pathName": "pages/addMembership/addMembership",
-          "query": "id=12",
-          "scene": null
-        },
-        {
-          "name": "pages/grabble/grabble",
-          "pathName": "pages/grabble/grabble",
-          "query": "id=12",
-          "scene": null
-        },
-        {
           "name": "pages/businessOverview/businessOverview",
           "pathName": "pages/businessOverview/businessOverview",
           "query": "",
@@ -70,6 +52,41 @@
           "name": "pagesRepertory/libraryHistory/libraryHistory",
           "pathName": "pagesRepertory/libraryHistory/libraryHistory",
           "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesHome/stockQuantity/stockQuantity",
+          "pathName": "pagesHome/stockQuantity/stockQuantity",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesRepertory/commodityManagement/commodityManagement",
+          "pathName": "pagesRepertory/commodityManagement/commodityManagement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesHome/resaleCashier/resaleCashier",
+          "pathName": "pagesHome/resaleCashier/resaleCashier",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesHome/stockQuantity/stockQuantity",
+          "pathName": "pagesHome/stockQuantity/stockQuantity",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesRepertory/selectProducts/selectProducts",
+          "pathName": "pagesRepertory/selectProducts/selectProducts",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pagesRepertory/chooseSupplier/chooseSupplier",
+          "pathName": "pagesRepertory/chooseSupplier/chooseSupplier",
           "scene": null
         }
       ]

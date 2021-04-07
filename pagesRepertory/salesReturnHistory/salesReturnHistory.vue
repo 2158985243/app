@@ -261,7 +261,7 @@
 		background-color: #f2f1f5;
 
 		.right_icon {
-			margin-right: 30rpx;
+			margin-right: 10rpx;
 		}
 
 		.box {

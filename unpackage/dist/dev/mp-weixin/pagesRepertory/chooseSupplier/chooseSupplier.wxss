@@ -34,7 +34,6 @@
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
           flex-direction: column;
-  background-color: #e7e7e7;
 }
 .chooseSupplier .search.data-v-3b8981f6 {
   display: -webkit-box;
@@ -47,6 +46,10 @@
   -webkit-justify-content: center;
           justify-content: center;
   background-color: #e7e7e7;
+  width: 100%;
+}
+.chooseSupplier .search .square.data-v-3b8981f6 {
+  width: 94%;
 }
 .chooseSupplier.data-v-3b8981f6 .u-content {
   background-color: #FFFFFF !important;

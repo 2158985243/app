@@ -93,7 +93,7 @@
 				</view>
 			</view>
 			<view class="box">
-				<view class="item-li" @tap="toSelecSalesperson">
+				<view class="item-li" @click="toSelecSalesperson">
 					<view class="box-left">
 						<text>销售员</text>
 					</view>
@@ -102,7 +102,7 @@
 						<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
 					</view>
 				</view>
-				<view class="item-li" @tap="hiddenTime" v-if="message_list.sales_can_choose_date.value==1">
+				<view class="item-li" @click="hiddenTime" v-if="message_list.sales_can_choose_date.value==1">
 					<view class="box-left">
 						<text>销售日期</text>
 					</view>

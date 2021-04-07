@@ -114,7 +114,7 @@
 					<view class="box-right">
 					</view>
 				</view>
-				<view class="item-li" @tap="hiddenTime">
+				<view class="item-li" @click="hiddenTime">
 					<view class="box-left">
 						<text>销售日期</text>
 					</view>

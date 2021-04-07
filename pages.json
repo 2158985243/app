@@ -2,7 +2,8 @@
 	"easycom": {
 		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
 	},
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	// 主包
+	"pages": [ 
 		{
 			"path": "pages/user/login",
 			"style": {
@@ -93,6 +94,7 @@
 			}
 		}
 	],
+	// 分包
 	"subPackages": [
 		
 		// 首页相关的页面
@@ -388,6 +390,12 @@
 					"navigationBarTextStyle": "white"
 				}
 			}, {
+				"path": "salesInquiry/salesInquiry",
+				"style": {
+					"navigationStyle": "custom", // 隐藏系统导航栏
+					"navigationBarTextStyle": "white"
+				}
+			}, {
 				"path": "editSettleAccounts/editSettleAccounts",
 				"style": {
 					"navigationStyle": "custom", // 隐藏系统导航栏
@@ -418,6 +426,13 @@
 
 				}, {
 					"path": "article/article",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white"
+					}
+
+				},{
+					"path": "selectProducts/selectProducts",
 					"style": {
 						"navigationStyle": "custom", // 隐藏系统导航栏
 						"navigationBarTextStyle": "white"
@@ -1220,9 +1235,41 @@
 
 			]
 		}
+		// ,
+		// 我的相关的页面
+		// {
+		// 	"root": "pagesMarketing",
+		// 	"pages": []
+		// }
 
 	],
-
+	// 预加载
+	"preloadRule": {
+			"pages/user/login": {
+		            "network": "all",
+		            "packages": ["__APP__"]
+		     },
+	        "pages/home/home": {
+	            "network": "all",
+	            "packages": ["pagesHome"]
+	        },
+	        "pages/repertory/repertory": {
+	            "network": "all",
+	            "packages": ["pagesRepertory"]
+	        },
+	        // "pages/marketing/marketing": {
+	        //     "network": "all",
+	        //     "packages": ["pagesMarketing"]
+	        // },
+	        "pages/statement/statement": {
+	            "network": "all",
+	            "packages": ["pagesStatement"]
+	        },
+	        "pages/mine/mine": {
+	            "network": "all",
+	            "packages": ["pagesMine"]
+	        }
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

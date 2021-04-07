@@ -19,15 +19,15 @@
 				<view class="form_item">
 					<view class="left">
 					<text>盘点范围</text>
-					<u-input placeholder='请选择盘点范围' @tap="inventoryRange" :disabled='true' v-model="scopes_name" type="text" />
+					<u-input placeholder='请选择盘点范围' @click="inventoryRange" :disabled='true' v-model="scopes_name" type="text" />
 				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
 				<u-action-sheet :list="scopes" @click="scopeItem" v-model="show"></u-action-sheet>
-				<view class="form_item"  @tap="toNoInventory">
+				<view class="form_item"  @click="toNoInventory">
 					<view class="left">
 					<text>未盘点商品</text>
-					<view class="lan" @tap="toNoInventory">查看未盘点商品</view>
+					<view class="lan" @click="toNoInventory">查看未盘点商品</view>
 				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>

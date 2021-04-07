@@ -13,7 +13,7 @@
 				</view>
 			</template>
 		</u-navbar>
-		<view class="hearder-search">
+		<view class="hearder-search" :style="'top:'+ statusBarHeight + 'rpx'">
 			<u-search class='search'  bg-color="#ffffff" style="width: 70%;" height='50' @change="search" :show-action="false" :focus='false'
 			 :scan="true" shape="square" placeholder="请输入商品名称/编码" v-model="form.keyword" @Inventory="handelScan"></u-search>
 			<view class="arr" @click="goodsCateShow = !goodsCateShow">
@@ -129,7 +129,8 @@
 				stopPullDown: true,
 				last_page: 0,
 				pull: false,
-				store_ids: []
+				store_ids: [],
+				statusBarHeight:0
 			}
 		},
 	
@@ -248,6 +249,7 @@
 		},
 		onUnload() {
 			uni.$off()
+			
 		},
 		onLoad() {
 			this.init()
@@ -262,6 +264,14 @@
 					this.init()
 				}
 			})
+			let _this = this
+			uni.getSystemInfo({
+				success(res) {
+					_this.$nextTick(()=>{
+						_this.statusBarHeight = Number(res.statusBarHeight)*2 + 96
+					})
+				}
+			})
 		}
 	}
 </script>
@@ -269,9 +279,9 @@
 <style scoped lang="scss">
 	.stockQuantity {
 		width: 100%;
+		height: 100vh;
 		display: flex;
 		flex-direction: column;
-
 		.classify {
 			position: fixed;
 			top: calc(164rpx + var(--status-bar-height));
@@ -315,13 +325,15 @@
 			display: flex;
 			flex-direction: column;
 			margin-top: 80rpx;
-
+			position: relative;
 			.box-hd {
 				width: 100%;
 				display: flex;
 				flex-direction: row;
 				padding: 20rpx;
 				border-bottom: 0.01rem solid #EEEEEE;
+				position: sticky;
+				top: 0;
 			}
 
 			.box-item {
@@ -420,11 +432,12 @@
 			height: 80rpx;
 			display: flex;
 			flex-direction: row;
-			justify-content: space-between;
 			align-items: center;
-			position: fixed;
-			top: calc(80rpx + var(--status-bar-height));
 			background-color: #F4F6F4;
+			justify-content: space-between;
+			position: fixed;
+			// top: 0;
+			// top: calc(88rpx + var(--status-bar-height));
 			z-index: 99;
 			.search{
 				padding: 20rpx;

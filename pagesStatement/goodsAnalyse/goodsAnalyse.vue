@@ -22,7 +22,7 @@
 		<!-- 选择类型 -->
 		<u-mask :show="show" @click="show = false">
 			<view class="warp">
-				<view class="rect" v-for="(item,index) in navs" @tap.stop="navClick(item)">
+				<view class="rect" v-for="(item,index) in navs" @click.stop="navClick(item)">
 					<text>{{item.name}}</text>
 				</view>
 			</view>

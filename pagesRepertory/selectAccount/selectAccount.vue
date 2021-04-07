@@ -6,7 +6,7 @@
 			</template>
 		</u-navbar>
 		<view class="list">
-			<view class="box" @tap="navigate(item)" v-for="(item,index) in list" :key="item.id">
+			<view class="box" @click="navigate(item)" v-for="(item,index) in list" :key="item.id">
 				<text>{{item.name}}</text>
 				<view class="">
 					<text>&yen;{{item.money}}</text>

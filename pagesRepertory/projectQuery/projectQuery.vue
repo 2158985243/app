@@ -18,7 +18,7 @@
 			<view class="form_item">
 				<view class="left">
 					<text>支出账户</text>
-					<u-input placeholder='请选择支出账户' :disabled='true' @tap="toSelectAccount" v-model="account"
+					<u-input placeholder='请选择支出账户' :disabled='true' @click="toSelectAccount" v-model="account"
 						type="text" />
 				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -26,7 +26,7 @@
 			<view class="form_item">
 				<view class="left">
 					<text>经手人</text>
-					<u-input placeholder='请选择经手人' :disabled='true' @tap="toSelecSalesperson" v-model="user"
+					<u-input placeholder='请选择经手人' :disabled='true' @click="toSelecSalesperson" v-model="user"
 						type="text" />
 				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>

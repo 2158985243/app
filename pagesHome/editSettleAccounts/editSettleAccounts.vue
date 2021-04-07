@@ -92,7 +92,7 @@
 				</view>
 			</view>
 			<view class="box">
-				<view class="item-li" @tap="toSelecSalesperson">
+				<view class="item-li" @click="toSelecSalesperson">
 					<view class="box-left">
 						<text>销售员</text>
 					</view>
@@ -101,7 +101,7 @@
 						<u-icon name="arrow-right" color="#cccccc" size="30"></u-icon>
 					</view>
 				</view>
-				<view class="item-li" @tap="hiddenTime">
+				<view class="item-li" @click="hiddenTime">
 					<view class="box-left">
 						<text>销售日期</text>
 					</view>

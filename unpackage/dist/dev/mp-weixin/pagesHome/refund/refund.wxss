@@ -136,6 +136,7 @@
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
           flex-direction: column;
+  width: calc(100% - 40rpx);
 }
 .refund .box .form_item.data-v-520f2705 {
   padding-right: 20rpx;
@@ -148,6 +149,22 @@
   background-color: #FFFFFF;
   margin-bottom: 2rpx;
   height: 85rpx;
+  width: 100%;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.refund .box .form_item .left.data-v-520f2705 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
 }
 .refund .box .form_item text.data-v-520f2705 {
   width: 220rpx;

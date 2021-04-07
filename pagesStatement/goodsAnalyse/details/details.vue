@@ -83,7 +83,7 @@
 							<u-icon name="arrow-down-fill" class="down" color="#2979ff" size="34"></u-icon>
 						</view>
 					</view>
-					<view class="nav-date" v-show="item_active == 1">
+					<view class="nav-date" v-if="item_active == 1">
 						<view class="date" v-for='(item,index) in date_list' @click="dateClick(index)" :class="date_active==index? 'active':''">
 							<text>{{item.name}}</text>
 						</view>
@@ -92,7 +92,7 @@
 				</view>
 				<!-- 内容 -->
 				<view class="goods-conts">
-					<view class="sotck-data" v-show="item_active==0">
+					<view class="sotck-data" v-if="item_active==0">
 						<view class="sotck-nav">
 							<text>颜色</text>
 							<text>尺码</text>
@@ -116,7 +116,7 @@
 							</block>
 						</view>
 					</view>
-					<view class="sotck-data" v-show="item_active==1">
+					<view class="sotck-data" v-if="item_active==1">
 						<view class="sotck-nav">
 							<text>颜色</text>
 							<text>尺码</text>
@@ -140,7 +140,7 @@
 							</block>
 						</view>
 					</view>
-					<view class="sotck-data" v-show="item_active==2">
+					<view class="sotck-data" v-if="item_active==2">
 						<view class="related-nav">
 							<text>关联商品</text>
 							<text>搭配次数</text>
@@ -684,7 +684,7 @@
 
 				.nav {
 					position: sticky;
-					top: calc(84rpx + var(--status-bar-height));
+					top: 0;
 					width: 100%;
 					display: flex;
 					flex-direction: column;
@@ -753,7 +753,7 @@
 					display: flex;
 					flex-direction: column;
 					position: sticky;
-					top: calc(244rpx + var(--status-bar-height));
+					top: calc(164rpx + var(--status-bar-height));
 					.sotck-data {
 						width: 100%;
 						display: flex;

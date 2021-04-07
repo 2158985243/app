@@ -12,7 +12,7 @@
 				<text>商品</text>
 				<u-input placeholder='请输入货号/商品名称/条码' v-model="form.keyword" type="text" />
 				</view>
-				<u-icon name="scan" @tap='handelScan' color="#2979ff" size="38"></u-icon>
+				<u-icon name="scan" @click='handelScan' color="#2979ff" size="38"></u-icon>
 			</view>
 			<view class="form_item">
 				<view class="left">
@@ -24,7 +24,7 @@
 			<view class="form_item">
 				<view class="left">
 				<text>分类</text>
-				<u-input placeholder='请选择商品分类' @tap="toCategory" :disabled='true' v-model="category" type="text" />
+				<u-input placeholder='请选择商品分类' @click="toCategory" :disabled='true' v-model="category" type="text" />
 			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
@@ -33,14 +33,14 @@
 			<view class="form_item">
 				<view class="left">
 				<text>品牌</text>
-				<u-input placeholder='请选择品牌' @tap="toTrademark" :disabled='true' type='text' v-model="trademark_name" />
+				<u-input placeholder='请选择品牌' @click="toTrademark" :disabled='true' type='text' v-model="trademark_name" />
 			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<view class="form_item">
 				<view class="left">
 				<text>年份</text>
-				<u-input placeholder='请选择年份' @tap="toYear" :disabled='true' v-model="form.year" type="text" />
+				<u-input placeholder='请选择年份' @click="toYear" :disabled='true' v-model="form.year" type="text" />
 			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
@@ -48,7 +48,7 @@
 			<view class="form_item">
 				<view class="left">
 				<text>季节</text>
-				<u-input placeholder='请选择季节' @tap="toSeason" :disabled='true' v-model="form.season" type="text" />
+				<u-input placeholder='请选择季节' @click="toSeason" :disabled='true' v-model="form.season" type="text" />
 			</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>

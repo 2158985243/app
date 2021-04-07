@@ -5,7 +5,7 @@
 				<view class="form_item">
 					<view class="left">
 						<text>供应商</text>
-						<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier"
+						<u-input placeholder='请选择供应商' @click="toChooseSupplier" :disabled='true' v-model="supplier"
 							type="text" />
 					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -118,7 +118,7 @@
 				<view class="form_item">
 					<view class="left">
 						<text>付款账户</text>
-						<u-input placeholder='请选择付款账户' @tap="toSelectAccount" :disabled='true' v-model="account"
+						<u-input placeholder='请选择付款账户' @click="toSelectAccount" :disabled='true' v-model="account"
 							type="text" />
 					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -141,7 +141,7 @@
 				<view class="form_item">
 					<view class="left">
 						<text>业务时间</text>
-						<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.business_time"
+						<u-input placeholder='请选择时间' @click="hiddenTime" :disabled='true' v-model="form.business_time"
 							type="text" />
 					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -220,7 +220,7 @@
 					</view>
 
 					<view class="btn">
-						<u-button type="primary" class="btn" @tap="sure()">确定</u-button>
+						<u-button type="primary" class="btn" @click="sure()">确定</u-button>
 					</view>
 				</view>
 			</u-popup>

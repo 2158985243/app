@@ -43,7 +43,7 @@
 			<view class="item-box">
 				<view class="left">
 					<text class="item-title">品牌权限</text>
-					<u-input placeholder='请选择品牌' @tap="toTrademark" v-model="trademark_name" :disabled='true'
+					<u-input placeholder='请选择品牌' @click="toTrademark" v-model="trademark_name" :disabled='true'
 						type="text" />
 				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -54,7 +54,7 @@
 			<view class="item-box">
 				<view class="left">
 					<text class="item-title">关联员工</text>
-					<u-input placeholder='请选择关联员工' @tap="toSelecSalesperson" v-model="staff" :disabled='true'
+					<u-input placeholder='请选择关联员工' @click="toSelecSalesperson" v-model="staff" :disabled='true'
 						type="text" />
 				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>

@@ -55,6 +55,7 @@
         "warenauswahl/warenauswahl",
         "exchanged/exchanged",
         "cancelledList/cancelledList",
+        "salesInquiry/salesInquiry",
         "editSettleAccounts/editSettleAccounts"
       ]
     },
@@ -64,6 +65,7 @@
         "libraryHistory/libraryHistory",
         "expense/expense",
         "article/article",
+        "selectProducts/selectProducts",
         "addArticle/addArticle",
         "refer/refer",
         "purchaseStorage/purchaseStorage",
@@ -235,6 +237,38 @@
         "text": "我的"
       }
     ]
+  },
+  "preloadRule": {
+    "pages/user/login": {
+      "network": "all",
+      "packages": [
+        "__APP__"
+      ]
+    },
+    "pages/home/home": {
+      "network": "all",
+      "packages": [
+        "pagesHome"
+      ]
+    },
+    "pages/repertory/repertory": {
+      "network": "all",
+      "packages": [
+        "pagesRepertory"
+      ]
+    },
+    "pages/statement/statement": {
+      "network": "all",
+      "packages": [
+        "pagesStatement"
+      ]
+    },
+    "pages/mine/mine": {
+      "network": "all",
+      "packages": [
+        "pagesMine"
+      ]
+    }
   },
   "usingComponents": {}
 }

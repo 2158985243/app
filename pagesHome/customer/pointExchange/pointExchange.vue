@@ -206,7 +206,7 @@
 				</view>
 
 				<view class="btn">
-					<u-button type="primary" class="btn" @tap="save()">确定</u-button>
+					<u-button type="primary" class="btn" @click="save()">确定</u-button>
 				</view>
 			</view>
 		</u-popup>

@@ -124,7 +124,7 @@
 				</view>
 
 				<view class="btn">
-					<u-button type="primary" class="btn" @tap="sure()">确定</u-button>
+					<u-button type="primary" class="btn" @click="sure()">确定</u-button>
 				</view>
 			</view>
 		</u-popup>
@@ -210,7 +210,6 @@
 			async showgd(item, index) {
 				this.listindex = index;
 				this.goodsDetails = JSON.parse(JSON.stringify(item.goodsData));
-				this.$set(this.goodsDetails, index, this.goodsDetails[index])
 				this.showGoods = true;
 			},
 			// 全部尺码数量变化

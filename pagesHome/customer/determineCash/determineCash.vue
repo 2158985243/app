@@ -51,7 +51,7 @@
 				</view>
 			</view>
 			<view class="box">
-				<view class="item-li" @tap="toSelecSalesperson">
+				<view class="item-li" @click="toSelecSalesperson">
 					<view class="box-left">
 						<text>销售员</text>
 					</view>

@@ -9,7 +9,7 @@
 						<text>名称</text>
 						<u-input placeholder='请输入商品名称' v-model="form.name" type="text" />
 					</view>
-					<u-icon name="arrow-right" class="man_r" @tap="toProductName" color="#cccccc" size="28"></u-icon>
+					<u-icon name="arrow-right" class="man_r" @click="toProductName" color="#cccccc" size="28"></u-icon>
 				</view>
 				<view class="form_item">
 					<view class="left">
@@ -20,7 +20,7 @@
 				<view class="form_item">
 					<view class="left">
 						<text>颜色</text>
-						<u-input placeholder='请选择颜色' @tap="toColors" :disabled='true' type='text'
+						<u-input placeholder='请选择颜色' @click="toColors" :disabled='true' type='text'
 							v-model="colors_name" />
 					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -28,7 +28,7 @@
 				<view class="form_item">
 					<view class="left">
 						<text>尺码</text>
-						<u-input placeholder='请选择尺码' @tap="toSizes" :disabled='true' type='text' v-model="size_name" />
+						<u-input placeholder='请选择尺码' @click="toSizes" :disabled='true' type='text' v-model="size_name" />
 					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
@@ -59,7 +59,7 @@
 				<view class="form_item">
 					<view class="left">
 						<text>分类</text>
-						<u-input placeholder='请选择商品分类' @tap="toCategory" :disabled='true' v-model="category"
+						<u-input placeholder='请选择商品分类' @click="toCategory" :disabled='true' v-model="category"
 							type="text" />
 					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -67,7 +67,7 @@
 				<view class="form_item">
 					<view class="left">
 						<text>供应商</text>
-						<u-input placeholder='请选择供应商' @tap="toChooseSupplier" :disabled='true' v-model="supplier"
+						<u-input placeholder='请选择供应商' @click="toChooseSupplier" :disabled='true' v-model="supplier"
 							type="text" />
 					</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -100,7 +100,7 @@
 						<text>商品条码</text>
 						<u-input placeholder='扫条形码获取商品信息' v-model="form.barcode" type="text" />
 					</view>
-					<u-icon name="scan" color="#2979ff" @tap="toBarcode" size="50"></u-icon>
+					<u-icon name="scan" color="#2979ff" @click="toBarcode" size="50"></u-icon>
 				</view>
 				<view class="form_item">
 					<view class="left">
@@ -167,7 +167,7 @@
 					<view class="form_item">
 						<view class="left">
 							<text>品牌</text>
-							<u-input placeholder='请选择品牌' @tap="toTrademark" :disabled='true' type='text'
+							<u-input placeholder='请选择品牌' @click="toTrademark" :disabled='true' type='text'
 								v-model="trademark_name" />
 						</view>
 						<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -175,7 +175,7 @@
 					<view class="form_item">
 						<view class="left">
 							<text>年份</text>
-							<u-input placeholder='请选择年份' @tap="toYear" :disabled='true' type='text'
+							<u-input placeholder='请选择年份' @click="toYear" :disabled='true' type='text'
 								v-model="form.year" />
 						</view>
 						<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -184,7 +184,7 @@
 					<view class="form_item">
 						<view class="left">
 							<text>季节</text>
-							<u-input placeholder='请选择季节' @tap="toSeason" :disabled='true' type='text'
+							<u-input placeholder='请选择季节' @click="toSeason" :disabled='true' type='text'
 								v-model="form.season" />
 						</view>
 						<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -193,7 +193,7 @@
 					<view class="form_item">
 						<view class="left">
 							<text>单位</text>
-							<u-input placeholder='请选择单位' @tap="toUnitList" :disabled='true' type='text'
+							<u-input placeholder='请选择单位' @click="toUnitList" :disabled='true' type='text'
 								v-model="unitList_name" />
 						</view>
 						<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
@@ -249,8 +249,8 @@
 			</view>
 		</view>
 		<view class="btn">
-			<u-button class="stbn" @tap="delgoods">删除</u-button>
-			<u-button type="primary" class="stbn" @tap="save">保存</u-button>
+			<u-button class="stbn" @click="delgoods">删除</u-button>
+			<u-button type="primary" class="stbn" @click="save">保存</u-button>
 		</view>
 		<cus-previewImg ref="cusPreviewImg" :circular="true" :duration="400" :list="ImgList" />
 	</view>

@@ -70,7 +70,7 @@
 				<view class="form_item">
 					<view class="left">
 					<text>业务时间</text>
-					<u-input placeholder='请选择时间' @tap="hiddenTime" :disabled='true' v-model="form.business_time" type="text" />
+					<u-input placeholder='请选择时间' @click="hiddenTime" :disabled='true' v-model="form.business_time" type="text" />
 				</view>
 					<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 				</view>
@@ -141,7 +141,7 @@
 					</view>
 
 					<view class="btn">
-						<u-button type="primary" class="btn" @tap="sure()">确定</u-button>
+						<u-button type="primary" class="btn" @click="sure()">确定</u-button>
 					</view>
 				</view>
 			</u-popup>

@@ -154,16 +154,37 @@
 				// }
 				this.showedit = false;
 			},
+			// 登陆
 			async register() {
-				this.form.store_id = ''
-				let res = await login(this.form)
-				console.log(res);
-				if (res.code == 2) {
-					this.stores = res.data.store;
-					this.form.store_id = res.data.store[0].store_id;
-					this.is_valid = res.data.store[0].is_valid;
-					this.value = res.data.store[0].name
-					this.showedit = true;
+				if(this.form.member_mobile == ""){
+					this.$refs.uToast.show({
+						title: '请输入注册手机号码',
+						type: 'default',
+						position: 'bottom'
+					})
+				}else if(this.form.account == ""){
+					this.$refs.uToast.show({
+						title: '请输入用户账号或admin',
+						type: 'default',
+						position: 'bottom'
+					})
+				}else if(this.form.password == ""){
+					this.$refs.uToast.show({
+						title: '请输入密码',
+						type: 'default',
+						position: 'bottom'
+					})
+				}else{
+					
+					this.form.store_id = ''
+					let res = await login(this.form)
+					if (res.code == 2) {
+						this.stores = res.data.store;
+						this.form.store_id = res.data.store[0].store_id;
+						this.is_valid = res.data.store[0].is_valid;
+						this.value = res.data.store[0].name
+						this.showedit = true;
+					}
 				}
 			},
 			enroll: function() {

@@ -40,9 +40,7 @@
 .accountManagement .header.data-v-69518de7 {
   width: 100%;
   height: 100rpx;
-  position: fixed;
   background-color: #FFFFFF;
-  top: calc(84rpx + 25px);
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -74,7 +72,6 @@
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
           flex-direction: column;
-  margin: 100rpx 0;
 }
 .accountManagement .list .box.data-v-69518de7 {
   display: -webkit-box;

@@ -4,7 +4,7 @@
 			<u-search placeholder="请输入商品名称" shape='square' :show-action='false' height='60' :input-style="style_input" margin='20rpx' v-model="keyword"></u-search>
 		</view>
 		<view class="box">
-			<view class="list" @tap="toaddCommodity(item)" v-for="(item,index) in list" :key="index">
+			<view class="list" @click="toaddCommodity(item)" v-for="(item,index) in list" :key="index">
 				<text>
 					{{item.name}}
 				</text>

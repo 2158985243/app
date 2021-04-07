@@ -9,7 +9,7 @@
 			<view class="form_item">
 				<text>会员</text>
 				<u-input placeholder='请输入会员卡号、手机号或姓名' v-model="form.keyword" type="text" />
-				<u-icon name="scan" @tap='handelScan' color="#2979ff" size="38"></u-icon>
+				<u-icon name="scan" @click='handelScan' color="#2979ff" size="38"></u-icon>
 			</view>
 			<view class="form_item">
 				<text>店铺</text>
@@ -20,13 +20,13 @@
 		<view class="box">
 			<view class="form_item">
 				<text>开始日期</text>
-				<u-input placeholder='请选择时间' @tap="hiddenTime(0)" :disabled='true' v-model="form.start_time" type="text" />
+				<u-input placeholder='请选择时间' @click="hiddenTime(0)" :disabled='true' v-model="form.start_time" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<u-picker mode="time" v-model="showtime" @confirm="confirmTime" :params="params"></u-picker>
 			<view class="form_item">
 				<text>结束日期</text>
-				<u-input placeholder='请选择时间' @tap="hiddenTime(1)" :disabled='true' v-model="form.end_time" type="text" />
+				<u-input placeholder='请选择时间' @click="hiddenTime(1)" :disabled='true' v-model="form.end_time" type="text" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<u-picker mode="time" v-model="showtime1" @confirm="confirmTime1" :params="params"></u-picker>

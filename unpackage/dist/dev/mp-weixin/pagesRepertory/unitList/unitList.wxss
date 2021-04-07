@@ -30,7 +30,7 @@
   background-color: #f8f8f8;
 }
 .unitList .right_icon.data-v-3ad26056 {
-  margin-right: 40rpx;
+  margin-right: 20rpx;
 }
 .unitList .pop.data-v-3ad26056 {
   width: 70vw;

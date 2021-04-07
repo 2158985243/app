@@ -5,7 +5,7 @@
 			<u-input placeholder='请输入商品名称' v-model="name" type="text" />
 		</view>
 		<view class="btn">
-			<u-button type="primary" class="btn" @tap="save">保存</u-button>
+			<u-button type="primary" class="btn" @click="save">保存</u-button>
 		</view>
 	</view>
 </template>

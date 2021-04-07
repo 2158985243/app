@@ -23,26 +23,36 @@
 		</view>
 		<view class="box">
 			<view class="form_item">
+				<view class="left">
+					
 				<text>退款方式</text>
-				<u-input placeholder='请选择退款方式' @tap="toPatternOfPayment" :disabled='true' type='text' v-model="account_name" />
+				<u-input placeholder='请选择退款方式' @click="toPatternOfPayment" :disabled='true' type='text' v-model="account_name" />
+				</view>
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view>
 			<!-- <view class="form_item">
 				<text>退款时间</text>
-				<u-input placeholder='请选择支付类型' @tap="toPatternOfPayment"  :disabled='true' type='text' v-model="account_name" />
+				<u-input placeholder='请选择支付类型' @click="toPatternOfPayment"  :disabled='true' type='text' v-model="account_name" />
 				<u-icon name="arrow-right" color="#cccccc" size="28"></u-icon>
 			</view> -->
 			<view class="form_item">
+				<view class="left">
 				<text>退款原因</text>
 				<u-input placeholder='请输入退款原因' type='text' v-model="obj.refund_reason" />
+				
+			</view>
 			</view>
 			<view class="form_item" v-if="form.customer_id!=0">
+				<view class="left">
 				<text>退返积分</text>
 				<u-input placeholder='' :disabled='true' type='text' v-model="obj.reward_point" />
 			</view>
+			</view>
 			<view class="form_item">
+				<view class="left">
 				<text>备注信息</text>
 				<u-input placeholder='请输入备注信息' type='text' v-model="obj.remarks" />
+			</view>
 			</view>
 
 		</view>
@@ -312,7 +322,7 @@
 			margin: 0 20rpx 90rpx 20rpx;
 			display: flex;
 			flex-direction: column;
-
+			width: calc(100% - 40rpx);
 			.form_item {
 				padding-right: 20rpx;
 				display: flex;
@@ -320,7 +330,13 @@
 				background-color: #FFFFFF;
 				margin-bottom: 2rpx;
 				height: 85rpx;
-
+				width: 100%;
+				justify-content: space-between;
+				.left{
+					display: flex;
+					align-items: center;
+					flex-direction: row;
+				}
 				text {
 					width: 220rpx;
 					// text-align: left;

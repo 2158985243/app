@@ -1,4 +1,4 @@
-(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pagesMine/common/vendor"],{1260:
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pagesMine/common/vendor"],{1276:
 /*!**********************************************************************!*\
   !*** C:/Users/admin/Desktop/clothingAPP/clothing/api/uploadImage.js ***!
   \**********************************************************************/

@@ -12,7 +12,7 @@
 		<!-- 选择类型 -->
 		<u-mask :show="show" @click="show = false">
 			<view class="warp">
-				<view class="rect" v-for="(item,index) in navs" @tap.stop="navClick(item)">
+				<view class="rect" v-for="(item,index) in navs" @click.stop="navClick(item)">
 					<text>{{item.name}}</text>
 				</view>
 			</view>
@@ -20,7 +20,7 @@
 
 
 		<view class="list-data">
-			<view class="nav">
+			<view class="nav"  :style="'top:'+ statusBarHeight + 'rpx'">
 				<view class="nav-li">
 					<view class="select-left" @click="show = true">
 						<text class="select-box">{{sort_name}}</text>
@@ -325,6 +325,7 @@
 				tag_list: [],
 				leve_list: [],
 				screen_checked: false,
+				statusBarHeight:0
 			}
 		},
 		computed: {
@@ -551,6 +552,14 @@
 			this.keyword = option.val;
 			this.tags()
 			this.leves()
+			let _this = this
+			uni.getSystemInfo({
+				success(res) {
+					_this.$nextTick(()=>{
+						_this.statusBarHeight = Number(res.statusBarHeight)*2 + 96
+					})
+				}
+			})
 		},
 	}
 </script>
@@ -708,7 +717,7 @@
 			display: flex;
 			flex-direction: column;
 			position: sticky;
-			top: calc(78rpx + var(--status-bar-height));
+			// top: calc(78rpx + var(--status-bar-height));
 			z-index: 99;
 
 			.nav-li {

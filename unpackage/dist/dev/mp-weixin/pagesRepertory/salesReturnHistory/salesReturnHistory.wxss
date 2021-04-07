@@ -37,7 +37,7 @@
   background-color: #f2f1f5;
 }
 .salesReturnHistory .right_icon.data-v-3d09b2d6 {
-  margin-right: 30rpx;
+  margin-right: 10rpx;
 }
 .salesReturnHistory .box.data-v-3d09b2d6 {
   width: 100%;

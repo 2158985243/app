@@ -18,7 +18,7 @@
 				:bottom="bottom" :autoPullUp="autoPullUp" :stopPullDown="stopPullDown" :inBottom='inBottom'
 				@onPullDown="handlePullDown" @onPullUp="handleLoadMore">
 				<view class="list-arr" v-for="(item,index) in dataList" :key='index'>
-					<view class="list-arr-name" v-show="acitve==index">
+					<view class="list-arr-name" v-if="acitve==index">
 						<!-- :style="{height:hig+'rpx'}" -->
 						<view class="list-shop" v-for="(item1,index1) in item.arr" @click="rightchange(index1,item1)">
 							<view class="img">

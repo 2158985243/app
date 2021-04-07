@@ -6,7 +6,7 @@
 			</template>
 		</u-navbar>
 		<view class="search">
-			<u-search placeholder="请输入供应商姓名" shape='square' height='60' @change="changeInput" :input-style="style_input"
+			<u-search placeholder="请输入供应商姓名" shape='square' class="square" height='60' @change="changeInput" :input-style="style_input"
 			 :show-action='false' margin='20rpx' v-model="keyword"></u-search>
 		</view>
 		<view class="management_list">
@@ -134,13 +134,17 @@
 		min-height: 100%;
 		display: flex;
 		flex-direction: column;
-		background-color: #e7e7e7;
+		// background-color: #e7e7e7;
 		.search {
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			// height: 80rpx;
 			background-color: #e7e7e7;
+			width: 100%;
+			.square{
+				width: 94%;
+			}
 		}
 
 		/deep/.u-content {

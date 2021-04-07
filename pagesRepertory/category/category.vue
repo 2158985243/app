@@ -7,7 +7,7 @@
 			</template>
 		</u-navbar>
 		<view class="list">
-			<view class="lisr" v-for="(item,index) in list" :key="index" @tap="toAddCommodity(item)">
+			<view class="lisr" v-for="(item,index) in list" :key="index" @click="toAddCommodity(item)">
 				<text>{{item.name}}</text>
 				<view class="logo" v-show="visible">
 					<u-icon name="order" class="icon" color="#cccccc" size="38" @click.native.stop="editct(item)"></u-icon>

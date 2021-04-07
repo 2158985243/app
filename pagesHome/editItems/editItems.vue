@@ -28,28 +28,37 @@
 		</view>
 		<view class="box">
 			<view class="list-item" v-if="!bl">
+				<view class="left">
+					
 				<view class="label-name">
 					本次售价
 				</view>
 				<u-input v-model="item.retail_price" @input="inputPrice" :maxlength='maxLength' :clearable="false" height="50" placeholder='' type="number" />
+				</view>
 			</view>
 			<view class="list-item" v-else>
+				<view class="left">
 				<view class="label-name">
 					本次积分
 				</view>
 				<u-input v-model="item.retail_price" :clearable="false" height="50" placeholder='' type="number" />
 			</view>
+			</view>
 			<view class="list-item">
+				<view class="left">
 				<view class="label-name">
 					本次打折
 				</view>
 				<u-input v-model="item.discount" @input="inputDiscount"  :maxlength='maxlength1'  :clearable="false" height="50" placeholder='' type="number" />
 			</view>
+			</view>
 			<view class="number-box">
+				<view class="left">
 				<view class="label-name">
 					销售数量
 				</view>
 				<u-number-box :min="0" v-model="item.quantity"></u-number-box>
+			</view>
 			</view>
 		</view>
 		<u-popup mode="center" v-model="show" border-radius="20" width="70%">
@@ -302,7 +311,11 @@
 				align-items: center;
 				background-color: #FFFFFF;
 				border-bottom: 0.01rem solid #E5E5E5;
-
+				.left{
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+				}
 				.label-name {
 					width: 180rpx;
 					color: #a5a5a5;

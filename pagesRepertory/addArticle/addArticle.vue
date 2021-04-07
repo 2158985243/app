@@ -7,7 +7,7 @@
 			</view>
 		
 			<view class="btn">
-				<u-button type="primary" class="btn" @tap="save">保存</u-button>
+				<u-button type="primary" class="btn" @click="save">保存</u-button>
 			</view>
 	
 		</view>

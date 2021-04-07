@@ -26,6 +26,7 @@
 /* 文章场景相关 */
 .stockQuantity.data-v-1753ceee {
   width: 100%;
+  height: 100vh;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -93,6 +94,7 @@
   -webkit-flex-direction: column;
           flex-direction: column;
   margin-top: 80rpx;
+  position: relative;
 }
 .stockQuantity .box .box-hd.data-v-1753ceee {
   width: 100%;
@@ -105,6 +107,9 @@
           flex-direction: row;
   padding: 20rpx;
   border-bottom: 0.01rem solid #EEEEEE;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }
 .stockQuantity .box .box-item.data-v-1753ceee {
   width: 100%;
@@ -226,15 +231,14 @@
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  position: fixed;
-  top: calc(80rpx + 25px);
   background-color: #F4F6F4;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  position: fixed;
   z-index: 99;
 }
 .stockQuantity .hearder-search .search.data-v-1753ceee {

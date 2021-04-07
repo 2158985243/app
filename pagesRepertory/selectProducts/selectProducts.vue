@@ -5,7 +5,7 @@
 				<u-icon name="plus" @click="toAddCommodity" color="#ffffff" class="right_icon" size="34"></u-icon>
 			</template>
 		</u-navbar>
-		<view class="box">
+		<view class="box" :style="'top:'+ statusBarHeight + 'rpx'">
 			<u-popup v-model="show" z-index='999' mode="right" width="80%">
 
 				<view class="popup-right">
@@ -198,7 +198,7 @@
 				</view>
 
 				<view class="btn">
-					<u-button type="primary" class="btn" @tap="save()">确定</u-button>
+					<u-button type="primary" class="btn" @click="save()">确定</u-button>
 				</view>
 			</view>
 		</u-popup>
@@ -326,7 +326,8 @@
 				mored: {id:0,index:0,name:'全部'},
 				pull: false,
 				condition: 0,
-				stockLog:0
+				stockLog:0,
+				statusBarHeight:0
 			}
 		},
 
@@ -373,13 +374,13 @@
 			// 	}
 			// },
 		},
-		onBackPress(options) {
-			if (options.from === 'navigateBack') {
-				return false;
-			}
-			this.quit()
-			return true;
-		},
+		// onBackPress(options) {
+		// 	if (options.from === 'navigateBack') {
+		// 		return false;
+		// 	}
+		// 	this.quit()
+		// 	return true;
+		// },
 		methods: {
 			quit() {
 				let _this = this
@@ -870,6 +871,14 @@
 			if (query.stockLog) {
 				this.stockLog = Number(query.stockLog);
 			}
+			let _this = this
+			uni.getSystemInfo({
+				success(res) {
+					_this.$nextTick(()=>{
+						_this.statusBarHeight = Number(res.statusBarHeight)*2 + 96
+					})
+				}
+			})
 		}
 	}
 </script>
@@ -1158,7 +1167,7 @@
 		.box{
 			width: 100%;
 			position: fixed;
-			top: calc(80rpx + var(--status-bar-height)) ;
+			// top: calc(80rpx + var(--status-bar-height)) ;
 			z-index: 999;
 		}
 		.list {
@@ -1166,7 +1175,8 @@
 			// max-height: 70%;
 			height: calc(100% - 240rpx);
 			display: flex;
-			margin: 78rpx 0 80rpx 0;
+			margin-bottom:80rpx;
+			margin-top:80rpx;
 			overflow: hidden;
 		}
 

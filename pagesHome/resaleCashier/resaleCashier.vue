@@ -210,7 +210,7 @@
 				</view>
 
 				<view class="btn">
-					<u-button type="primary" class="btn" @tap="save()">确定</u-button>
+					<u-button type="primary" class="btn" @click="save()">确定</u-button>
 				</view>
 			</view>
 		</u-popup>
@@ -502,7 +502,7 @@
 					this.$nextTick(() => {
 						this.dataList[this.mored.index].last_page = res.last_page
 						this.dataList[this.mored.index].arr = res.data;
-						this.$set(this.dataList,this.mored.index,this.dataList[this.mored.index])
+						this.$set(this.dataList, this.mored.index, this.dataList[this.mored.index])
 						// this.$forceUpdate()
 					})
 				}
@@ -593,10 +593,13 @@
 							goods_category_id: e.id,
 							keyword: this.keyword
 						});
-						this.dataList[i].arr = res.data;
-						this.dataList[i].last_page = res.last_page
-						this.$set(this.dataList, i, this.dataList[i])
-						// console.log(res.data);
+						this.$nextTick(() => {
+							this.dataList[i].arr = res.data;
+							this.dataList[i].last_page = res.last_page
+							this.$set(this.dataList, i, this.dataList[i])
+							// console.log(res.data);
+							// this.$forceUpdate()
+						})
 						break;
 					}
 				}
@@ -1141,9 +1144,9 @@
 
 		.box {
 			width: 100%;
-			position: fixed;
-			top: calc(78rpx + var(--status-bar-height));
-			z-index: 1000;
+			// position: fixed;
+			// top: calc(88rpx + var(--status-bar-height));
+			// z-index: 1000;
 		}
 
 		.list {
@@ -1151,7 +1154,7 @@
 			// max-height: 70%;
 			height: calc(100% - 240rpx);
 			display: flex;
-			margin: 78rpx 0 80rpx 0;
+			margin: 0 0 80rpx 0;
 			overflow: hidden;
 		}
 
@@ -1219,9 +1222,11 @@
 				justify-content: space-between;
 				width: 100%;
 				height: 80rpx;
-				.search{
+
+				.search {
 					width: 75%;
 				}
+
 				.search_add {
 					display: flex;
 					align-items: center;
